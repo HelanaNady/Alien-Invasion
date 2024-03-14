@@ -78,7 +78,7 @@ As **the C++ Core Guidelines strongly discourage the use of Hungarian method**. 
       Hungarian notation     // Old variable name
       string txtTextBox        // TextBox
       string frmInputForm      // InputForm
-      ```
+```
    [For more info](https://www.lenovo.com/us/en/glossary/what-is-hungarian-notation/?orgRef=https%253A%252F%252Fwww.google.com%252F)
 
 ---
