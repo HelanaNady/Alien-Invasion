@@ -89,7 +89,7 @@
     ```cpp
     function
     {
-    	//function body
+        // function body
     }
     ```
 
@@ -97,7 +97,7 @@
 
     ```cpp
     function{
-    //function body
+        // function body
     }
     ```
 
