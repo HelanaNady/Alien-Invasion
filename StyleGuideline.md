@@ -2,7 +2,7 @@
 
 ## Classes
 
--   The class name should be written in PascalCase
+-   The class name should be written in **PascalCase**
 
     ```cpp
     class LinkedList
@@ -10,7 +10,7 @@
 
 ## Functions & Variables
 
--   Function and variable names should be written in camelCase
+-   Function and variable names should be written in **camelCase**
 -   Consider using `const` whenever applicable, especially for member functions that don't modify the object
 
     ```cpp
@@ -20,11 +20,23 @@
 
 ## Constants
 
--   Use all uppercase with underscores to separate words (e.g., `MAX_SIZE`)
+-   Constants should be written in all uppercase with underscores to separate words.
+
+    ```cpp
+    const int MAX_SIZE = 100;
+    ```
+
+## Enumerations
+
+-   Enumeration names should be written in **PascalCase** and the enumeration constants should be written in all uppercase with underscores to separate words just as constants.
+
+    ```cpp
+    enum Color { RED, GREEN, BLUE };
+    ```
 
 ## Pointers & References
 
--   Clearly separate type name from variable name, pointer (\*), and reference (&) type designators are to be placed next to the type name without any whitespace. Variable names should then be placed after a whitespace.
+-   Clearly separate type name from variable name, pointer (`*`) and references (`&`) type designators are to be placed next to the type name without any whitespace. Variable names should then be placed after a whitespace.
 
     **Do:**
 
@@ -51,11 +63,25 @@
 
 ## File Names
 
--   Match the filename with the class name. For non-class files, use PascalCase and choose a name that states the primary purpose of the file
+-   File names should match the class name. For non-class files, use **PascalCase** and choose a name that states the primary purpose of the file.
 
 ## Formatting
 
 -   **Indentation**: Use tabs for indentation, with a width equivalent to four spaces
+-   **Inline Comments**: Should be separated by a space.
+
+    **Do:**
+
+    ```cpp
+    int x = 5; // This is a comment
+    ```
+
+    **Don't:**
+
+    ```cpp
+    int x = 5;//This is a comment
+    ```
+
 -   **Brace Placement**: Opening braces should be placed on a new line
 
     **Do:**
