@@ -38,14 +38,14 @@
 
 -   Clearly separate type name from variable name, pointer (`*`) and references (`&`) type designators are to be placed next to the type name without any whitespace. Variable names should then be placed after a whitespace.
 
-    **Do:**
+    **✔️ Do:**
 
     ```cpp
     int* ptr;
     int& value;
     ```
 
-    **Don't:**
+    **❌ Don't:**
 
     ```cpp
     int *ptr;
@@ -70,13 +70,13 @@
 -   **Indentation**: Use tabs for indentation, with a width equivalent to four spaces
 -   **Inline Comments**: Should be separated by a space.
 
-    **Do:**
+    **✔️ Do:**
 
     ```cpp
     int x = 5; // This is a comment
     ```
 
-    **Don't:**
+    **❌ Don't:**
 
     ```cpp
     int x = 5;//This is a comment
@@ -84,7 +84,7 @@
 
 -   **Brace Placement**: Opening braces should be placed on a new line
 
-    **Do:**
+    **✔️ Do:**
 
     ```cpp
     function
@@ -93,7 +93,7 @@
     }
     ```
 
-    **Don't:**
+    **❌ Don't:**
 
     ```cpp
     function{
