@@ -18,6 +18,10 @@
     int newData;
     ```
 
+## Constants
+
+-   Use all uppercase with underscores to separate words (e.g., `MAX_SIZE`)
+
 ## Pointers & References
 
 -   Clearly separate type name from variable name, pointer (\*), and reference (&) type designators are to be placed next to the type name without any whitespace. Variable names should then be placed after a whitespace.
@@ -45,6 +49,10 @@
     Node* frontPtr;
     ```
 
+## File Names
+
+-   Match the filename with the class name. For non-class files, use PascalCase and choose a name that states the primary purpose of the file
+
 ## Formatting
 
 -   **Indentation**: Use tabs for indentation, with a width equivalent to four spaces
@@ -66,6 +74,15 @@
     //function body
     }
     ```
+
+## Branch Naming
+
+-   **Feature Branches:** `feature/<short-description>`
+
+    -   Example: `feature/unit-generator-class`
+
+-   **Bug Fix Branches:** `bugfix/<issue-number>-<short-description>`
+    -   Example: `bugfix/123-fix-crash-on-army-joining`
 
 ## Best Practices
 
