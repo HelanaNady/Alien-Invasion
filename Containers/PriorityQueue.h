@@ -11,21 +11,22 @@ class PriorityQueue
     PriorityNode<T>* head;
 
 public:
-    PriorityQueue(): head(nullptr)
-    {
-    }
+    PriorityQueue(): head(nullptr) {}
 
-    ~PriorityQueue() {
+    ~PriorityQueue()
+    {
         T tmp;
         int p;
         while (dequeue(tmp, p));
     }
 
     // Insert the new node in its correct position according to its priority
-    void enqueue(const T& data, int priority) {
+    void enqueue(const T& data, int priority)
+    {
         PriorityNode<T>* newNode = new PriorityNode<T>(data, priority);
 
-        if (head == nullptr || priority > head->getPriority()) {
+        if (head == nullptr || priority > head->getPriority())
+        {
             newNode->setNext(head);
             head = newNode;
             return;
@@ -39,7 +40,8 @@ public:
         current->setNext(newNode);
     }
 
-    bool dequeue(T& topEntry, int& pri) {
+    bool dequeue(T& topEntry, int& pri)
+    {
         if (isEmpty())
             return false;
 
@@ -51,7 +53,8 @@ public:
         return true;
     }
 
-    bool peek(T& topEntry, int& priority) {
+    bool peek(T& topEntry, int& priority)
+    {
         if (isEmpty())
             return false;
 
@@ -61,16 +64,22 @@ public:
         return true;
     }
 
-    bool isEmpty() const {
+    bool isEmpty() const
+    {
         return head == nullptr;
     }
 
-    void printList() const {
+    void printList() const
+    {
         PriorityNode<T>* current = head;
         int p = 0;
 
         while (current) {
-            std::cout << current->getItem(p) << ", ";
+            std::cout << current->getItem(p);
+
+            if (current->getNext() != nullptr)
+                std::cout << << ", ";
+
 			current = current->getNext();
 		}
 
