@@ -27,19 +27,11 @@
     <ClInclude Include="Containers\QueueADT.h">
       <Filter>Containers</Filter>
     </ClInclude>
-    <ClInclude Include="StackADT.h">
+    <ClInclude Include="Containers\StackADT.h">
       <Filter>Containers</Filter>
     </ClInclude>
-    <ClInclude Include="ArrayStack.h">
+    <ClInclude Include="Containers\ArrayStack.h">
       <Filter>Containers</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include=".gitignore" />
-    <None Include="README.md" />
-    <None Include="StyleGuideline.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="CMakeLists.txt" />
   </ItemGroup>
 </Project>

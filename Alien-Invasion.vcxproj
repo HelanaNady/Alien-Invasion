@@ -22,22 +22,14 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ArrayStack.h" />
+    <ClInclude Include="Containers\ArrayStack.h" />
     <ClInclude Include="Containers\Deque.h" />
     <ClInclude Include="Containers\LinkedQueue.h" />
     <ClInclude Include="Containers\Node.h" />
     <ClInclude Include="Containers\PriorityNode.h" />
     <ClInclude Include="Containers\PriorityQueue.h" />
     <ClInclude Include="Containers\QueueADT.h" />
-    <ClInclude Include="StackADT.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include=".gitignore" />
-    <None Include="README.md" />
-    <None Include="StyleGuideline.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="CMakeLists.txt" />
+    <ClInclude Include="Containers\StackADT.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
