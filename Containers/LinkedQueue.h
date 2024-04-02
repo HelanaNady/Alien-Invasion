@@ -25,7 +25,6 @@ LinkedQueue<T>::LinkedQueue()
 {
     backPtr = nullptr;
     frontPtr = nullptr;
-
 }
 
 template <typename T>
@@ -72,7 +71,6 @@ bool LinkedQueue<T>::dequeue(T& frontEntry)
     return true;
 }
 
-
 template <typename T>
 bool LinkedQueue<T>::peek(T& frontEntry) const
 {
@@ -81,23 +79,6 @@ bool LinkedQueue<T>::peek(T& frontEntry) const
 
     frontEntry = frontPtr->getItem();
     return true;
-}
-
-template<typename T>
-void LinkedQueue<T>::printList() const
-{
-    if (isEmpty()) return;
-
-    Node<T>* current = frontPtr;
-
-    while (current)
-    {
-        std::cout << current->getItem();
-        if (current->getNext() != nullptr)
-            std::cout << ", ";
-        current = current->getNext();
-    }
-    std::cout << std::endl;
 }
 
 template <typename T>
