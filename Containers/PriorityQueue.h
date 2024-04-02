@@ -78,7 +78,7 @@ public:
             std::cout << current->getItem(p);
 
             if (current->getNext() != nullptr)
-                std::cout << << ", ";
+                std::cout << ", ";
 
 			current = current->getNext();
 		}
