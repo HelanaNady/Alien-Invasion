@@ -1,4 +1,5 @@
-#pragma once
+#ifndef STACKADT_H
+#define STACKADT_H
 
 template<typename T>
 class StackADT
@@ -15,4 +16,5 @@ public:
 
     virtual ~StackADT() { }
 };
+#endif 
 

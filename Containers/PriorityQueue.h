@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PRIORITYQUEUE_H
+#define PRIORITYQUEUE_H
 
 #include <iostream>
 #include "PriorityNode.h"
@@ -24,6 +25,7 @@ public:
 
     ~PriorityQueue();
 };
+#endif
 
 template <typename T>
 PriorityQueue<T>::PriorityQueue(): head(nullptr), itemCount(0)

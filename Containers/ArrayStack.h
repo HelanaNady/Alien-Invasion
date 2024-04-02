@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ARRAYSTACK_H
+#define ARRAYSTACK_H
 
 #include <iostream>
 #include "StackADT.h"
@@ -7,7 +8,7 @@
 template<typename T>
 class ArrayStack : public StackADT<T>
 {
-	enum { MAX_SIZE = 100 };
+	enum { MAX_SIZE = 1000 };
 private:
 	const int MAX_SIZE;
 	T items[MAX_SIZE];
@@ -22,6 +23,7 @@ public:
 	void printList() const;
 	int getCount() const;
 };
+#endif
 
 template<typename T>
 inline ArrayStack<T>::ArrayStack() : top(-1)
