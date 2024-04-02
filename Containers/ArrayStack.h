@@ -6,7 +6,7 @@
 template<typename T>
 class ArrayStack : public StackADT<T>
 {
-
+	enum { MAX_SIZE = 100 };
 private:
 	const int MAX_SIZE;
 	T items[MAX_SIZE];
@@ -23,7 +23,7 @@ public:
 };
 
 template<typename T>
-inline ArrayStack<T>::ArrayStack() :MAX_SIZE(100), top(-1)
+inline ArrayStack<T>::ArrayStack() : top(-1)
 {}
 
 template<typename T>
