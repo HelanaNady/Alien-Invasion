@@ -9,9 +9,10 @@ template <typename T>
 class PriorityQueue
 {
     PriorityNode<T>* head;
+    int itemCount;
 
 public:
-    PriorityQueue(): head(nullptr) {}
+    PriorityQueue(): head(nullptr), itemCount(0) {}
 
     ~PriorityQueue()
     {
@@ -38,6 +39,7 @@ public:
 
         newNode->setNext(current->getNext());
         current->setNext(newNode);
+        itemCount++; 
     }
 
     bool dequeue(T& topEntry, int& pri)
@@ -50,6 +52,7 @@ public:
         head = head->getNext();
         delete temp;
 
+        itemCount--;
         return true;
     }
 
@@ -84,5 +87,10 @@ public:
 		}
 
         std::cout << std::endl;
+    }
+
+    int getCount() const
+    {
+        return itemCount;
     }
 };
