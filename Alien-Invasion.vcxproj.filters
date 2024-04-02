@@ -3,4 +3,17 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Containers">
+      <UniqueIdentifier>{30a4ef19-f6b1-4dde-9639-08137b5a96c3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Containers\PriorityQueue.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Containers\PriorityNode.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>
