@@ -15,5 +15,31 @@
     <ClInclude Include="Containers\PriorityNode.h">
       <Filter>Containers</Filter>
     </ClInclude>
+    <ClInclude Include="Containers\Deque.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Containers\LinkedQueue.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Containers\Node.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="Containers\QueueADT.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="StackADT.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="ArrayStack.h">
+      <Filter>Containers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+    <None Include="README.md" />
+    <None Include="StyleGuideline.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
 </Project>

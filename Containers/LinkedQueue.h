@@ -17,6 +17,7 @@ public:
     bool dequeue(T& frontEntry);
     bool peek(T& frontEntry)  const;
     void printList() const;
+    int getCount() const;
     ~LinkedQueue();
 };
 
@@ -79,6 +80,35 @@ bool LinkedQueue<T>::peek(T& frontEntry) const
 
     frontEntry = frontPtr->getItem();
     return true;
+}
+
+template<typename T>
+inline void LinkedQueue<T>::printList() const
+{
+    if (isEmpty()) return;
+
+    Node<T>* currentPtr = frontPtr;
+    while (currentPtr)
+    {
+        std::cout << currentPtr->getItem();
+        if (currentPtr != backPtr)
+            std::cout << ", ";
+        currentPtr = currentPtr->getNext();
+    }
+    std::cour << std::endl;
+}
+
+template<typename T>
+inline int LinkedQueue<T>::getCount() const
+{
+    int count = 0;
+    Node<T>* currentPtr = frontPtr;
+    while (currentPtr)
+    {
+        count++;
+        currentPtr = currentPtr->getNext();
+    }
+    return count;
 }
 
 template <typename T>
