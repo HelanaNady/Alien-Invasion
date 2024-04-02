@@ -1,5 +1,6 @@
 #pragma once
 
+#include <iostream>
 #include "StackADT.h"
 
 // The default size is 100

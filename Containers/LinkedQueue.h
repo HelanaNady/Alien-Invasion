@@ -1,6 +1,7 @@
 #ifndef LINKED_QUEUE_
 #define LINKED_QUEUE_
 
+#include <iostream>
 #include "Node.h"
 #include "QueueADT.h"
 
@@ -95,13 +96,13 @@ inline void LinkedQueue<T>::printList() const
             std::cout << ", ";
         currentPtr = currentPtr->getNext();
     }
-    std::cour << std::endl;
+    std::cout << std::endl;
 }
 
 template<typename T>
 inline int LinkedQueue<T>::getCount() const
 {
-    return itemCcount;
+    return itemCount;
 }
 
 template <typename T>
