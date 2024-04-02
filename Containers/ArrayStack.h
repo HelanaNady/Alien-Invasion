@@ -10,7 +10,6 @@ class ArrayStack : public StackADT<T>
 {
 	enum { MAX_SIZE = 1000 };
 private:
-	const int MAX_SIZE;
 	T items[MAX_SIZE];
 	int top;
 
