@@ -4,6 +4,8 @@
 #include "Unit.h"
 class AlienMonster: public Unit
 {
-
+public:
+	void print();
+	void attack(Unit* aUnit);
 };
 #endif

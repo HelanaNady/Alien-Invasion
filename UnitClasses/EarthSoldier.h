@@ -4,5 +4,8 @@
 #include "Unit.h"
 class EarthSoldier : public Unit
 {
+public:
+	void print();
+	void attack(Unit* aUnit);
 };
 #endif
