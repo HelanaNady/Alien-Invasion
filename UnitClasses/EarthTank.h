@@ -2,7 +2,7 @@
 #define EARTHTANK_H
 
 #include "Unit.h"
-class EearthTank :public Unit
+class EearthTank: public Unit
 {
 
 };

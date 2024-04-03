@@ -2,7 +2,7 @@
 #define ALIENSOLIDER_H
 
 #include "Unit.h"
-class AlienSolider :public Unit
+class AlienSolider: public Unit
 {
 
 };

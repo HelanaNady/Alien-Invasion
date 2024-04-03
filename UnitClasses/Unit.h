@@ -10,7 +10,15 @@ class Unit
 {
 	UnitType unitType;
 	int id;
-	int joinTime;
+
+	int Tj; // Join time 
+	int Ta; // First attack time
+	int Td; // Destruction time
+
+	int Df; // First attack delay
+	int Dd; // Destruction delay
+	int Db; // Battle time
+
 	int health;
 	int power;
 	int attackCapacity;

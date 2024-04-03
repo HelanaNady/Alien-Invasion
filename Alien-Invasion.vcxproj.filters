@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Containers">
       <UniqueIdentifier>{30a4ef19-f6b1-4dde-9639-08137b5a96c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UnitsClasses">
+      <UniqueIdentifier>{d6265d0d-9e06-4a0b-9c88-39e5e3415fa3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -33,5 +33,31 @@
     <ClInclude Include="Containers\ArrayStack.h">
       <Filter>Containers</Filter>
     </ClInclude>
+    <ClInclude Include="UnitClasses\AlienDrone.h">
+      <Filter>UnitsClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitClasses\AlienMonster.h">
+      <Filter>UnitsClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitClasses\AlienSolider.h">
+      <Filter>UnitsClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitClasses\EarthGunnery.h">
+      <Filter>UnitsClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitClasses\EarthSolider.h">
+      <Filter>UnitsClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitClasses\EarthTank.h">
+      <Filter>UnitsClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitClasses\Unit.h">
+      <Filter>UnitsClasses</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>UnitsClasses</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

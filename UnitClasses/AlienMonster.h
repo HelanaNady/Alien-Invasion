@@ -2,7 +2,7 @@
 #define ALIENMONSTER_H
 
 #include "Unit.h"
-class AlienMonster :public Unit
+class AlienMonster: public Unit
 {
 
 };
