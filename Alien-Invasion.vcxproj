@@ -30,6 +30,13 @@
     <ClInclude Include="Containers\PriorityQueue.h" />
     <ClInclude Include="Containers\QueueADT.h" />
     <ClInclude Include="Containers\StackADT.h" />
+    <ClInclude Include="UnitClasses\AlienDrone.h" />
+    <ClInclude Include="UnitClasses\AlienMonster.h" />
+    <ClInclude Include="UnitClasses\AlienSolider.h" />
+    <ClInclude Include="UnitClasses\EarthGunnery.h" />
+    <ClInclude Include="UnitClasses\EarthSolider.h" />
+    <ClInclude Include="UnitClasses\EarthTank.h" />
+    <ClInclude Include="UnitClasses\Unit.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
