@@ -13,9 +13,16 @@
 
 class EarthArmy: public Army
 {
+private:
     LinkedQueue<EarthSoldier*> soldiers;
     ArrayStack<EarthTank*> tanks;
     PriorityQueue<EarthGunnery*> gunneries;
+
+public:
+    void addUnit();
+    void removeUnit();
+    void print() const;
+    void attack();
 };
 
 #endif
