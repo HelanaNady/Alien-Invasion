@@ -42,13 +42,13 @@
     <ClInclude Include="UnitClasses\AlienMonster.h">
       <Filter>UnitsClasses</Filter>
     </ClInclude>
-    <ClInclude Include="UnitClasses\AlienSolider.h">
+    <ClInclude Include="UnitClasses\AlienSoldier.h">
       <Filter>UnitsClasses</Filter>
     </ClInclude>
     <ClInclude Include="UnitClasses\EarthGunnery.h">
       <Filter>UnitsClasses</Filter>
     </ClInclude>
-    <ClInclude Include="UnitClasses\EarthSolider.h">
+    <ClInclude Include="UnitClasses\EarthSoldier.h">
       <Filter>UnitsClasses</Filter>
     </ClInclude>
     <ClInclude Include="UnitClasses\EarthTank.h">

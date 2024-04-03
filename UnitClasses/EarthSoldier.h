@@ -2,7 +2,7 @@
 #define EARTHSOLIDER_H
 
 #include "Unit.h"
-class EearthSolider: public Unit
+class EarthSoldier: public Unit
 {
 
 };

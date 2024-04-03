@@ -5,14 +5,16 @@
 #include "..\Containers\LinkedQueue.h"
 #include "..\Containers\ArrayStack.h"
 #include "..\Containers\Deque.h"
+#include "..\UnitClasses\Unit.h"
+#include "..\UnitClasses\AlienSoldier.h"
+#include "..\UnitClasses\AlienMonster.h"
+#include "..\UnitClasses\AlienDrone.h"
 
 class AlienArmy: public Army
 {
-    // Alien army units will be added: Soldiers, Monsters and Drones
-
-    // Queue <AlienSoldier> soldiers;
+    LinkedQueue <AlienSoldier> soliders;
     // Array <AlienMonster> monsters;
-    // Deque <AlienDrone> drones;
+    Deque <AlienDrone> drones;
 };
 
 #endif
