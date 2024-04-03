@@ -25,7 +25,6 @@ public:
 
     ~PriorityQueue();
 };
-#endif
 
 template <typename T>
 PriorityQueue<T>::PriorityQueue(): head(nullptr), itemCount(0)
@@ -120,3 +119,5 @@ PriorityQueue<T>::~PriorityQueue()
     int p;
     while (dequeue(tmp, p));
 }
+
+#endif

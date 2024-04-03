@@ -18,7 +18,6 @@ public:
 	PriorityNode<T>* getNext() const;
 	int getPriority() const;
 };
-#endif
 
 template <typename T>
 PriorityNode<T>::PriorityNode(const T& _item, int _priority)
@@ -59,3 +58,5 @@ int PriorityNode<T>::getPriority() const
 {
 	return priority;
 }
+
+#endif

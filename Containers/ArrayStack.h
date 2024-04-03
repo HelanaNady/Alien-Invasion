@@ -22,7 +22,6 @@ public:
 	void printList() const;
 	int getCount() const;
 };
-#endif
 
 template<typename T>
 inline ArrayStack<T>::ArrayStack(): top(-1)
@@ -79,4 +78,4 @@ inline int ArrayStack<T>::getCount() const
 	return top + 1;
 }
 
-
+#endif
