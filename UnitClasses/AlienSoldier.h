@@ -1,5 +1,5 @@
-#ifndef ALIENSOLDIER_H
-#define ALIENSOLDIER_H
+#ifndef ALIEN_SOLDIER_H
+#define ALIEN_SOLDIER_H
 
 #include "Unit.h"
 class AlienSoldier : public Unit

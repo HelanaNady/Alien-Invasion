@@ -1,5 +1,5 @@
-#ifndef ARRAYSTACK_H
-#define ARRAYSTACK_H
+#ifndef ARRAY_STACK_H
+#define ARRAY_STACK_H
 
 #include <iostream>
 #include "StackADT.h"

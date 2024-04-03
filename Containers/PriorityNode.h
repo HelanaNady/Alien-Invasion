@@ -1,5 +1,5 @@
-#ifndef PRIORITYNODE_H
-#define PRIORITYNODE_H
+#ifndef PRIORITY_NODE_H
+#define PRIORITY_NODE_H
 
 template <typename T>
 class PriorityNode

@@ -1,5 +1,5 @@
-#ifndef EARTHTANK_H
-#define EARTHTANK_H
+#ifndef EARTH_TANK_H
+#define EARTH_TANK_H
 
 #include "Unit.h"
 class EarthTank: public Unit

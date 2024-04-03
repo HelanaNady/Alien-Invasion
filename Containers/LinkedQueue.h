@@ -1,5 +1,5 @@
-#ifndef LINKED_QUEUE_
-#define LINKED_QUEUE_
+#ifndef LINKED_QUEUE_H
+#define LINKED_QUEUE_H
 
 #include <iostream>
 #include "Node.h"
