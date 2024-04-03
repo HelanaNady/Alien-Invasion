@@ -1,10 +1,11 @@
-#ifndef EARTHSOLIDER_H
-#define EARTHSOLIDER_H
+#ifndef EARTH_SOLDIER_H
+#define EARTH_SOLDIER_H
 
 #include "Unit.h"
-class EarthSoldier: public Unit
+class EarthSoldier : public Unit
 {
-
+public:
+	void print();
+	void attack(Unit* aUnit);
 };
 #endif
-

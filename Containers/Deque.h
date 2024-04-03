@@ -1,5 +1,5 @@
-#ifndef DEQUE_
-#define DEQUE_
+#ifndef DEQUE_H
+#define DEQUE_H
 
 #include "LinkedQueue.h"
 

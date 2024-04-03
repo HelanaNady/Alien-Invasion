@@ -1,5 +1,5 @@
-#ifndef STACKADT_H
-#define STACKADT_H
+#ifndef STACK_ADT_H
+#define STACK_ADT_H
 
 template<typename T>
 class StackADT

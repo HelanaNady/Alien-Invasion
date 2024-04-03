@@ -1,5 +1,5 @@
-#ifndef PRIORITYNODE_H
-#define PRIORITYNODE_H
+#ifndef PRIORITY_NODE_H
+#define PRIORITY_NODE_H
 
 template <typename T>
 class PriorityNode
@@ -18,7 +18,6 @@ public:
 	PriorityNode<T>* getNext() const;
 	int getPriority() const;
 };
-#endif
 
 template <typename T>
 PriorityNode<T>::PriorityNode(const T& _item, int _priority)
@@ -59,3 +58,5 @@ int PriorityNode<T>::getPriority() const
 {
 	return priority;
 }
+
+#endif

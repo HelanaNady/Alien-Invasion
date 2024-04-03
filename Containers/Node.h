@@ -1,5 +1,5 @@
-#ifndef _NODE
-#define _NODE
+#ifndef NODE_H
+#define NODE_H
 
 template <typename T>
 class Node
@@ -19,8 +19,7 @@ public:
     T getItem() const;
     Node<T>* getPrev() const;
     Node<T>* getNext() const;
-}; // end Node
-#endif
+};
 
 template < typename T>
 Node<T>::Node()
@@ -74,3 +73,5 @@ Node<T>* Node<T>::getNext() const
 {
     return next;
 }
+
+#endif
