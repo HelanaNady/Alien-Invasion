@@ -4,11 +4,17 @@
     <Filter Include="Containers">
       <UniqueIdentifier>{30a4ef19-f6b1-4dde-9639-08137b5a96c3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UnitsClasses">
-      <UniqueIdentifier>{d6265d0d-9e06-4a0b-9c88-39e5e3415fa3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ArmyClasses">
       <UniqueIdentifier>{8a245181-84c7-4cb6-9cc0-a558bcaf50e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RandomGenerator">
+      <UniqueIdentifier>{b46dd307-1a63-43e4-9442-65d606a3ceb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameClass">
+      <UniqueIdentifier>{e00b24d1-c45b-4cf0-a79c-f081f0669982}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UnitClasses">
+      <UniqueIdentifier>{d6265d0d-9e06-4a0b-9c88-39e5e3415fa3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -37,26 +43,33 @@
       <Filter>Containers</Filter>
     </ClInclude>
     <ClInclude Include="UnitClasses\AlienDrone.h">
-      <Filter>UnitsClasses</Filter>
+      <Filter>UnitClasses</Filter>
     </ClInclude>
     <ClInclude Include="UnitClasses\AlienMonster.h">
-      <Filter>UnitsClasses</Filter>
+      <Filter>UnitClasses</Filter>
     </ClInclude>
     <ClInclude Include="UnitClasses\AlienSoldier.h">
-      <Filter>UnitsClasses</Filter>
+      <Filter>UnitClasses</Filter>
     </ClInclude>
     <ClInclude Include="UnitClasses\EarthGunnery.h">
-      <Filter>UnitsClasses</Filter>
+      <Filter>UnitClasses</Filter>
     </ClInclude>
     <ClInclude Include="UnitClasses\EarthSoldier.h">
-      <Filter>UnitsClasses</Filter>
+      <Filter>UnitClasses</Filter>
     </ClInclude>
     <ClInclude Include="UnitClasses\EarthTank.h">
-      <Filter>UnitsClasses</Filter>
+      <Filter>UnitClasses</Filter>
     </ClInclude>
     <ClInclude Include="UnitClasses\Unit.h">
-      <Filter>UnitsClasses</Filter>
+      <Filter>UnitClasses</Filter>
     </ClInclude>
+    <ClInclude Include="RandomGenerator\RandomGenerator.h">
+      <Filter>RandomGenerator</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>GameClass</Filter>
+    </ClInclude>
+    <ClInclude Include="DEFS.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArmyClasses\AlienArmy.h">
@@ -72,7 +85,19 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="UnitClasses\Unit.cpp">
-      <Filter>UnitsClasses</Filter>
+      <Filter>UnitClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="RandomGenerator\RandomGenerator.cpp">
+      <Filter>RandomGenerator</Filter>
+    </ClCompile>
+    <ClCompile Include="ArmyClasses\AlienArmy.cpp">
+      <Filter>ArmyClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="ArmyClasses\EarthArmy.cpp">
+      <Filter>ArmyClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>GameClass</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
