@@ -1,103 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Containers">
-      <UniqueIdentifier>{30a4ef19-f6b1-4dde-9639-08137b5a96c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ArmyClasses">
+    <Filter Include="Army Classes">
       <UniqueIdentifier>{8a245181-84c7-4cb6-9cc0-a558bcaf50e4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RandomGenerator">
-      <UniqueIdentifier>{b46dd307-1a63-43e4-9442-65d606a3ceb0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameClass">
+    <Filter Include="Game Class">
       <UniqueIdentifier>{e00b24d1-c45b-4cf0-a79c-f081f0669982}</UniqueIdentifier>
     </Filter>
-    <Filter Include="UnitClasses">
+    <Filter Include="Containers Classes">
+      <UniqueIdentifier>{30a4ef19-f6b1-4dde-9639-08137b5a96c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RandomGenerator Class">
+      <UniqueIdentifier>{b46dd307-1a63-43e4-9442-65d606a3ceb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Unit Classes">
       <UniqueIdentifier>{d6265d0d-9e06-4a0b-9c88-39e5e3415fa3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Containers\PriorityQueue.h">
-      <Filter>Containers</Filter>
+      <Filter>Containers Classes</Filter>
     </ClInclude>
     <ClInclude Include="Containers\PriorityNode.h">
-      <Filter>Containers</Filter>
+      <Filter>Containers Classes</Filter>
     </ClInclude>
     <ClInclude Include="Containers\Deque.h">
-      <Filter>Containers</Filter>
+      <Filter>Containers Classes</Filter>
     </ClInclude>
     <ClInclude Include="Containers\LinkedQueue.h">
-      <Filter>Containers</Filter>
+      <Filter>Containers Classes</Filter>
     </ClInclude>
     <ClInclude Include="Containers\Node.h">
-      <Filter>Containers</Filter>
+      <Filter>Containers Classes</Filter>
     </ClInclude>
     <ClInclude Include="Containers\QueueADT.h">
-      <Filter>Containers</Filter>
+      <Filter>Containers Classes</Filter>
     </ClInclude>
     <ClInclude Include="Containers\StackADT.h">
-      <Filter>Containers</Filter>
+      <Filter>Containers Classes</Filter>
     </ClInclude>
     <ClInclude Include="Containers\ArrayStack.h">
-      <Filter>Containers</Filter>
+      <Filter>Containers Classes</Filter>
     </ClInclude>
     <ClInclude Include="UnitClasses\AlienDrone.h">
-      <Filter>UnitClasses</Filter>
+      <Filter>Unit Classes</Filter>
     </ClInclude>
     <ClInclude Include="UnitClasses\AlienMonster.h">
-      <Filter>UnitClasses</Filter>
+      <Filter>Unit Classes</Filter>
     </ClInclude>
     <ClInclude Include="UnitClasses\AlienSoldier.h">
-      <Filter>UnitClasses</Filter>
+      <Filter>Unit Classes</Filter>
     </ClInclude>
     <ClInclude Include="UnitClasses\EarthGunnery.h">
-      <Filter>UnitClasses</Filter>
+      <Filter>Unit Classes</Filter>
     </ClInclude>
     <ClInclude Include="UnitClasses\EarthSoldier.h">
-      <Filter>UnitClasses</Filter>
+      <Filter>Unit Classes</Filter>
     </ClInclude>
     <ClInclude Include="UnitClasses\EarthTank.h">
-      <Filter>UnitClasses</Filter>
+      <Filter>Unit Classes</Filter>
     </ClInclude>
     <ClInclude Include="UnitClasses\Unit.h">
-      <Filter>UnitClasses</Filter>
+      <Filter>Unit Classes</Filter>
     </ClInclude>
     <ClInclude Include="RandomGenerator\RandomGenerator.h">
-      <Filter>RandomGenerator</Filter>
+      <Filter>RandomGenerator Class</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
-      <Filter>GameClass</Filter>
+      <Filter>Game Class</Filter>
     </ClInclude>
     <ClInclude Include="DEFS.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArmyClasses\AlienArmy.h">
-      <Filter>ArmyClasses</Filter>
+      <Filter>Army Classes</Filter>
     </ClInclude>
     <ClInclude Include="ArmyClasses\Army.h">
-      <Filter>ArmyClasses</Filter>
+      <Filter>Army Classes</Filter>
     </ClInclude>
     <ClInclude Include="ArmyClasses\EarthArmy.h">
-      <Filter>ArmyClasses</Filter>
+      <Filter>Army Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="UnitClasses\Unit.cpp">
-      <Filter>UnitClasses</Filter>
+      <Filter>Unit Classes</Filter>
     </ClCompile>
     <ClCompile Include="RandomGenerator\RandomGenerator.cpp">
-      <Filter>RandomGenerator</Filter>
+      <Filter>RandomGenerator Class</Filter>
     </ClCompile>
     <ClCompile Include="ArmyClasses\AlienArmy.cpp">
-      <Filter>ArmyClasses</Filter>
+      <Filter>Army Classes</Filter>
     </ClCompile>
     <ClCompile Include="ArmyClasses\EarthArmy.cpp">
-      <Filter>ArmyClasses</Filter>
+      <Filter>Army Classes</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>GameClass</Filter>
+      <Filter>Game Class</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
