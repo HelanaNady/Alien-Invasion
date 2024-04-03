@@ -12,7 +12,7 @@ public:
 };
 
 template<typename T>
-bool Deque<T>::dequeueBack(T& backEntry)
+inline bool Deque<T>::dequeueBack(T& backEntry)
 {
     if (LinkedQueue<T> ::isEmpty())
         return false;

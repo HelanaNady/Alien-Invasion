@@ -4,7 +4,7 @@
 #include <iostream>
 #include "StackADT.h"
 
-// The default size is 100
+// The default size is 1000
 template<typename T>
 class ArrayStack: public StackADT<T>
 {

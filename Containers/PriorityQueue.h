@@ -27,12 +27,12 @@ public:
 };
 
 template <typename T>
-PriorityQueue<T>::PriorityQueue(): head(nullptr), itemCount(0)
+inline PriorityQueue<T>::PriorityQueue(): head(nullptr), itemCount(0)
 { }
 
 // Insert the new node in its correct position according to its priority
 template <typename T>
-void PriorityQueue<T>::enqueue(const T& data, int priority)
+inline void PriorityQueue<T>::enqueue(const T& data, int priority)
 {
     PriorityNode<T>* newNode = new PriorityNode<T>(data, priority);
 
@@ -53,7 +53,7 @@ void PriorityQueue<T>::enqueue(const T& data, int priority)
 }
 
 template <typename T>
-bool PriorityQueue<T>::dequeue(T& topEntry, int& pri)
+inline bool PriorityQueue<T>::dequeue(T& topEntry, int& pri)
 {
     if (isEmpty())
         return false;
@@ -68,7 +68,7 @@ bool PriorityQueue<T>::dequeue(T& topEntry, int& pri)
 }
 
 template <typename T>
-bool PriorityQueue<T>::peek(T& topEntry, int& priority)
+inline bool PriorityQueue<T>::peek(T& topEntry, int& priority)
 {
     if (isEmpty())
         return false;
@@ -80,13 +80,13 @@ bool PriorityQueue<T>::peek(T& topEntry, int& priority)
 }
 
 template <typename T>
-bool PriorityQueue<T>::isEmpty() const
+inline bool PriorityQueue<T>::isEmpty() const
 {
     return head == nullptr;
 }
 
 template <typename T>
-void PriorityQueue<T>::printList() const
+inline void PriorityQueue<T>::printList() const
 {
     if (isEmpty()) return;
 
@@ -107,13 +107,13 @@ void PriorityQueue<T>::printList() const
 }
 
 template <typename T>
-int PriorityQueue<T>::getCount() const
+inline int PriorityQueue<T>::getCount() const
 {
     return itemCount;
 }
 
 template <typename T>
-PriorityQueue<T>::~PriorityQueue()
+inline PriorityQueue<T>::~PriorityQueue()
 {
     T tmp;
     int p;

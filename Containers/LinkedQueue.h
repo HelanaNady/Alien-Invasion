@@ -24,17 +24,17 @@ public:
 };
 
 template <typename T>
-LinkedQueue<T>::LinkedQueue():itemCount(0), backPtr(nullptr), frontPtr(nullptr)
+inline LinkedQueue<T>::LinkedQueue():itemCount(0), backPtr(nullptr), frontPtr(nullptr)
 { }
 
 template <typename T>
-bool LinkedQueue<T>::isEmpty() const
+inline bool LinkedQueue<T>::isEmpty() const
 {
     return (frontPtr == nullptr);
 }
 
 template <typename T>
-bool LinkedQueue<T>::enqueue(const T& newEntry)
+inline bool LinkedQueue<T>::enqueue(const T& newEntry)
 {
     Node<T>* newNodePtr = new Node<T>(newEntry);
     // Insert the new node
@@ -52,7 +52,7 @@ bool LinkedQueue<T>::enqueue(const T& newEntry)
 }
 
 template <typename T>
-bool LinkedQueue<T>::dequeue(T& frontEntry)
+inline bool LinkedQueue<T>::dequeue(T& frontEntry)
 {
     if (isEmpty())
         return false;
@@ -74,7 +74,7 @@ bool LinkedQueue<T>::dequeue(T& frontEntry)
 }
 
 template <typename T>
-bool LinkedQueue<T>::peek(T& frontEntry) const
+inline bool LinkedQueue<T>::peek(T& frontEntry) const
 {
     if (isEmpty())
         return false;
@@ -106,7 +106,7 @@ inline int LinkedQueue<T>::getCount() const
 }
 
 template <typename T>
-LinkedQueue<T>::~LinkedQueue()
+inline LinkedQueue<T>::~LinkedQueue()
 {
     T temp;
     while (dequeue(temp));
