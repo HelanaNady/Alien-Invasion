@@ -59,9 +59,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>UnitsClasses</Filter>
-    </ClCompile>
     <ClInclude Include="ArmyClasses\AlienArmy.h">
       <Filter>ArmyClasses</Filter>
     </ClInclude>
@@ -71,5 +68,8 @@
     <ClInclude Include="ArmyClasses\EarthArmy.h">
       <Filter>ArmyClasses</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
 </Project>
