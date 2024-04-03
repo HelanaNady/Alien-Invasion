@@ -71,5 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="UnitClasses\Unit.cpp">
+      <Filter>UnitsClasses</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

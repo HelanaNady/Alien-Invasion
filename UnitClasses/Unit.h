@@ -29,8 +29,3 @@ public:
 
 };
 #endif
-
-void Unit:: recieveDamage(int loss)
-{
-	health -= loss;
-}
