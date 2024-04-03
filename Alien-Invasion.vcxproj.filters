@@ -7,6 +7,9 @@
     <Filter Include="Containers">
       <UniqueIdentifier>{30a4ef19-f6b1-4dde-9639-08137b5a96c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ArmyClasses">
+      <UniqueIdentifier>{8a245181-84c7-4cb6-9cc0-a558bcaf50e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Containers\PriorityQueue.h">
@@ -32,6 +35,15 @@
     </ClInclude>
     <ClInclude Include="Containers\ArrayStack.h">
       <Filter>Containers</Filter>
+    </ClInclude>
+    <ClInclude Include="ArmyClasses\AlienArmy.h">
+      <Filter>ArmyClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="ArmyClasses\Army.h">
+      <Filter>ArmyClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="ArmyClasses\EarthArmy.h">
+      <Filter>ArmyClasses</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

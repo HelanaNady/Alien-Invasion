@@ -30,6 +30,9 @@
     <ClInclude Include="Containers\PriorityQueue.h" />
     <ClInclude Include="Containers\QueueADT.h" />
     <ClInclude Include="Containers\StackADT.h" />
+    <ClInclude Include="ArmyClasses\Army.h" />
+    <ClInclude Include="ArmyClasses\EarthArmy.h" />
+    <ClInclude Include="ArmyClasses\AlienArmy.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
