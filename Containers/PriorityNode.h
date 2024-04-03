@@ -1,5 +1,5 @@
-#ifndef PRIORITYNODE_H
-#define PRIORITYNODE_H
+#ifndef PRIORITY_NODE_H
+#define PRIORITY_NODE_H
 
 template <typename T>
 class PriorityNode
@@ -13,22 +13,21 @@ public:
 
 	void setItem(const T& _item, int _priority);
 	void setNext(PriorityNode<T>* nextNodePtr);
-		
+
 	T getItem(int& _priority) const;
 	PriorityNode<T>* getNext() const;
 	int getPriority() const;
 };
-#endif
 
 template <typename T>
-PriorityNode<T>::PriorityNode(const T& _item, int _priority)
+inline PriorityNode<T>::PriorityNode(const T& _item, int _priority)
 {
 	setItem(_item, _priority);
 	next = nullptr;
 }
 
 template <typename T>
-void PriorityNode<T>::setItem(const T& _item, int _priority)
+inline void PriorityNode<T>::setItem(const T& _item, int _priority)
 {
 	item = _item;
 	priority = _priority;
@@ -41,7 +40,7 @@ void PriorityNode<T>::setNext(PriorityNode<T>* nextNodePtr)
 }
 
 template <typename T>
-T PriorityNode<T>::getItem(int& _priority) const
+inline T PriorityNode<T>::getItem(int& _priority) const
 {
 	_priority = priority;
 
@@ -49,13 +48,15 @@ T PriorityNode<T>::getItem(int& _priority) const
 }
 
 template <typename T>
-PriorityNode<T>* PriorityNode<T>::getNext() const
+inline PriorityNode<T>* PriorityNode<T>::getNext() const
 {
 	return next;
 }
 
 template <typename T>
-int PriorityNode<T>::getPriority() const
+inline int PriorityNode<T>::getPriority() const
 {
 	return priority;
 }
+
+#endif

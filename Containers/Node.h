@@ -1,5 +1,5 @@
-#ifndef _NODE
-#define _NODE
+#ifndef NODE_H
+#define NODE_H
 
 template <typename T>
 class Node
@@ -19,33 +19,32 @@ public:
     T getItem() const;
     Node<T>* getPrev() const;
     Node<T>* getNext() const;
-}; // end Node
-#endif
+};
 
 template < typename T>
-Node<T>::Node()
+inline Node<T>::Node()
     : prev(nullptr), next(nullptr)
 { }
 
 template < typename T>
-Node<T>::Node(const T& item)
+inline Node<T>::Node(const T& item)
     : item(item), prev(nullptr), next(nullptr)
 { }
 
 template < typename T>
-Node<T>::Node(const T& item, Node<T>* prevNodePtr, Node<T>* nextNodePtr)
+inline Node<T>::Node(const T& item, Node<T>* prevNodePtr, Node<T>* nextNodePtr)
     : item(item), prev(prevNodePtr), next(nextNodePtr)
 {
 
 }
 template < typename T>
-void Node<T>::setItem(const T& item)
+inline void Node<T>::setItem(const T& item)
 {
     this->item = item;
 }
 
 template < typename T>
-void Node<T>::setNext(Node<T>* nextNodePtr)
+inline void Node<T>::setNext(Node<T>* nextNodePtr)
 {
     next = nextNodePtr;
 }
@@ -58,19 +57,21 @@ inline void Node<T>::setPrev(Node<T>* prevNodePtr)
 
 
 template < typename T>
-T Node<T>::getItem() const
+inline T Node<T>::getItem() const
 {
     return item;
 }
 
 template<typename T>
-Node<T>* Node<T>::getPrev() const
+inline Node<T>* Node<T>::getPrev() const
 {
     return prev;
 }
 
 template < typename T>
-Node<T>* Node<T>::getNext() const
+inline Node<T>* Node<T>::getNext() const
 {
     return next;
 }
+
+#endif

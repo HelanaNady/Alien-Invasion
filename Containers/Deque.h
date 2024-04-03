@@ -1,10 +1,10 @@
-#ifndef DEQUE_
-#define DEQUE_
+#ifndef DEQUE_H
+#define DEQUE_H
 
 #include "LinkedQueue.h"
 
 template <typename T>
-class Deque : public LinkedQueue<T>
+class Deque: public LinkedQueue<T>
 {
 public:
     bool dequeueBack(T& backEntry);
@@ -12,7 +12,7 @@ public:
 };
 
 template<typename T>
-bool Deque<T>::dequeueBack(T& backEntry)
+inline bool Deque<T>::dequeueBack(T& backEntry)
 {
     if (LinkedQueue<T> ::isEmpty())
         return false;

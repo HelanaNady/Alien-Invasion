@@ -1,10 +1,12 @@
-#ifndef EARTHGUNNERY_H
-#define EARTHGUNNERY_H
+#ifndef EARTH_GUNNERY_H
+#define EARTH_GUNNERY_H
 
 #include "Unit.h"
-class EearthGunnery: public Unit
+class EarthGunnery: public Unit
 {
-
+public:
+	void print();
+	void attack(Unit* aUnit);
 };
 #endif
 

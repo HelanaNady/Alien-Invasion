@@ -1,12 +1,12 @@
-#ifndef ARRAYSTACK_H
-#define ARRAYSTACK_H
+#ifndef ARRAY_STACK_H
+#define ARRAY_STACK_H
 
 #include <iostream>
 #include "StackADT.h"
 
-// The default size is 100
+// The default size is 1000
 template<typename T>
-class ArrayStack : public StackADT<T>
+class ArrayStack: public StackADT<T>
 {
 	enum { MAX_SIZE = 1000 };
 private:
@@ -22,11 +22,10 @@ public:
 	void printList() const;
 	int getCount() const;
 };
-#endif
 
 template<typename T>
-inline ArrayStack<T>::ArrayStack() : top(-1)
-{}
+inline ArrayStack<T>::ArrayStack(): top(-1)
+{ }
 
 template<typename T>
 inline bool ArrayStack<T>::isEmpty() const
@@ -79,4 +78,4 @@ inline int ArrayStack<T>::getCount() const
 	return top + 1;
 }
 
-
+#endif

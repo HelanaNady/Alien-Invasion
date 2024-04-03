@@ -1,8 +1,8 @@
-#ifndef ALIEN_DRONE_H
-#define ALIEN_DRONE_H
+#ifndef ALIEN_SOLDIER_H
+#define ALIEN_SOLDIER_H
 
 #include "Unit.h"
-class AlienDrone: public Unit
+class AlienSoldier : public Unit
 {
 public:
 	void print();

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Containers">
@@ -6,6 +6,9 @@
     </Filter>
     <Filter Include="UnitsClasses">
       <UniqueIdentifier>{d6265d0d-9e06-4a0b-9c88-39e5e3415fa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ArmyClasses">
+      <UniqueIdentifier>{8a245181-84c7-4cb6-9cc0-a558bcaf50e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -39,13 +42,13 @@
     <ClInclude Include="UnitClasses\AlienMonster.h">
       <Filter>UnitsClasses</Filter>
     </ClInclude>
-    <ClInclude Include="UnitClasses\AlienSolider.h">
+    <ClInclude Include="UnitClasses\AlienSoldier.h">
       <Filter>UnitsClasses</Filter>
     </ClInclude>
     <ClInclude Include="UnitClasses\EarthGunnery.h">
       <Filter>UnitsClasses</Filter>
     </ClInclude>
-    <ClInclude Include="UnitClasses\EarthSolider.h">
+    <ClInclude Include="UnitClasses\EarthSoldier.h">
       <Filter>UnitsClasses</Filter>
     </ClInclude>
     <ClInclude Include="UnitClasses\EarthTank.h">
@@ -56,7 +59,19 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClInclude Include="ArmyClasses\AlienArmy.h">
+      <Filter>ArmyClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="ArmyClasses\Army.h">
+      <Filter>ArmyClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="ArmyClasses\EarthArmy.h">
+      <Filter>ArmyClasses</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="UnitClasses\Unit.cpp">
       <Filter>UnitsClasses</Filter>
     </ClCompile>
   </ItemGroup>
