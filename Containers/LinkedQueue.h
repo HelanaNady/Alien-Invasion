@@ -6,7 +6,7 @@
 #include "QueueADT.h"
 
 template <typename T>
-class LinkedQueue :public QueueADT<T>
+class LinkedQueue : public QueueADT<T>
 {
 protected:
     Node<T>* backPtr;
