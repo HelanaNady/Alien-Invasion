@@ -1,9 +1,8 @@
-#ifndef ALIENSOLIDER_H
-#define ALIENSOLIDER_H
+#ifndef ALIENSOLDIER_H
+#define ALIENSOLDIER_H
 
 #include "Unit.h"
-class AlienSoldier: public Unit
+class AlienSoldier : public Unit
 {
-
 };
 #endif

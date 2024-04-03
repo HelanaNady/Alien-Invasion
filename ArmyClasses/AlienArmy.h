@@ -10,11 +10,11 @@
 #include "..\UnitClasses\AlienMonster.h"
 #include "..\UnitClasses\AlienDrone.h"
 
-class AlienArmy: public Army
+class AlienArmy : public Army
 {
-    LinkedQueue <AlienSoldier> soliders;
+    LinkedQueue<AlienSoldier> soldiers;
     // Array <AlienMonster> monsters;
-    Deque <AlienDrone> drones;
+    Deque<AlienDrone> drones;
 };
 
 #endif

@@ -15,7 +15,7 @@ class EarthArmy: public Army
 {
     LinkedQueue <EarthSoldier> soldiers;
     ArrayStack <EarthTank> tanks;
-    PriorityQueue <EarthGunnery > gunneries;
+    PriorityQueue <EarthGunnery> gunneries;
 };
 
 #endif
