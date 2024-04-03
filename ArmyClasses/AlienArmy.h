@@ -6,7 +6,7 @@
 #include "..\Containers\ArrayStack.h"
 #include "..\Containers\Deque.h"
 
-class AlienArmy : public Army
+class AlienArmy: public Army
 {
     // Alien army units will be added: Soldiers, Monsters and Drones
 

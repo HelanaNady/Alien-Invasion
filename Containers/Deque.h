@@ -4,7 +4,7 @@
 #include "LinkedQueue.h"
 
 template <typename T>
-class Deque : public LinkedQueue<T>
+class Deque: public LinkedQueue<T>
 {
 public:
     bool dequeueBack(T& backEntry);

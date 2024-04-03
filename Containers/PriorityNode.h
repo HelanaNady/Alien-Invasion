@@ -13,7 +13,7 @@ public:
 
 	void setItem(const T& _item, int _priority);
 	void setNext(PriorityNode<T>* nextNodePtr);
-		
+
 	T getItem(int& _priority) const;
 	PriorityNode<T>* getNext() const;
 	int getPriority() const;

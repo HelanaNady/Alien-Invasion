@@ -6,7 +6,7 @@
 #include "QueueADT.h"
 
 template <typename T>
-class LinkedQueue : public QueueADT<T>
+class LinkedQueue: public QueueADT<T>
 {
 protected:
     Node<T>* backPtr;
@@ -24,7 +24,7 @@ public:
 };
 
 template <typename T>
-LinkedQueue<T>::LinkedQueue() :itemCount(0), backPtr(nullptr), frontPtr(nullptr)
+LinkedQueue<T>::LinkedQueue():itemCount(0), backPtr(nullptr), frontPtr(nullptr)
 { }
 
 template <typename T>

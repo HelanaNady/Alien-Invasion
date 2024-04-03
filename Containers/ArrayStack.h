@@ -6,7 +6,7 @@
 
 // The default size is 100
 template<typename T>
-class ArrayStack : public StackADT<T>
+class ArrayStack: public StackADT<T>
 {
 	enum { MAX_SIZE = 1000 };
 private:
@@ -25,7 +25,7 @@ public:
 #endif
 
 template<typename T>
-inline ArrayStack<T>::ArrayStack() : top(-1)
+inline ArrayStack<T>::ArrayStack(): top(-1)
 { }
 
 template<typename T>

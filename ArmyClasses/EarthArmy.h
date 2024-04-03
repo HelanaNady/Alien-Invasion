@@ -6,7 +6,7 @@
 #include "..\Containers\LinkedQueue.h"
 #include "..\Containers\PriorityQueue.h"
 
-class EarthArmy : public Army
+class EarthArmy: public Army
 {
     // Earth army units' Lists will be added: Soldiers, Tanks and Gunnery
 

@@ -29,8 +29,7 @@ public:
 
 template <typename T>
 PriorityQueue<T>::PriorityQueue(): head(nullptr), itemCount(0)
-{
-}
+{ }
 
 // Insert the new node in its correct position according to its priority
 template <typename T>
@@ -95,7 +94,8 @@ void PriorityQueue<T>::printList() const
     PriorityNode<T>* current = head;
     int p = 0;
 
-    while (current) {
+    while (current)
+    {
         std::cout << current->getItem(p);
 
         if (current->getNext() != nullptr)
