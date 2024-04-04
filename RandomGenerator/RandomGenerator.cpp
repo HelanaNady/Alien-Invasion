@@ -30,30 +30,6 @@ void RandomGenerator::loadParameters(std::string wholeFile)
 	ss >> alienPowerRange.min >> dummyHyphen >> alienPowerRange.max;
 	ss >> alienHealthRange.min >> dummyHyphen >> alienHealthRange.max;
 	ss >> alienAttackCapacityRange.min >> dummyHyphen >> alienAttackCapacityRange.max;
-
-	std::cout << N << std::endl;
-	std::cout << ESPercentage << std::endl;
-	std::cout << ETPercentage << std::endl;
-	std::cout << EGPercentage << std::endl;
-	std::cout << ASPercentage << std::endl;
-	std::cout << AMPercentage << std::endl;
-	std::cout << ADPercentage << std::endl;
-	std::cout << prob << std::endl;
-
-	std::cout << earthPowerRange.min << std::endl;
-	std::cout << earthPowerRange.max << std::endl;
-	std::cout << earthHealthRange.min << std::endl;
-	std::cout << earthHealthRange.max << std::endl;
-
-	std::cout << earthAttackCapacityRange.min << std::endl;
-	std::cout << earthAttackCapacityRange.max << std::endl;
-	std::cout << alienPowerRange.min << std::endl;
-	std::cout << alienPowerRange.max << std::endl;
-
-	std::cout << alienHealthRange.min << std::endl;
-	std::cout << alienHealthRange.max << std::endl;
-	std::cout << alienAttackCapacityRange.min << std::endl;
-	std::cout << alienAttackCapacityRange.max << std::endl;
 }
 
 Unit* RandomGenerator::generateUnit(ArmyType armyType) const
