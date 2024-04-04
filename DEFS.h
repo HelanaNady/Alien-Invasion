@@ -2,8 +2,8 @@
 #define DEFS_H
 
 struct Range {
-	int start;
-	int end;
+	int min;
+	int max;
 };
 
 #endif
