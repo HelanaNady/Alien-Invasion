@@ -17,9 +17,9 @@ private:
 	GameMode gameMode;
 	int currentTimestep;
 
-	EarthArmy* earthArmy;
-	AlienArmy* alienArmy;
-	RandomGenerator* randomGenerator;
+	EarthArmy earthArmy;
+	AlienArmy alienArmy;
+	// RandomGenerator randomGenerator; // We need to pass the parameters to the constructor
 
 public:
 	Game();
