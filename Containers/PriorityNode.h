@@ -9,28 +9,28 @@ class PriorityNode
 	PriorityNode<T>* next; // Pointer to next node
 
 public:
-	PriorityNode(const T& _item, int _priority);
+	PriorityNode(const T& item, int priority);
 
-	void setItem(const T& _item, int _priority);
+	void setItem(const T& item, int priority);
 	void setNext(PriorityNode<T>* nextNodePtr);
 
-	T getItem(int& _priority) const;
+	T getItem(int& priority) const;
 	PriorityNode<T>* getNext() const;
 	int getPriority() const;
 };
 
 template <typename T>
-inline PriorityNode<T>::PriorityNode(const T& _item, int _priority)
+inline PriorityNode<T>::PriorityNode(const T& item, int priority)
 {
-	setItem(_item, _priority);
+	setItem(item, priority);
 	next = nullptr;
 }
 
 template <typename T>
-inline void PriorityNode<T>::setItem(const T& _item, int _priority)
+inline void PriorityNode<T>::setItem(const T& item, int priority)
 {
-	item = _item;
-	priority = _priority;
+	this->item = item;
+	this->priority = priority;
 }
 
 template <typename T>
@@ -40,9 +40,9 @@ void PriorityNode<T>::setNext(PriorityNode<T>* nextNodePtr)
 }
 
 template <typename T>
-inline T PriorityNode<T>::getItem(int& _priority) const
+inline T PriorityNode<T>::getItem(int& priority) const
 {
-	_priority = priority;
+	priority = this->priority;
 
 	return item;
 }

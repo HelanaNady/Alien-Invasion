@@ -19,7 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ArmyClasses\AlienArmy.cpp" />
+    <ClCompile Include="ArmyClasses\EarthArmy.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="RandomGenerator\RandomGenerator.cpp" />
     <ClCompile Include="UnitClasses\Unit.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -31,6 +35,9 @@
     <ClInclude Include="Containers\PriorityQueue.h" />
     <ClInclude Include="Containers\QueueADT.h" />
     <ClInclude Include="Containers\StackADT.h" />
+    <ClInclude Include="DEFS.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="RandomGenerator\RandomGenerator.h" />
     <ClInclude Include="UnitClasses\AlienDrone.h" />
     <ClInclude Include="UnitClasses\AlienMonster.h" />
     <ClInclude Include="UnitClasses\AlienSoldier.h" />
