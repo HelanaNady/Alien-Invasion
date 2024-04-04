@@ -9,6 +9,6 @@ class AlienSoldier : public Unit
 public:
 	AlienSoldier(UnitType, int, int, int);
 	void print();
-	void attack(Unit* aUnit);
+	void attack(Unit*);
 };
 #endif

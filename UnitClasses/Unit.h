@@ -28,6 +28,6 @@ public:
 
 	void recieveDamage(int loss);
 	virtual void print() = 0;
-	virtual void attack(Unit* aUnit) = 0;  //shouldn't it be passed a list??? will check later
+	virtual void attack(Unit*) = 0;  //shouldn't it be passed a list??? will check later
 };
 #endif

@@ -9,7 +9,7 @@ class EarthTank: public Unit
 public:
 	EarthTank(UnitType, int, int, int);
 	void print();
-	void attack(Unit* aUnit);
+	void attack(Unit*);
 };
 #endif
 
