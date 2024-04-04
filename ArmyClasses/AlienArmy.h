@@ -13,7 +13,7 @@
 class AlienArmy: public Army
 {
 private:
-    LinkedQueue<AlienSoldier*> soliders;
+    LinkedQueue<AlienSoldier*> soldiers;
     // Array <AlienMonster> monsters;
     Deque<AlienDrone*> drones;
 
