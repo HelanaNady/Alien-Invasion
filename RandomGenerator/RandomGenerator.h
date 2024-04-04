@@ -1,6 +1,8 @@
 #ifndef RANDOM_GENERATOR_H
 #define RANDOM_GENERATOR_H
 
+#include <string>
+
 #include "../DEFS.h"
 #include "../UnitClasses/Unit.h"
 
@@ -22,11 +24,13 @@ private:
 	Range alienHealthRange;
 	Range alienAttackCapacityRange;
 
-public:
-	RandomGenerator(int, int, int, int, int, int, int, int, Range, Range, Range, Range, Range, Range);
+private:
+	void loadParameters(std::string); 
+	Unit* generateUnit(ArmyType) const;
 
-	Unit* generateUnit();
-	int getRandomNumber(int min, int max);
+public:
+	RandomGenerator(std::string);
+	int getRandomNumber(int, int) const;
 };
 
 #endif

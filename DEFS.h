@@ -6,4 +6,14 @@ struct Range {
 	int max;
 };
 
+enum ArmyType {
+	EARTH, ALIEN
+};
+
+enum UnitType
+{
+	ES, EG, ET,
+	AS, AD, AM
+};
+
 #endif

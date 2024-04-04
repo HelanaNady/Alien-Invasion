@@ -5,30 +5,35 @@
 #include "ArmyClasses/AlienArmy.h"
 #include "RandomGenerator/RandomGenerator.h"
 
+#include <string>
+
 enum GameMode
 {
-	INTERACTIVE,
-	SILENT,
+    INTERACTIVE,
+    SILENT,
 };
 
 class Game
 {
 private:
-	GameMode gameMode;
-	int currentTimestep;
+    GameMode gameMode;
+    int currentTimestep;
 
-	EarthArmy earthArmy;
-	AlienArmy alienArmy;
-	// RandomGenerator randomGenerator; // We need to pass the parameters to the constructor
+    EarthArmy earthArmy;
+    AlienArmy alienArmy;
+    RandomGenerator* randomGenerator;
+
+private:
+    std::string loadFile(std::string fileName);
 
 public:
-	Game();
+    Game();
 
-	void run(GameMode);
-	void incrementTimestep();
-	void changeGameMode(GameMode);
+    void run(GameMode, std::string);
+    void incrementTimestep();
+    void changeGameMode(GameMode);
 
-	~Game();
+    ~Game();
 };
 
 #endif

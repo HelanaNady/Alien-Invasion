@@ -1,13 +1,14 @@
 #ifndef UNIT_H
 #define UNIT_H
 
-enum UnitType
-{
-	ES, EG, ET,
-	AS, AD, AM
-};
+#include "../DEFS.h"
+
 class Unit
 {
+private:
+	static int lastEarthId;
+	static int lastAlienId;
+
 	UnitType unitType;
 	int id;
 
@@ -19,13 +20,14 @@ class Unit
 	int Dd; // Destruction delay
 	int Db; // Battle time
 
-	int health;
-	int power;
-	int attackCapacity;
+	int health; // Current health
+	int power; // Attack power
+	int attackCapacity; // Attack capacity
 public:
+	Unit(UnitType, int, int, int);
+
 	void recieveDamage(int loss);
 	virtual void print() = 0;
 	virtual void attack(Unit* aUnit) = 0;  //shouldn't it be passed a list??? will check later
-
 };
 #endif

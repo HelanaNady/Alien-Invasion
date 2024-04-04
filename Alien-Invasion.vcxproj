@@ -24,6 +24,8 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RandomGenerator\RandomGenerator.cpp" />
+    <ClCompile Include="UnitClasses\AlienMonster.cpp" />
+    <ClCompile Include="UnitClasses\EarthSoldier.cpp" />
     <ClCompile Include="UnitClasses\Unit.cpp" />
   </ItemGroup>
   <ItemGroup>

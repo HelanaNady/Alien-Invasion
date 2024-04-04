@@ -14,7 +14,7 @@ public:
 
     virtual bool peek(T& TopEntry) const = 0;
 
-    virtual ~StackADT() { }
+    virtual ~StackADT() {}
 };
 #endif 
 
