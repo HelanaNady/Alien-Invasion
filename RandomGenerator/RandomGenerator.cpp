@@ -70,7 +70,7 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 		
 		if (B <= ESPercentage)
 			newUnit = new EarthSoldier(UnitType::ES, health, power, attackCapacity);
-		else if(N <= (ESPercentage + ETPercentage))
+		else if (B <= (ESPercentage + ETPercentage))
 			newUnit = new EarthTank(UnitType::ET, health, power, attackCapacity);
 		else
 			newUnit = new EarthGunnery(UnitType::EG, health, power, attackCapacity);

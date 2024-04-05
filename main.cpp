@@ -2,7 +2,7 @@
 
 int main()
 {
-	srand(time(NULL));
+	srand((unsigned) time(NULL));
 
     return 0;
 }
