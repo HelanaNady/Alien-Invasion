@@ -14,9 +14,9 @@
 class EarthArmy: public Army
 {
 private:
-    LinkedQueue<Unit*> soldiers;
-    ArrayStack<Unit*> tanks;
-    PriorityQueue<Unit*> gunneries;
+    LinkedQueue<EarthSoldier*> soldiers;
+    ArrayStack<EarthTank*> tanks;
+    PriorityQueue<EarthGunnery*> gunneries;
 
 public:
     void addUnit(Unit*);

@@ -46,14 +46,5 @@ void Game::addUnit(Unit* unit)
 		alienArmy.addUnit(unit);
 }
 
-void Game::print() const 
-{
-	randomGenerator->generateArmy(); 
-
-	earthArmy.print();
-	alienArmy.print();
-}
-
 Game::~Game()
-{
-}
+{}

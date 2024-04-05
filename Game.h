@@ -33,7 +33,6 @@ public:
     void incrementTimestep();
     void changeGameMode(GameMode);
     void addUnit(Unit*);
-    void print() const;
 
     ~Game();
 };
