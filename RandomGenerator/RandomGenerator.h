@@ -13,7 +13,7 @@ class RandomGenerator
 {
 private:
 	Game* gamePtr;
-
+  
 	int N;
 	int ESPercentage;
 	int ETPercentage;
