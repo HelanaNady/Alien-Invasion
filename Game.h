@@ -32,6 +32,8 @@ public:
     void run(GameMode, std::string);
     void incrementTimestep();
     void changeGameMode(GameMode);
+    void addUnit(Unit*);
+    void print() const;
 
     ~Game();
 };

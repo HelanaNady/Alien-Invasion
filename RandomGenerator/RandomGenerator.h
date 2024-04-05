@@ -3,12 +3,17 @@
 
 #include <string>
 
+// #include "../Game.h"
 #include "../DEFS.h"
 #include "../UnitClasses/Unit.h"
+
+class Game;
 
 class RandomGenerator
 {
 private:
+	Game* gamePtr;
+
 	int N;
 	int ESPercentage;
 	int ETPercentage;
@@ -29,7 +34,8 @@ private:
 	Unit* generateUnit(ArmyType) const;
 
 public:
-	RandomGenerator(std::string);
+	RandomGenerator(Game*, std::string);
+	void generateArmy();
 	int getRandomNumber(int, int) const;
 };
 

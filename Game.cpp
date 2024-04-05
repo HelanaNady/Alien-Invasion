@@ -1,9 +1,11 @@
-#include "Game.h"
-
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <sstream> 
+#include <sstream>
+
+#include "Game.h"
+#include "DEFS.h"
+#include "UnitClasses/Unit.h"
 
 std::string Game::loadFile(std::string fileName)
 {
@@ -27,8 +29,31 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 	this->gameMode = gameMode;
 
 	std::string inputParameters = loadFile(inputFileName);
-	randomGenerator = new RandomGenerator(inputParameters);
-};
+	randomGenerator = new RandomGenerator(this, inputParameters);
+}
+
+void Game::incrementTimestep()
+{}
+
+void Game::changeGameMode(GameMode)
+{}
+
+void Game::addUnit(Unit* unit) 
+{
+	if (unit->getArmyType() == ArmyType::EARTH)
+		earthArmy.addUnit(unit);
+	else if (unit->getArmyType() == ArmyType::ALIEN)
+		alienArmy.addUnit(unit);
+}
+
+void Game::print() const 
+{
+	randomGenerator->generateArmy(); 
+
+	earthArmy.print();
+	alienArmy.print();
+}
 
 Game::~Game()
-{}
+{
+}

@@ -13,12 +13,12 @@
 class AlienArmy: public Army
 {
 private:
-    LinkedQueue<AlienSoldier*> soldiers;
+    LinkedQueue<Unit*> soldiers;
     // Array <AlienMonster> monsters;
-    Deque<AlienDrone*> drones;
+    Deque<Unit*> drones;
 
 public:
-    void addUnit();
+    void addUnit(Unit*);
     void removeUnit();
     void print() const;
     void attack();
