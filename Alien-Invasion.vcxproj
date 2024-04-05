@@ -27,6 +27,7 @@
     <ClCompile Include="UnitClasses\Unit.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Containers\Array.h" />
     <ClInclude Include="Containers\ArrayStack.h" />
     <ClInclude Include="Containers\Deque.h" />
     <ClInclude Include="Containers\LinkedQueue.h" />

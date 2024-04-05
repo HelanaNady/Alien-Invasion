@@ -42,6 +42,9 @@
     <ClInclude Include="Containers\ArrayStack.h">
       <Filter>Containers Classes</Filter>
     </ClInclude>
+    <ClInclude Include="Containers\Array.h">
+      <Filter>Containers Classes</Filter>
+    </ClInclude>
     <ClInclude Include="UnitClasses\AlienDrone.h">
       <Filter>Unit Classes</Filter>
     </ClInclude>
