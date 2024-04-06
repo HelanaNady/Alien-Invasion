@@ -14,4 +14,15 @@ add_executable(Alien_Invasion
         Containers/PriorityNode.h
         Containers/PriorityQueue.h
         Containers/QueueADT.h
-        Containers/StackADT.h)
+        Containers/StackADT.h
+        RandomGenerator/RandomGenerator.cpp
+        UnitClasses/AlienDrone.cpp
+        UnitClasses/AlienMonster.cpp
+        UnitClasses/AlienSoldier.cpp
+        UnitClasses/EarthGunnery.cpp
+        UnitClasses/EarthSoldier.cpp
+        UnitClasses/EarthTank.cpp
+        UnitClasses/Unit.cpp
+        Game.cpp
+        ArmyClasses/AlienArmy.cpp
+        ArmyClasses/EarthArmy.cpp)
