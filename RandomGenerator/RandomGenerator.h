@@ -34,7 +34,7 @@ private:
 
 public:
 	RandomGenerator(Game*, std::string);
-	void generateArmies() const;
+	void generateArmy(ArmyType) const;
 	int getRandomNumber(int, int) const;
 };
 
