@@ -1,9 +1,9 @@
 #include "EarthGunnery.h"
 
-EarthGunnery::EarthGunnery(UnitType unitType, int health, int power, int attackCapacity): Unit(unitType, health, power, attackCapacity)
+EarthGunnery::EarthGunnery(Game* gamePtr, int health, int power, int attackCapacity): Unit(gamePtr, UnitType::EG, health, power, attackCapacity)
 {}
 
-void EarthGunnery::print()
+void EarthGunnery::print() const
 {}
 
 void EarthGunnery::attack(Unit* aUnit)

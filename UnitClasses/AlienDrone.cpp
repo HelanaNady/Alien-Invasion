@@ -1,9 +1,9 @@
 #include "AlienDrone.h"
 
-AlienDrone::AlienDrone(UnitType unitType, int health, int power, int attackCapacity): Unit(unitType, health, power, attackCapacity)
+AlienDrone::AlienDrone(Game* gamePtr, int health, int power, int attackCapacity): Unit(gamePtr, UnitType::AD, health, power, attackCapacity)
 {}
 
-void AlienDrone::print()
+void AlienDrone::print() const
 {}
 
 void AlienDrone::attack(Unit* aUnit)

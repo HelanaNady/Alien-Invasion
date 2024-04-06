@@ -38,12 +38,17 @@ void Game::incrementTimestep()
 void Game::changeGameMode(GameMode)
 {}
 
-void Game::addUnit(Unit* unit) 
+void Game::addUnit(Unit* unit)
 {
 	if (unit->getArmyType() == ArmyType::EARTH)
 		earthArmy.addUnit(unit);
 	else if (unit->getArmyType() == ArmyType::ALIEN)
 		alienArmy.addUnit(unit);
+}
+
+int Game::getCurrentTimestep() const
+{
+	return currentTimestep;
 }
 
 Game::~Game()

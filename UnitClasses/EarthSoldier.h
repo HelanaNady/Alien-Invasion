@@ -4,11 +4,11 @@
 #include "Unit.h"
 #include "../DEFS.h"
 
-class EarthSoldier : public Unit
+class EarthSoldier: public Unit
 {
 public:
-	EarthSoldier(UnitType, int, int, int);
-	void print();
+	EarthSoldier(Game*, int, int, int);
+	void print() const;
 	void attack(Unit*);
 };
 #endif

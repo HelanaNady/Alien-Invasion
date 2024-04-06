@@ -1,9 +1,9 @@
 #include "EarthSoldier.h"
 
-EarthSoldier::EarthSoldier(UnitType unitType, int health, int power, int attackCapacity): Unit(unitType, health, power, attackCapacity)
+EarthSoldier::EarthSoldier(Game* gamePtr, int health, int power, int attackCapacity): Unit(gamePtr, UnitType::ES, health, power, attackCapacity)
 {}
 
-void EarthSoldier::print()
+void EarthSoldier::print() const
 {}
 
 void EarthSoldier::attack(Unit* aUnit)
