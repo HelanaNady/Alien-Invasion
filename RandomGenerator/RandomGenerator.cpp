@@ -65,7 +65,9 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 	if (armyType == ArmyType::EARTH) 
 	{
 		int power = getRandomNumber(earthPowerRange.min, earthPowerRange.max);
-		int health = getRandomNumber(earthHealthRange.min, earthHealthRange.max);
+		int health = getRandomNumber(earthHealthRange.min, earthHealthRange.max);  
+		if (health > 100 && gamePtr->getCurrentTimestep() == 0) // Initial health shouldn't exceed 100
+			health = getRandomNumber(earthHealthRange.min, 99);
 		int attackCapacity = getRandomNumber(earthAttackCapacityRange.min, earthAttackCapacityRange.max);
 		
 		if (B <= ESPercentage)
@@ -79,6 +81,8 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 	{
 		int power = getRandomNumber(alienPowerRange.min, alienPowerRange.max);
 		int health = getRandomNumber(alienHealthRange.min, alienHealthRange.max);
+		if (health > 100 && gamePtr->getCurrentTimestep() == 0) // Initial health shouldn't exceed 100
+			health = getRandomNumber(alienHealthRange.min, 99); 
 		int attackCapacity = getRandomNumber(alienAttackCapacityRange.min, alienAttackCapacityRange.max);
 
 		if (B <= ASPercentage)

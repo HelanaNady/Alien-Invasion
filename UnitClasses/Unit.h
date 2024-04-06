@@ -3,10 +3,13 @@
 
 #include <iostream>
 #include "../DEFS.h"
+#include "../Game.h"
 
 class Unit
 {
 private:
+	Game* gamePtr;
+
 	static int lastEarthId;
 	static int lastAlienId;
 

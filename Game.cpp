@@ -46,5 +46,10 @@ void Game::addUnit(Unit* unit)
 		alienArmy.addUnit(unit);
 }
 
+int Game::getCurrentTimestep()
+{
+	return currentTimestep;
+}
+
 Game::~Game()
 {}
