@@ -2,10 +2,13 @@
 #define ALIEN_DRONE_H
 
 #include "Unit.h"
+#include "../DEFS.h"
+
 class AlienDrone: public Unit
 {
 public:
-	void print();
-	void attack(Unit* aUnit);
+	AlienDrone(Game*, int, int, int);
+	void print() const;
+	void attack(Unit*);
 };
 #endif

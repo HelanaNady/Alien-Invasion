@@ -2,10 +2,13 @@
 #define EARTH_SOLDIER_H
 
 #include "Unit.h"
-class EarthSoldier : public Unit
+#include "../DEFS.h"
+
+class EarthSoldier: public Unit
 {
 public:
-	void print();
-	void attack(Unit* aUnit);
+	EarthSoldier(Game*, int, int, int);
+	void print() const;
+	void attack(Unit*);
 };
 #endif

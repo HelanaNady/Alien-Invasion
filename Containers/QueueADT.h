@@ -14,6 +14,6 @@ public:
 
     virtual bool peek(T& FrontEntry) const = 0;
 
-    virtual ~QueueADT() { }
+    virtual ~QueueADT() {}
 };
 #endif

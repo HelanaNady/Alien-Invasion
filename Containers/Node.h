@@ -24,12 +24,12 @@ public:
 template < typename T>
 inline Node<T>::Node()
     : prev(nullptr), next(nullptr)
-{ }
+{}
 
 template < typename T>
 inline Node<T>::Node(const T& item)
     : item(item), prev(nullptr), next(nullptr)
-{ }
+{}
 
 template < typename T>
 inline Node<T>::Node(const T& item, Node<T>* prevNodePtr, Node<T>* nextNodePtr)

@@ -19,7 +19,7 @@ private:
     PriorityQueue<EarthGunnery*> gunneries;
 
 public:
-    void addUnit();
+    void addUnit(Unit*);
     void removeUnit();
     void print() const;
     void attack();

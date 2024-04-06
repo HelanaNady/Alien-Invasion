@@ -42,6 +42,9 @@
     <ClInclude Include="Containers\ArrayStack.h">
       <Filter>Containers Classes</Filter>
     </ClInclude>
+    <ClInclude Include="Containers\Array.h">
+      <Filter>Containers Classes</Filter>
+    </ClInclude>
     <ClInclude Include="UnitClasses\AlienDrone.h">
       <Filter>Unit Classes</Filter>
     </ClInclude>
@@ -98,6 +101,24 @@
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Game Class</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitClasses\EarthSoldier.cpp">
+      <Filter>Unit Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitClasses\AlienMonster.cpp">
+      <Filter>Unit Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitClasses\AlienDrone.cpp">
+      <Filter>Unit Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitClasses\AlienSoldier.cpp">
+      <Filter>Unit Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitClasses\EarthGunnery.cpp">
+      <Filter>Unit Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitClasses\EarthTank.cpp">
+      <Filter>Unit Classes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

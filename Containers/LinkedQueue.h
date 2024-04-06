@@ -25,7 +25,7 @@ public:
 
 template <typename T>
 inline LinkedQueue<T>::LinkedQueue():itemCount(0), backPtr(nullptr), frontPtr(nullptr)
-{ }
+{}
 
 template <typename T>
 inline bool LinkedQueue<T>::isEmpty() const

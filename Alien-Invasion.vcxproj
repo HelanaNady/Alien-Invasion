@@ -24,9 +24,16 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RandomGenerator\RandomGenerator.cpp" />
+    <ClCompile Include="UnitClasses\AlienDrone.cpp" />
+    <ClCompile Include="UnitClasses\AlienMonster.cpp" />
+    <ClCompile Include="UnitClasses\AlienSoldier.cpp" />
+    <ClCompile Include="UnitClasses\EarthGunnery.cpp" />
+    <ClCompile Include="UnitClasses\EarthSoldier.cpp" />
+    <ClCompile Include="UnitClasses\EarthTank.cpp" />
     <ClCompile Include="UnitClasses\Unit.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Containers\Array.h" />
     <ClInclude Include="Containers\ArrayStack.h" />
     <ClInclude Include="Containers\Deque.h" />
     <ClInclude Include="Containers\LinkedQueue.h" />

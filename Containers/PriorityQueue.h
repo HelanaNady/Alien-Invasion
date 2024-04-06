@@ -28,7 +28,7 @@ public:
 
 template <typename T>
 inline PriorityQueue<T>::PriorityQueue(): head(nullptr), itemCount(0)
-{ }
+{}
 
 // Insert the new node in its correct position according to its priority
 template <typename T>

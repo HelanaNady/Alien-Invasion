@@ -25,7 +25,7 @@ public:
 
 template<typename T>
 inline ArrayStack<T>::ArrayStack(): top(-1)
-{ }
+{}
 
 template<typename T>
 inline bool ArrayStack<T>::isEmpty() const

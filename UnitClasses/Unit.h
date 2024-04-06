@@ -1,13 +1,21 @@
 #ifndef UNIT_H
 #define UNIT_H
 
-enum UnitType
-{
-	ES, EG, ET,
-	AS, AD, AM
-};
+#include <iostream>
+
+#include "../DEFS.h"
+
+class Game;
+
 class Unit
 {
+private:
+	Game* gamePtr;
+
+	static int lastEarthId;
+	static int lastAlienId;
+
+	ArmyType armyType;
 	UnitType unitType;
 	int id;
 
@@ -19,13 +27,23 @@ class Unit
 	int Dd; // Destruction delay
 	int Db; // Battle time
 
-	int health;
-	int power;
-	int attackCapacity;
+	int health; // Current health
+	int power; // Attack power
+	int attackCapacity; // Attack capacity
 public:
-	void recieveDamage(int loss);
-	virtual void print() = 0;
-	virtual void attack(Unit* aUnit) = 0;  //shouldn't it be passed a list??? will check later
+	Unit(Game*, UnitType, int, int, int);
 
+	void recieveDamage(int);
+	virtual void print() const = 0;
+	virtual void attack(Unit*) = 0;  // shouldn't it be passed a list??? will check later
+
+	// Getters
+	int getId() const;
+	ArmyType getArmyType() const;
+	UnitType getUnitType() const;
+	int getHealth() const;
+	int getPower() const;
+
+	friend std::ostream& operator<<(std::ostream&, Unit*);
 };
 #endif
