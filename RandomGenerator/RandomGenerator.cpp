@@ -18,7 +18,7 @@ RandomGenerator::RandomGenerator(Game* gamePtr, std::string wholeFile): gamePtr(
 	loadParameters(wholeFile);
 }
 
-void RandomGenerator::generateArmies() const
+void RandomGenerator::generateArmy(ArmyType armyType) const
 {
 	int A = getRandomNumber(1, 100);
 
@@ -28,13 +28,7 @@ void RandomGenerator::generateArmies() const
 
 		for (int i = 0; i < N; i++)
 		{
-			newUnit = generateUnit(ArmyType::EARTH);
-			gamePtr->addUnit(newUnit);
-		}
-
-		for (int i = 0; i < N; i++)
-		{
-			newUnit = generateUnit(ArmyType::ALIEN);
+			newUnit = generateUnit(armyType);
 			gamePtr->addUnit(newUnit);
 		}
 	}
