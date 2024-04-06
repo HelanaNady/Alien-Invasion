@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include "../DEFS.h"
-#include "../Game.h"
+class Game;
 
 class Unit
 {
