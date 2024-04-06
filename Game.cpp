@@ -38,7 +38,7 @@ void Game::incrementTimestep()
 void Game::changeGameMode(GameMode)
 {}
 
-void Game::addUnit(Unit* unit) 
+void Game::addUnit(Unit* unit)
 {
 	if (unit->getArmyType() == ArmyType::EARTH)
 		earthArmy.addUnit(unit);
@@ -46,7 +46,7 @@ void Game::addUnit(Unit* unit)
 		alienArmy.addUnit(unit);
 }
 
-int Game::getCurrentTimestep()
+int Game::getCurrentTimestep() const
 {
 	return currentTimestep;
 }

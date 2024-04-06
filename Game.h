@@ -33,7 +33,7 @@ public:
     void incrementTimestep();
     void changeGameMode(GameMode);
     void addUnit(Unit*);
-    int getCurrentTimestep();
+    int getCurrentTimestep() const;
 
     ~Game();
 };

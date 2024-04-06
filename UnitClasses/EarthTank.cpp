@@ -1,9 +1,9 @@
 #include "EarthTank.h"
 
-EarthTank::EarthTank(UnitType unitType, int health, int power, int attackCapacity): Unit(unitType, health, power, attackCapacity)
+EarthTank::EarthTank(Game* gamePtr, int health, int power, int attackCapacity): Unit(gamePtr, UnitType::ET, health, power, attackCapacity)
 {}
 
-void EarthTank::print()
+void EarthTank::print() const
 {}
 
 void EarthTank::attack(Unit* aUnit)

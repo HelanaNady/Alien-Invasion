@@ -2,7 +2,9 @@
 #define UNIT_H
 
 #include <iostream>
+
 #include "../DEFS.h"
+
 class Game;
 
 class Unit
@@ -29,11 +31,11 @@ private:
 	int power; // Attack power
 	int attackCapacity; // Attack capacity
 public:
-	Unit(UnitType, int, int, int);
+	Unit(Game*, UnitType, int, int, int);
 
-	void recieveDamage(int loss);
-	virtual void print() = 0;
-	virtual void attack(Unit*) = 0;  //shouldn't it be passed a list??? will check later
+	void recieveDamage(int);
+	virtual void print() const = 0;
+	virtual void attack(Unit*) = 0;  // shouldn't it be passed a list??? will check later
 
 	// Getters
 	int getId() const;

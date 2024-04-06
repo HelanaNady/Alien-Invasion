@@ -7,9 +7,8 @@
 class EarthGunnery: public Unit
 {
 public:
-	EarthGunnery(UnitType, int, int, int);
-	void print();
+	EarthGunnery(Game*, int, int, int);
+	void print() const;
 	void attack(Unit*);
 };
 #endif
-

@@ -2,13 +2,13 @@
 #define ALIEN_MONSTER_H
 
 #include "Unit.h"
-#include "../DEFS.h" 
+#include "../DEFS.h"
 
 class AlienMonster: public Unit
 {
 public:
-	AlienMonster(UnitType, int, int, int); 
-	void print();
+	AlienMonster(Game*, int, int, int);
+	void print() const;
 	void attack(Unit*);
 };
 #endif

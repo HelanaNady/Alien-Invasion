@@ -18,14 +18,14 @@ RandomGenerator::RandomGenerator(Game* gamePtr, std::string wholeFile): gamePtr(
 	loadParameters(wholeFile);
 }
 
-void RandomGenerator::generateArmy()
+void RandomGenerator::generateArmies() const
 {
 	int A = getRandomNumber(1, 100);
 
 	if (A <= prob)
 	{
 		Unit* newUnit;
-		
+
 		for (int i = 0; i < N; i++)
 		{
 			newUnit = generateUnit(ArmyType::EARTH);
@@ -47,7 +47,7 @@ void RandomGenerator::loadParameters(std::string wholeFile)
 
 	char dummyHyphen;
 
-	ss >> earthPowerRange.min >> dummyHyphen >> earthPowerRange.max; 
+	ss >> earthPowerRange.min >> dummyHyphen >> earthPowerRange.max;
 	ss >> earthHealthRange.min >> dummyHyphen >> earthHealthRange.max;
 	ss >> earthAttackCapacityRange.min >> dummyHyphen >> earthAttackCapacityRange.max;
 
@@ -61,36 +61,36 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 	Unit* newUnit = nullptr;
 
 	int B = getRandomNumber(1, 100);
-		
-	if (armyType == ArmyType::EARTH) 
+
+	if (armyType == ArmyType::EARTH)
 	{
 		int power = getRandomNumber(earthPowerRange.min, earthPowerRange.max);
-		int health = getRandomNumber(earthHealthRange.min, earthHealthRange.max);  
+		int health = getRandomNumber(earthHealthRange.min, earthHealthRange.max);
 		if (health > 100 && gamePtr->getCurrentTimestep() == 0) // Initial health shouldn't exceed 100
 			health = getRandomNumber(earthHealthRange.min, 99);
 		int attackCapacity = getRandomNumber(earthAttackCapacityRange.min, earthAttackCapacityRange.max);
-		
+
 		if (B <= ESPercentage)
-			newUnit = new EarthSoldier(UnitType::ES, health, power, attackCapacity);
+			newUnit = new EarthSoldier(gamePtr, health, power, attackCapacity);
 		else if (B <= (ESPercentage + ETPercentage))
-			newUnit = new EarthTank(UnitType::ET, health, power, attackCapacity);
+			newUnit = new EarthTank(gamePtr, health, power, attackCapacity);
 		else
-			newUnit = new EarthGunnery(UnitType::EG, health, power, attackCapacity);
+			newUnit = new EarthGunnery(gamePtr, health, power, attackCapacity);
 	}
-	else 
+	else
 	{
 		int power = getRandomNumber(alienPowerRange.min, alienPowerRange.max);
 		int health = getRandomNumber(alienHealthRange.min, alienHealthRange.max);
 		if (health > 100 && gamePtr->getCurrentTimestep() == 0) // Initial health shouldn't exceed 100
-			health = getRandomNumber(alienHealthRange.min, 99); 
+			health = getRandomNumber(alienHealthRange.min, 99);
 		int attackCapacity = getRandomNumber(alienAttackCapacityRange.min, alienAttackCapacityRange.max);
 
 		if (B <= ASPercentage)
-			newUnit = new AlienSoldier(UnitType::AS, health, power, attackCapacity);
+			newUnit = new AlienSoldier(gamePtr, health, power, attackCapacity);
 		else if (B <= (ASPercentage + AMPercentage))
-			newUnit = new AlienMonster(UnitType::AM, health, power, attackCapacity);
+			newUnit = new AlienMonster(gamePtr, health, power, attackCapacity);
 		else
-			newUnit = new AlienDrone(UnitType::AD, health, power, attackCapacity);
+			newUnit = new AlienDrone(gamePtr, health, power, attackCapacity);
 	}
 
 	return newUnit;
