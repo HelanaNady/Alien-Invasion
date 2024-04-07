@@ -6,8 +6,8 @@
 class FileHandler
 {
 public:
-	static std::string loadFile(std::string);
-    void outputFile(std::string, std::string);
+    static std::string loadFile(std::string);
+    static void outputFile(std::string, std::string);
 };
 
 #endif

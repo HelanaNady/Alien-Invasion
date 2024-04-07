@@ -13,12 +13,12 @@ std::string FileHandler::loadFile(std::string fileName)
 		while (std::getline(fin, newLine))
 			wholeFile += newLine + " ";
 	}
-    
+
 	return wholeFile;
 }
 
 void FileHandler::outputFile(std::string outputFileName, std::string content)
 {
-    //
+	//
 }
 
