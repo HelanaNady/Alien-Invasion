@@ -10,5 +10,7 @@ public:
 	EarthGunnery(Game*, int, int, int);
 	void print() const;
 	void attack(Unit*);
+
+	int getPriority() const;
 };
 #endif

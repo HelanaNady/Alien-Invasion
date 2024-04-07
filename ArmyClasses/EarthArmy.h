@@ -20,7 +20,7 @@ private:
 
 public:
     void addUnit(Unit*);
-    void removeUnit();
+    Unit* removeUnit(UnitType);
     void print() const;
     void attack();
 };

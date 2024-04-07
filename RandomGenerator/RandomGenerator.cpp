@@ -60,13 +60,12 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 	{
 		int power = getRandomNumber(earthPowerRange.min, earthPowerRange.max);
 		int health;
-		if(earthHealthRange.max > 100) // Initial health shouldn't exceed 100
+		if (earthHealthRange.max > 100) // Initial health shouldn't exceed 100
 			health = getRandomNumber(earthHealthRange.min, 99);
 		else
 			health = getRandomNumber(earthHealthRange.min, earthHealthRange.max);
 		int attackCapacity = getRandomNumber(earthAttackCapacityRange.min, earthAttackCapacityRange.max);
 
-	
 		if (B <= ESPercentage)
 			newUnit = new EarthSoldier(gamePtr, health, power, attackCapacity);
 		else if (B <= (ESPercentage + ETPercentage))
@@ -84,7 +83,6 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 			health = getRandomNumber(alienHealthRange.min, alienHealthRange.max);
 		int attackCapacity = getRandomNumber(alienAttackCapacityRange.min, alienAttackCapacityRange.max);
 
-		
 		if (B <= ASPercentage)
 			newUnit = new AlienSoldier(gamePtr, health, power, attackCapacity);
 		else if (B <= (ASPercentage + AMPercentage))

@@ -35,7 +35,7 @@ public:
 
 	void recieveDamage(int);
 	virtual void print() const = 0;
-	virtual void attack(Unit*) = 0;  // shouldn't it be passed a list??? will check later
+	virtual void attack(Unit*) = 0;
 
 	// Getters
 	int getId() const;
@@ -43,6 +43,10 @@ public:
 	UnitType getUnitType() const;
 	int getHealth() const;
 	int getPower() const;
+	int getAttackCapacity() const;
+	void setHealth(int);
+	void setPower(int);
+	void setAttackCapacity(int);
 
 	friend std::ostream& operator<<(std::ostream&, Unit*);
 };
