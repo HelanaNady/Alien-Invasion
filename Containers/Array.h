@@ -15,7 +15,7 @@ public:
     Array();
     bool isEmpty() const;
     bool insert(const T newEntry);
-    bool remove(int index);
+    bool remove(int index, T entry);
     bool entryAt(T entry, int index) const;
     void printList() const;
     int getCount() const;
@@ -42,10 +42,11 @@ inline bool Array<T>::insert(const T newEntry)
 }
 
 template <typename T>
-inline bool Array<T>::remove(int index)
+inline bool Array<T>::remove(int index, T entry)
 {
     if (index >= count) return false;
 
+    entry = items[index];
     items[index] = items[count - 1];
     items[count - 1] = nullptr;
     count--;
@@ -71,7 +72,6 @@ inline void Array<T>::printList() const
         if (i != count - 1)
             std::cout << ", ";
     }
-    std::cout << std::endl;
 }
 
 template <typename T>

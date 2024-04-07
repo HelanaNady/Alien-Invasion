@@ -69,7 +69,6 @@ inline void ArrayStack<T>::printList() const
 		if (i < top)
 			std::cout << ", ";
 	}
-	std::cout << std::endl;
 }
 
 template<typename T>

@@ -13,11 +13,48 @@ void EarthArmy::addUnit(Unit* unit)
         gunneries.enqueue(dynamic_cast<EarthGunnery*>(unit), unit->getHealth() + unit->getPower());
 }
 
-void EarthArmy::removeUnit()
-{}
+Unit* EarthArmy::removeUnit(UnitType unitType)
+{
+    Unit* unit = nullptr;
+
+    if (unitType == UnitType::ES)
+    {
+        EarthSoldier* temp = nullptr;
+        soldiers.dequeue(temp);
+        unit = temp;
+    }
+    else if (unitType == UnitType::ET)
+    {
+        EarthTank* temp = nullptr;
+        tanks.pop(temp);
+        unit = temp;
+    }
+    else if (unitType == UnitType::EG)
+    {
+        int dummyPri;
+        EarthGunnery* temp = nullptr;
+        gunneries.dequeue(temp, dummyPri);
+        unit = temp;
+    }
+
+    return unit;
+}
 
 void EarthArmy::print() const
-{}
+{
+    std::cout << "============== Earth Army Alive Units ==============" << std::endl;
+    std::cout << soldiers.getCount() << " ES [";
+    soldiers.printList();
+    std::cout << "]" << std::endl;
+
+    std::cout << tanks.getCount() << " ET [";
+    tanks.printList();
+    std::cout << "]" << std::endl;
+
+    std::cout << gunneries.getCount() << " EG [";
+    gunneries.printList();
+    std::cout << "]" << std::endl;
+}
 
 void EarthArmy::attack()
 {}

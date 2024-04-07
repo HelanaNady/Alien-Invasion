@@ -56,6 +56,9 @@
     <ClInclude Include="ArmyClasses\EarthArmy.h" />
     <ClInclude Include="ArmyClasses\AlienArmy.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="phase1testing.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

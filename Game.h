@@ -4,6 +4,7 @@
 #include "ArmyClasses/EarthArmy.h"
 #include "ArmyClasses/AlienArmy.h"
 #include "RandomGenerator/RandomGenerator.h"
+#include "Containers/LinkedQueue.h"
 
 #include <string>
 
@@ -23,6 +24,8 @@ private:
     AlienArmy alienArmy;
     RandomGenerator* randomGenerator;
 
+    LinkedQueue<Unit*> killedList;
+
 private:
     std::string loadFile(std::string fileName);
 
@@ -32,7 +35,12 @@ public:
     void run(GameMode, std::string);
     void incrementTimestep();
     void changeGameMode(GameMode);
+    bool battleOver() const;
     void addUnit(Unit*);
+    void killUnit(Unit*);
+    void printKilledList() const;
+
+    // Getters
     int getCurrentTimestep() const;
 
     ~Game();
