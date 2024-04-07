@@ -24,7 +24,7 @@ public:
 };
 
 template <typename T>
-inline LinkedQueue<T>::LinkedQueue():itemCount(0), backPtr(nullptr), frontPtr(nullptr)
+inline LinkedQueue<T>::LinkedQueue(): itemCount(0), backPtr(nullptr), frontPtr(nullptr)
 {}
 
 template <typename T>
@@ -96,7 +96,6 @@ inline void LinkedQueue<T>::printList() const
             std::cout << ", ";
         currentPtr = currentPtr->getNext();
     }
-    std::cout << std::endl;
 }
 
 template<typename T>

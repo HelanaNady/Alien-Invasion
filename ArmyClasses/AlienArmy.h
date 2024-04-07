@@ -4,6 +4,7 @@
 #include "Army.h"
 #include "..\Containers\LinkedQueue.h"
 #include "..\Containers\ArrayStack.h"
+#include "..\Containers\Array.h"
 #include "..\Containers\Deque.h"
 #include "..\UnitClasses\Unit.h"
 #include "..\UnitClasses\AlienSoldier.h"
@@ -14,12 +15,15 @@ class AlienArmy: public Army
 {
 private:
     LinkedQueue<AlienSoldier*> soldiers; 
-    // Array <AlienMonster*> monsters;
+    Array<AlienMonster*> monsters;
     Deque<AlienDrone*> drones;
 
+    bool dronesToggler;
+
 public:
+    AlienArmy();
     void addUnit(Unit*);
-    void removeUnit();
+    Unit* removeUnit(UnitType);
     void print() const;
     void attack();
 };

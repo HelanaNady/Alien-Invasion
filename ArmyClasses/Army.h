@@ -7,7 +7,7 @@ class Army
 {
 public:
     virtual void addUnit(Unit*) = 0; // Will take a pointer to Unit as a parameter
-    virtual void removeUnit() = 0;
+    virtual Unit* removeUnit(UnitType) = 0;
     virtual void print() const = 0;
     virtual void attack() = 0;
 };

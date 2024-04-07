@@ -9,17 +9,18 @@ class Deque: public LinkedQueue<T>
 public:
     bool dequeueBack(T& backEntry);
     bool peekBack(T& backEntry);
+    bool enqueueFront(const T& newEntry);
 };
 
 template<typename T>
 inline bool Deque<T>::dequeueBack(T& backEntry)
 {
-    if (LinkedQueue<T> ::isEmpty())
+    if (LinkedQueue<T>::isEmpty())
         return false;
 
-    Node<T>* nodeToDeletePtr = LinkedQueue<T> ::backPtr;
-    Node<T>*& front = LinkedQueue<T> ::frontPtr;
-    Node<T>*& back = LinkedQueue<T> ::backPtr;
+    Node<T>* nodeToDeletePtr = LinkedQueue<T>::backPtr;
+    Node<T>*& front = LinkedQueue<T>::frontPtr;
+    Node<T>*& back = LinkedQueue<T>::backPtr;
 
     backEntry = back->getItem();
     back = back->getPrev();
@@ -30,7 +31,7 @@ inline bool Deque<T>::dequeueBack(T& backEntry)
         back->setNext(nullptr);
 
     delete nodeToDeletePtr;
-
+    LinkedQueue<T>::itemCount--;
     return true;
 }
 
@@ -41,6 +42,29 @@ inline bool Deque<T>::peekBack(T& backEntry)
         return false;
 
     backEntry = LinkedQueue<T>::backPtr->getItem();
+    return true;
+}
+
+template<typename T>
+inline bool Deque<T>::enqueueFront(const T& newEntry)
+{
+    Node<T>* newNodePtr = new Node<T>(newEntry);
+
+    Node<T>*& front = LinkedQueue<T>::frontPtr;
+    Node<T>*& back = LinkedQueue<T>::backPtr;
+
+    if(LinkedQueue<T>::isEmpty())
+        back = newNodePtr;
+    else
+    {
+        newNodePtr->setNext(front);
+        front->setPrev(newNodePtr);
+    }
+
+    front = newNodePtr;
+
+    LinkedQueue<T>::itemCount++;
+
     return true;
 }
 

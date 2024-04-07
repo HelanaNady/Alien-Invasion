@@ -43,6 +43,10 @@ public:
 	UnitType getUnitType() const;
 	int getHealth() const;
 	int getPower() const;
+	int getAttackCapacity() const;
+	void setHealth(int);
+	void setPower(int);
+	void setAttackCapacity(int);
 
 	friend std::ostream& operator<<(std::ostream&, Unit*);
 };

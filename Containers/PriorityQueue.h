@@ -40,6 +40,8 @@ inline void PriorityQueue<T>::enqueue(const T& data, int priority)
     {
         newNode->setNext(head);
         head = newNode;
+        itemCount++;
+        
         return;
     }
 
@@ -102,8 +104,6 @@ inline void PriorityQueue<T>::printList() const
 
         current = current->getNext();
     }
-
-    std::cout << std::endl;
 }
 
 template <typename T>
