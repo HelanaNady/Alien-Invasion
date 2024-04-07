@@ -1,17 +1,13 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <string>
+
+#include "DEFS.h"
 #include "ArmyClasses/EarthArmy.h"
 #include "ArmyClasses/AlienArmy.h"
 #include "RandomGenerator/RandomGenerator.h"
-
-#include <string>
-
-enum GameMode
-{
-    INTERACTIVE,
-    SILENT,
-};
+#include "Containers/LinkedQueue.h"
 
 class Game
 {
@@ -23,6 +19,8 @@ private:
     AlienArmy alienArmy;
     RandomGenerator* randomGenerator;
 
+    LinkedQueue<Unit*> killedList;
+
 private:
     std::string loadFile(std::string fileName);
 
@@ -32,7 +30,12 @@ public:
     void run(GameMode, std::string);
     void incrementTimestep();
     void changeGameMode(GameMode);
+    bool battleOver() const;
     void addUnit(Unit*);
+    void killUnit(Unit*);
+    void printKilledList() const;
+
+    // Getters
     int getCurrentTimestep() const;
 
     ~Game();
