@@ -21,9 +21,6 @@ private:
 
     LinkedQueue<Unit*> killedList;
 
-private:
-    std::string loadFile(std::string fileName);
-
 public:
     Game();
 
