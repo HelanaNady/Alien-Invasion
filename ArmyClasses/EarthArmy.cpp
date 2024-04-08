@@ -6,11 +6,11 @@
 void EarthArmy::addUnit(Unit* unit)
 {
     if (unit->getUnitType() == UnitType::ES)
-        soldiers.enqueue(dynamic_cast<EarthSoldier*>(unit)); 
+        soldiers.enqueue(unit);
     else if (unit->getUnitType() == UnitType::ET)
-        tanks.push(dynamic_cast<EarthTank*>(unit));
+        tanks.push(unit);
     else if (unit->getUnitType() == UnitType::EG)
-        gunneries.enqueue(dynamic_cast<EarthGunnery*>(unit), unit->getHealth() + unit->getPower());
+        gunneries.enqueue(unit, unit->getHealth() + unit->getPower());
 }
 
 Unit* EarthArmy::removeUnit(UnitType unitType)
@@ -18,23 +18,15 @@ Unit* EarthArmy::removeUnit(UnitType unitType)
     Unit* unit = nullptr;
 
     if (unitType == UnitType::ES)
-    {
-        EarthSoldier* temp = nullptr;
-        soldiers.dequeue(temp);
-        unit = temp;
-    }
+        soldiers.dequeue(unit);
+   
     else if (unitType == UnitType::ET)
-    {
-        EarthTank* temp = nullptr;
-        tanks.pop(temp);
-        unit = temp;
-    }
+        tanks.pop(unit);
+
     else if (unitType == UnitType::EG)
     {
         int dummyPri;
-        EarthGunnery* temp = nullptr;
-        gunneries.dequeue(temp, dummyPri);
-        unit = temp;
+        gunneries.dequeue(unit, dummyPri);
     }
 
     return unit;

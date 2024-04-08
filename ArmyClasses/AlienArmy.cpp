@@ -10,15 +10,17 @@ AlienArmy::AlienArmy(): dronesToggler(false)
 void AlienArmy::addUnit(Unit* unit)
 {
     if (unit->getUnitType() == UnitType::AS)
-        soldiers.enqueue(dynamic_cast<AlienSoldier*>(unit));
+        soldiers.enqueue(unit);
+
     else if (unit->getUnitType() == UnitType::AM)
-        monsters.insert(dynamic_cast<AlienMonster*>(unit));
+        monsters.insert(unit);
+
     else
     {
         if (dronesToggler)
-            drones.enqueue(dynamic_cast<AlienDrone*>(unit));
+            drones.enqueue(unit);
         else
-            drones.enqueueFront(dynamic_cast<AlienDrone*>(unit));
+            drones.enqueueFront(unit);
 
         dronesToggler = !dronesToggler; 
     }
@@ -29,32 +31,26 @@ Unit* AlienArmy::removeUnit(UnitType unitType)
     Unit* unit = nullptr;
 
     if (unitType == UnitType::AS)
-    {
-        AlienSoldier* temp = nullptr; 
-        soldiers.dequeue(temp); 
-        unit = temp; 
-    }
+        soldiers.dequeue(unit); 
+
     else if (unitType == UnitType::AM)
     {
-        AlienMonster* temp = nullptr;
         int maxCount = monsters.getCount();
         if (!monsters.isEmpty())
         {
             int index = rand() % maxCount;
-            monsters.remove(index, temp);
+            monsters.remove(index, unit);
         }
     }
+
     else
     {
-        AlienDrone* temp = nullptr;
-
         if (dronesToggler) 
-            drones.dequeue(temp);
+            drones.dequeue(unit);
         else
-            drones.dequeueBack(temp);
+            drones.dequeueBack(unit);
 
         dronesToggler = !dronesToggler;
-        unit = temp;
     }
 
     return unit;
