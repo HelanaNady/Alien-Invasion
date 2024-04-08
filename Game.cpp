@@ -38,10 +38,10 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 	{
 		incrementTimestep();
 
-		std::cout << "\nCurrent Timestep "<< currentTimestep << std::endl; 
+		std::cout << "\nCurrent Timestep " << currentTimestep << std::endl;
 		earthArmy.print();
 		alienArmy.print();
-		printKilledList(); 
+		printKilledList();
 	}
 }
 
@@ -70,21 +70,21 @@ void Game::incrementTimestep()
 	else if (x < 30)
 	{
 		Unit* unit = earthArmy.removeUnit(UnitType::EG);
-		if(unit)
+		if (unit)
 		{
-			unit->setHealth(0.5* unit->getHealth());
+			unit->setHealth(0.5 * unit->getHealth());
 			earthArmy.addUnit(unit);
 		}
 	}
 	else if (x < 40)
 	{
-		for(int i = 0; i < 5; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			Unit* unit = alienArmy.removeUnit(UnitType::AS);
-			if (unit) 
+			if (unit)
 			{
 				int newHealth = unit->getHealth() - 1;
-				if(newHealth > 0)
+				if (newHealth > 0)
 				{
 					unit->setHealth(newHealth);
 					alienArmy.addUnit(unit);
@@ -95,17 +95,17 @@ void Game::incrementTimestep()
 	else if (x < 50)
 	{
 		LinkedQueue<Unit*> removedMonsters;
-		for (int i = 0; i < 5; i++) 
+		for (int i = 0; i < 5; i++)
 		{
 			Unit* unit = alienArmy.removeUnit(UnitType::AM);
 			if (unit)
 				removedMonsters.enqueue(unit); // Removed 5 or less Monsters
 		}
-		
+
 		for (int i = 0; i < removedMonsters.getCount(); i++)
 		{
-			Unit* removedMonster = nullptr; 
-			removedMonsters.dequeue(removedMonster); 
+			Unit* removedMonster = nullptr;
+			removedMonsters.dequeue(removedMonster);
 			alienArmy.addUnit(dynamic_cast<AlienMonster*>(removedMonster)); // Re-added 5 Monsters
 		}
 	}
@@ -125,7 +125,7 @@ void Game::changeGameMode(GameMode gameMode)
 	this->gameMode = gameMode;
 }
 
-bool Game::battleOver() const 
+bool Game::battleOver() const
 {
 	return currentTimestep >= 50;
 }
@@ -138,16 +138,17 @@ void Game::addUnit(Unit* unit)
 		alienArmy.addUnit(unit);
 }
 
-void Game::killUnit(Unit* unit) {
+void Game::killUnit(Unit* unit)
+{
 	killedList.enqueue(unit);
 }
 
 void Game::printKilledList() const
 {
-    std::cout << "============== Killed/Destructed Units ==============" << std::endl;
-    std::cout << killedList.getCount() << " units [";
+	std::cout << "============== Killed/Destructed Units ==============" << std::endl;
+	std::cout << killedList.getCount() << " units [";
 	killedList.printList();
-    std::cout << "]" << std::endl;
+	std::cout << "]" << std::endl;
 }
 
 int Game::getCurrentTimestep() const

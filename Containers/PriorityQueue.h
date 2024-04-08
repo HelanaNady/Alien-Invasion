@@ -41,7 +41,7 @@ inline void PriorityQueue<T>::enqueue(const T& data, int priority)
         newNode->setNext(head);
         head = newNode;
         itemCount++;
-        
+
         return;
     }
 

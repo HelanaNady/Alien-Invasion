@@ -53,7 +53,7 @@ inline bool Deque<T>::enqueueFront(const T& newEntry)
     Node<T>*& front = LinkedQueue<T>::frontPtr;
     Node<T>*& back = LinkedQueue<T>::backPtr;
 
-    if(LinkedQueue<T>::isEmpty())
+    if (LinkedQueue<T>::isEmpty())
         back = newNodePtr;
     else
     {

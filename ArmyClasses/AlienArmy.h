@@ -14,9 +14,9 @@
 class AlienArmy: public Army
 {
 private:
-    LinkedQueue<AlienSoldier*> soldiers; 
-    Array<AlienMonster*> monsters;
-    Deque<AlienDrone*> drones;
+    LinkedQueue<Unit*> soldiers;
+    Array<Unit*> monsters;
+    Deque<Unit*> drones;
 
     bool dronesToggler;
 
