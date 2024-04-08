@@ -1,5 +1,6 @@
 #include "Unit.h"
 #include "../Game.h"
+#include <cmath>
 
 int Unit::lastEarthId = 0;
 int Unit::lastAlienId = 1999;
@@ -20,12 +21,17 @@ Unit::Unit(Game* gamePtr, UnitType unitType, int health, int power, int attackCa
 	Tj = gamePtr->getCurrentTimestep();
 }
 
-void Unit::recieveDamage(int loss)
+void Unit::recieveDamage(int UAP)
 {
-	health -= loss;
+	health -= UAP;
 
 	if (health < 0)
 		health = 0;
+}
+
+int Unit::calcUAP(Unit* attacker)
+{
+	return (attacker->getPower() * attacker->getHealth() / 100) / sqrt(this->health);
 }
 
 int Unit::getId() const

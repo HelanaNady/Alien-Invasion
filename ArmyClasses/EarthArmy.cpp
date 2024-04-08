@@ -3,6 +3,10 @@
 #include "EarthArmy.h"
 #include "../UnitClasses/Unit.h"
 
+EarthArmy::EarthArmy(): soldiersCount(0), tanksCount(0), gunneriesCount(0)
+{
+}
+
 void EarthArmy::addUnit(Unit* unit)
 {
     UnitType unitType = unit->getUnitType();
@@ -10,16 +14,25 @@ void EarthArmy::addUnit(Unit* unit)
     switch (unitType)
     {
         case UnitType::ES:
+        {
             soldiers.enqueue(unit);
+            soldiersCount++;
             break;
+        }
 
         case UnitType::ET:
+        {
             tanks.push(unit);
+            tanksCount++;
             break;
+        }
 
         case UnitType::EG:
+        {
             gunneries.enqueue(unit, unit->getHealth() + unit->getPower());
+            gunneriesCount++;
             break;
+        }
     }
 }
 
@@ -46,7 +59,7 @@ Unit* EarthArmy::removeUnit(UnitType unitType)
     return unit;
 }
 
-void EarthArmy::print() const
+void EarthArmy::printArmy() const
 {
     std::cout << "============== Earth Army Alive Units ==============" << std::endl;
     std::cout << soldiers.getCount() << " ES [";

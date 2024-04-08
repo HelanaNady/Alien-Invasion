@@ -18,13 +18,18 @@ private:
     Array<Unit*> monsters;
     Deque<Unit*> drones;
 
+    // Counts needed for the outputfile
+    int soldiersCount;
+    int monstersCount;
+    int dronesCount;
+
     bool dronesToggler;
 
 public:
     AlienArmy();
     void addUnit(Unit*);
     Unit* removeUnit(UnitType);
-    void print() const;
+    void printArmy() const;
     void attack();
 };
 

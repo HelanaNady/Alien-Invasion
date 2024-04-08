@@ -18,10 +18,16 @@ private:
     ArrayStack<Unit*> tanks;
     PriorityQueue<Unit*> gunneries;
 
+    // Counts needed for the outputfile
+    int soldiersCount;
+    int tanksCount;
+    int gunneriesCount;
+
 public:
+    EarthArmy();
     void addUnit(Unit*);
     Unit* removeUnit(UnitType);
-    void print() const;
+    void printArmy() const;
     void attack();
 };
 

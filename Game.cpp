@@ -23,8 +23,8 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 		incrementTimestep();
 
 		std::cout << "\nCurrent Timestep " << currentTimestep << std::endl;
-		earthArmy.print();
-		alienArmy.print();
+		earthArmy.printArmy();
+		alienArmy.printArmy();
 		printKilledList();
 	}
 }
