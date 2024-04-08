@@ -8,18 +8,26 @@ AlienArmy::AlienArmy(): dronesToggler(false)
 
 void AlienArmy::addUnit(Unit* unit)
 {
-    if (unit->getUnitType() == UnitType::AS)
-        soldiers.enqueue(dynamic_cast<AlienSoldier*>(unit));
-    else if (unit->getUnitType() == UnitType::AM)
-        monsters.insert(dynamic_cast<AlienMonster*>(unit));
-    else
-    {
-        if (dronesToggler)
-            drones.enqueue(dynamic_cast<AlienDrone*>(unit));
-        else
-            drones.enqueueFront(dynamic_cast<AlienDrone*>(unit));
+    UnitType unitType = unit->getUnitType();
 
-        dronesToggler = !dronesToggler;
+    switch (unitType)
+    {
+        case UnitType::AS:
+            soldiers.enqueue(unit);
+            break;
+
+        case UnitType::AM:
+            monsters.insert(unit);
+            break;
+
+        case UnitType::AD:
+            if (dronesToggler)
+                drones.enqueue(unit);
+            else
+                drones.enqueueFront(unit);
+
+            dronesToggler = !dronesToggler;
+            break;
     }
 }
 
@@ -27,33 +35,25 @@ Unit* AlienArmy::removeUnit(UnitType unitType)
 {
     Unit* unit = nullptr;
 
-    if (unitType == UnitType::AS)
+    switch (unitType)
     {
-        AlienSoldier* temp = nullptr;
-        soldiers.dequeue(temp);
-        unit = temp;
-    }
-    else if (unitType == UnitType::AM)
-    {
-        AlienMonster* temp = nullptr;
-        int maxCount = monsters.getCount();
-        if (!monsters.isEmpty())
-        {
-            int index = rand() % maxCount;
-            monsters.remove(index, temp);
-        }
-    }
-    else
-    {
-        AlienDrone* temp = nullptr;
+        case UnitType::AS:
+            soldiers.dequeue(unit);
+            break;
 
-        if (dronesToggler)
-            drones.dequeue(temp);
-        else
-            drones.dequeueBack(temp);
+        case UnitType::AM:
+            if (!monsters.isEmpty())
+                monsters.remove((rand() % monsters.getCount()), unit);
+            break;
 
-        dronesToggler = !dronesToggler;
-        unit = temp;
+        case UnitType::AD:
+            if (dronesToggler)
+                drones.dequeue(unit);
+            else
+                drones.dequeueBack(unit);
+
+            dronesToggler = !dronesToggler;
+            break;
     }
 
     return unit;

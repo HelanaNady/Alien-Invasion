@@ -5,14 +5,21 @@
 
 void EarthArmy::addUnit(Unit* unit)
 {
-    if (unit->getUnitType() == UnitType::ES)
-        soldiers.enqueue(dynamic_cast<EarthSoldier*>(unit));
-    else if (unit->getUnitType() == UnitType::ET)
-        tanks.push(dynamic_cast<EarthTank*>(unit));
-    else if (unit->getUnitType() == UnitType::EG)
+    UnitType unitType = unit->getUnitType();
+
+    switch (unitType)
     {
-        EarthGunnery* temp = dynamic_cast<EarthGunnery*>(unit);
-        gunneries.enqueue(temp, temp->getPriority());
+        case UnitType::ES:
+            soldiers.enqueue(unit);
+            break;
+
+        case UnitType::ET:
+            tanks.push(unit);
+            break;
+
+        case UnitType::EG:
+            gunneries.enqueue(unit, unit->getHealth() + unit->getPower());
+            break;
     }
 }
 
@@ -20,24 +27,20 @@ Unit* EarthArmy::removeUnit(UnitType unitType)
 {
     Unit* unit = nullptr;
 
-    if (unitType == UnitType::ES)
+    switch (unitType)
     {
-        EarthSoldier* temp = nullptr;
-        soldiers.dequeue(temp);
-        unit = temp;
-    }
-    else if (unitType == UnitType::ET)
-    {
-        EarthTank* temp = nullptr;
-        tanks.pop(temp);
-        unit = temp;
-    }
-    else if (unitType == UnitType::EG)
-    {
-        int dummyPri;
-        EarthGunnery* temp = nullptr;
-        gunneries.dequeue(temp, dummyPri);
-        unit = temp;
+        case UnitType::ES:
+            soldiers.dequeue(unit);
+            break;
+
+        case UnitType::ET:
+            tanks.pop(unit);
+            break;
+
+        case UnitType::EG:
+            int dummyPri;
+            gunneries.dequeue(unit, dummyPri);
+            break;
     }
 
     return unit;
