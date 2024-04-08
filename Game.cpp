@@ -127,7 +127,7 @@ void Game::changeGameMode(GameMode gameMode)
 
 bool Game::battleOver() const
 {
-	return currentTimestep > 50;
+	return currentTimestep >= 50;
 }
 
 void Game::addUnit(Unit* unit)
