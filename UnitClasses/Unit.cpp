@@ -75,9 +75,6 @@ void Unit::setAttackCapacity(int attackCapacity)
 
 std::ostream& operator<<(std::ostream& oStream, Unit* unitObj)
 {
-	// oStream << unitObj->id << "\t" << unitObj->Tj << std::endl;
-	// oStream << unitObj->health << "\t" << unitObj->power << "\t" << unitObj->attackCapacity << std::endl;
-
 	oStream << unitObj->id;
 
 	return oStream;
