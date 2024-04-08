@@ -27,14 +27,20 @@ Unit* EarthArmy::removeUnit(UnitType unitType)
 {
     Unit* unit = nullptr;
 
-    if (unitType == UnitType::ES)
-        soldiers.dequeue(unit);
-    else if (unitType == UnitType::ET)
-        tanks.pop(unit);
-    else if (unitType == UnitType::EG)
+    switch (unitType)
     {
-        int dummyPri;
-        gunneries.dequeue(unit, dummyPri);
+        case UnitType::ES:
+            soldiers.dequeue(unit);
+            break;
+
+        case UnitType::ET:
+            tanks.pop(unit);
+            break;
+
+        case UnitType::EG:
+            int dummyPri;
+            gunneries.dequeue(unit, dummyPri);
+            break;
     }
 
     return unit;

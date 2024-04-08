@@ -4,8 +4,7 @@
 #include "../UnitClasses/Unit.h"
 
 AlienArmy::AlienArmy(): dronesToggler(false)
-{
-}
+{}
 
 void AlienArmy::addUnit(Unit* unit)
 {
@@ -27,34 +26,35 @@ void AlienArmy::addUnit(Unit* unit)
             else
                 drones.enqueueFront(unit);
 
-            dronesToggler = !dronesToggler; 
+            dronesToggler = !dronesToggler;
             break;
     }
 }
 
-Unit* AlienArmy::removeUnit(UnitType unitType) 
+Unit* AlienArmy::removeUnit(UnitType unitType)
 {
     Unit* unit = nullptr;
 
-    if (unitType == UnitType::AS)
-        soldiers.dequeue(unit); 
-    else if (unitType == UnitType::AM)
+    switch (unitType)
     {
-        int maxCount = monsters.getCount();
-        if (!monsters.isEmpty())
-        {
-            int index = rand() % maxCount;
-            monsters.remove(index, unit);
-        }
-    }
-    else
-    {
-        if (dronesToggler) 
-            drones.dequeue(unit);
-        else
-            drones.dequeueBack(unit);
+        case UnitType::AS:
+            soldiers.dequeue(unit);
+            break;
 
-        dronesToggler = !dronesToggler;
+        case UnitType::AM:
+            int maxCount = monsters.getCount();
+            if (!monsters.isEmpty())
+                monsters.remove((rand() % maxCount), unit);
+            break;
+
+        case UnitType::AD:
+            if (dronesToggler)
+                drones.dequeue(unit);
+            else
+                drones.dequeueBack(unit);
+
+            dronesToggler = !dronesToggler;
+            break;
     }
 
     return unit;
@@ -71,12 +71,11 @@ void AlienArmy::print() const
     std::cout << monsters.getCount() << " AM [";
     monsters.printList();
     std::cout << "]" << std::endl;
-    
+
     std::cout << drones.getCount() << " AD [";
     drones.printList();
     std::cout << "]" << std::endl;
 }
 
 void AlienArmy::attack()
-{
-}
+{}

@@ -1,12 +1,14 @@
 #ifndef DEFS_H
 #define DEFS_H
 
-struct Range {
+struct Range
+{
 	int min;
 	int max;
 };
 
-enum ArmyType {
+enum ArmyType
+{
 	EARTH, ALIEN
 };
 

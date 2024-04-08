@@ -23,7 +23,7 @@ public:
 
 
 template <typename T>
-inline Array<T>::Array() : count(0)
+inline Array<T>::Array(): count(0)
 {}
 
 template <typename T>
