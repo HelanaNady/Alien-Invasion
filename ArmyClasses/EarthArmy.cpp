@@ -5,12 +5,22 @@
 
 void EarthArmy::addUnit(Unit* unit)
 {
-    if (unit->getUnitType() == UnitType::ES)
-        soldiers.enqueue(unit);
-    else if (unit->getUnitType() == UnitType::ET)
-        tanks.push(unit);
-    else if (unit->getUnitType() == UnitType::EG)
-        gunneries.enqueue(unit, unit->getHealth() + unit->getPower());
+    UnitType unitType = unit->getUnitType();
+
+    switch (unitType)
+    {
+        case UnitType::ES:
+            soldiers.enqueue(unit);
+            break;
+
+        case UnitType::ET:
+            tanks.push(unit);
+            break;
+
+        case UnitType::EG:
+            gunneries.enqueue(unit, unit->getHealth() + unit->getPower());
+            break;
+    }
 }
 
 Unit* EarthArmy::removeUnit(UnitType unitType)
@@ -19,10 +29,8 @@ Unit* EarthArmy::removeUnit(UnitType unitType)
 
     if (unitType == UnitType::ES)
         soldiers.dequeue(unit);
-   
     else if (unitType == UnitType::ET)
         tanks.pop(unit);
-
     else if (unitType == UnitType::EG)
     {
         int dummyPri;

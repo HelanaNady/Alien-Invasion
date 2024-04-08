@@ -9,20 +9,26 @@ AlienArmy::AlienArmy(): dronesToggler(false)
 
 void AlienArmy::addUnit(Unit* unit)
 {
-    if (unit->getUnitType() == UnitType::AS)
-        soldiers.enqueue(unit);
+    UnitType unitType = unit->getUnitType();
 
-    else if (unit->getUnitType() == UnitType::AM)
-        monsters.insert(unit);
-
-    else
+    switch (unitType)
     {
-        if (dronesToggler)
-            drones.enqueue(unit);
-        else
-            drones.enqueueFront(unit);
+        case UnitType::AS:
+            soldiers.enqueue(unit);
+            break;
 
-        dronesToggler = !dronesToggler; 
+        case UnitType::AM:
+            monsters.insert(unit);
+            break;
+
+        case UnitType::AD:
+            if (dronesToggler)
+                drones.enqueue(unit);
+            else
+                drones.enqueueFront(unit);
+
+            dronesToggler = !dronesToggler; 
+            break;
     }
 }
 
@@ -32,7 +38,6 @@ Unit* AlienArmy::removeUnit(UnitType unitType)
 
     if (unitType == UnitType::AS)
         soldiers.dequeue(unit); 
-
     else if (unitType == UnitType::AM)
     {
         int maxCount = monsters.getCount();
@@ -42,7 +47,6 @@ Unit* AlienArmy::removeUnit(UnitType unitType)
             monsters.remove(index, unit);
         }
     }
-
     else
     {
         if (dronesToggler) 
