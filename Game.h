@@ -7,7 +7,10 @@
 #include "ArmyClasses/EarthArmy.h"
 #include "ArmyClasses/AlienArmy.h"
 #include "RandomGenerator/RandomGenerator.h"
-#include "Containers/LinkedQueue.h"
+
+
+
+
 
 class Game
 {
@@ -18,9 +21,7 @@ private:
     EarthArmy earthArmy;
     AlienArmy alienArmy;
     RandomGenerator* randomGenerator;
-
     LinkedQueue<Unit*> killedList;
-
 private:
     std::string loadFile(std::string fileName);
 

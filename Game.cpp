@@ -1,24 +1,9 @@
 #include <iostream>
-#include <fstream>
-#include <sstream>
 
 #include "Game.h"
 #include "DEFS.h"
 #include "UnitClasses/Unit.h"
-
-std::string Game::loadFile(std::string fileName)
-{
-	std::fstream fin(fileName);
-	std::string wholeFile;
-
-	if (fin.is_open())
-	{
-		std::string newLine;
-		while (std::getline(fin, newLine))
-			wholeFile += newLine + " ";
-	}
-	return wholeFile;
-}
+#include "FileHandler/FileHandler.h"
 
 Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), randomGenerator(nullptr)
 {}
@@ -29,7 +14,7 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 	changeGameMode(gameMode);
 
 	// Load parameters for random generator
-	std::string inputParameters = loadFile(inputFileName);
+	std::string inputParameters = FileHandler::loadFile(inputFileName);
 	randomGenerator = new RandomGenerator(this, inputParameters);
 
 	// Run the game
