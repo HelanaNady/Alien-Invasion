@@ -130,7 +130,4 @@
       <Filter>FileHandler</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="phase1testing.txt" />
-  </ItemGroup>
 </Project>
