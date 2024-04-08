@@ -1,25 +1,9 @@
 #include <iostream>
-#include <fstream>
-#include <string>
-#include <sstream>
 
 #include "Game.h"
 #include "DEFS.h"
 #include "UnitClasses/Unit.h"
-
-std::string Game::loadFile(std::string fileName)
-{
-	std::fstream fin(fileName);
-	std::string wholeFile;
-
-	if (fin.is_open())
-	{
-		std::string newLine;
-		while (std::getline(fin, newLine))
-			wholeFile += newLine + " ";
-	}
-	return wholeFile;
-}
+#include "FileHandler/FileHandler.h"
 
 Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), randomGenerator(nullptr)
 {}
@@ -30,7 +14,7 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 	changeGameMode(gameMode);
 
 	// Load parameters for random generator
-	std::string inputParameters = loadFile(inputFileName);
+	std::string inputParameters = FileHandler::loadFile(inputFileName);
 	randomGenerator = new RandomGenerator(this, inputParameters);
 
 	// Run the game
@@ -52,72 +36,6 @@ void Game::incrementTimestep()
 	// Generate units for both armies
 	randomGenerator->generateArmy(ArmyType::EARTH);
 	randomGenerator->generateArmy(ArmyType::ALIEN);
-
-	// Generate random number X
-	int x = randomGenerator->getRandomNumber(1, 100);
-	if (x < 10)
-	{
-		Unit* unit = earthArmy.removeUnit(UnitType::ES);
-		if (unit)
-			addUnit(unit);
-	}
-	else if (x < 20)
-	{
-		Unit* unit = earthArmy.removeUnit(UnitType::ET);
-		if (unit)
-			killUnit(unit);
-	}
-	else if (x < 30)
-	{
-		Unit* unit = earthArmy.removeUnit(UnitType::EG);
-		if (unit)
-		{
-			unit->setHealth(0.5 * unit->getHealth());
-			earthArmy.addUnit(unit);
-		}
-	}
-	else if (x < 40)
-	{
-		for (int i = 0; i < 5; i++)
-		{
-			Unit* unit = alienArmy.removeUnit(UnitType::AS);
-			if (unit)
-			{
-				int newHealth = unit->getHealth() - 1;
-				if (newHealth > 0)
-				{
-					unit->setHealth(newHealth);
-					alienArmy.addUnit(unit);
-				}
-			}
-		}
-	}
-	else if (x < 50)
-	{
-		LinkedQueue<Unit*> removedMonsters;
-		for (int i = 0; i < 5; i++)
-		{
-			Unit* unit = alienArmy.removeUnit(UnitType::AM);
-			if (unit)
-				removedMonsters.enqueue(unit); // Removed 5 or less Monsters
-		}
-
-		for (int i = 0; i < removedMonsters.getCount(); i++)
-		{
-			Unit* removedMonster = nullptr;
-			removedMonsters.dequeue(removedMonster);
-			alienArmy.addUnit(dynamic_cast<AlienMonster*>(removedMonster)); // Re-added 5 Monsters
-		}
-	}
-	else if (x < 60)
-	{
-		for (int i = 0; i < 6; i++)
-		{
-			Unit* unit = alienArmy.removeUnit(UnitType::AD);
-			if (unit)
-				killUnit(unit);
-		}
-	}
 }
 
 void Game::changeGameMode(GameMode gameMode)
@@ -127,7 +45,7 @@ void Game::changeGameMode(GameMode gameMode)
 
 bool Game::battleOver() const
 {
-	return currentTimestep >= 50;
+	return currentTimestep > 10;
 }
 
 void Game::addUnit(Unit* unit)

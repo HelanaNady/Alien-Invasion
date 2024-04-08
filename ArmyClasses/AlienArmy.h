@@ -20,6 +20,8 @@ private:
 
     bool dronesToggler;
 
+    bool dronesToggler;
+
 public:
     AlienArmy();
     void addUnit(Unit*);

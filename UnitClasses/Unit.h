@@ -35,7 +35,7 @@ public:
 
 	void recieveDamage(int);
 	virtual void print() const = 0;
-	virtual void attack(Unit*) = 0;  // shouldn't it be passed a list??? will check later
+	virtual void attack(Unit*) = 0;
 
 	// Getters
 	int getId() const;
