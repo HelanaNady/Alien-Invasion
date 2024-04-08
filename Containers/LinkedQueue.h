@@ -14,12 +14,14 @@ protected:
     int itemCount;
 public:
     LinkedQueue();
+
     bool isEmpty() const;
     bool enqueue(const T& newEntry);
     bool dequeue(T& frontEntry);
     bool peek(T& frontEntry)  const;
     void printList() const;
     int getCount() const;
+
     ~LinkedQueue();
 };
 

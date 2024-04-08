@@ -9,3 +9,8 @@ void EarthGunnery::print() const
 
 void EarthGunnery::attack(Unit* aUnit)
 {}
+
+int EarthGunnery::getPriority() const
+{
+    return getHealth() + getPower();
+}

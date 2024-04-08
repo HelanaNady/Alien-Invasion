@@ -26,6 +26,8 @@ public:
     Unit* removeUnit(UnitType);
     void print() const;
     void attack();
+
+    ~AlienArmy();
 };
 
 #endif
