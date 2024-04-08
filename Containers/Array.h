@@ -14,9 +14,9 @@ private:
 public:
     Array();
     bool isEmpty() const;
-    bool insert(const T newEntry);
-    bool remove(int index, T entry);
-    bool entryAt(T entry, int index) const;
+    bool insert(const T& newEntry);
+    bool remove(int index, T& entry);
+    bool entryAt(T& entry, int index) const;
     void printList() const;
     int getCount() const;
 };
@@ -33,7 +33,7 @@ inline bool Array<T>::isEmpty() const
 }
 
 template <typename T>
-inline bool Array<T>::insert(const T newEntry)
+inline bool Array<T>::insert(const T& newEntry)
 {
     if (count == MAX_SIZE - 1) return false;
 
@@ -42,7 +42,7 @@ inline bool Array<T>::insert(const T newEntry)
 }
 
 template <typename T>
-inline bool Array<T>::remove(int index, T entry)
+inline bool Array<T>::remove(int index, T& entry)
 {
     if (index >= count) return false;
 
@@ -55,7 +55,7 @@ inline bool Array<T>::remove(int index, T entry)
 }
 
 template <typename T>
-inline bool Array<T>::entryAt(T entry, int index) const
+inline bool Array<T>::entryAt(T& entry, int index) const
 {
     if (isEmpty()) return false;
 
