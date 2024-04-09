@@ -77,19 +77,23 @@ void Game::killUnit(Unit* unit)
 void Game::printAll() 
 {
 	std::cout << "\nCurrent Timestep " << currentTimestep << std::endl;
+
+	std::cout << "============== Earth Army Alive Units ==============" << std::endl;
 	earthArmy.printArmy();
+
+	std::cout << "============== Alien Army Alive Units ==============" << std::endl;
 	alienArmy.printArmy();
 	
 	std::cout << "============== Units fighting at current step ==============" << std::endl;
 	earthArmy.printFightingUnits(); // Is this right?
 	alienArmy.printFightingUnits();
 
+	std::cout << "============== Killed/Destructed Units ==============" << std::endl;
 	printKilledList();
 }
 
 void Game::printKilledList() const
 {
-	std::cout << "============== Killed/Destructed Units ==============" << std::endl;
 	std::cout << killedList.getCount() << " units [";
 	killedList.printList();
 	std::cout << "]" << std::endl;
