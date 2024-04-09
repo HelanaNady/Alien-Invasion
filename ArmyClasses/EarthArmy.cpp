@@ -105,6 +105,11 @@ void EarthArmy::printArmy() const
 void EarthArmy::attack()
 {}
 
+bool EarthArmy::isDead()
+{
+    return soldiers.getCount() + tanks.getCount() + gunneries.getCount() == 0;
+}
+
 EarthArmy::~EarthArmy()
 {
     // Delete all units in the army

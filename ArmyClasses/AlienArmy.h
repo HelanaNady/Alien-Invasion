@@ -38,6 +38,7 @@ public:
     Unit* removeUnit(UnitType);
     void printArmy() const;
     void attack();
+    bool isDead();
 
     // Getters
     int getUnitsCount(UnitType) const;

@@ -42,9 +42,9 @@ void Game::changeGameMode(GameMode gameMode)
 	this->gameMode = gameMode;
 }
 
-bool Game::battleOver() const
+bool Game::battleOver() 
 {
-	return currentTimestep > 10;
+	return currentTimestep > 40 && !(earthArmy.isDead() && alienArmy.isDead());
 }
 
 void Game::addUnit(Unit* unit)

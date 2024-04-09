@@ -11,6 +11,7 @@ public:
     virtual void addUnit(Unit*) = 0;
     virtual Unit* removeUnit(UnitType) = 0;
     virtual void attack() = 0;
+    virtual bool isDead() = 0;
 
     virtual int getUnitsCount(UnitType) const = 0;
     virtual int getDeadUnitsCount(UnitType) const = 0; 

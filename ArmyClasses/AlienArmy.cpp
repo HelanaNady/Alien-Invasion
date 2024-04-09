@@ -115,6 +115,11 @@ void AlienArmy::printArmy() const
 void AlienArmy::attack()
 {}
 
+bool AlienArmy::isDead()
+{
+    return soldiers.getCount() + monsters.getCount() + drones.getCount() == 0;
+}
+
 AlienArmy::~AlienArmy()
 {
     // Delete all units in the army

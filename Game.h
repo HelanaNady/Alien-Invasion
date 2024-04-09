@@ -26,7 +26,7 @@ public:
     void run(GameMode, std::string);
     void incrementTimestep();
     void changeGameMode(GameMode);
-    bool battleOver() const;
+    bool battleOver() ;
     
     void addUnit(Unit*);
     Unit* removeUnit(ArmyType, UnitType);
