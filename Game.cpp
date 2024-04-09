@@ -55,6 +55,20 @@ void Game::addUnit(Unit* unit)
 		alienArmy.addUnit(unit);
 }
 
+Unit* Game::removeUnit(ArmyType armyType, UnitType unitType)
+{
+	switch (armyType)
+	{
+		case (ArmyType::EARTH):
+			return earthArmy.removeUnit(unitType);
+			break;
+		default:
+			return alienArmy.removeUnit(unitType);
+			break;
+
+	}
+}
+
 void Game::killUnit(Unit* unit)
 {
 	killedList.enqueue(unit); 

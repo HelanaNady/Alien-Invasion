@@ -29,6 +29,7 @@ public:
     bool battleOver() const;
     
     void addUnit(Unit*);
+    Unit* removeUnit(ArmyType, UnitType);
     void killUnit(Unit*);
    
     void printAll();
