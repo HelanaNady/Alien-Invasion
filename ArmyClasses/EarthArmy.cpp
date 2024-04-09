@@ -3,7 +3,8 @@
 #include "EarthArmy.h"
 #include "../UnitClasses/Unit.h"
 
-EarthArmy::EarthArmy(): soldiersCount(0), tanksCount(0), gunneriesCount(0)
+
+EarthArmy::EarthArmy(): EScount(0), EGcount(0), ETcount(0), deadEScount(0), deadEGcount(0), deadETcount(0)
 {
 }
 
@@ -14,25 +15,18 @@ void EarthArmy::addUnit(Unit* unit)
     switch (unitType)
     {
         case UnitType::ES:
-        {
             soldiers.enqueue(unit);
-            soldiersCount++;
+            EScount++;
             break;
-        }
-
         case UnitType::ET:
-        {
             tanks.push(unit);
-            tanksCount++;
+            ETcount++;
             break;
-        }
 
         case UnitType::EG:
-        {
             gunneries.enqueue(unit, unit->getHealth() + unit->getPower());
-            gunneriesCount++;
+            EGcount++;
             break;
-        }
     }
 }
 
@@ -57,6 +51,38 @@ Unit* EarthArmy::removeUnit(UnitType unitType)
     }
 
     return unit;
+}
+
+int EarthArmy::getUnitsCount(UnitType unitType) const
+{
+    switch (unitType)
+    {
+        case ES:
+            return EScount;
+            break;
+        case EG:
+            return EGcount;
+            break;
+        case ET:
+            return ETcount;
+            break;
+    }
+}
+
+int EarthArmy::getDeadUnitsCount(UnitType unitType) const
+{
+    switch (unitType)
+    {
+        case ES:
+            return deadEScount;
+            break;
+        case EG:
+            return deadEGcount;
+            break;
+        case ET:
+            return deadETcount;
+            break;
+    }
 }
 
 void EarthArmy::printArmy() const

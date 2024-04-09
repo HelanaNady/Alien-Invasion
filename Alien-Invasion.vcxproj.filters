@@ -129,5 +129,8 @@
     <ClCompile Include="FileHandler\FileHandler.cpp">
       <Filter>FileHandler</Filter>
     </ClCompile>
+    <ClCompile Include="ArmyClasses\Army.cpp">
+      <Filter>Army Classes</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

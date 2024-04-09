@@ -5,7 +5,11 @@ EarthGunnery::EarthGunnery(Game* gamePtr, int health, int power, int attackCapac
 {}
 
 void EarthGunnery::print() const
-{}
+{
+    std::cout << "EG " << this->getId() << " shots [";
+    foughtUnits.printList();
+    std::cout << "]\n";
+}
 
 void EarthGunnery::attack(Unit* aUnit)
 {}

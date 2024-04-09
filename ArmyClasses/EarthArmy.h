@@ -2,7 +2,6 @@
 #define EARTH_ARMY_H
 
 #include "Army.h"
-#include "..\UnitClasses\Unit.h"
 #include "..\Containers\ArrayStack.h"
 #include "..\Containers\LinkedQueue.h"
 #include "..\Containers\PriorityQueue.h"
@@ -18,10 +17,16 @@ private:
     ArrayStack<Unit*> tanks;
     PriorityQueue<Unit*> gunneries;
 
-    // Counts needed for the outputfile
-    int soldiersCount;
-    int tanksCount;
-    int gunneriesCount;
+    // Counts needed for the outputfile statistics
+    
+    // Initial units count
+    int EScount;
+    int ETcount;
+    int EGcount;
+
+    int deadEScount;
+    int deadETcount;
+    int deadEGcount;
 
 public:
     EarthArmy();
@@ -29,6 +34,11 @@ public:
     Unit* removeUnit(UnitType);
     void printArmy() const;
     void attack();
+
+    // Getters
+    int getUnitsCount(UnitType) const;
+    int getDeadUnitsCount(UnitType) const;
+
 };
 
 #endif

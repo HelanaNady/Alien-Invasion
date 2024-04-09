@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "../DEFS.h"
+#include "../Containers/LinkedQueue.h"
 
 class Game;
 
@@ -17,6 +18,7 @@ private:
 
 	ArmyType armyType;
 	UnitType unitType;
+protected:
 	int id;
 
 	int Tj; // Join time 
@@ -30,6 +32,9 @@ private:
 	int health; // Current health
 	int power; // Attack power
 	int attackCapacity; // Attack capacity
+
+	LinkedQueue<int> foughtUnits; // A list of the units fought to be printed
+
 public:
 	Unit(Game*, UnitType, int, int, int);
 
@@ -45,10 +50,14 @@ public:
 	int getHealth() const;
 	int getPower() const;
 	int getAttackCapacity() const;
+	int getTime(char) const;
+	int getDelay(char) const;
+	
 	// Setters
 	void setHealth(int);
 	void setPower(int);
 	void setAttackCapacity(int);
+	void setDelay(char); // Call it three times one for each delay
 
 	friend std::ostream& operator<<(std::ostream&, Unit*);
 };

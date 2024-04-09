@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 #include "Game.h"
 #include "DEFS.h"
@@ -21,11 +22,9 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 	while (!battleOver())
 	{
 		incrementTimestep();
-
-		std::cout << "\nCurrent Timestep " << currentTimestep << std::endl;
-		earthArmy.printArmy();
-		alienArmy.printArmy();
-		printKilledList();
+		if(gameMode == GameMode::INTERACTIVE)
+			printAll();
+		//printOutputFile();
 	}
 }
 
@@ -58,7 +57,19 @@ void Game::addUnit(Unit* unit)
 
 void Game::killUnit(Unit* unit)
 {
-	killedList.enqueue(unit);
+	killedList.enqueue(unit); 
+}
+
+void Game::printAll() 
+{
+	std::cout << "\nCurrent Timestep " << currentTimestep << std::endl;
+	earthArmy.printArmy();
+	alienArmy.printArmy();
+	
+	earthArmy.printFightingUnits(); // Is this right?
+	alienArmy.printFightingUnits();
+
+	printKilledList();
 }
 
 void Game::printKilledList() const
@@ -68,6 +79,7 @@ void Game::printKilledList() const
 	killedList.printList();
 	std::cout << "]" << std::endl;
 }
+
 
 int Game::getCurrentTimestep() const
 {

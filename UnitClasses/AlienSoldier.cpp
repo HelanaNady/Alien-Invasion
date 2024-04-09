@@ -5,7 +5,11 @@ AlienSoldier::AlienSoldier(Game* gamePtr, int health, int power, int attackCapac
 {}
 
 void AlienSoldier::print() const
-{}
+{
+    std::cout << "AD " << this->getId() << " shots [";
+    foughtUnits.printList();
+    std::cout << "]\n";
+}
 
 void AlienSoldier::attack(Unit* aUnit)
 {}

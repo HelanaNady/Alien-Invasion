@@ -23,14 +23,16 @@ private:
 
 public:
     Game();
-
     void run(GameMode, std::string);
     void incrementTimestep();
     void changeGameMode(GameMode);
     bool battleOver() const;
+    
     void addUnit(Unit*);
     void killUnit(Unit*);
-    void printKilledList() const;
+   
+    void printAll();
+    void printKilledList() const; // Prints the killed list with the console formats
 
     // Getters
     int getCurrentTimestep() const;

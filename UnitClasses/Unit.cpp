@@ -64,6 +64,38 @@ int Unit::getAttackCapacity() const
 	return attackCapacity;
 }
 
+int Unit::getDelay(char c) const
+{
+	switch (c)
+	{
+		case 'f': // First Attack Delay
+			return Df;
+			break;
+		case 'd':  // Destruction Delay
+			return Dd;
+			break;
+		case 'b':
+			return Db; // Battle Time
+			break;
+	}
+}
+
+int Unit::getTime(char c) const
+{
+	switch(c)
+	{
+		case 'j': // Join Time
+			return Tj;
+			break;
+		case 'a':  // First Attack Time
+			return Ta;
+			break;
+		case 'd':
+			return Td; // Destruction Time
+			break;
+	}
+}
+
 void Unit::setHealth(int health)
 {
 	health = this->health;
@@ -77,6 +109,22 @@ void Unit::setPower(int power)
 void Unit::setAttackCapacity(int attackCapacity)
 {
 	attackCapacity = this->attackCapacity;
+}
+
+void Unit::setDelay(char c)
+{
+	switch (c)
+	{
+		case 'f': // First Attack Delay
+			Df = Ta - Tj; 
+			break;
+		case 'd':  // Destruction Delay
+			Dd = Td - Ta;
+			break;
+		case 'b':
+			Db = Td - Tj; // Battle Time
+			break;
+	}
 }
 
 std::ostream& operator<<(std::ostream& oStream, Unit* unitObj)

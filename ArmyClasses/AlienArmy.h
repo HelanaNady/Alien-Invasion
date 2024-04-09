@@ -3,7 +3,6 @@
 
 #include "Army.h"
 #include "..\Containers\LinkedQueue.h"
-#include "..\Containers\ArrayStack.h"
 #include "..\Containers\Array.h"
 #include "..\Containers\Deque.h"
 #include "..\UnitClasses\Unit.h"
@@ -18,10 +17,16 @@ private:
     Array<Unit*> monsters;
     Deque<Unit*> drones;
 
-    // Counts needed for the outputfile
-    int soldiersCount;
-    int monstersCount;
-    int dronesCount;
+    // Counts needed for the outputfile statistics
+
+    // Initial units count
+    int AScount;
+    int AMcount;
+    int ADcount;
+
+    int deadAScount;
+    int deadAMcount;
+    int deadADcount;
 
     bool dronesToggler;
 
@@ -31,6 +36,10 @@ public:
     Unit* removeUnit(UnitType);
     void printArmy() const;
     void attack();
+
+    // Getters
+    int getUnitsCount(UnitType) const;
+    int getDeadUnitsCount(UnitType) const;
 };
 
 #endif
