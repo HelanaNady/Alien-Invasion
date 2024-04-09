@@ -29,9 +29,9 @@ void Unit::recieveDamage(int UAP)
 		health = 0;
 }
 
-int Unit::calcUAP(Unit* attacker)
+int Unit::calcUAP(Unit* attackedUnit)
 {
-	return (attacker->getPower() * attacker->getHealth() / 100) / sqrt(this->health);
+	return (power * health / 100) / sqrt(attackedUnit->health);
 }
 
 int Unit::getId() const
