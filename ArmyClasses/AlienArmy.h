@@ -43,6 +43,8 @@ public:
     int getUnitsCount(UnitType) const;
     int getDeadUnitsCount(UnitType) const;
 
+    ~AlienArmy()
+
 
 };
 
