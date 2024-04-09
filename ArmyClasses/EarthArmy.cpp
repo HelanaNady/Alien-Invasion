@@ -104,3 +104,19 @@ void EarthArmy::printArmy() const
 
 void EarthArmy::attack()
 {}
+
+EarthArmy::~EarthArmy()
+{
+    // Delete all units in the army
+    Unit* unit = nullptr;
+    int dummyPri;
+
+    while (soldiers.dequeue(unit))
+        delete unit;
+
+    while (tanks.pop(unit))
+        delete unit;
+
+    while (gunneries.dequeue(unit, dummyPri))
+        delete unit;
+}

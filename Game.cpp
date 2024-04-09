@@ -102,4 +102,16 @@ int Game::getCurrentTimestep() const
 }
 
 Game::~Game()
-{}
+{
+	// Delete the random generator
+	if (randomGenerator != nullptr)
+		delete randomGenerator;
+
+	// Delete all units in the killed list
+	Unit* unit = nullptr;
+	while (!killedList.isEmpty())
+	{
+		killedList.dequeue(unit);
+		delete unit;
+	}
+}

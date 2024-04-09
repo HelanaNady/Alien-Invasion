@@ -33,6 +33,7 @@ private:
 
 public:
     AlienArmy();
+
     void addUnit(Unit*);
     Unit* removeUnit(UnitType);
     void printArmy() const;
@@ -41,6 +42,8 @@ public:
     // Getters
     int getUnitsCount(UnitType) const;
     int getDeadUnitsCount(UnitType) const;
+
+
 };
 
 #endif

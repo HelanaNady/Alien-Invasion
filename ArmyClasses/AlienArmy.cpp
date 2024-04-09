@@ -114,3 +114,26 @@ void AlienArmy::printArmy() const
 
 void AlienArmy::attack()
 {}
+
+AlienArmy::~AlienArmy()
+{
+    // Delete all units in the army
+    Unit* unit = nullptr;
+    while (!soldiers.isEmpty())
+    {
+        soldiers.dequeue(unit);
+        delete unit;
+    }
+
+    while (!monsters.isEmpty())
+    {
+        monsters.remove(0, unit);
+        delete unit;
+    }
+
+    while (!drones.isEmpty())
+    {
+        drones.dequeue(unit);
+        delete unit;
+    }
+}
