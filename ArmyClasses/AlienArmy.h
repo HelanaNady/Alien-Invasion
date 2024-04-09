@@ -24,6 +24,7 @@ private:
     int AMcount;
     int ADcount;
 
+    // Dead units count --> increment everytime you send a unit to the killed list
     int deadAScount;
     int deadAMcount;
     int deadADcount;

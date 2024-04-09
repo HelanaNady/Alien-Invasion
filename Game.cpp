@@ -66,6 +66,7 @@ void Game::printAll()
 	earthArmy.printArmy();
 	alienArmy.printArmy();
 	
+	std::cout << "============== Units fighting at current step ==============" << std::endl;
 	earthArmy.printFightingUnits(); // Is this right?
 	alienArmy.printFightingUnits();
 

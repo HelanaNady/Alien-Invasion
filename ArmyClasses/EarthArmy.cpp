@@ -18,6 +18,7 @@ void EarthArmy::addUnit(Unit* unit)
             soldiers.enqueue(unit);
             EScount++;
             break;
+       
         case UnitType::ET:
             tanks.push(unit);
             ETcount++;

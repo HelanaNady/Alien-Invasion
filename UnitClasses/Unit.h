@@ -33,7 +33,7 @@ protected:
 	int power; // Attack power
 	int attackCapacity; // Attack capacity
 
-	LinkedQueue<int> foughtUnits; // A list of the units fought to be printed
+	LinkedQueue<int> foughtUnits; // A list of the units fought in the current timestep to be printed
 
 public:
 	Unit(Game*, UnitType, int, int, int);

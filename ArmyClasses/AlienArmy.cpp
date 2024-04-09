@@ -13,30 +13,24 @@ void AlienArmy::addUnit(Unit* unit)
     switch (unitType)
     {
         case UnitType::AS:
-        {
             soldiers.enqueue(unit);
             AScount++;
             break;
-        }
+
 
         case UnitType::AM:
-        {
             monsters.insert(unit);
             AMcount++;
             break;
-        }
 
         case UnitType::AD:
-        {
             if (dronesToggler)
                 drones.enqueue(unit);
             else
                 drones.enqueueFront(unit);
-
             dronesToggler = !dronesToggler;
             ADcount++;
             break;
-        }
     }
 }
 
