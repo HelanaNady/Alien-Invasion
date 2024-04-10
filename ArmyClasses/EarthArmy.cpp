@@ -87,7 +87,20 @@ void EarthArmy::printArmy() const
 }
 
 void EarthArmy::attack()
-{}
+{
+    Unit* attacker = pickAttacker(UnitType::ES);
+    if(attacker)
+    attacker->attack();
+
+    attacker = pickAttacker(UnitType::EG);
+    if (attacker)
+    attacker->attack();
+    
+    attacker = pickAttacker(UnitType::ET);
+    if (attacker)
+    attacker->attack();
+
+}
 
 bool EarthArmy::isDead()
 {

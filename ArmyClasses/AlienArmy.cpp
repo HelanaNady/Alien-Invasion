@@ -96,7 +96,25 @@ void AlienArmy::printArmy() const
 }
 
 void AlienArmy::attack()
-{}
+{
+    Unit* attacker = pickAttacker(UnitType::AS);
+    if (attacker)
+    attacker->attack();
+
+    attacker = pickAttacker(UnitType::AM);
+    if (attacker)
+    attacker->attack();
+
+    if (drones.getCount() > 1)
+    {
+        attacker = pickAttacker(UnitType::AD);
+        attacker->attack();
+        dronesToggler = !dronesToggler;
+        attacker = pickAttacker(UnitType::AD);
+        attacker->attack();
+    }
+
+}
 
 bool AlienArmy::isDead()
 {
