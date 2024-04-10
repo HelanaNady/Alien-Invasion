@@ -28,6 +28,7 @@ public:
     EarthArmy();
     void addUnit(Unit*);
     Unit* removeUnit(UnitType);
+    Unit* pickAttacker(UnitType);
     void printArmy() const;
     void attack();
     bool isDead();

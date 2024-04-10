@@ -54,6 +54,26 @@ Unit* EarthArmy::removeUnit(UnitType unitType)
     return unit;
 }
 
+Unit* EarthArmy::pickAttacker(UnitType unitType)
+{
+    Unit* unit = nullptr;
+
+    switch (unitType)
+    {
+        case ES:
+            soldiers.peek(unit);
+            break;
+        case EG:
+            gunneries.peek(unit, unit->getHealth() + unit->getPower());
+            break;
+        case ET:
+            tanks.peek(unit);
+            break;
+    }
+
+    return unit;
+}
+
 int EarthArmy::getUnitsCount(UnitType unitType) const
 {
     switch (unitType)

@@ -62,6 +62,34 @@ Unit* AlienArmy::removeUnit(UnitType unitType)
     return unit;
 }
 
+Unit* AlienArmy::pickAttacker(UnitType unitType)
+{
+    Unit* unit = nullptr;
+
+    switch (unitType)
+    {
+        case UnitType::AS:
+            soldiers.peek(unit);
+            break;
+
+        case UnitType::AM:
+            if (!monsters.isEmpty())
+                monsters.entryAt(unit, (rand() % monsters.getCount()));
+            break;
+
+        case UnitType::AD:
+            if (dronesToggler)
+                drones.peek(unit);
+            else
+                drones.peekBack(unit);
+
+            dronesToggler = !dronesToggler;
+            break;
+    }
+
+    return unit;
+}
+
 int AlienArmy::getUnitsCount(UnitType unitType) const
 {
     switch (unitType)
