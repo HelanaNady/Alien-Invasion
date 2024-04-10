@@ -75,8 +75,7 @@ inline bool PriorityQueue<T>::peek(T& topEntry, int& priority)
     if (isEmpty())
         return false;
 
-    topEntry = head->getItem();
-    priority = head->getPriority();
+    topEntry = head->getItem(priority);
 
     return true;
 }
