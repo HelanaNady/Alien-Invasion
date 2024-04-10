@@ -29,7 +29,7 @@ public:
     bool battleOver() ;
     
     void addUnit(Unit*);
-    Unit* removeUnit(ArmyType, UnitType);
+    Unit* getEnemyUnit(ArmyType, UnitType);
     void killUnit(Unit*);
    
     void printAll();

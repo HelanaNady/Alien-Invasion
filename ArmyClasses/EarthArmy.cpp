@@ -4,7 +4,7 @@
 #include "../UnitClasses/Unit.h"
 
 
-EarthArmy::EarthArmy(): EScount(0), EGcount(0), ETcount(0), deadEScount(0), deadEGcount(0), deadETcount(0)
+EarthArmy::EarthArmy(): EScount(0), EGcount(0), ETcount(0)
 {
 }
 
@@ -70,21 +70,6 @@ int EarthArmy::getUnitsCount(UnitType unitType) const
     }
 }
 
-int EarthArmy::getDeadUnitsCount(UnitType unitType) const
-{
-    switch (unitType)
-    {
-        case ES:
-            return deadEScount;
-            break;
-        case EG:
-            return deadEGcount;
-            break;
-        case ET:
-            return deadETcount;
-            break;
-    }
-}
 
 void EarthArmy::printArmy() const
 {

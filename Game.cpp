@@ -55,7 +55,7 @@ void Game::addUnit(Unit* unit)
 		alienArmy.addUnit(unit);
 }
 
-Unit* Game::removeUnit(ArmyType armyType, UnitType unitType)
+Unit* Game::getEnemyUnit(ArmyType armyType, UnitType unitType)
 {
 	switch (armyType)
 	{

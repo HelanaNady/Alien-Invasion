@@ -3,7 +3,7 @@
 #include "AlienArmy.h"
 #include "../UnitClasses/Unit.h"
 
-AlienArmy::AlienArmy(): AScount(0), AMcount(0), ADcount(0), deadAScount(0), deadAMcount(0), deadADcount(0), dronesToggler(false)
+AlienArmy::AlienArmy(): AScount(0), AMcount(0), ADcount(0), dronesToggler(false)
 {}
 
 void AlienArmy::addUnit(Unit* unit)
@@ -79,21 +79,6 @@ int AlienArmy::getUnitsCount(UnitType unitType) const
 
 }
 
-int AlienArmy::getDeadUnitsCount(UnitType unitType) const
-{
-    switch (unitType)
-    {
-        case AS:
-            return deadAScount;
-            break;
-        case AM:
-            return deadAMcount;
-            break;
-        case AD:
-            return deadADcount;
-            break;
-    }
-}
 
 void AlienArmy::printArmy() const
 {

@@ -14,7 +14,6 @@ public:
     virtual bool isDead() = 0;
 
     virtual int getUnitsCount(UnitType) const = 0;
-    virtual int getDeadUnitsCount(UnitType) const = 0; 
     virtual void printArmy() const = 0;
     void printFightingUnits();
 };
