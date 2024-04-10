@@ -10,6 +10,7 @@ protected:
 public:
     virtual void addUnit(Unit*) = 0;
     virtual Unit* removeUnit(UnitType) = 0;
+    virtual Unit* pickAttacker(UnitType) = 0;
     virtual void attack() = 0;
     virtual bool isDead() = 0;
 
