@@ -66,17 +66,26 @@ void Game::addUnit(Unit* unit)
 LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int attackCapacity)
 {
 	LinkedQueue<Unit*> enemyUnits;
-	Unit* enemyUnit = nullptr;
+	Unit* enemyUnitPtr = nullptr;
 	
 	switch (armyType)
 	{
 		case(ArmyType::EARTH):
 			for (int i = 0; i < attackCapacity; i++)
-			enemyUnits.enqueue(earthArmy.removeUnit(unitType));
+			{
+				enemyUnitPtr = earthArmy.removeUnit(unitType);
+				if (enemyUnitPtr)
+					enemyUnits.enqueue(enemyUnitPtr);
+			}
 			break;
 		default:
 			for (int i = 0; i < attackCapacity; i++)
-				enemyUnits.enqueue(alienArmy.removeUnit(unitType));		
+			{
+				enemyUnitPtr = alienArmy.removeUnit(unitType); 
+				if (enemyUnitPtr) 
+					enemyUnits.enqueue(enemyUnitPtr); 
+			}
+			break;
 	}
 
 	return enemyUnits;
