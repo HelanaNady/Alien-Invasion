@@ -97,8 +97,6 @@ int AlienArmy::getDeadUnitsCount(UnitType unitType) const
 
 void AlienArmy::printArmy() const
 {
-    std::cout << "============== Alien Army Alive Units ==============" << std::endl;
-
     std::cout << soldiers.getCount() << " AS [";
     soldiers.printList();
     std::cout << "]" << std::endl;

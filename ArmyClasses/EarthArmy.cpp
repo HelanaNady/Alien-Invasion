@@ -88,7 +88,6 @@ int EarthArmy::getDeadUnitsCount(UnitType unitType) const
 
 void EarthArmy::printArmy() const
 {
-    std::cout << "============== Earth Army Alive Units ==============" << std::endl;
     std::cout << soldiers.getCount() << " ES [";
     soldiers.printList();
     std::cout << "]" << std::endl;
