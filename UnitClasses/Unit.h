@@ -44,18 +44,17 @@ public:
 	virtual void attack(Unit*) = 0;
 
 	// Getters
-
 	int getId() const;
 	ArmyType getArmyType() const;
 	UnitType getUnitType() const;
 	int getHealth() const;
 	int getPower() const;
 	int getAttackCapacity() const;
-	     // Time
+	// Time
 	int getTjoin() const;
 	int getTattack() const;
 	int getTdestruction() const;
-	    // Delay
+	// Delay
 	int getDfirst() const;
 	int getDdestruction() const;
 	int getDbattle() const;
@@ -65,7 +64,10 @@ public:
 	void setHealth(int);
 	void setPower(int);
 	void setAttackCapacity(int);
-	    //Delay
+	// Time
+	void setTattack(int);
+	void setTdestruction(int);
+	//Delay
 	void setDfirst();
 	void setDdestruction();
 	void setDbattle();

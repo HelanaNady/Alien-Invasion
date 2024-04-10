@@ -109,6 +109,17 @@ void Unit::setAttackCapacity(int attackCapacity)
 	attackCapacity = this->attackCapacity;
 }
 
+
+void Unit::setTattack(int Ta)
+{
+	this->Ta = Ta;
+}
+
+void Unit::setTdestruction(int Td)
+{
+	this->Td = Td;
+}
+
 void Unit::setDfirst()
 {
 	Df = Ta - Tj; // First Attack Delay
