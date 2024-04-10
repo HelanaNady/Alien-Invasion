@@ -24,8 +24,8 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 		incrementTimestep();
 		if(gameMode == GameMode::INTERACTIVE)
 			printAll();
-		//printOutputFile();
 	}
+	//printOutputFile();
 }
 
 void Game::incrementTimestep()
@@ -95,7 +95,6 @@ void Game::printKilledList() const
 	std::cout << "]" << std::endl;
 }
 
-
 int Game::getCurrentTimestep() const
 {
 	return currentTimestep;
@@ -106,12 +105,4 @@ Game::~Game()
 	// Delete the random generator
 	if (randomGenerator != nullptr)
 		delete randomGenerator;
-
-	// Delete all units in the killed list
-	Unit* unit = nullptr;
-	while (!killedList.isEmpty())
-	{
-		killedList.dequeue(unit);
-		delete unit;
-	}
 }

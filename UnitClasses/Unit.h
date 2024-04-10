@@ -44,20 +44,31 @@ public:
 	virtual void attack(Unit*) = 0;
 
 	// Getters
+
 	int getId() const;
 	ArmyType getArmyType() const;
 	UnitType getUnitType() const;
 	int getHealth() const;
 	int getPower() const;
 	int getAttackCapacity() const;
-	int getTime(char) const;
-	int getDelay(char) const;
+	     // Time
+	int getTjoin() const;
+	int getTattack() const;
+	int getTdestruction() const;
+	    // Delay
+	int getDfirst() const;
+	int getDdestruction() const;
+	int getDbattle() const;
+	
 	
 	// Setters
 	void setHealth(int);
 	void setPower(int);
 	void setAttackCapacity(int);
-	void setDelay(char); // Call it three times one for each delay
+	    //Delay
+	void setDfirst();
+	void setDdestruction();
+	void setDbattle();
 
 	friend std::ostream& operator<<(std::ostream&, Unit*);
 };

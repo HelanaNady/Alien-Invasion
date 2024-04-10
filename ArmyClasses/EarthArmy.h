@@ -24,10 +24,6 @@ private:
     int ETcount;
     int EGcount;
 
-    int deadEScount;
-    int deadETcount;
-    int deadEGcount;
-
 public:
     EarthArmy();
     void addUnit(Unit*);

@@ -64,36 +64,34 @@ int Unit::getAttackCapacity() const
 	return attackCapacity;
 }
 
-int Unit::getDelay(char c) const
+int Unit::getTjoin() const
 {
-	switch (c)
-	{
-		case 'f': // First Attack Delay
-			return Df;
-			break;
-		case 'd':  // Destruction Delay
-			return Dd;
-			break;
-		case 'b':
-			return Db; // Battle Time
-			break;
-	}
+	return Tj;
 }
 
-int Unit::getTime(char c) const
+int Unit::getTattack() const
 {
-	switch(c)
-	{
-		case 'j': // Join Time
-			return Tj;
-			break;
-		case 'a':  // First Attack Time
-			return Ta;
-			break;
-		case 'd':
-			return Td; // Destruction Time
-			break;
-	}
+	return Ta;
+}
+
+int Unit::getTdestruction() const
+{
+	return Td;
+}
+
+int Unit::getDfirst() const
+{
+	return Df;
+}
+
+int Unit::getDdestruction() const
+{
+	return Dd;
+}
+
+int Unit::getDbattle() const
+{
+	return	Db;
 }
 
 void Unit::setHealth(int health)
@@ -111,21 +109,21 @@ void Unit::setAttackCapacity(int attackCapacity)
 	attackCapacity = this->attackCapacity;
 }
 
-void Unit::setDelay(char c)
+void Unit::setDfirst()
 {
-	switch (c)
-	{
-		case 'f': // First Attack Delay
-			Df = Ta - Tj; 
-			break;
-		case 'd':  // Destruction Delay
-			Dd = Td - Ta;
-			break;
-		case 'b':
-			Db = Td - Tj; // Battle Time
-			break;
-	}
+	Df = Ta - Tj; // First Attack Delay
 }
+
+void Unit::setDdestruction()
+{
+	Dd = Td - Ta; // Destruction Delay
+}
+
+void Unit::setDbattle()
+{
+	Db = Td - Tj; // Battle Time
+}
+
 
 std::ostream& operator<<(std::ostream& oStream, Unit* unitObj)
 {
