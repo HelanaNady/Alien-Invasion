@@ -24,7 +24,7 @@ void EarthArmy::addUnit(Unit* unit)
             ETcount++;
             break;
 
-        case UnitType::EG:
+        default:
             gunneries.enqueue(unit, unit->getHealth() + unit->getPower());
             EGcount++;
             break;
@@ -45,7 +45,7 @@ Unit* EarthArmy::removeUnit(UnitType unitType)
             tanks.pop(unit);
             break;
 
-        case UnitType::EG:
+        default:
             int dummyPri;
             gunneries.dequeue(unit, dummyPri);
             break;
@@ -57,6 +57,7 @@ Unit* EarthArmy::removeUnit(UnitType unitType)
 Unit* EarthArmy::pickAttacker(UnitType unitType)
 {
     Unit* unit = nullptr;
+    int dummyPri = 0; 
 
     switch (unitType)
     {
@@ -64,9 +65,9 @@ Unit* EarthArmy::pickAttacker(UnitType unitType)
             soldiers.peek(unit);
             break;
         case EG:
-            gunneries.peek(unit, unit->getHealth() + unit->getPower());
+            gunneries.peek(unit, dummyPri);
             break;
-        case ET:
+        default:
             tanks.peek(unit);
             break;
     }
@@ -84,7 +85,7 @@ int EarthArmy::getUnitsCount(UnitType unitType) const
         case EG:
             return EGcount;
             break;
-        case ET:
+        default:
             return ETcount;
             break;
     }
@@ -131,7 +132,7 @@ EarthArmy::~EarthArmy()
 {
     // Delete all units in the army
     Unit* unit = nullptr;
-    int dummyPri;
+    int dummyPri = 0;
 
     while (soldiers.dequeue(unit))
         delete unit;

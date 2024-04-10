@@ -22,8 +22,6 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 	while (!battleOver())
 	{
 		incrementTimestep();
-		if(gameMode == GameMode::INTERACTIVE)
-			printAll();
 	}
 	//printOutputFile();
 }
@@ -35,6 +33,9 @@ void Game::incrementTimestep()
 	// Generate units for both armies
 	randomGenerator->generateArmy(ArmyType::EARTH);
 	randomGenerator->generateArmy(ArmyType::ALIEN);
+
+	if (gameMode == GameMode::INTERACTIVE)
+		printAll();
 }
 
 void Game::changeGameMode(GameMode gameMode)
@@ -62,18 +63,25 @@ void Game::addUnit(Unit* unit)
 	}
 }
 
-Unit* Game::getEnemyUnit(ArmyType armyType, UnitType unitType)
+LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int attackCapacity)
 {
+	LinkedQueue<Unit*> enemyUnits;
+	Unit* enemyUnit = nullptr;
+	
 	switch (armyType)
 	{
-		case (ArmyType::EARTH):
-			return earthArmy.removeUnit(unitType);
+		case(ArmyType::EARTH):
+			for (int i = 0; i < attackCapacity; i++)
+			enemyUnits.enqueue(earthArmy.removeUnit(unitType));
 			break;
 		default:
-			return alienArmy.removeUnit(unitType);
-			break;
+			for (int i = 0; i < attackCapacity; i++)
+				enemyUnits.enqueue(alienArmy.removeUnit(unitType));		
 	}
+
+	return enemyUnits;
 }
+
 
 void Game::killUnit(Unit* unit)
 {

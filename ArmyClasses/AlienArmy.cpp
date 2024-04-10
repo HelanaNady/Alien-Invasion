@@ -23,7 +23,7 @@ void AlienArmy::addUnit(Unit* unit)
             AMcount++;
             break;
 
-        case UnitType::AD:
+        default:
             if (dronesToggler)
                 drones.enqueue(unit);
             else
@@ -49,7 +49,7 @@ Unit* AlienArmy::removeUnit(UnitType unitType)
                 monsters.remove((rand() % monsters.getCount()), unit);
             break;
 
-        case UnitType::AD:
+        default:
             if (dronesToggler)
                 drones.dequeue(unit);
             else
@@ -77,7 +77,7 @@ Unit* AlienArmy::pickAttacker(UnitType unitType)
                 monsters.entryAt(unit, (rand() % monsters.getCount()));
             break;
 
-        case UnitType::AD:
+        default:
             if (dronesToggler)
                 drones.peek(unit);
             else
@@ -100,7 +100,7 @@ int AlienArmy::getUnitsCount(UnitType unitType) const
         case AM:
             return AMcount;
             break;
-        case AD:
+        default:
             return ADcount;
             break;
     }
