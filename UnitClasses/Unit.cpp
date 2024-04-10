@@ -5,7 +5,8 @@
 int Unit::lastEarthId = 0;
 int Unit::lastAlienId = 1999;
 
-Unit::Unit(Game* gamePtr, UnitType unitType, int health, int power, int attackCapacity): gamePtr(gamePtr), unitType(unitType), Ta(0), Td(0), Df(0), Dd(0), Db(0), health(health), power(power), attackCapacity(attackCapacity)
+Unit::Unit(Game* gamePtr, UnitType unitType, int health, int power, int attackCapacity)
+	: gamePtr(gamePtr), unitType(unitType), Ta(-1), Td(0), Df(0), Dd(0), Db(0), health(health), power(power), attackCapacity(attackCapacity)
 {
 	if (unitType == UnitType::ES || unitType == UnitType::EG || unitType == UnitType::ET)
 	{
