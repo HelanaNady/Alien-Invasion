@@ -49,10 +49,17 @@ bool Game::battleOver()
 
 void Game::addUnit(Unit* unit)
 {
-	if (unit->getArmyType() == ArmyType::EARTH)
-		earthArmy.addUnit(unit);
-	else if (unit->getArmyType() == ArmyType::ALIEN)
-		alienArmy.addUnit(unit);
+	ArmyType armyType = unit->getArmyType();
+
+	switch (armyType)
+	{
+		case (ArmyType::EARTH):
+			earthArmy.addUnit(unit);
+			break;
+		default:
+			alienArmy.addUnit(unit);
+			break;
+	}
 }
 
 Unit* Game::getEnemyUnit(ArmyType armyType, UnitType unitType)
@@ -65,7 +72,6 @@ Unit* Game::getEnemyUnit(ArmyType armyType, UnitType unitType)
 		default:
 			return alienArmy.removeUnit(unitType);
 			break;
-
 	}
 }
 
