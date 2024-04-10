@@ -127,21 +127,28 @@ void AlienArmy::attack()
 {
     Unit* attacker = pickAttacker(UnitType::AS);
     if (attacker)
-    attacker->attack();
+    {
+        attacker->attack();
+        currentFighters.enqueue(attacker);
+    }
 
     attacker = pickAttacker(UnitType::AM);
     if (attacker)
-    attacker->attack();
+    {
+        attacker->attack();
+        currentFighters.enqueue(attacker);
+    }
 
     if (drones.getCount() > 1)
     {
         attacker = pickAttacker(UnitType::AD);
         attacker->attack();
-        dronesToggler = !dronesToggler;
+        currentFighters.enqueue(attacker);
+     
         attacker = pickAttacker(UnitType::AD);
         attacker->attack();
+        currentFighters.enqueue(attacker);
     }
-
 }
 
 bool AlienArmy::isDead()
