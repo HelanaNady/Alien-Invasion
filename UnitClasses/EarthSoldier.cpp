@@ -14,5 +14,5 @@ void EarthSoldier::print() const
     std::cout << "]\n";
 }
 
-void EarthSoldier::attack(Unit* aUnit)
+void EarthSoldier::attack()
 {}

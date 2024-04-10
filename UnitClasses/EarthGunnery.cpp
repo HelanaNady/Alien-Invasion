@@ -11,7 +11,7 @@ void EarthGunnery::print() const
     std::cout << "]\n";
 }
 
-void EarthGunnery::attack(Unit* aUnit)
+void EarthGunnery::attack()
 {}
 
 int EarthGunnery::getPriority() const

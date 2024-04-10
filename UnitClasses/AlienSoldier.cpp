@@ -11,5 +11,5 @@ void AlienSoldier::print() const
     std::cout << "]\n";
 }
 
-void AlienSoldier::attack(Unit* aUnit)
+void AlienSoldier::attack()
 {}

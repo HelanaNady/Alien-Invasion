@@ -41,7 +41,7 @@ public:
 	void recieveDamage(int);
 	int calcUAP(Unit*); // Calculates the damage caused when attacked by "attackerUnit"
 	virtual void print() const = 0;
-	virtual void attack(Unit*) = 0;
+	virtual void attack() = 0;
 
 	// Getters
 	int getId() const;

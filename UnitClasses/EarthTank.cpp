@@ -11,5 +11,5 @@ void EarthTank::print() const
     std::cout << "]\n";
 }
 
-void EarthTank::attack(Unit* aUnit)
+void EarthTank::attack()
 {}
