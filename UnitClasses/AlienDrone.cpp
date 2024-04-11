@@ -17,8 +17,8 @@ void AlienDrone::attack()
     int ETnumber = (attackCapacity / 2) + 1;
     int EGnumber = attackCapacity - ETnumber;
 
-    LinkedQueue<Unit*> ETlist = gamePtr->getEnemyList(EARTH, ET, ETnumber);
-    LinkedQueue<Unit*> EGlist = gamePtr->getEnemyList(EARTH, EG, EGnumber);
+    LinkedQueue<Unit*> ETlist = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, ETnumber);
+    LinkedQueue<Unit*> EGlist = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::EG, EGnumber);
 
     ArrayStack<Unit*> ETtempList;
     LinkedQueue<Unit*> EGtempList;
