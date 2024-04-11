@@ -43,8 +43,7 @@ void AlienDrone::attack()
         }
             
         // Decrement health 
-        int newHealth = attackedUnit->getHealth() - calcUAP(attackedUnit);
-        attackedUnit->setHealth(newHealth);
+        attackedUnit->recieveDamage(calcUAP(attackedUnit));
 
         // Check if it was killed or not
         if (attackedUnit->getHealth())
