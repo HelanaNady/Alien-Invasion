@@ -21,12 +21,8 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 	while (!battleOver())
 	{
 		incrementTimestep();
-
-		std::cout << "\nCurrent Timestep " << currentTimestep << std::endl;
-		earthArmy.print();
-		alienArmy.print();
-		printKilledList();
 	}
+	//printOutputFile();
 }
 
 void Game::incrementTimestep()
@@ -36,6 +32,9 @@ void Game::incrementTimestep()
 	// Generate units for both armies
 	randomGenerator->generateArmy(ArmyType::EARTH);
 	randomGenerator->generateArmy(ArmyType::ALIEN);
+
+	if (gameMode == GameMode::INTERACTIVE)
+		printAll();
 }
 
 void Game::changeGameMode(GameMode gameMode)
@@ -43,27 +42,82 @@ void Game::changeGameMode(GameMode gameMode)
 	this->gameMode = gameMode;
 }
 
-bool Game::battleOver() const
+bool Game::battleOver()
 {
-	return currentTimestep > 10;
+	return currentTimestep > 40 && !(earthArmy.isDead() && alienArmy.isDead());
 }
 
 void Game::addUnit(Unit* unit)
 {
-	if (unit->getArmyType() == ArmyType::EARTH)
-		earthArmy.addUnit(unit);
-	else if (unit->getArmyType() == ArmyType::ALIEN)
-		alienArmy.addUnit(unit);
+	ArmyType armyType = unit->getArmyType();
+
+	switch (armyType)
+	{
+		case ArmyType::EARTH:
+			earthArmy.addUnit(unit);
+			break;
+
+		case ArmyType::ALIEN:
+			alienArmy.addUnit(unit);
+			break;
+	}
 }
+
+LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int attackCapacity)
+{
+	LinkedQueue<Unit*> enemyUnits;
+	Unit* enemyUnitPtr = nullptr;
+
+	switch (armyType)
+	{
+		case ArmyType::EARTH:
+			for (int i = 0; i < attackCapacity; i++)
+			{
+				enemyUnitPtr = earthArmy.removeUnit(unitType);
+				if (enemyUnitPtr)
+					enemyUnits.enqueue(enemyUnitPtr);
+			}
+			break;
+
+		case ArmyType::ALIEN:
+			for (int i = 0; i < attackCapacity; i++)
+			{
+				enemyUnitPtr = alienArmy.removeUnit(unitType);
+				if (enemyUnitPtr)
+					enemyUnits.enqueue(enemyUnitPtr);
+			}
+			break;
+	}
+
+	return enemyUnits;
+}
+
 
 void Game::killUnit(Unit* unit)
 {
 	killedList.enqueue(unit);
 }
 
+void Game::printAll()
+{
+	std::cout << "\nCurrent Timestep " << currentTimestep << std::endl;
+
+	std::cout << "============== Earth Army Alive Units ==============" << std::endl;
+	earthArmy.printArmy();
+
+	std::cout << "============== Alien Army Alive Units ==============" << std::endl;
+	alienArmy.printArmy();
+
+	std::cout << "============== Units fighting at current step ==============" << std::endl;
+	earthArmy.printFightingUnits(); // Is this right?
+	alienArmy.printFightingUnits();
+
+	std::cout << "============== Killed/Destructed Units ==============" << std::endl;
+	printKilledList();
+}
+
 void Game::printKilledList() const
 {
-	std::cout << "============== Killed/Destructed Units ==============" << std::endl;
 	std::cout << killedList.getCount() << " units [";
 	killedList.printList();
 	std::cout << "]" << std::endl;
@@ -94,12 +148,4 @@ Game::~Game()
 	// Delete the random generator
 	if (randomGenerator != nullptr)
 		delete randomGenerator;
-
-	// Delete all units in the killed list
-	Unit* unit = nullptr;
-	while (!killedList.isEmpty())
-	{
-		killedList.dequeue(unit);
-		delete unit;
-	}
 }

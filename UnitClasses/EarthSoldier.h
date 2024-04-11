@@ -9,6 +9,6 @@ class EarthSoldier: public Unit
 public:
 	EarthSoldier(Game*, int, int, int);
 	void print() const;
-	void attack(Unit*);
+	void attack();
 };
 #endif

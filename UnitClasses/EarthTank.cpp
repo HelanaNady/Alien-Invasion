@@ -5,7 +5,11 @@ EarthTank::EarthTank(Game* gamePtr, int health, int power, int attackCapacity)
 {}
 
 void EarthTank::print() const
-{}
+{
+    std::cout << "ET " << this->getId() << " shots [";
+    foughtUnits.printList();
+    std::cout << "]\n";
+}
 
-void EarthTank::attack(Unit* aUnit)
+void EarthTank::attack()
 {}

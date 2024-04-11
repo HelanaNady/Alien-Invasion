@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArmyClasses\AlienArmy.cpp" />
+    <ClCompile Include="ArmyClasses\Army.cpp" />
     <ClCompile Include="ArmyClasses\EarthArmy.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />

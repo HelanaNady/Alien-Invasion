@@ -5,11 +5,18 @@
 
 class Army
 {
+protected:
+    LinkedQueue<Unit*> currentAttackers; // enqueue at the beginning of each attack function  
 public:
     virtual void addUnit(Unit*) = 0;
     virtual Unit* removeUnit(UnitType) = 0;
-    virtual void print() const = 0;
+    virtual Unit* pickAttacker(UnitType) = 0;
     virtual void attack() = 0;
+    virtual bool isDead() = 0;
+
+    virtual int getUnitsCount(UnitType) const = 0;
+    virtual void printArmy() const = 0;
+    void printFightingUnits();
 };
 
 #endif
