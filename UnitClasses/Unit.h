@@ -44,6 +44,8 @@ public:
 	int getHealth() const;
 	int getPower() const;
 	int getAttackCapacity() const;
+
+	// Setters
 	void setHealth(int);
 	void setPower(int);
 	void setAttackCapacity(int);

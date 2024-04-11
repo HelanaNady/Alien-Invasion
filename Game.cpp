@@ -18,9 +18,8 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 	randomGenerator = new RandomGenerator(this, inputParameters);
 
 	// Run the game
-	char key = '\0';
-
-	do {
+	do
+	{
 		incrementTimestep();
 
 		std::cout << "\nCurrent Timestep " << currentTimestep << std::endl;
@@ -28,9 +27,8 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 		alienArmy.print();
 		printKilledList();
 
-		std::cout << "Click enter to continue...";
-		while (key != '\n')
-			std::cin >> key;
+		std::cout << "Press Enter to continue...";
+		while (std::cin.get() != '\n');
 	} while (!battleOver());
 }
 
@@ -83,7 +81,7 @@ void Game::incrementTimestep()
 			}
 		}
 
-		while(tempList.dequeue(unit))
+		while (tempList.dequeue(unit))
 		{
 			alienArmy.addUnit(unit);
 		}
