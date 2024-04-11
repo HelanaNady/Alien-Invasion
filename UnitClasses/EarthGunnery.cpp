@@ -18,8 +18,8 @@ void EarthGunnery::attack()
     int ADnumber = attackCapacity - AMnumber;
 
 
-    LinkedQueue<Unit*> AMlist = gamePtr->getEnemyList(ALIEN, AM, AMnumber);
-    LinkedQueue<Unit*> ADlist = gamePtr->getEnemyList(ALIEN, AD, ADnumber);
+    LinkedQueue<Unit*> AMlist = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AM, AMnumber);
+    LinkedQueue<Unit*> ADlist = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AD, ADnumber);
 
     LinkedQueue<Unit*> AMtempList;
     LinkedQueue<Unit*> ADtempList;
