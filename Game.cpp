@@ -18,15 +18,20 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 	randomGenerator = new RandomGenerator(this, inputParameters);
 
 	// Run the game
-	while (!battleOver())
-	{
+	char key = '\0';
+
+	do {
 		incrementTimestep();
 
 		std::cout << "\nCurrent Timestep " << currentTimestep << std::endl;
 		earthArmy.print();
 		alienArmy.print();
 		printKilledList();
-	}
+
+		std::cout << "Click enter to continue...";
+		while (key != '\n')
+			std::cin >> key;
+	} while (!battleOver());
 }
 
 void Game::incrementTimestep()
@@ -62,18 +67,25 @@ void Game::incrementTimestep()
 	}
 	else if (x < 40)
 	{
+		LinkedQueue<Unit*> tempList;
+		Unit* unit = nullptr;
 		for (int i = 0; i < 5; i++)
 		{
-			Unit* unit = alienArmy.removeUnit(UnitType::AS);
+			unit = alienArmy.removeUnit(UnitType::AS);
 			if (unit)
 			{
 				int newHealth = unit->getHealth() - 1;
 				if (newHealth > 0)
 				{
-					unit->setHealth(newHealth);
-					alienArmy.addUnit(unit);
+					unit->recieveDamage(newHealth);
+					tempList.enqueue(unit);
 				}
 			}
+		}
+
+		while(tempList.dequeue(unit))
+		{
+			alienArmy.addUnit(unit);
 		}
 	}
 	else if (x < 50)
