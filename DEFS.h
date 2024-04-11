@@ -1,16 +1,16 @@
 #ifndef DEFS_H
 #define DEFS_H
 
-enum GameMode
-{
-	INTERACTIVE,
-	SILENT,
-};
-
 struct Range
 {
 	int min;
 	int max;
+};
+
+enum GameMode
+{
+	INTERACTIVE,
+	SILENT,
 };
 
 enum ArmyType

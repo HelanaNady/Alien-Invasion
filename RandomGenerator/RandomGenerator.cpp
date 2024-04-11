@@ -22,14 +22,15 @@ void RandomGenerator::generateArmy(ArmyType armyType) const
 {
 	int A = getRandomNumber(1, 100);
 
-	if (A <= prob)
+	if (A <= prob) // If the probability is satisfied, generate the units
 	{
-		Unit* newUnit;
+		Unit* newUnit = nullptr;
 
+		// Generate N units
 		for (int i = 0; i < N; i++)
 		{
 			newUnit = generateUnit(armyType);
-			gamePtr->addUnit(newUnit);
+			gamePtr->addUnit(newUnit); // Add the unit to the suitable army & list based on the unit type
 		}
 	}
 }
@@ -39,7 +40,7 @@ void RandomGenerator::loadParameters(std::string wholeFile)
 	std::stringstream ss(wholeFile);
 	ss >> N >> ESPercentage >> ETPercentage >> EGPercentage >> ASPercentage >> AMPercentage >> ADPercentage >> prob;
 
-	char dummyHyphen;
+	char dummyHyphen; // To read the hyphen between the min and max values of the ranges
 
 	ss >> earthPowerRange.min >> dummyHyphen >> earthPowerRange.max;
 	ss >> earthHealthRange.min >> dummyHyphen >> earthHealthRange.max;
@@ -58,14 +59,15 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 
 	if (armyType == ArmyType::EARTH)
 	{
-		int power = getRandomNumber(earthPowerRange.min, earthPowerRange.max);
+		int power = getRandomNumber(earthPowerRange.min, earthPowerRange.max); // Generate a random power value
 		int health;
 		if (earthHealthRange.max > 100) // Initial health shouldn't exceed 100
 			health = getRandomNumber(earthHealthRange.min, 99);
 		else
 			health = getRandomNumber(earthHealthRange.min, earthHealthRange.max);
-		int attackCapacity = getRandomNumber(earthAttackCapacityRange.min, earthAttackCapacityRange.max);
+		int attackCapacity = getRandomNumber(earthAttackCapacityRange.min, earthAttackCapacityRange.max); // Generate a random attack capacity value
 
+		// Generate a random unit based on the B value and the percentages
 		if (B <= ESPercentage)
 			newUnit = new EarthSoldier(gamePtr, health, power, attackCapacity);
 		else if (B <= (ESPercentage + ETPercentage))
@@ -75,14 +77,15 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 	}
 	else
 	{
-		int power = getRandomNumber(alienPowerRange.min, alienPowerRange.max);
+		int power = getRandomNumber(alienPowerRange.min, alienPowerRange.max); // Generate a random power value
 		int health;
 		if (alienHealthRange.max > 100) // Initial health shouldn't exceed 100
 			health = getRandomNumber(alienHealthRange.min, 99);
 		else
 			health = getRandomNumber(alienHealthRange.min, alienHealthRange.max);
-		int attackCapacity = getRandomNumber(alienAttackCapacityRange.min, alienAttackCapacityRange.max);
+		int attackCapacity = getRandomNumber(alienAttackCapacityRange.min, alienAttackCapacityRange.max); // Generate a random attack capacity value
 
+		// Generate a random unit based on the B value and the percentages
 		if (B <= ASPercentage)
 			newUnit = new AlienSoldier(gamePtr, health, power, attackCapacity);
 		else if (B <= (ASPercentage + AMPercentage))

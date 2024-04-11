@@ -22,11 +22,13 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 	{
 		incrementTimestep();
 
+		// Print the current timestep and the armies and the killed list
 		std::cout << "\nCurrent Timestep " << currentTimestep << std::endl;
 		earthArmy.print();
 		alienArmy.print();
 		printKilledList();
 
+		// Wait for the user to press Enter
 		std::cout << "Press Enter to continue...";
 		while (std::cin.get() != '\n');
 	} while (!battleOver());
@@ -44,67 +46,74 @@ void Game::incrementTimestep()
 	int x = randomGenerator->getRandomNumber(1, 100);
 	if (x < 10)
 	{
+		// Remove a soldier from the Earth army and add it back
 		Unit* unit = earthArmy.removeUnit(UnitType::ES);
 		if (unit)
-			addUnit(unit);
+			earthArmy.addUnit(unit);
 	}
 	else if (x < 20)
 	{
+		// Remove a tank from the Earth army and added to the killed list
 		Unit* unit = earthArmy.removeUnit(UnitType::ET);
 		if (unit)
 			killUnit(unit);
 	}
 	else if (x < 30)
 	{
+		// Remove a gunner from the Earth army, reduce its health by half, and add it back
 		Unit* unit = earthArmy.removeUnit(UnitType::EG);
 		if (unit)
 		{
-			unit->setHealth(0.5 * unit->getHealth());
+			unit->receiveDamage(0.5 * unit->getHealth()); // Reduce health by half
 			earthArmy.addUnit(unit);
 		}
 	}
 	else if (x < 40)
 	{
+		// Remove 5 soldiers from the Alien army, reduce their health by 1, and add them back
 		LinkedQueue<Unit*> tempList;
 		Unit* unit = nullptr;
+
+		// Remove 5 soldiers
 		for (int i = 0; i < 5; i++)
 		{
 			unit = alienArmy.removeUnit(UnitType::AS);
+
 			if (unit)
 			{
-				int newHealth = unit->getHealth() - 1;
-				if (newHealth > 0)
-				{
-					unit->recieveDamage(newHealth);
-					tempList.enqueue(unit);
-				}
+				unit->receiveDamage(1); // Reduce health by 1
+				tempList.enqueue(unit);
 			}
 		}
 
+		// Add the units back
 		while (tempList.dequeue(unit))
-		{
-			alienArmy.addUnit(unit);
-		}
+			if (unit->isAlive())
+				alienArmy.addUnit(unit);
+			else
+				killUnit(unit);
 	}
 	else if (x < 50)
 	{
+		// Remove 5 monsters from the Alien army and add them back
 		LinkedQueue<Unit*> removedMonsters;
+		Unit* unit = nullptr;
+
+		// Remove 5 Monsters
 		for (int i = 0; i < 5; i++)
 		{
-			Unit* unit = alienArmy.removeUnit(UnitType::AM);
+			unit = alienArmy.removeUnit(UnitType::AM);
 			if (unit)
-				removedMonsters.enqueue(unit); // Removed 5 or less Monsters
+				removedMonsters.enqueue(unit);
 		}
 
-		for (int i = 0; i < removedMonsters.getCount(); i++)
-		{
-			Unit* removedMonster = nullptr;
-			removedMonsters.dequeue(removedMonster);
-			alienArmy.addUnit(dynamic_cast<AlienMonster*>(removedMonster)); // Re-added 5 Monsters
-		}
+		// Add 5 Monsters back
+		while (removedMonsters.dequeue(unit))
+			alienArmy.addUnit(unit);
 	}
 	else if (x < 60)
 	{
+		// Remove 6 drones from the front & back of the list of Alien army and add them to the killed list
 		for (int i = 0; i < 6; i++)
 		{
 			Unit* unit = alienArmy.removeUnit(UnitType::AD);

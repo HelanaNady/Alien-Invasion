@@ -10,14 +10,14 @@ class Game;
 class Unit
 {
 private:
-	Game* gamePtr;
+	Game* gamePtr; // Pointer to the game object
 
-	static int lastEarthId;
-	static int lastAlienId;
+	static int lastEarthId; // Last Earth unit ID used to generate the next ID
+	static int lastAlienId; // Last Alien unit ID used to generate the next ID
 
-	ArmyType armyType;
-	UnitType unitType;
-	int id;
+	ArmyType armyType; // Army type
+	UnitType unitType; // Unit type
+	int id; // Unit ID
 
 	int Tj; // Join time 
 	int Ta; // First attack time
@@ -33,9 +33,12 @@ private:
 public:
 	Unit(Game*, UnitType, int, int, int);
 
-	void recieveDamage(int);
-	virtual void print() const = 0;
-	virtual void attack(Unit*) = 0;
+	void receiveDamage(int); // Receive damage from an attack
+	virtual void print() const = 0; // Print the unit
+	virtual void attack(Unit*) = 0; // Run the attack for the unit
+
+	bool isAlive() const; // Check if the unit is alive
+	bool isDead() const; // Check if the unit is dead
 
 	// Getters
 	int getId() const;
@@ -46,7 +49,6 @@ public:
 	int getAttackCapacity() const;
 
 	// Setters
-	void setHealth(int);
 	void setPower(int);
 	void setAttackCapacity(int);
 
