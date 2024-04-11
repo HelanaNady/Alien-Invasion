@@ -21,8 +21,7 @@ void EarthGunnery::attack()
     LinkedQueue<Unit*> AMlist = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AM, AMnumber);
     LinkedQueue<Unit*> ADlist = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AD, ADnumber);
 
-    LinkedQueue<Unit*> AMtempList;
-    LinkedQueue<Unit*> ADtempList;
+    LinkedQueue<Unit*> tempList;
 
     int dronesCount = 2; // Counter to handle attacking 2 drones then a monster repeatedly
 
@@ -54,18 +53,7 @@ void EarthGunnery::attack()
         // Check if it was killed or not
         if (attackedUnit->getHealth())
         {
-            UnitType unitType = attackedUnit->getUnitType();
-
-            switch (unitType)
-            {
-                case UnitType::AM:
-                    AMtempList.enqueue(attackedUnit);
-                    break;
-
-                case UnitType::AD:
-                    ADtempList.enqueue(attackedUnit);
-                    break;
-            }
+            tempList.enqueue(attackedUnit);
         }
         else
         {
@@ -79,19 +67,9 @@ void EarthGunnery::attack()
     }
 
     // Re-adding attacked units to their original lists
-    while (!AMtempList.isEmpty())
-    {
-        Unit* unit;
-        AMtempList.dequeue(unit);
+    Unit* unit = nullptr;
+    while (tempList.dequeue(unit))
         gamePtr->addUnit(unit);
-    }
-
-    while (!ADtempList.isEmpty())
-    {
-        Unit* unit;
-        ADtempList.dequeue(unit);
-        gamePtr->addUnit(unit);
-    }
 }
 
 int EarthGunnery::getPriority() const
