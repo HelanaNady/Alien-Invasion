@@ -18,7 +18,7 @@ public:
 
     void enqueue(const T& data, int priority);
     bool dequeue(T& topEntry, int& pri);
-    bool peek(T& topEntry, int priority);
+    bool peek(T& topEntry, int& priority);
     bool isEmpty() const;
     void printList() const;
     int getCount() const;
@@ -55,12 +55,12 @@ inline void PriorityQueue<T>::enqueue(const T& data, int priority)
 }
 
 template <typename T>
-inline bool PriorityQueue<T>::dequeue(T& topEntry, int& pri)
+inline bool PriorityQueue<T>::dequeue(T& topEntry, int& priority)
 {
     if (isEmpty())
         return false;
 
-    topEntry = head->getItem(pri);
+    topEntry = head->getItem(priority);
     PriorityNode<T>* temp = head;
     head = head->getNext();
     delete temp;
@@ -70,7 +70,7 @@ inline bool PriorityQueue<T>::dequeue(T& topEntry, int& pri)
 }
 
 template <typename T>
-inline bool PriorityQueue<T>::peek(T& topEntry, int priority)
+inline bool PriorityQueue<T>::peek(T& topEntry, int& priority)
 {
     if (isEmpty())
         return false;
