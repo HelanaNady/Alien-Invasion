@@ -20,7 +20,8 @@ void AlienMonster::attack()
     LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, soldiersCapacity);
     LinkedQueue<Unit*> tanksList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, tanksCapacity);
 
-    LinkedQueue<Unit*> tempList;
+    LinkedQueue<Unit*> soldiersTempList;
+    ArrayStack<Unit*> tanksTempList;
     Unit* enemyUnit = nullptr;
 
     // Loop through the tanks and soldiers lists
@@ -50,7 +51,12 @@ void AlienMonster::attack()
                 enemyUnit->setBattleDelay();
             }
             else
-                tempList.enqueue(enemyUnit);
+            {
+                if (i == 0)
+                    soldiersTempList.enqueue(enemyUnit);
+                else
+                    tanksTempList.push(enemyUnit);
+            }
 
             // Store the IDs of the fought units to be printed later
             foughtUnits.enqueue(enemyUnit->getId());
@@ -58,10 +64,16 @@ void AlienMonster::attack()
     }
 
     // Empty the tempList and re-add the alive units back to their lists
-    while (!tempList.isEmpty())
+    while (!soldiersTempList.isEmpty())
     {
         Unit* tempUnitPtr = nullptr;
-        tempList.dequeue(tempUnitPtr);
+        soldiersTempList.dequeue(tempUnitPtr);
+        gamePtr->addUnit(tempUnitPtr);
+    }
+    while (!tanksTempList.isEmpty())
+    {
+        Unit* tempUnitPtr = nullptr;
+        tanksTempList.pop(tempUnitPtr);
         gamePtr->addUnit(tempUnitPtr);
     }
 }
