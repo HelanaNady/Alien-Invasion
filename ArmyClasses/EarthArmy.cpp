@@ -5,8 +5,7 @@
 
 
 EarthArmy::EarthArmy(): EScount(0), EGcount(0), ETcount(0)
-{
-}
+{}
 
 void EarthArmy::addUnit(Unit* unit)
 {
@@ -18,7 +17,7 @@ void EarthArmy::addUnit(Unit* unit)
             soldiers.enqueue(unit);
             EScount++;
             break;
-       
+
         case UnitType::ET:
             tanks.push(unit);
             ETcount++;
@@ -57,7 +56,7 @@ Unit* EarthArmy::removeUnit(UnitType unitType)
 Unit* EarthArmy::pickAttacker(UnitType unitType)
 {
     Unit* unit = nullptr;
-    int dummyPri = 0; 
+    int dummyPri = 0;
 
     switch (unitType)
     {
@@ -113,21 +112,21 @@ void EarthArmy::attack()
     if (attacker)
     {
         attacker->attack();
-        currentFighters.enqueue(attacker);
+        currentAttackers.enqueue(attacker);
     }
 
     attacker = pickAttacker(UnitType::EG);
     if (attacker)
     {
         attacker->attack();
-        currentFighters.enqueue(attacker);
+        currentAttackers.enqueue(attacker);
     }
-    
+
     attacker = pickAttacker(UnitType::ET);
     if (attacker)
     {
         attacker->attack();
-        currentFighters.enqueue(attacker);
+        currentAttackers.enqueue(attacker);
     }
 }
 

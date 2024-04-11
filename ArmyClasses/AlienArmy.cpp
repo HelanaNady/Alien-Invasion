@@ -129,25 +129,25 @@ void AlienArmy::attack()
     if (attacker)
     {
         attacker->attack();
-        currentFighters.enqueue(attacker);
+        currentAttackers.enqueue(attacker);
     }
 
     attacker = pickAttacker(UnitType::AM);
     if (attacker)
     {
         attacker->attack();
-        currentFighters.enqueue(attacker);
+        currentAttackers.enqueue(attacker);
     }
 
     if (drones.getCount() > 1)
     {
         attacker = pickAttacker(UnitType::AD);
         attacker->attack();
-        currentFighters.enqueue(attacker);
-     
+        currentAttackers.enqueue(attacker);
+
         attacker = pickAttacker(UnitType::AD);
         attacker->attack();
-        currentFighters.enqueue(attacker);
+        currentAttackers.enqueue(attacker);
     }
 }
 

@@ -6,7 +6,7 @@
 class Army
 {
 protected:
-    LinkedQueue<Unit*> currentFighters; // enqueue at the beginning of each attack function  
+    LinkedQueue<Unit*> currentAttackers; // enqueue at the beginning of each attack function  
 public:
     virtual void addUnit(Unit*) = 0;
     virtual Unit* removeUnit(UnitType) = 0;
