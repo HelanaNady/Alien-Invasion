@@ -41,7 +41,7 @@ void AlienMonster::attack()
             }
 
             // Receive damage and check whether it's dead or not
-            enemyUnit->recieveDamage(this->calcUAP(enemyUnit));
+            enemyUnit->recieveDamage(calcUAP(enemyUnit));
             if (enemyUnit->getHealth() == 0)
             {
                 gamePtr->killUnit(enemyUnit);
