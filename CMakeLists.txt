@@ -26,5 +26,4 @@ add_executable(Alien_Invasion
         Game.cpp
         ArmyClasses/AlienArmy.cpp
         ArmyClasses/EarthArmy.cpp
-        FileHandler/FileHandler.cpp
         ArmyClasses/Army.cpp)

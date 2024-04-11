@@ -16,9 +16,6 @@
     <Filter Include="Unit Classes">
       <UniqueIdentifier>{d6265d0d-9e06-4a0b-9c88-39e5e3415fa3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FileHandler">
-      <UniqueIdentifier>{8fe946b0-dd17-4611-98ef-5f13266b06f9}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Containers\PriorityQueue.h">
@@ -76,9 +73,6 @@
       <Filter>Game Class</Filter>
     </ClInclude>
     <ClInclude Include="DEFS.h" />
-    <ClInclude Include="FileHandler\FileHandler.h">
-      <Filter>FileHandler</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArmyClasses\AlienArmy.h">
@@ -125,12 +119,6 @@
     </ClCompile>
     <ClCompile Include="UnitClasses\EarthTank.cpp">
       <Filter>Unit Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="FileHandler\FileHandler.cpp">
-      <Filter>FileHandler</Filter>
-    </ClCompile>
-    <ClCompile Include="ArmyClasses\Army.cpp">
-      <Filter>Army Classes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
