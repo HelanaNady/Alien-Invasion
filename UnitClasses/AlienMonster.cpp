@@ -1,5 +1,5 @@
 #include "AlienMonster.h"
-#include "Game.h"
+#include "../Game.h"
 
 AlienMonster::AlienMonster(Game* gamePtr, int health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::AM, health, power, attackCapacity)
@@ -15,7 +15,7 @@ void AlienMonster::print() const
 void AlienMonster::attack()
 {
     int soldiersCapacity = attackCapacity / 2;
-    int tanksCapacity = attackCapacity - tanksCapacity;
+    int tanksCapacity = attackCapacity - soldiersCapacity;
 
     LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, soldiersCapacity);
     LinkedQueue<Unit*> tanksList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, tanksCapacity);
