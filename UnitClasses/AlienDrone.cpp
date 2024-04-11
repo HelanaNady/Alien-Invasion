@@ -37,8 +37,11 @@ void AlienDrone::attack()
 
         // Check if it was attacked before or not
         if (attackedUnit->getTattack() == -1)
+        {
             setTattack(gamePtr->getCurrentTimestep());
-
+            attackedUnit->setDfirst();
+        }
+            
         // Decrement health 
         int newHealth = attackedUnit->getHealth() - calcUAP(attackedUnit);
         attackedUnit->setHealth(newHealth);
@@ -63,9 +66,10 @@ void AlienDrone::attack()
         {
             gamePtr->killUnit(attackedUnit);
             attackedUnit->setTdestruction(gamePtr->getCurrentTimestep());
+            attackedUnit->setDdestruction();
+            attackedUnit->setDbattle();
         }
 
-        // Add to fought Units List
         foughtUnits.enqueue(attackedUnit->getId());
     }
 
