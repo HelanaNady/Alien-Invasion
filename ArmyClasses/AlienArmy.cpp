@@ -3,7 +3,7 @@
 #include "AlienArmy.h"
 #include "../UnitClasses/Unit.h"
 
-AlienArmy::AlienArmy(): dronesToggler(false)
+AlienArmy::AlienArmy(): AScount(0), AMcount(0), ADcount(0), dronesToggler(false)
 {}
 
 void AlienArmy::addUnit(Unit* unit)
@@ -14,10 +14,12 @@ void AlienArmy::addUnit(Unit* unit)
     {
         case UnitType::AS:
             soldiers.enqueue(unit);
+            AScount++;
             break;
 
         case UnitType::AM:
             monsters.insert(unit);
+            AMcount++;
             break;
 
         case UnitType::AD:
@@ -27,6 +29,7 @@ void AlienArmy::addUnit(Unit* unit)
                 drones.enqueueFront(unit);
 
             dronesToggler = !dronesToggler;
+            ADcount++;
             break;
     }
 }
@@ -59,10 +62,51 @@ Unit* AlienArmy::removeUnit(UnitType unitType)
     return unit;
 }
 
-void AlienArmy::print() const
+Unit* AlienArmy::pickAttacker(UnitType unitType)
 {
-    std::cout << "============== Alien Army Alive Units ==============" << std::endl;
+    Unit* unit = nullptr;
 
+    switch (unitType)
+    {
+        case UnitType::AS:
+            soldiers.peek(unit);
+            break;
+
+        case UnitType::AM:
+            if (!monsters.isEmpty())
+                monsters.entryAt(unit, (rand() % monsters.getCount()));
+            break;
+
+        case UnitType::AD:
+            if (dronesToggler)
+                drones.peek(unit);
+            else
+                drones.peekBack(unit);
+
+            dronesToggler = !dronesToggler;
+            break;
+    }
+
+    return unit;
+}
+
+int AlienArmy::getUnitsCount(UnitType unitType) const
+{
+    switch (unitType)
+    {
+        case UnitType::AS:
+            return AScount;
+        case UnitType::AM:
+            return AMcount;
+        case UnitType::AD:
+            return ADcount;
+    }
+
+    return 0;
+}
+
+void AlienArmy::printArmy() const
+{
     std::cout << soldiers.getCount() << " AS [";
     soldiers.printList();
     std::cout << "]" << std::endl;
@@ -77,7 +121,37 @@ void AlienArmy::print() const
 }
 
 void AlienArmy::attack()
-{}
+{
+    Unit* attacker = pickAttacker(UnitType::AS);
+    if (attacker)
+    {
+        attacker->attack();
+        currentAttackers.enqueue(attacker);
+    }
+
+    attacker = pickAttacker(UnitType::AM);
+    if (attacker)
+    {
+        attacker->attack();
+        currentAttackers.enqueue(attacker);
+    }
+
+    if (drones.getCount() > 1)
+    {
+        attacker = pickAttacker(UnitType::AD);
+        attacker->attack();
+        currentAttackers.enqueue(attacker);
+
+        attacker = pickAttacker(UnitType::AD);
+        attacker->attack();
+        currentAttackers.enqueue(attacker);
+    }
+}
+
+bool AlienArmy::isDead()
+{
+    return soldiers.getCount() + monsters.getCount() + drones.getCount() == 0;
+}
 
 AlienArmy::~AlienArmy()
 {

@@ -55,12 +55,12 @@ inline void PriorityQueue<T>::enqueue(const T& data, int priority)
 }
 
 template <typename T>
-inline bool PriorityQueue<T>::dequeue(T& topEntry, int& pri)
+inline bool PriorityQueue<T>::dequeue(T& topEntry, int& priority)
 {
     if (isEmpty())
         return false;
 
-    topEntry = head->getItem(pri);
+    topEntry = head->getItem(priority);
     PriorityNode<T>* temp = head;
     head = head->getNext();
     delete temp;
@@ -75,8 +75,7 @@ inline bool PriorityQueue<T>::peek(T& topEntry, int& priority)
     if (isEmpty())
         return false;
 
-    topEntry = head->getItem();
-    priority = head->getPriority();
+    topEntry = head->getItem(priority);
 
     return true;
 }

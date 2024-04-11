@@ -4,19 +4,20 @@
 #include <iostream>
 
 #include "../DEFS.h"
+#include "../Containers/LinkedQueue.h"
 
 class Game;
 
 class Unit
 {
 private:
-	Game* gamePtr;
-
 	static int lastEarthId;
 	static int lastAlienId;
 
 	ArmyType armyType;
 	UnitType unitType;
+protected:
+	Game* gamePtr;
 	int id;
 
 	int Tj; // Join time 
@@ -30,12 +31,16 @@ private:
 	int health; // Current health
 	int power; // Attack power
 	int attackCapacity; // Attack capacity
+
+	LinkedQueue<int> foughtUnits; // A list of the units fought in the current timestep to be printed
+
 public:
 	Unit(Game*, UnitType, int, int, int);
 
 	void recieveDamage(int);
+	int calcUAP(Unit*); // Calculates the damage caused when attacked by "attackerUnit"
 	virtual void print() const = 0;
-	virtual void attack(Unit*) = 0;
+	virtual void attack() = 0;
 
 	// Getters
 	int getId() const;
@@ -44,9 +49,31 @@ public:
 	int getHealth() const;
 	int getPower() const;
 	int getAttackCapacity() const;
+
+	// Time
+	int getJoinTime() const;
+	int getFirstAttackTime() const;
+	int getDestructionTime() const;
+
+	// Delay
+	int getFirstAttackDelay() const;
+	int getDestructionDelay() const;
+	int getBattleDelay() const;
+
+
+	// Setters
 	void setHealth(int);
 	void setPower(int);
 	void setAttackCapacity(int);
+
+	// Time
+	void setFirstTimeAttack(int);
+	void setDestructionTime(int);
+
+	// Delay
+	void setFirstAttackDelay();
+	void setDestructionDelay();
+	void setBattleDelay();
 
 	friend std::ostream& operator<<(std::ostream&, Unit*);
 };
