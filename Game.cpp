@@ -1,9 +1,9 @@
 #include <iostream>
+#include <fstream>
 
 #include "Game.h"
 #include "DEFS.h"
 #include "UnitClasses/Unit.h"
-#include "FileHandler/FileHandler.h"
 
 Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), randomGenerator(nullptr)
 {}
@@ -14,7 +14,7 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 	changeGameMode(gameMode);
 
 	// Load parameters for random generator
-	std::string inputParameters = FileHandler::loadFile(inputFileName);
+	std::string inputParameters = loadFromFile(inputFileName);
 	randomGenerator = new RandomGenerator(this, inputParameters);
 
 	// Run the game
@@ -67,6 +67,21 @@ void Game::printKilledList() const
 	std::cout << killedList.getCount() << " units [";
 	killedList.printList();
 	std::cout << "]" << std::endl;
+}
+
+std::string Game::loadFromFile(std::string fileName)
+{
+	std::fstream fin(fileName);
+	std::string wholeFile;
+
+	if (fin.is_open())
+	{
+		std::string newLine;
+		while (std::getline(fin, newLine))
+			wholeFile += newLine + " ";
+	}
+
+	return wholeFile;
 }
 
 int Game::getCurrentTimestep() const

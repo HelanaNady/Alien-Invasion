@@ -32,6 +32,8 @@ public:
     void killUnit(Unit*);
     void printKilledList() const;
 
+    std::string loadFromFile(std::string);
+
     // Getters
     int getCurrentTimestep() const;
 
