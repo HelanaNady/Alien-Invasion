@@ -95,6 +95,8 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 void Game::killUnit(Unit* unit)
 {
 	killedList.enqueue(unit); 
+	if (unit->getUnitType() == UnitType::AM)
+		alienArmy.removeUnit(UnitType::AM);
 }
 
 void Game::printAll() 
@@ -125,6 +127,17 @@ void Game::printKilledList() const
 int Game::getCurrentTimestep() const
 {
 	return currentTimestep;
+}
+
+int Game::getUnitsCount(ArmyType armyType, UnitType unitType) const
+{
+	switch (armyType)
+	{
+		case (ArmyType::EARTH):
+			return earthArmy.getUnitsCount(unitType);
+		default:
+			return alienArmy.getUnitsCount(unitType);
+	}
 }
 
 Game::~Game()

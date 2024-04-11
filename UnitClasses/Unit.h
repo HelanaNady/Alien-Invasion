@@ -11,14 +11,13 @@ class Game;
 class Unit
 {
 private:
-	Game* gamePtr;
-
 	static int lastEarthId;
 	static int lastAlienId;
 
 	ArmyType armyType;
 	UnitType unitType;
 protected:
+	Game* gamePtr; 
 	int id;
 
 	int Tj; // Join time 
