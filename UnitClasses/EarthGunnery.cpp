@@ -45,8 +45,8 @@ void EarthGunnery::attack()
             continue;
 
         // Check if it was attacked before or not
-        if (attackedUnit->getTattack() == -1)
-            setTattack(gamePtr->getCurrentTimestep());
+        if (attackedUnit->getFirstAttackTime() == -1)
+            attackedUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
         // Decrement health 
         attackedUnit->recieveDamage(calcUAP(attackedUnit));
@@ -70,9 +70,9 @@ void EarthGunnery::attack()
         else
         {
             gamePtr->killUnit(attackedUnit);
-            attackedUnit->setTdestruction(gamePtr->getCurrentTimestep());
-            attackedUnit->setDdestruction();
-            attackedUnit->setDbattle();
+            attackedUnit->setDestructionTime(gamePtr->getCurrentTimestep());
+            attackedUnit->setDestructionDelay();
+            attackedUnit->setBattleDelay();
         }
 
         foughtUnits.enqueue(attackedUnit->getId());
