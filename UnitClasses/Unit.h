@@ -11,14 +11,13 @@ class Game;
 class Unit
 {
 private:
-	Game* gamePtr;
-
 	static int lastEarthId;
 	static int lastAlienId;
 
 	ArmyType armyType;
 	UnitType unitType;
 protected:
+	Game* gamePtr;
 	int id;
 
 	int Tj; // Join time 
@@ -50,27 +49,31 @@ public:
 	int getHealth() const;
 	int getPower() const;
 	int getAttackCapacity() const;
+
 	// Time
-	int getTjoin() const;
-	int getTattack() const;
-	int getTdestruction() const;
+	int getJoinTime() const;
+	int getFirstAttackTime() const;
+	int getDestructionTime() const;
+
 	// Delay
-	int getDfirst() const;
-	int getDdestruction() const;
-	int getDbattle() const;
+	int getFirstAttackDelay() const;
+	int getDestructionDelay() const;
+	int getBattleDelay() const;
 
 
 	// Setters
 	void setHealth(int);
 	void setPower(int);
 	void setAttackCapacity(int);
+
 	// Time
-	void setTattack(int);
-	void setTdestruction(int);
-	//Delay
-	void setDfirst();
-	void setDdestruction();
-	void setDbattle();
+	void setFirstTimeAttack(int);
+	void setDestructionTime(int);
+
+	// Delay
+	void setFirstAttackDelay();
+	void setDestructionDelay();
+	void setBattleDelay();
 
 	friend std::ostream& operator<<(std::ostream&, Unit*);
 };

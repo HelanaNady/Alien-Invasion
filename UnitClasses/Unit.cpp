@@ -65,32 +65,32 @@ int Unit::getAttackCapacity() const
 	return attackCapacity;
 }
 
-int Unit::getTjoin() const
+int Unit::getJoinTime() const
 {
 	return Tj;
 }
 
-int Unit::getTattack() const
+int Unit::getFirstAttackTime() const
 {
 	return Ta;
 }
 
-int Unit::getTdestruction() const
+int Unit::getDestructionTime() const
 {
 	return Td;
 }
 
-int Unit::getDfirst() const
+int Unit::getFirstAttackDelay() const
 {
 	return Df;
 }
 
-int Unit::getDdestruction() const
+int Unit::getDestructionDelay() const
 {
 	return Dd;
 }
 
-int Unit::getDbattle() const
+int Unit::getBattleDelay() const
 {
 	return	Db;
 }
@@ -110,32 +110,30 @@ void Unit::setAttackCapacity(int attackCapacity)
 	attackCapacity = this->attackCapacity;
 }
 
-
-void Unit::setTattack(int Ta)
+void Unit::setFirstTimeAttack(int Ta)
 {
 	this->Ta = Ta;
 }
 
-void Unit::setTdestruction(int Td)
+void Unit::setDestructionTime(int Td)
 {
 	this->Td = Td;
 }
 
-void Unit::setDfirst()
+void Unit::setFirstAttackDelay()
 {
 	Df = Ta - Tj; // First Attack Delay
 }
 
-void Unit::setDdestruction()
+void Unit::setDestructionDelay()
 {
 	Dd = Td - Ta; // Destruction Delay
 }
 
-void Unit::setDbattle()
+void Unit::setBattleDelay()
 {
 	Db = Td - Tj; // Battle Time
 }
-
 
 std::ostream& operator<<(std::ostream& oStream, Unit* unitObj)
 {
