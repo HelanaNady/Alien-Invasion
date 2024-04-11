@@ -7,5 +7,5 @@ EarthSoldier::EarthSoldier(Game* gamePtr, int health, int power, int attackCapac
 void EarthSoldier::print() const
 {}
 
-void EarthSoldier::attack(Unit* aUnit)
+void EarthSoldier::attack()
 {}

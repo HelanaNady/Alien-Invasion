@@ -7,5 +7,5 @@ EarthTank::EarthTank(Game* gamePtr, int health, int power, int attackCapacity)
 void EarthTank::print() const
 {}
 
-void EarthTank::attack(Unit* aUnit)
+void EarthTank::attack()
 {}

@@ -35,7 +35,7 @@ public:
 
 	void receiveDamage(int); // Receive damage from an attack
 	virtual void print() const = 0; // Print the unit
-	virtual void attack(Unit*) = 0; // Run the attack for the unit
+	virtual void attack() = 0; // Run the attack for the unit
 
 	bool isAlive() const; // Check if the unit is alive
 	bool isDead() const; // Check if the unit is dead

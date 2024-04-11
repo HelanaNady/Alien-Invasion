@@ -7,5 +7,5 @@ AlienSoldier::AlienSoldier(Game* gamePtr, int health, int power, int attackCapac
 void AlienSoldier::print() const
 {}
 
-void AlienSoldier::attack(Unit* aUnit)
+void AlienSoldier::attack()
 {}
