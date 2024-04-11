@@ -26,12 +26,12 @@ public:
     void run(GameMode, std::string);
     void incrementTimestep();
     void changeGameMode(GameMode);
-    bool battleOver() ;
-    
+    bool battleOver();
+
     void addUnit(Unit*);
     LinkedQueue<Unit*> getEnemyList(ArmyType, UnitType, int);
     void killUnit(Unit*);
-   
+
     void printAll();
     void printKilledList() const; // Prints the killed list with the console formats
 

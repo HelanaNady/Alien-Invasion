@@ -58,8 +58,8 @@ public:
 	int getDfirst() const;
 	int getDdestruction() const;
 	int getDbattle() const;
-	
-	
+
+
 	// Setters
 	void setHealth(int);
 	void setPower(int);
