@@ -43,7 +43,7 @@ void Game::changeGameMode(GameMode gameMode)
 	this->gameMode = gameMode;
 }
 
-bool Game::battleOver() 
+bool Game::battleOver()
 {
 	return currentTimestep > 40 && !(earthArmy.isDead() && alienArmy.isDead());
 }
@@ -54,10 +54,11 @@ void Game::addUnit(Unit* unit)
 
 	switch (armyType)
 	{
-		case (ArmyType::EARTH):
+		case ArmyType::EARTH:
 			earthArmy.addUnit(unit);
 			break;
-		default:
+
+		case ArmyType::ALIEN:
 			alienArmy.addUnit(unit);
 			break;
 	}
@@ -67,10 +68,10 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 {
 	LinkedQueue<Unit*> enemyUnits;
 	Unit* enemyUnitPtr = nullptr;
-	
+
 	switch (armyType)
 	{
-		case(ArmyType::EARTH):
+		case ArmyType::EARTH:
 			for (int i = 0; i < attackCapacity; i++)
 			{
 				enemyUnitPtr = earthArmy.removeUnit(unitType);
@@ -78,12 +79,13 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 					enemyUnits.enqueue(enemyUnitPtr);
 			}
 			break;
-		default:
+
+		case ArmyType::ALIEN:
 			for (int i = 0; i < attackCapacity; i++)
 			{
-				enemyUnitPtr = alienArmy.removeUnit(unitType); 
-				if (enemyUnitPtr) 
-					enemyUnits.enqueue(enemyUnitPtr); 
+				enemyUnitPtr = alienArmy.removeUnit(unitType);
+				if (enemyUnitPtr)
+					enemyUnits.enqueue(enemyUnitPtr);
 			}
 			break;
 	}
@@ -94,10 +96,10 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 
 void Game::killUnit(Unit* unit)
 {
-	killedList.enqueue(unit); 
+	killedList.enqueue(unit);
 }
 
-void Game::printAll() 
+void Game::printAll()
 {
 	std::cout << "\nCurrent Timestep " << currentTimestep << std::endl;
 
@@ -106,7 +108,7 @@ void Game::printAll()
 
 	std::cout << "============== Alien Army Alive Units ==============" << std::endl;
 	alienArmy.printArmy();
-	
+
 	std::cout << "============== Units fighting at current step ==============" << std::endl;
 	earthArmy.printFightingUnits(); // Is this right?
 	alienArmy.printFightingUnits();
