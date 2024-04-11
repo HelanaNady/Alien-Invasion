@@ -60,11 +60,7 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 	if (armyType == ArmyType::EARTH)
 	{
 		int power = getRandomNumber(earthPowerRange.min, earthPowerRange.max); // Generate a random power value
-		int health;
-		if (earthHealthRange.max > 100) // Initial health shouldn't exceed 100
-			health = getRandomNumber(earthHealthRange.min, 99);
-		else
-			health = getRandomNumber(earthHealthRange.min, earthHealthRange.max);
+		int health = getRandomNumber(earthHealthRange.min, earthHealthRange.max); // Generate a random health value
 		int attackCapacity = getRandomNumber(earthAttackCapacityRange.min, earthAttackCapacityRange.max); // Generate a random attack capacity value
 
 		// Generate a random unit based on the B value and the percentages
@@ -78,11 +74,7 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 	else
 	{
 		int power = getRandomNumber(alienPowerRange.min, alienPowerRange.max); // Generate a random power value
-		int health;
-		if (alienHealthRange.max > 100) // Initial health shouldn't exceed 100
-			health = getRandomNumber(alienHealthRange.min, 99);
-		else
-			health = getRandomNumber(alienHealthRange.min, alienHealthRange.max);
+		int health = getRandomNumber(alienHealthRange.min, alienHealthRange.max); // Generate a random health value
 		int attackCapacity = getRandomNumber(alienAttackCapacityRange.min, alienAttackCapacityRange.max); // Generate a random attack capacity value
 
 		// Generate a random unit based on the B value and the percentages

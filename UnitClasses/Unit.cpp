@@ -4,8 +4,17 @@
 int Unit::lastEarthId = 0;
 int Unit::lastAlienId = 1999;
 
-Unit::Unit(Game* gamePtr, UnitType unitType, int health, int power, int attackCapacity): gamePtr(gamePtr), unitType(unitType), Ta(0), Td(0), Df(0), Dd(0), Db(0), health(health), power(power), attackCapacity(attackCapacity)
+Unit::Unit(Game* gamePtr, UnitType unitType, int health, int power, int attackCapacity): gamePtr(gamePtr), unitType(unitType), Ta(0), Td(0), Df(0), Dd(0), Db(0), power(power), attackCapacity(attackCapacity)
 {
+	// Check if the health value is within the range [0, 100]
+	if (health < 0)
+		health = 0;
+	if (health > 100)
+		health = 100;
+
+	this->health = health;
+
+	// Set the ID and the army type based on the unit type
 	if (unitType == UnitType::ES || unitType == UnitType::EG || unitType == UnitType::ET) // Earth unit
 	{
 		id = ++lastEarthId; // Increment the last Earth unit ID
