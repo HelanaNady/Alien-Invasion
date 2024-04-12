@@ -3,7 +3,7 @@
 #include "AlienArmy.h"
 #include "../UnitClasses/Unit.h"
 
-AlienArmy::AlienArmy(): AScount(0), AMcount(0), ADcount(0), dronesToggler(false)
+AlienArmy::AlienArmy(): dronesToggler(false)
 {}
 
 void AlienArmy::addUnit(Unit* unit)
@@ -14,13 +14,11 @@ void AlienArmy::addUnit(Unit* unit)
     {
         case UnitType::AS:
             soldiers.enqueue(unit);
-            AScount++;
             break;
 
 
         case UnitType::AM:
             monsters.insert(unit);
-            AMcount++;
             break;
 
         default:
@@ -29,7 +27,6 @@ void AlienArmy::addUnit(Unit* unit)
             else
                 drones.enqueueFront(unit);
             dronesToggler = !dronesToggler;
-            ADcount++;
             break;
     }
 }
@@ -95,13 +92,13 @@ int AlienArmy::getUnitsCount(UnitType unitType) const
     switch (unitType)
     {
         case AS:
-            return AScount;
+            return soldiers.getCount();
             break;
         case AM:
-            return AMcount;
+            return monsters.getCount();
             break;
         default:
-            return ADcount;
+            return drones.getCount();
             break;
     }
 

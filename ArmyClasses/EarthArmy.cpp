@@ -3,11 +3,6 @@
 #include "EarthArmy.h"
 #include "../UnitClasses/Unit.h"
 
-
-EarthArmy::EarthArmy(): EScount(0), EGcount(0), ETcount(0)
-{
-}
-
 void EarthArmy::addUnit(Unit* unit)
 {
     UnitType unitType = unit->getUnitType();
@@ -16,17 +11,14 @@ void EarthArmy::addUnit(Unit* unit)
     {
         case UnitType::ES:
             soldiers.enqueue(unit);
-            EScount++;
             break;
        
         case UnitType::ET:
             tanks.push(unit);
-            ETcount++;
             break;
 
         default:
             gunneries.enqueue(unit, unit->getHealth() + unit->getPower());
-            EGcount++;
             break;
     }
 }
@@ -61,13 +53,13 @@ Unit* EarthArmy::pickAttacker(UnitType unitType)
 
     switch (unitType)
     {
-        case ES:
+        case UnitType::ES:
             soldiers.peek(unit);
             break;
-        case EG:
+        case UnitType::EG:
             gunneries.peek(unit, dummyPri);
             break;
-        default:
+        case UnitType::ET:
             tanks.peek(unit);
             break;
     }
@@ -79,14 +71,14 @@ int EarthArmy::getUnitsCount(UnitType unitType) const
 {
     switch (unitType)
     {
-        case ES:
-            return EScount;
+        case UnitType::ES:
+            return soldiers.getCount();
             break;
-        case EG:
-            return EGcount;
+        case UnitType::EG:
+            return gunneries.getCount();
             break;
-        default:
-            return ETcount;
+        case UnitType::ET:
+            return tanks.getCount();
             break;
     }
 }
