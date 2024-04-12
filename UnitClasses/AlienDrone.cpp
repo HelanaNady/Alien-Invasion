@@ -74,17 +74,10 @@ void AlienDrone::attack()
 
     // Re-adding attacked units to their original lists
 
-    while (!ETtempList.isEmpty())
-    {
-        Unit* unit;
-        ETtempList.pop(unit);
+    Unit* unit = nullptr;
+    while (ETtempList.pop(unit))
         gamePtr->addUnit(unit);
-    }
 
-    while (!EGtempList.isEmpty())
-    {
-        Unit* unit;
-        EGtempList.dequeue(unit);
+    while (EGtempList.dequeue(unit))
         gamePtr->addUnit(unit);
-    }
 }
