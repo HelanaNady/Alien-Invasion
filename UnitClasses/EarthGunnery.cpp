@@ -31,12 +31,12 @@ void EarthGunnery::attack()
 
         if (dronesCount == 0)
         {
-            ADlist.dequeue(attackedUnit);
-            dronesCount = 2; // Reset counter
+            AMlist.dequeue(attackedUnit);
+            dronesCount = 2; // Reseting the counter
         }
         else
         {
-            AMlist.dequeue(attackedUnit);
+            ADlist.dequeue(attackedUnit);
             dronesCount--;
         }
 
