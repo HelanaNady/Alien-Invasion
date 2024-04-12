@@ -17,15 +17,7 @@ private:
     ArrayStack<Unit*> tanks;
     PriorityQueue<Unit*> gunneries;
 
-    // Counts needed for the outputfile statistics
-
-    // Initial units count
-    int EScount;
-    int ETcount;
-    int EGcount;
-
 public:
-    EarthArmy();
     void addUnit(Unit*);
     Unit* removeUnit(UnitType);
     Unit* pickAttacker(UnitType);

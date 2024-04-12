@@ -28,14 +28,24 @@ private:
 	Range alienHealthRange;
 	Range alienAttackCapacityRange;
 
+	// Counts needed for the outputfile statistics
+	// Total units generated through the whole battle (all timesteps combined)
+	int AScount;
+	int AMcount;
+	int ADcount;
+	int EScount;
+	int ETcount;
+	int EGcount;
+
 private:
 	void loadParameters(std::string);
-	Unit* generateUnit(ArmyType) const;
+	Unit* generateUnit(ArmyType);
 
 public:
 	RandomGenerator(Game*, std::string);
-	void generateArmy(ArmyType) const;
+	void generateArmy(ArmyType);
 	int getRandomNumber(int, int) const;
+	int getTotalUnitCount(UnitType) const;
 };
 
 #endif
