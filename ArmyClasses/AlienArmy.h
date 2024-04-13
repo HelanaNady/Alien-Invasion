@@ -33,8 +33,6 @@ public:
     int getUnitsCount(UnitType) const;
 
     ~AlienArmy();
-
-
 };
 
 #endif

@@ -116,21 +116,15 @@ int RandomGenerator::getTotalUnitCount(UnitType unitType) const
 	{
 		case UnitType::AS:
 			return totalAScount;
-			break;
 		case UnitType::AM:
 			return totalAMcount;
-			break;
 		case UnitType::AD:
 			return totalADcount;
-			break; 
-		case UnitType::ES: 
+		case UnitType::ES:
 			return totalEScount;
-			break;
-		case UnitType::ET: 
+		case UnitType::ET:
 			return totalETcount;
-			break;
-		case UnitType::EG: 
+		case UnitType::EG:
 			return totalEGcount;
-			break;
 	}
 }

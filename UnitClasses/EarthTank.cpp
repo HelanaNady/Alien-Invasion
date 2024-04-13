@@ -69,7 +69,6 @@ void EarthTank::attack()
             tempList.enqueue(enemyUnit);
     }
 
-
     // Re-adding attacked units to their original lists
     Unit* tempUnitPtr = nullptr;
     while (tempList.dequeue(tempUnitPtr))

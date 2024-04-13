@@ -99,7 +99,6 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 	return enemyUnits;
 }
 
-
 void Game::killUnit(Unit* unit)
 {
 	killedList.enqueue(unit);

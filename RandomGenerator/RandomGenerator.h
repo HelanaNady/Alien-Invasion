@@ -35,7 +35,7 @@ private:
 	int totalADcount;
 	int totalEScount;
 	int totalETcount;
-	int totalEGcount; 
+	int totalEGcount;
 
 private:
 	void loadParameters(std::string);

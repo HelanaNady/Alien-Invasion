@@ -21,7 +21,6 @@ public:
     int getCount() const;
 };
 
-
 template <typename T>
 inline Array<T>::Array(): count(0)
 {}

@@ -55,7 +55,6 @@ inline void Node<T>::setPrev(Node<T>* prevNodePtr)
     prev = prevNodePtr;
 }
 
-
 template < typename T>
 inline T Node<T>::getItem() const
 {
