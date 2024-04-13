@@ -13,12 +13,13 @@
 #include "../UnitClasses/AlienDrone.h"
 #include "../Game.h"
 
-RandomGenerator::RandomGenerator(Game* gamePtr, std::string wholeFile): gamePtr(gamePtr)
+RandomGenerator::RandomGenerator(Game* gamePtr, std::string wholeFile)
+	: gamePtr(gamePtr), totalAScount(0), totalAMcount(0), totalADcount(0), totalEScount(0), totalEGcount(0), totalETcount(0)
 {
 	loadParameters(wholeFile);
 }
 
-void RandomGenerator::generateArmy(ArmyType armyType) const
+void RandomGenerator::generateArmy(ArmyType armyType)
 {
 	int A = getRandomNumber(1, 100);
 
@@ -50,7 +51,7 @@ void RandomGenerator::loadParameters(std::string wholeFile)
 	ss >> alienAttackCapacityRange.min >> dummyHyphen >> alienAttackCapacityRange.max;
 }
 
-Unit* RandomGenerator::generateUnit(ArmyType armyType) const
+Unit* RandomGenerator::generateUnit(ArmyType armyType)
 {
 	Unit* newUnit = nullptr;
 
@@ -67,11 +68,20 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 		int attackCapacity = getRandomNumber(earthAttackCapacityRange.min, earthAttackCapacityRange.max);
 
 		if (B <= ESPercentage)
+		{
 			newUnit = new EarthSoldier(gamePtr, health, power, attackCapacity);
+			totalEScount++;
+		}
 		else if (B <= (ESPercentage + ETPercentage))
+		{
 			newUnit = new EarthTank(gamePtr, health, power, attackCapacity);
+			totalETcount++;
+		}
 		else
+		{
 			newUnit = new EarthGunnery(gamePtr, health, power, attackCapacity);
+			totalEGcount++;
+		}
 	}
 	else
 	{
@@ -84,11 +94,20 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 		int attackCapacity = getRandomNumber(alienAttackCapacityRange.min, alienAttackCapacityRange.max);
 
 		if (B <= ASPercentage)
+		{
 			newUnit = new AlienSoldier(gamePtr, health, power, attackCapacity);
+			totalAScount++;
+		}
 		else if (B <= (ASPercentage + AMPercentage))
+		{
 			newUnit = new AlienMonster(gamePtr, health, power, attackCapacity);
+			totalAMcount++;
+		}
 		else
+		{
 			newUnit = new AlienDrone(gamePtr, health, power, attackCapacity);
+			totalADcount++;
+		}
 	}
 
 	return newUnit;
@@ -97,4 +116,29 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 int RandomGenerator::getRandomNumber(int min, int max) const
 {
 	return min + rand() % (max - min + 1);
+}
+
+int RandomGenerator::getTotalUnitCount(UnitType unitType) const
+{
+	switch (unitType)
+	{
+		case UnitType::AS:
+			return totalAScount;
+			break;
+		case UnitType::AM:
+			return totalAMcount;
+			break;
+		case UnitType::AD:
+			return totalADcount;
+			break; 
+		case UnitType::ES: 
+			return totalEScount;
+			break;
+		case UnitType::ET: 
+			return totalETcount;
+			break;
+		case UnitType::EG: 
+			return totalEGcount;
+			break;
+	}
 }

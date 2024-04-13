@@ -17,13 +17,6 @@ private:
     Array<Unit*> monsters;
     Deque<Unit*> drones;
 
-    // Counts needed for the outputfile statistics
-
-    // Initial units count
-    int AScount;
-    int AMcount;
-    int ADcount;
-
     bool dronesToggler;
 
 public:

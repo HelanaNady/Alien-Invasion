@@ -143,6 +143,17 @@ int Game::getCurrentTimestep() const
 	return currentTimestep;
 }
 
+int Game::getUnitsCount(ArmyType armyType, UnitType unitType) const
+{
+	switch (armyType)
+	{
+		case (ArmyType::EARTH):
+			return earthArmy.getUnitsCount(unitType);
+		case (ArmyType::ALIEN):
+			return alienArmy.getUnitsCount(unitType);
+	}
+}
+
 Game::~Game()
 {
 	// Delete the random generator

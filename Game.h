@@ -29,8 +29,8 @@ public:
     bool battleOver();
 
     void addUnit(Unit*);
-    LinkedQueue<Unit*> getEnemyList(ArmyType, UnitType, int);
     void killUnit(Unit*);
+    LinkedQueue<Unit*> getEnemyList(ArmyType, UnitType, int);
 
     void printAll();
     void printKilledList() const; // Prints the killed list with the console formats
@@ -39,6 +39,7 @@ public:
 
     // Getters
     int getCurrentTimestep() const;
+    int getUnitsCount(ArmyType, UnitType) const;
 
     ~Game();
 };
