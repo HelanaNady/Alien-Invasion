@@ -69,4 +69,3 @@ inline bool Deque<T>::enqueueFront(const T& newEntry)
 }
 
 #endif
-

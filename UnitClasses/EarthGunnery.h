@@ -13,4 +13,5 @@ public:
 
 	int getPriority() const;
 };
+
 #endif

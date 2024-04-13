@@ -16,5 +16,6 @@ public:
 
     virtual ~StackADT() {}
 };
+
 #endif 
 

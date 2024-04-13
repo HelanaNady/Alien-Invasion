@@ -76,4 +76,5 @@ public:
 
 	friend std::ostream& operator<<(std::ostream&, Unit*);
 };
+
 #endif
