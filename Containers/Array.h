@@ -2,9 +2,10 @@
 #define ARRAY_H
 
 #include <iostream>
+#include "ArrayADT.h"
 
 template<typename T>
-class Array
+class Array: public ArrayADT<T>
 {
     enum { MAX_SIZE = 1000 };
 private:
