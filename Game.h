@@ -31,7 +31,6 @@ public:
     void addUnit(Unit*);
     void killUnit(Unit*);
     LinkedQueue<Unit*> getEnemyList(ArmyType, UnitType, int);
-    void killUnit(Unit*);
 
     void printAll();
     void printKilledList() const; // Prints the killed list with the console formats

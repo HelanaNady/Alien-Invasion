@@ -54,9 +54,9 @@ void EarthTank::attack()
         }
 
         // Check if it were attacked before or not 
-        if (enemyUnit->getTattack() == -1) 
+        if (enemyUnit->getFirstAttackTime() == -1) 
         {
-            enemyUnit->setTattack(gamePtr->getCurrentTimestep()); 
+            enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep()); 
         }
 
         // Recieve damage and check whether it's dead or not
@@ -64,7 +64,7 @@ void EarthTank::attack()
         if (enemyUnit->getHealth() == 0)
         {
             gamePtr->killUnit(enemyUnit);
-            enemyUnit->setTdestruction(gamePtr->getCurrentTimestep());
+            enemyUnit->setDestructionTime(gamePtr->getCurrentTimestep());
             if(deadSoldiers < soldiersToKill)
             deadSoldiers++;
         }
