@@ -145,7 +145,7 @@ void AlienArmy::attack()
     }
 }
 
-bool AlienArmy::isDead()
+bool AlienArmy::isDead() const
 {
     return soldiers.getCount() + monsters.getCount() + drones.getCount() == 0;
 }

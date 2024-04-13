@@ -28,7 +28,7 @@ private:
 	Range alienHealthRange;
 	Range alienAttackCapacityRange;
 
-	// Counts needed for the outputfile statistics
+	// Counts needed for the output file statistics
 	// Total units generated through the whole battle (all timesteps combined)
 	int totalAScount;
 	int totalAMcount;

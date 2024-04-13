@@ -122,7 +122,7 @@ void EarthArmy::attack()
     }
 }
 
-bool EarthArmy::isDead()
+bool EarthArmy::isDead() const
 {
     return soldiers.getCount() + tanks.getCount() + gunneries.getCount() == 0;
 }

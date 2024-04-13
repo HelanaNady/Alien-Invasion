@@ -158,6 +158,8 @@ int Game::getUnitsCount(ArmyType armyType, UnitType unitType) const
 		case (ArmyType::ALIEN):
 			return alienArmy.getUnitsCount(unitType);
 	}
+
+	return 0;
 }
 
 Game::~Game()

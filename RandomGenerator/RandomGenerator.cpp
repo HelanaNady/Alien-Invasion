@@ -40,7 +40,7 @@ void RandomGenerator::loadParameters(std::string wholeFile)
 	std::stringstream ss(wholeFile);
 	ss >> N >> ESPercentage >> ETPercentage >> EGPercentage >> ASPercentage >> AMPercentage >> ADPercentage >> prob;
 
-	char dummyHyphen;
+	char dummyHyphen = '\0';
 
 	ss >> earthPowerRange.min >> dummyHyphen >> earthPowerRange.max;
 	ss >> earthHealthRange.min >> dummyHyphen >> earthHealthRange.max;
@@ -127,4 +127,6 @@ int RandomGenerator::getTotalUnitCount(UnitType unitType) const
 		case UnitType::EG:
 			return totalEGcount;
 	}
+
+	return 0;
 }
