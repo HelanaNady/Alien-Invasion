@@ -14,7 +14,7 @@
 #include "../Game.h"
 
 RandomGenerator::RandomGenerator(Game* gamePtr, std::string wholeFile)
-	: gamePtr(gamePtr), AScount(0), AMcount(0), ADcount(0), EScount(0), EGcount(0), ETcount(0)
+	: gamePtr(gamePtr), totalAScount(0), totalAMcount(0), totalADcount(0), totalEScount(0), totalEGcount(0), totalETcount(0)
 {
 	loadParameters(wholeFile);
 }
@@ -70,17 +70,17 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType)
 		if (B <= ESPercentage)
 		{
 			newUnit = new EarthSoldier(gamePtr, health, power, attackCapacity);
-			EScount++;
+			totalEScount++;
 		}
 		else if (B <= (ESPercentage + ETPercentage))
 		{
 			newUnit = new EarthTank(gamePtr, health, power, attackCapacity);
-			ETcount++;
+			totalETcount++;
 		}
 		else
 		{
 			newUnit = new EarthGunnery(gamePtr, health, power, attackCapacity);
-			EGcount++;
+			totalEGcount++;
 		}
 	}
 	else
@@ -94,11 +94,20 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType)
 		int attackCapacity = getRandomNumber(alienAttackCapacityRange.min, alienAttackCapacityRange.max);
 
 		if (B <= ASPercentage)
+		{
 			newUnit = new AlienSoldier(gamePtr, health, power, attackCapacity);
+			totalAScount++;
+		}
 		else if (B <= (ASPercentage + AMPercentage))
+		{
 			newUnit = new AlienMonster(gamePtr, health, power, attackCapacity);
+			totalAMcount++;
+		}
 		else
+		{
 			newUnit = new AlienDrone(gamePtr, health, power, attackCapacity);
+			totalADcount++;
+		}
 	}
 
 	return newUnit;
@@ -114,22 +123,22 @@ int RandomGenerator::getTotalUnitCount(UnitType unitType) const
 	switch (unitType)
 	{
 		case UnitType::AS:
-			return AScount;
+			return totalAScount;
 			break;
 		case UnitType::AM:
-			return AMcount;
+			return totalAMcount;
 			break;
 		case UnitType::AD:
-			return ADcount;
+			return totalADcount;
 			break; 
 		case UnitType::ES: 
-			return EScount;
+			return totalEScount;
 			break;
 		case UnitType::ET: 
-			return ETcount;
+			return totalETcount;
 			break;
 		case UnitType::EG: 
-			return EGcount; 
+			return totalEGcount;
 			break;
 	}
 }

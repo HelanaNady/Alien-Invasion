@@ -30,12 +30,12 @@ private:
 
 	// Counts needed for the outputfile statistics
 	// Total units generated through the whole battle (all timesteps combined)
-	int AScount;
-	int AMcount;
-	int ADcount;
-	int EScount;
-	int ETcount;
-	int EGcount;
+	int totalAScount;
+	int totalAMcount;
+	int totalADcount;
+	int totalEScount;
+	int totalETcount;
+	int totalEGcount; 
 
 private:
 	void loadParameters(std::string);
