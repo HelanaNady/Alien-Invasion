@@ -91,15 +91,12 @@ int AlienArmy::getUnitsCount(UnitType unitType) const
 {
     switch (unitType)
     {
-        case AS:
+        case UnitType::AS:
             return soldiers.getCount();
-            break;
-        case AM:
+        case UnitType::AM:
             return monsters.getCount();
-            break;
-        default:
+        case UnitType::AD:
             return drones.getCount();
-            break;
     }
 
     return 0;

@@ -12,12 +12,10 @@ void EarthArmy::addUnit(Unit* unit)
         case UnitType::ES:
             soldiers.enqueue(unit);
             break;
-
         case UnitType::ET:
             tanks.push(unit);
             break;
-
-        default:
+        case UnitType::EG:
             gunneries.enqueue(unit, unit->getHealth() + unit->getPower());
             break;
     }
@@ -67,9 +65,9 @@ Unit* EarthArmy::pickAttacker(UnitType unitType)
     return unit;
 }
 
-int EarthArmy::getUnitsCount(UnitType unitType) const 
+int EarthArmy::getUnitsCount(UnitType unitType) const
 {
-    switch (unitType) 
+    switch (unitType)
     {
         case UnitType::ES:
             return soldiers.getCount();
