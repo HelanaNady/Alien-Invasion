@@ -17,11 +17,22 @@ void AlienMonster::print() const
 
 void AlienMonster::attack()
 {
-    int soldiersCapacity = attackCapacity / 2;
-    int tanksCapacity = attackCapacity - soldiersCapacity;
+    // Get the counts of available units
+    int availableSoldiersCount = gamePtr->getUnitsCount(ArmyType::EARTH, UnitType::ES);
+    int availableTanksCount = gamePtr->getUnitsCount(ArmyType::EARTH, UnitType::ET);
 
-    LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, soldiersCapacity);
-    LinkedQueue<Unit*> tanksList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, tanksCapacity);
+    // Calculate the attack capacity for soldiers and tanks
+    int soldiersAttackCapacity = std::min(availableSoldiersCount, attackCapacity / 2);
+    int remainingAttackCapacity = attackCapacity - soldiersAttackCapacity;
+    int tanksAttackCapacity = std::min(availableTanksCount, remainingAttackCapacity);
+
+    // If there's still remaining attack capacity add it to soldiers attack capacity
+    if (tanksAttackCapacity < remainingAttackCapacity)
+        soldiersAttackCapacity += std::min(availableSoldiersCount - soldiersAttackCapacity, remainingAttackCapacity - tanksAttackCapacity);
+
+    // Get the lists of soldiers and tanks
+    LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, soldiersAttackCapacity);
+    LinkedQueue<Unit*> tanksList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, tanksAttackCapacity);
 
     LinkedQueue<Unit*> soldiersTempList;
     ArrayStack<Unit*> tanksTempList;

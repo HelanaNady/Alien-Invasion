@@ -23,8 +23,8 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 		incrementTimestep();
 
 		// Print the output
-	if (gameMode == GameMode::INTERACTIVE)
-		printAll();
+		if (gameMode == GameMode::INTERACTIVE)
+			printAll();
 
 		std::cout << "Press Enter to continue...";
 		while (std::cin.get() != '\n');
@@ -51,7 +51,7 @@ void Game::changeGameMode(GameMode gameMode)
 
 bool Game::battleOver()
 {
-	return currentTimestep > 40 && (earthArmy.isDead() || alienArmy.isDead());
+	return currentTimestep >= 40 && (earthArmy.isDead() || alienArmy.isDead());
 }
 
 void Game::addUnit(Unit* unit)
