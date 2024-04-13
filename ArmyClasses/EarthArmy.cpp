@@ -67,9 +67,9 @@ Unit* EarthArmy::pickAttacker(UnitType unitType)
     return unit;
 }
 
-int EarthArmy::getUnitsCount(UnitType unitType) const
+int EarthArmy::getUnitsCount(UnitType unitType) const 
 {
-    switch (unitType)
+    switch (unitType) 
     {
         case UnitType::ES:
             return soldiers.getCount();

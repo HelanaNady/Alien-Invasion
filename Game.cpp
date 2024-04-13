@@ -135,7 +135,7 @@ int Game::getUnitsCount(ArmyType armyType, UnitType unitType) const
 	{
 		case (ArmyType::EARTH):
 			return earthArmy.getUnitsCount(unitType);
-		default:
+		case (ArmyType::ALIEN):
 			return alienArmy.getUnitsCount(unitType);
 	}
 }
