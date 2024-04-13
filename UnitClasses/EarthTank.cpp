@@ -8,13 +8,15 @@ EarthTank::EarthTank(Game* gamePtr, int health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::ET, health, power, attackCapacity)
 {}
 
-void EarthTank::print() const
+void EarthTank::print()
 {
     if (!foughtUnits.isEmpty())
     {
         std::cout << "ET " << getId() << " shots [";
         foughtUnits.printList();
-        std::cout << "]\n";
+        std::cout << "]" << std::endl;
+
+        clearFoughtUnits(); // Clear the list after printing
     }
 }
 

@@ -5,13 +5,15 @@ AlienDrone::AlienDrone(Game* gamePtr, int health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::AD, health, power, attackCapacity)
 {}
 
-void AlienDrone::print() const
+void AlienDrone::print()
 {
     if (!foughtUnits.isEmpty())
     {
         std::cout << "AD " << getId() << " shots [";
         foughtUnits.printList();
-        std::cout << "]\n";
+        std::cout << "]" << std::endl;
+
+        clearFoughtUnits(); // Clear the list after printing
     }
 }
 

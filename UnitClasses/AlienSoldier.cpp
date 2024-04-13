@@ -5,13 +5,15 @@ AlienSoldier::AlienSoldier(Game* gamePtr, int health, int power, int attackCapac
     : Unit(gamePtr, UnitType::AS, health, power, attackCapacity)
 {}
 
-void AlienSoldier::print() const
+void AlienSoldier::print()
 {
     if (!foughtUnits.isEmpty())
     {
         std::cout << "AS " << getId() << " shots [";
         foughtUnits.printList();
-        std::cout << "]\n";
+        std::cout << "]" << std::endl;
+
+        clearFoughtUnits(); // Clear the list after printing
     }
 }
 

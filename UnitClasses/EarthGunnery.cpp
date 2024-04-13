@@ -5,13 +5,15 @@ EarthGunnery::EarthGunnery(Game* gamePtr, int health, int power, int attackCapac
     : Unit(gamePtr, UnitType::EG, health, power, attackCapacity)
 {}
 
-void EarthGunnery::print() const
+void EarthGunnery::print()
 {
     if (!foughtUnits.isEmpty())
     {
         std::cout << "EG " << getId() << " shots [";
         foughtUnits.printList();
-        std::cout << "]\n";
+        std::cout << "]" << std::endl;
+
+        clearFoughtUnits(); // Clear the list after printing
     }
 }
 

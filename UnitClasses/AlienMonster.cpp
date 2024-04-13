@@ -5,13 +5,15 @@ AlienMonster::AlienMonster(Game* gamePtr, int health, int power, int attackCapac
     : Unit(gamePtr, UnitType::AM, health, power, attackCapacity)
 {}
 
-void AlienMonster::print() const
+void AlienMonster::print()
 {
     if (!foughtUnits.isEmpty())
     {
         std::cout << "AM " << getId() << " shots [";
         foughtUnits.printList();
-        std::cout << "]\n";
+        std::cout << "]" << std::endl;
+
+        clearFoughtUnits(); // Clear the list after printing
     }
 }
 

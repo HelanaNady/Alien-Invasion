@@ -46,6 +46,12 @@ void Unit::receiveDamage(int UAP)
 	}
 }
 
+void Unit::clearFoughtUnits()
+{
+	int i = 0;
+	while (foughtUnits.dequeue(i));
+}
+
 bool Unit::isAlive() const
 {
 	return health > 0;

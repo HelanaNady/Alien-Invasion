@@ -8,13 +8,15 @@ EarthSoldier::EarthSoldier(Game* gamePtr, int health, int power, int attackCapac
     : Unit(gamePtr, UnitType::ES, health, power, attackCapacity)
 {}
 
-void EarthSoldier::print() const
+void EarthSoldier::print()
 {
     if (!foughtUnits.isEmpty())
     {
         std::cout << "ES " << getId() << " shots [";
         foughtUnits.printList();
-        std::cout << "]\n";
+        std::cout << "]" << std::endl;
+
+        clearFoughtUnits(); // Clear the list after printing
     }
 }
 
