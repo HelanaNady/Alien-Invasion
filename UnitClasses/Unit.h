@@ -23,10 +23,6 @@ private:
 	int Ta; // First attack time
 	int Td; // Destruction time
 
-	int Df; // First attack delay
-	int Dd; // Destruction delay
-	int Db; // Battle time
-
 	int health; // Current health
 	int power; // Attack power
 	int attackCapacity; // Attack capacity
@@ -47,6 +43,9 @@ public:
 	int getHealth() const;
 	int getPower() const;
 	int getAttackCapacity() const;
+	int getFirstAttackDelay() const;
+	int getDestructionDelay() const;
+	int getBattleDelay() const;
 
 	// Setters
 	void setPower(int);
