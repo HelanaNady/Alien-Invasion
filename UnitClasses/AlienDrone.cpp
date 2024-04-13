@@ -9,7 +9,7 @@ void AlienDrone::print() const
 {
     if (!foughtUnits.isEmpty())
     {
-        std::cout << "AD " << this->getId() << " shots [";
+        std::cout << "AD " << getId() << " shots [";
         foughtUnits.printList();
         std::cout << "]\n";
     }
@@ -42,9 +42,9 @@ void AlienDrone::attack()
         // Set the first attack time if it's the first time attacking
         if (attackedUnit->isFirstAttack())
             attackedUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
-        
+
         // Receive damage and check whether it's dead or not
-        attackedUnit->recieveDamage(calcUAP(attackedUnit));
+        attackedUnit->receiveDamage(calcUAP(attackedUnit));
 
         if (attackedUnit->isDead())
             gamePtr->killUnit(attackedUnit);

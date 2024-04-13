@@ -35,7 +35,7 @@ void Unit::setHealth(int health)
 	this->health = health;
 }
 
-void Unit::recieveDamage(int UAP)
+void Unit::receiveDamage(int UAP)
 {
 	health -= UAP;
 
@@ -60,7 +60,6 @@ bool Unit::isFirstAttack() const
 {
 	return Ta == -1;
 }
-
 
 int Unit::calcUAP(Unit* attackedUnit)
 {

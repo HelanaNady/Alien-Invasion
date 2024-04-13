@@ -9,7 +9,7 @@ void EarthGunnery::print() const
 {
     if (!foughtUnits.isEmpty())
     {
-        std::cout << "EG " << this->getId() << " shots [";
+        std::cout << "EG " << getId() << " shots [";
         foughtUnits.printList();
         std::cout << "]\n";
     }
@@ -17,7 +17,7 @@ void EarthGunnery::print() const
 
 void EarthGunnery::attack()
 {
-    int AMnumber = (attackCapacity / 2) + 1; 
+    int AMnumber = (attackCapacity / 2) + 1;
     int ADnumber = attackCapacity - AMnumber;
 
 
@@ -52,8 +52,8 @@ void EarthGunnery::attack()
         if (attackedUnit->isFirstAttack())
             attackedUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
-        // Recieve damage and check whether it's dead or not
-        attackedUnit->recieveDamage(calcUAP(attackedUnit));
+        // Receive damage and check whether it's dead or not
+        attackedUnit->receiveDamage(calcUAP(attackedUnit));
 
         if (attackedUnit->isDead())
             gamePtr->killUnit(attackedUnit);

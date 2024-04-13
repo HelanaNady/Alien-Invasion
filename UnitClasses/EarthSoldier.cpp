@@ -6,14 +6,13 @@
 
 EarthSoldier::EarthSoldier(Game* gamePtr, int health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::ES, health, power, attackCapacity)
-{
-}
+{}
 
 void EarthSoldier::print() const
 {
     if (!foughtUnits.isEmpty())
     {
-        std::cout << "ES " << this->getId() << " shots [";
+        std::cout << "ES " << getId() << " shots [";
         foughtUnits.printList();
         std::cout << "]\n";
     }
@@ -32,8 +31,8 @@ void EarthSoldier::attack()
         if (enemyUnit->isFirstAttack())
             enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
-        // Recieve damage and check whether it's dead or not
-        enemyUnit->recieveDamage(calcUAP(enemyUnit));
+        // Receive damage and check whether it's dead or not
+        enemyUnit->receiveDamage(calcUAP(enemyUnit));
         if (enemyUnit->isDead())
             gamePtr->killUnit(enemyUnit);
         else

@@ -9,7 +9,7 @@ void AlienMonster::print() const
 {
     if (!foughtUnits.isEmpty())
     {
-        std::cout << "AM " << this->getId() << " shots [";
+        std::cout << "AM " << getId() << " shots [";
         foughtUnits.printList();
         std::cout << "]\n";
     }
@@ -42,7 +42,7 @@ void AlienMonster::attack()
                 enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
             // Receive damage and check whether it's dead or not
-            enemyUnit->recieveDamage(calcUAP(enemyUnit));
+            enemyUnit->receiveDamage(calcUAP(enemyUnit));
             if (enemyUnit->isDead())
                 gamePtr->killUnit(enemyUnit);
             else
