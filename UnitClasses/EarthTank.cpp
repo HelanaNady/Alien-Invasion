@@ -18,7 +18,7 @@ void EarthTank::print() const
 void EarthTank::attack()
 {
     LinkedQueue<Unit*> monsterEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AM, attackCapacity);
-    LinkedQueue<Unit*> soldierEnemyList;
+    LinkedQueue<Unit*> soldierEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, attackCapacity); 
     LinkedQueue<Unit*> tempList;
     Unit* enemyUnit = nullptr;
 
@@ -34,21 +34,24 @@ void EarthTank::attack()
         {
             Unit* tempUnitPtr = nullptr; 
             while (tempList.dequeue(tempUnitPtr)) 
-                gamePtr->addUnit(tempUnitPtr); 
+                gamePtr->addUnit(tempUnitPtr);
+            soldierEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, attackCapacity); 
         }
 
 
         if (deadSoldiers < soldiersToKill)
         {
-            soldierEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, attackCapacity); 
             soldierEnemyList.dequeue(enemyUnit);
         }
         else
             monsterEnemyList.dequeue(enemyUnit);
 
-
-        if (!enemyUnit)
+        // If no unit was recieved and at least one of the lists weren't empty, don't increment the counter
+        if (!enemyUnit && (!soldierEnemyList.isEmpty() || !monsterEnemyList.isEmpty()))
+        {
+            i--;
             continue;
+        }
 
         // Check if it were attacked before or not 
         if (enemyUnit->getTattack() == -1) 
