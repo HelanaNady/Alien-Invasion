@@ -7,9 +7,12 @@ AlienMonster::AlienMonster(Game* gamePtr, int health, int power, int attackCapac
 
 void AlienMonster::print() const
 {
-    std::cout << "AM " << this->getId() << " shots [";
-    foughtUnits.printList();
-    std::cout << "]\n";
+    if (!foughtUnits.isEmpty())
+    {
+        std::cout << "AM " << this->getId() << " shots [";
+        foughtUnits.printList();
+        std::cout << "]\n";
+    }
 }
 
 void AlienMonster::attack()
@@ -35,21 +38,13 @@ void AlienMonster::attack()
             currentList.dequeue(enemyUnit);
 
             // Set the first attack time if it's the first time attacking
-            if (enemyUnit->getFirstAttackTime() == -1)
-            {
+            if (enemyUnit->isFirstAttack())
                 enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
-                enemyUnit->setFirstAttackDelay();
-            }
 
             // Receive damage and check whether it's dead or not
             enemyUnit->recieveDamage(calcUAP(enemyUnit));
-            if (enemyUnit->getHealth() == 0)
-            {
+            if (enemyUnit->isDead())
                 gamePtr->killUnit(enemyUnit);
-                enemyUnit->setDestructionTime(gamePtr->getCurrentTimestep());
-                enemyUnit->setDestructionDelay();
-                enemyUnit->setBattleDelay();
-            }
             else
             {
                 if (i == 0)
@@ -64,16 +59,10 @@ void AlienMonster::attack()
     }
 
     // Empty the tempList and re-add the alive units back to their lists
-    while (!soldiersTempList.isEmpty())
-    {
-        Unit* tempUnitPtr = nullptr;
-        soldiersTempList.dequeue(tempUnitPtr);
-        gamePtr->addUnit(tempUnitPtr);
-    }
-    while (!tanksTempList.isEmpty())
-    {
-        Unit* tempUnitPtr = nullptr;
-        tanksTempList.pop(tempUnitPtr);
-        gamePtr->addUnit(tempUnitPtr);
-    }
+    Unit* unit = nullptr;
+    while (soldiersTempList.dequeue(unit))
+        gamePtr->addUnit(unit);
+
+    while (tanksTempList.pop(unit))
+        gamePtr->addUnit(unit);
 }

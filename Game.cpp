@@ -18,11 +18,17 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 	randomGenerator = new RandomGenerator(this, inputParameters);
 
 	// Run the game
-	while (!battleOver())
+	do
 	{
 		incrementTimestep();
-	}
-	//printOutputFile();
+
+		// Print the output
+	if (gameMode == GameMode::INTERACTIVE)
+		printAll();
+
+		std::cout << "Press Enter to continue...";
+		while (std::cin.get() != '\n');
+	} while (!battleOver());
 }
 
 void Game::incrementTimestep()
@@ -33,8 +39,9 @@ void Game::incrementTimestep()
 	randomGenerator->generateArmy(ArmyType::EARTH);
 	randomGenerator->generateArmy(ArmyType::ALIEN);
 
-	if (gameMode == GameMode::INTERACTIVE)
-		printAll();
+	// Start the battle attack
+	earthArmy.attack();
+	alienArmy.attack();
 }
 
 void Game::changeGameMode(GameMode gameMode)
@@ -44,7 +51,7 @@ void Game::changeGameMode(GameMode gameMode)
 
 bool Game::battleOver()
 {
-	return currentTimestep > 40 && !(earthArmy.isDead() && alienArmy.isDead());
+	return currentTimestep > 40 && (earthArmy.isDead() || alienArmy.isDead());
 }
 
 void Game::addUnit(Unit* unit)
@@ -109,7 +116,7 @@ void Game::printAll()
 	alienArmy.printArmy();
 
 	std::cout << "============== Units fighting at current step ==============" << std::endl;
-	earthArmy.printFightingUnits(); // Is this right?
+	earthArmy.printFightingUnits();
 	alienArmy.printFightingUnits();
 
 	std::cout << "============== Killed/Destructed Units ==============" << std::endl;

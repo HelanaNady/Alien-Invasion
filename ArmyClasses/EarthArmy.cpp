@@ -83,7 +83,6 @@ int EarthArmy::getUnitsCount(UnitType unitType) const
     return 0;
 }
 
-
 void EarthArmy::printArmy() const
 {
     std::cout << soldiers.getCount() << " ES [";

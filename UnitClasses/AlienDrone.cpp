@@ -7,9 +7,12 @@ AlienDrone::AlienDrone(Game* gamePtr, int health, int power, int attackCapacity)
 
 void AlienDrone::print() const
 {
-    std::cout << "AD " << this->getId() << " shots [";
-    foughtUnits.printList();
-    std::cout << "]\n";
+    if (!foughtUnits.isEmpty())
+    {
+        std::cout << "AD " << this->getId() << " shots [";
+        foughtUnits.printList();
+        std::cout << "]\n";
+    }
 }
 
 void AlienDrone::attack()
@@ -27,6 +30,7 @@ void AlienDrone::attack()
     {
         Unit* attackedUnit = nullptr;
 
+        // Get the unit and remove it from the list
         if (i % 2 == 0)
             ETlist.dequeue(attackedUnit);
         else
@@ -35,18 +39,16 @@ void AlienDrone::attack()
         if (!attackedUnit)
             continue;
 
-        // Check if it was attacked before or not
-        if (attackedUnit->getFirstAttackTime() == -1)
-        {
+        // Set the first attack time if it's the first time attacking
+        if (attackedUnit->isFirstAttack())
             attackedUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
-            attackedUnit->setFirstAttackDelay();
-        }
-            
-        // Decrement health 
+        
+        // Receive damage and check whether it's dead or not
         attackedUnit->recieveDamage(calcUAP(attackedUnit));
 
-        // Check if it was killed or not
-        if (attackedUnit->getHealth())
+        if (attackedUnit->isDead())
+            gamePtr->killUnit(attackedUnit);
+        else
         {
             UnitType unitType = attackedUnit->getUnitType();
 
@@ -61,19 +63,11 @@ void AlienDrone::attack()
                     break;
             }
         }
-        else
-        {
-            gamePtr->killUnit(attackedUnit);
-            attackedUnit->setDestructionTime(gamePtr->getCurrentTimestep());
-            attackedUnit->setDestructionDelay();
-            attackedUnit->setBattleDelay();
-        }
 
         foughtUnits.enqueue(attackedUnit->getId());
     }
 
-    // Re-adding attacked units to their original lists
-
+    // Empty the tempList and re-add the alive units back to their lists
     Unit* unit = nullptr;
     while (ETtempList.pop(unit))
         gamePtr->addUnit(unit);

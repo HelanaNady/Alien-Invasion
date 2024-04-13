@@ -10,9 +10,12 @@ EarthTank::EarthTank(Game* gamePtr, int health, int power, int attackCapacity)
 
 void EarthTank::print() const
 {
-    std::cout << "ET " << this->getId() << " shots [";
-    foughtUnits.printList();
-    std::cout << "]\n";
+    if (!foughtUnits.isEmpty())
+    {
+        std::cout << "ET " << this->getId() << " shots [";
+        foughtUnits.printList();
+        std::cout << "]\n";
+    }
 }
 
 void EarthTank::attack()
@@ -40,9 +43,7 @@ void EarthTank::attack()
 
 
         if (deadSoldiers < soldiersToKill)
-        {
             soldierEnemyList.dequeue(enemyUnit);
-        }
         else
             monsterEnemyList.dequeue(enemyUnit);
 
@@ -54,19 +55,16 @@ void EarthTank::attack()
         }
 
         // Check if it were attacked before or not 
-        if (enemyUnit->getFirstAttackTime() == -1) 
-        {
-            enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep()); 
-        }
+        if (enemyUnit->isFirstAttack())
+            enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
         // Recieve damage and check whether it's dead or not
         enemyUnit->recieveDamage(this->calcUAP(enemyUnit)); 
-        if (enemyUnit->getHealth() == 0)
+        if (enemyUnit->isDead())
         {
             gamePtr->killUnit(enemyUnit);
-            enemyUnit->setDestructionTime(gamePtr->getCurrentTimestep());
-            if(deadSoldiers < soldiersToKill)
-            deadSoldiers++;
+            if (deadSoldiers < soldiersToKill)
+                deadSoldiers++;
         }
         else
             tempList.enqueue(enemyUnit);

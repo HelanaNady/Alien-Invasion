@@ -11,9 +11,12 @@ EarthSoldier::EarthSoldier(Game* gamePtr, int health, int power, int attackCapac
 
 void EarthSoldier::print() const
 {
-    std::cout << "ES " << this->getId() << " shots [";
-    foughtUnits.printList();
-    std::cout << "]\n";
+    if (!foughtUnits.isEmpty())
+    {
+        std::cout << "ES " << this->getId() << " shots [";
+        foughtUnits.printList();
+        std::cout << "]\n";
+    }
 }
 
 void EarthSoldier::attack()
@@ -26,18 +29,13 @@ void EarthSoldier::attack()
     {
         enemyList.dequeue(enemyUnit);
         // Check if it were attacked before or not
-        if (enemyUnit->getFirstAttackTime() == -1)
-        {
+        if (enemyUnit->isFirstAttack())
             enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
-        }
 
         // Recieve damage and check whether it's dead or not
-        enemyUnit->recieveDamage(this->calcUAP(enemyUnit));
-        if (enemyUnit->getHealth() == 0)
-        {
+        enemyUnit->recieveDamage(calcUAP(enemyUnit));
+        if (enemyUnit->isDead())
             gamePtr->killUnit(enemyUnit);
-            enemyUnit->setDestructionTime(gamePtr->getCurrentTimestep());
-        }
         else
             tempList.enqueue(enemyUnit);
 
@@ -45,12 +43,8 @@ void EarthSoldier::attack()
         foughtUnits.enqueue(enemyUnit->getId());
     }
 
-
     // Empty the tempList and re-add the alive units back to their lists
-    while (!tempList.isEmpty())
-    {
-        Unit* tempUnitPtr = nullptr;
-        tempList.dequeue(tempUnitPtr);
-        gamePtr->addUnit(tempUnitPtr);
-    }
+    Unit* unit = nullptr;
+    while (tempList.dequeue(unit))
+        gamePtr->addUnit(unit);
 }

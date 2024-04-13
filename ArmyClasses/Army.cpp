@@ -4,9 +4,6 @@ void Army::printFightingUnits()
 {
 	Unit* unit;
 
-	while (!currentAttackers.isEmpty())
-	{
-		currentAttackers.dequeue(unit);
+	while (currentAttackers.dequeue(unit))
 		unit->print();
-	}
 }

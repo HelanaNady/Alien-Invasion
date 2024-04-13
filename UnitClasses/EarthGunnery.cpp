@@ -7,14 +7,17 @@ EarthGunnery::EarthGunnery(Game* gamePtr, int health, int power, int attackCapac
 
 void EarthGunnery::print() const
 {
-    std::cout << "EG " << this->getId() << " shots [";
-    foughtUnits.printList();
-    std::cout << "]\n";
+    if (!foughtUnits.isEmpty())
+    {
+        std::cout << "EG " << this->getId() << " shots [";
+        foughtUnits.printList();
+        std::cout << "]\n";
+    }
 }
 
 void EarthGunnery::attack()
 {
-    int AMnumber = (attackCapacity / 2) + 1;
+    int AMnumber = (attackCapacity / 2) + 1; 
     int ADnumber = attackCapacity - AMnumber;
 
 
@@ -40,36 +43,28 @@ void EarthGunnery::attack()
             dronesCount--;
         }
 
-        if (!attackedUnit && (!AMlist.isEmpty() || !ADlist.isEmpty()))
+        if (!attackedUnit)
         {
-            i--;
             continue;
         }
 
-        // Check if it was attacked before or not
-        if (attackedUnit->getFirstAttackTime() == -1)
+        // Set the first attack time if it's the first time attacking
+        if (attackedUnit->isFirstAttack())
             attackedUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
-        // Decrement health 
+        // Recieve damage and check whether it's dead or not
         attackedUnit->recieveDamage(calcUAP(attackedUnit));
 
-        // Check if it was killed or not
-        if (attackedUnit->getHealth())
-        {
-            tempList.enqueue(attackedUnit);
-        }
-        else
-        {
+        if (attackedUnit->isDead())
             gamePtr->killUnit(attackedUnit);
-            attackedUnit->setDestructionTime(gamePtr->getCurrentTimestep());
-            attackedUnit->setDestructionDelay();
-            attackedUnit->setBattleDelay();
-        }
+        else
+            tempList.enqueue(attackedUnit);
 
+        // Store the IDs of the fought units to be printed later
         foughtUnits.enqueue(attackedUnit->getId());
     }
 
-    // Re-adding attacked units to their original lists
+    // Empty the tempList and re-add the alive units back to their lists
     Unit* unit = nullptr;
     while (tempList.dequeue(unit))
         gamePtr->addUnit(unit);

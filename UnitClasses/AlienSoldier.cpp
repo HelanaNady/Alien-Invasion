@@ -7,9 +7,12 @@ AlienSoldier::AlienSoldier(Game* gamePtr, int health, int power, int attackCapac
 
 void AlienSoldier::print() const
 {
-    std::cout << "AD " << this->getId() << " shots [";
-    foughtUnits.printList();
-    std::cout << "]\n";
+    if (!foughtUnits.isEmpty())
+    {
+        std::cout << "AS " << this->getId() << " shots [";
+        foughtUnits.printList();
+        std::cout << "]\n";
+    }
 }
 
 void AlienSoldier::attack()
@@ -24,21 +27,13 @@ void AlienSoldier::attack()
         enemyList.dequeue(enemyUnit);
 
         // Set the first attack time if it's the first time attacking
-        if (enemyUnit->getFirstAttackTime() == -1)
-        {
+        if (enemyUnit->isFirstAttack())
             enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
-            enemyUnit->setFirstAttackDelay();
-        }
 
         // Receive damage and check whether it's dead or not
         enemyUnit->recieveDamage(calcUAP(enemyUnit));
-        if (enemyUnit->getHealth() == 0)
-        {
+        if (enemyUnit->isDead())
             gamePtr->killUnit(enemyUnit);
-            enemyUnit->setDestructionTime(gamePtr->getCurrentTimestep());
-            enemyUnit->setDestructionDelay();
-            enemyUnit->setBattleDelay();
-        }
         else
             tempList.enqueue(enemyUnit);
 
@@ -47,10 +42,7 @@ void AlienSoldier::attack()
     }
 
     // Empty the tempList and re-add the alive units back to their lists
-    while (!tempList.isEmpty())
-    {
-        Unit* tempUnitPtr = nullptr;
-        tempList.dequeue(tempUnitPtr);
-        gamePtr->addUnit(tempUnitPtr);
-    }
+    Unit* unit = nullptr;
+    while (tempList.dequeue(unit))
+        gamePtr->addUnit(unit);
 }

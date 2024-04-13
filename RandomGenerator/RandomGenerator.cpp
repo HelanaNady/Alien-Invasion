@@ -25,7 +25,7 @@ void RandomGenerator::generateArmy(ArmyType armyType)
 
 	if (A <= prob)
 	{
-		Unit* newUnit;
+		Unit* newUnit = nullptr;
 
 		for (int i = 0; i < N; i++)
 		{
@@ -60,11 +60,7 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType)
 	if (armyType == ArmyType::EARTH)
 	{
 		int power = getRandomNumber(earthPowerRange.min, earthPowerRange.max);
-		int health;
-		if (earthHealthRange.max > 100) // Initial health shouldn't exceed 100
-			health = getRandomNumber(earthHealthRange.min, 99);
-		else
-			health = getRandomNumber(earthHealthRange.min, earthHealthRange.max);
+		int health = getRandomNumber(earthHealthRange.min, earthHealthRange.max);
 		int attackCapacity = getRandomNumber(earthAttackCapacityRange.min, earthAttackCapacityRange.max);
 
 		if (B <= ESPercentage)
@@ -86,11 +82,7 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType)
 	else
 	{
 		int power = getRandomNumber(alienPowerRange.min, alienPowerRange.max);
-		int health;
-		if (alienHealthRange.max > 100) // Initial health shouldn't exceed 100
-			health = getRandomNumber(alienHealthRange.min, 99);
-		else
-			health = getRandomNumber(alienHealthRange.min, alienHealthRange.max);
+		int health = getRandomNumber(alienHealthRange.min, alienHealthRange.max);
 		int attackCapacity = getRandomNumber(alienAttackCapacityRange.min, alienAttackCapacityRange.max);
 
 		if (B <= ASPercentage)
