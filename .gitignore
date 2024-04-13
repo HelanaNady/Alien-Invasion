@@ -244,3 +244,4 @@ build
 bin
 .vs
 .vscode
+/testingPhase2.txt
