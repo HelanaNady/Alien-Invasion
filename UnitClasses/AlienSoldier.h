@@ -11,4 +11,5 @@ public:
 	void print() const;
 	void attack();
 };
+
 #endif

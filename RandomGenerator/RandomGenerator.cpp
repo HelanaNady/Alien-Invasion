@@ -40,7 +40,7 @@ void RandomGenerator::loadParameters(std::string wholeFile)
 	std::stringstream ss(wholeFile);
 	ss >> N >> ESPercentage >> ETPercentage >> EGPercentage >> ASPercentage >> AMPercentage >> ADPercentage >> prob;
 
-	char dummyHyphen; // To read the hyphen between the min and max values of the ranges
+	char dummyHyphen = '\0'; // To read the hyphen between the min and max values of the ranges
 
 	ss >> earthPowerRange.min >> dummyHyphen >> earthPowerRange.max;
 	ss >> earthHealthRange.min >> dummyHyphen >> earthHealthRange.max;
