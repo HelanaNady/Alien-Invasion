@@ -17,21 +17,28 @@ void AlienSoldier::print() const
 
 void AlienSoldier::attack()
 {
-    LinkedQueue<Unit*> enemyList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, attackCapacity);
+    // Get the lists of earth soldiers to attack
+    LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, attackCapacity);
+
+    // Create a temporary list to store the alive units
     LinkedQueue<Unit*> tempList;
+
+    // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
 
-    while (!enemyList.isEmpty())
+    while (!soldiersList.isEmpty())
     {
         // Get the unit and remove it from the list
-        enemyList.dequeue(enemyUnit);
+        soldiersList.dequeue(enemyUnit);
 
         // Set the first attack time if it's the first time attacking
         if (enemyUnit->isFirstAttack())
             enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
-        // Receive damage and check whether it's dead or not
+        // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
+
+        // If the unit is dead, added to killedList, otherwise add it to the tempList
         if (enemyUnit->isDead())
             gamePtr->killUnit(enemyUnit);
         else

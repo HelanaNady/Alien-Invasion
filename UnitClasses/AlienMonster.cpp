@@ -30,18 +30,21 @@ void AlienMonster::attack()
     if (tanksAttackCapacity < remainingAttackCapacity)
         soldiersAttackCapacity += std::min(availableSoldiersCount - soldiersAttackCapacity, remainingAttackCapacity - tanksAttackCapacity);
 
-    // Get the lists of soldiers and tanks
+    // Get the lists of earth soldiers and tanks to attack
     LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, soldiersAttackCapacity);
     LinkedQueue<Unit*> tanksList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, tanksAttackCapacity);
 
+    // Create temporary lists to store the alive units
     LinkedQueue<Unit*> soldiersTempList;
     ArrayStack<Unit*> tanksTempList;
+
+    // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
 
     // Loop through the tanks and soldiers lists
     for (int i = 0; i < 2; i++)
     {
-        LinkedQueue<Unit*>& currentList = (i == 0) ? soldiersList : tanksList;
+        LinkedQueue<Unit*>& currentList = (i == 0) ? soldiersList : tanksList; // Get the current list
 
         while (!currentList.isEmpty())
         {
@@ -52,15 +55,17 @@ void AlienMonster::attack()
             if (enemyUnit->isFirstAttack())
                 enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
-            // Receive damage and check whether it's dead or not
+            // Calculate the UAP and apply the damage
             enemyUnit->receiveDamage(calcUAP(enemyUnit));
+
+            // If the unit is dead, added to killedList, otherwise add it to the tempList
             if (enemyUnit->isDead())
                 gamePtr->killUnit(enemyUnit);
             else
             {
-                if (i == 0)
+                if (i == 0) // If it's a soldier, add it to the soldiersTempList
                     soldiersTempList.enqueue(enemyUnit);
-                else
+                else // If it's a tank, add it to the tanksTempList
                     tanksTempList.push(enemyUnit);
             }
 
