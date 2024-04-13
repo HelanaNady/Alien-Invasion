@@ -73,6 +73,9 @@
       <Filter>Game Class</Filter>
     </ClInclude>
     <ClInclude Include="DEFS.h" />
+    <ClInclude Include="Containers\ArrayADT.h">
+      <Filter>Containers Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArmyClasses\AlienArmy.h">
@@ -119,6 +122,9 @@
     </ClCompile>
     <ClCompile Include="UnitClasses\EarthTank.cpp">
       <Filter>Unit Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="ArmyClasses\Army.cpp">
+      <Filter>Army Classes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #ifndef STACK_ADT_H
 #define STACK_ADT_H
 
-template<typename T>
+template <typename T>
 class StackADT
 {
 public:

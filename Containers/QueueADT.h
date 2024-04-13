@@ -1,7 +1,7 @@
 #ifndef QUEUE_ADT_H
 #define QUEUE_ADT_H
 
-template<class T>
+template <class T>
 class QueueADT
 {
 public:

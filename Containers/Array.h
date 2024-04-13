@@ -4,7 +4,7 @@
 #include <iostream>
 #include "ArrayADT.h"
 
-template<typename T>
+template <typename T>
 class Array: public ArrayADT<T>
 {
     enum { MAX_SIZE = 1000 };

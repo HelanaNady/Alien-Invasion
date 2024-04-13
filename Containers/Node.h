@@ -49,7 +49,7 @@ inline void Node<T>::setNext(Node<T>* nextNodePtr)
     next = nextNodePtr;
 }
 
-template<typename T>
+template <typename T>
 inline void Node<T>::setPrev(Node<T>* prevNodePtr)
 {
     prev = prevNodePtr;
@@ -61,7 +61,7 @@ inline T Node<T>::getItem() const
     return item;
 }
 
-template<typename T>
+template <typename T>
 inline Node<T>* Node<T>::getPrev() const
 {
     return prev;
