@@ -40,8 +40,11 @@ void EarthGunnery::attack()
             dronesCount--;
         }
 
-        if (!attackedUnit)
+        if (!attackedUnit && (!AMlist.isEmpty() || !ADlist.isEmpty()))
+        {
+            i--;
             continue;
+        }
 
         // Check if it was attacked before or not
         if (attackedUnit->getFirstAttackTime() == -1)
