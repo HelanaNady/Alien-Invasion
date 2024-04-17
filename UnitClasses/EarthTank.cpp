@@ -49,9 +49,8 @@ void EarthTank::attack()
             monsterEnemyList.dequeue(enemyUnit);
 
         // If no unit was received and at least one of the lists weren't empty, don't increment the counter
-        if (!enemyUnit && (!soldierEnemyList.isEmpty() || !monsterEnemyList.isEmpty()))
+        if (!enemyUnit)
         {
-            i--;
             continue;
         }
 
