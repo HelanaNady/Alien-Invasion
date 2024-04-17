@@ -83,67 +83,29 @@ void RandomGenerator::setN(int N)
 	this->N = N;
 }
 
-void RandomGenerator::setESPercentage(int ESPercentage)
-{
-	 this->ESPercentage = ESPercentage;
-}
-
-void RandomGenerator::setETPercentage(int ETPercentage)
-{
-	this->ETPercentage = ETPercentage;
-}
-
-void RandomGenerator::setEGPercentage(int EGPercentage)
-{
-	this->EGPercentage = EGPercentage;
-}
-
-void RandomGenerator::setASPercentage(int ASPercentage)
-{
-	this->ASPercentage = ASPercentage;
-}
-
-void RandomGenerator::setAMPercentage(int AMPercentage)
-{
-	this->AMPercentage = AMPercentage;
-}
-
-void RandomGenerator::setADPercentage(int ADPercentage)
-{
-	this->ADPercentage = ADPercentage;
-}
-
 void RandomGenerator::setProb(int prob)
 {
 	this->prob = prob;
 }
 
-void RandomGenerator::setEarthPowerRange(Range earthPowerRange)
+void RandomGenerator::setEarthParameters(int ESPercentage, int ETPercentage, int EGPercentage, Range earthPowerRange, Range earthHealthRange, Range earthAttackCapacityRange)
 {
+	this->ESPercentage = ESPercentage;
+	this->ETPercentage = ETPercentage;
+	this->EGPercentage = EGPercentage;
+
 	this->earthPowerRange = earthPowerRange;
-}
-
-void RandomGenerator::setEarthHealthRange(Range earthHealthRange)
-{
 	this->earthPowerRange = earthHealthRange;
-}
-
-void RandomGenerator::setEarthAttackCapacityRange(Range earthAtackCapacityRange)
-{
 	this->earthAttackCapacityRange = earthAttackCapacityRange;
 }
 
-void RandomGenerator::setAlienPowerRange(Range alienPowerRange)
+void RandomGenerator::setAlienParameters(int ASPercentage, int AMPercentage, int ADPercentage, Range alienPowerRange, Range alienHealthRange, Range alienAttackCapacityRange)
 {
+	this->ASPercentage = ASPercentage;
+	this->AMPercentage = AMPercentage;
+	this->ADPercentage = ADPercentage;
+
 	this->alienPowerRange = alienPowerRange;
-}
-
-void RandomGenerator::setAlienHealthRange(Range alienHealthRange)
-{
-	this->alienHealthRange = alienHealthRange;
-}
-
-void RandomGenerator::setAlienAttackCapacityRange(Range alienAttackCapacityRange)
-{
+	this->alienPowerRange = alienHealthRange;
 	this->alienAttackCapacityRange = alienAttackCapacityRange;
 }
