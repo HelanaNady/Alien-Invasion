@@ -6,13 +6,8 @@ int Unit::lastAlienId = 1999;
 
 Unit::Unit(Game* gamePtr, UnitType unitType, int health, int power, int attackCapacity): gamePtr(gamePtr), unitType(unitType), Ta(0), Td(0), power(power), attackCapacity(attackCapacity)
 {
-	// Check if the health value is within the range [0, 100]
-	if (health < 0)
-		health = 0;
-	if (health > 100)
-		health = 100;
-
-	this->health = health;
+	// Set the health of the unit
+	setHealth(health);
 
 	// Set the ID and the army type based on the unit type
 	if (unitType == UnitType::ES || unitType == UnitType::EG || unitType == UnitType::ET) // Earth unit
@@ -27,6 +22,17 @@ Unit::Unit(Game* gamePtr, UnitType unitType, int health, int power, int attackCa
 	}
 
 	Tj = gamePtr->getCurrentTimestep(); // Set the join time to the current timestep
+}
+
+void Unit::setHealth(int health)
+{
+	// Check if the health value is within the range [1, 100]
+	if (health < 1)
+		health = 1;
+	if (health > 100)
+		health = 100;
+
+	this->health = health;
 }
 
 void Unit::receiveDamage(int loss)
@@ -44,7 +50,7 @@ bool Unit::isAlive() const
 
 bool Unit::isDead() const
 {
-	return health == 0;
+	return !isAlive();
 }
 
 int Unit::getId() const

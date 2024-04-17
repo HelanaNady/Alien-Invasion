@@ -1,7 +1,7 @@
 #ifndef ARRAY_ADT_H
 #define ARRAY_ADT_H
 
-template<typename T>
+template <typename T>
 class ArrayADT
 {
 public:
@@ -16,5 +16,5 @@ public:
 
     virtual ~ArrayADT() {}
 };
-#endif 
 
+#endif

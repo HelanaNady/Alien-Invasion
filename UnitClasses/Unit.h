@@ -15,9 +15,9 @@ private:
 	static int lastEarthId; // Last Earth unit ID used to generate the next ID
 	static int lastAlienId; // Last Alien unit ID used to generate the next ID
 
+	int id; // Unit ID
 	ArmyType armyType; // Army type
 	UnitType unitType; // Unit type
-	int id; // Unit ID
 
 	int Tj; // Join time 
 	int Ta; // First attack time
@@ -26,6 +26,10 @@ private:
 	int health; // Current health
 	int power; // Attack power
 	int attackCapacity; // Attack capacity
+
+private:
+	void setHealth(int); // Set the health of the unit used in the constructor
+
 public:
 	Unit(Game*, UnitType, int, int, int);
 
@@ -33,8 +37,8 @@ public:
 	virtual void print() const = 0; // Print the unit
 	virtual void attack() = 0; // Run the attack for the unit
 
-	bool isAlive() const; // Check if the unit is alive
-	bool isDead() const; // Check if the unit is dead
+	bool isAlive() const;
+	bool isDead() const;
 
 	// Getters
 	int getId() const;
@@ -43,9 +47,9 @@ public:
 	int getHealth() const;
 	int getPower() const;
 	int getAttackCapacity() const;
-	int getFirstAttackDelay() const;
-	int getDestructionDelay() const;
-	int getBattleDelay() const;
+	int getFirstAttackDelay() const; // Get difference between first attack time and join time
+	int getDestructionDelay() const; // Get difference between destruction time and first attack time
+	int getBattleDelay() const; // Get difference between join time and destruction time
 
 	// Setters
 	void setPower(int);
@@ -53,4 +57,5 @@ public:
 
 	friend std::ostream& operator<<(std::ostream&, Unit*);
 };
+
 #endif
