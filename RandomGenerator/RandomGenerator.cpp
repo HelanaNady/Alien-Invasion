@@ -13,13 +13,11 @@
 #include "../UnitClasses/AlienDrone.h"
 #include "../Game.h"
 
-RandomGenerator::RandomGenerator(Game* gamePtr, std::string wholeFile)
-	: gamePtr(gamePtr), totalAScount(0), totalAMcount(0), totalADcount(0), totalEScount(0), totalEGcount(0), totalETcount(0)
+RandomGenerator::RandomGenerator(Game* gamePtr): gamePtr(gamePtr)
 {
-	loadParameters(wholeFile);
 }
 
-void RandomGenerator::generateArmy(ArmyType armyType)
+void RandomGenerator::generateArmy(ArmyType armyType) const
 {
 	int A = getRandomNumber(1, 100);
 
@@ -35,23 +33,8 @@ void RandomGenerator::generateArmy(ArmyType armyType)
 	}
 }
 
-void RandomGenerator::loadParameters(std::string wholeFile)
-{
-	std::stringstream ss(wholeFile);
-	ss >> N >> ESPercentage >> ETPercentage >> EGPercentage >> ASPercentage >> AMPercentage >> ADPercentage >> prob;
 
-	char dummyHyphen = '\0';
-
-	ss >> earthPowerRange.min >> dummyHyphen >> earthPowerRange.max;
-	ss >> earthHealthRange.min >> dummyHyphen >> earthHealthRange.max;
-	ss >> earthAttackCapacityRange.min >> dummyHyphen >> earthAttackCapacityRange.max;
-
-	ss >> alienPowerRange.min >> dummyHyphen >> alienPowerRange.max;
-	ss >> alienHealthRange.min >> dummyHyphen >> alienHealthRange.max;
-	ss >> alienAttackCapacityRange.min >> dummyHyphen >> alienAttackCapacityRange.max;
-}
-
-Unit* RandomGenerator::generateUnit(ArmyType armyType)
+Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 {
 	Unit* newUnit = nullptr;
 
@@ -64,20 +47,11 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType)
 		int attackCapacity = getRandomNumber(earthAttackCapacityRange.min, earthAttackCapacityRange.max);
 
 		if (B <= ESPercentage)
-		{
 			newUnit = new EarthSoldier(gamePtr, health, power, attackCapacity);
-			totalEScount++;
-		}
 		else if (B <= (ESPercentage + ETPercentage))
-		{
 			newUnit = new EarthTank(gamePtr, health, power, attackCapacity);
-			totalETcount++;
-		}
 		else
-		{
 			newUnit = new EarthGunnery(gamePtr, health, power, attackCapacity);
-			totalEGcount++;
-		}
 	}
 	else
 	{
@@ -86,20 +60,11 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType)
 		int attackCapacity = getRandomNumber(alienAttackCapacityRange.min, alienAttackCapacityRange.max);
 
 		if (B <= ASPercentage)
-		{
 			newUnit = new AlienSoldier(gamePtr, health, power, attackCapacity);
-			totalAScount++;
-		}
 		else if (B <= (ASPercentage + AMPercentage))
-		{
 			newUnit = new AlienMonster(gamePtr, health, power, attackCapacity);
-			totalAMcount++;
-		}
 		else
-		{
 			newUnit = new AlienDrone(gamePtr, health, power, attackCapacity);
-			totalADcount++;
-		}
 	}
 
 	return newUnit;
@@ -110,23 +75,73 @@ int RandomGenerator::getRandomNumber(int min, int max) const
 	return min + rand() % (max - min + 1);
 }
 
-int RandomGenerator::getTotalUnitCount(UnitType unitType) const
+void RandomGenerator::setN(int N)
 {
-	switch (unitType)
-	{
-		case UnitType::AS:
-			return totalAScount;
-		case UnitType::AM:
-			return totalAMcount;
-		case UnitType::AD:
-			return totalADcount;
-		case UnitType::ES:
-			return totalEScount;
-		case UnitType::ET:
-			return totalETcount;
-		case UnitType::EG:
-			return totalEGcount;
-	}
-
-	return 0;
+	this->N = N;
 }
+
+void RandomGenerator::setESPercentage(int ESPercentage)
+{
+	 this->ESPercentage = ESPercentage;
+}
+
+void RandomGenerator::setETPercentage(int ETPercentage)
+{
+	this->ETPercentage = ETPercentage;
+}
+
+void RandomGenerator::setEGPercentage(int EGPercentage)
+{
+	this->EGPercentage = EGPercentage;
+}
+
+void RandomGenerator::setASPercentage(int ASPercentage)
+{
+	this->ASPercentage = ASPercentage;
+}
+
+void RandomGenerator::setAMPercentage(int AMPercentage)
+{
+	this->AMPercentage = AMPercentage;
+}
+
+void RandomGenerator::setADPercentage(int ADPercentage)
+{
+	this->ADPercentage = ADPercentage;
+}
+
+void RandomGenerator::setProb(int prob)
+{
+	this->prob = prob;
+}
+
+void RandomGenerator::setEarthPowerRange(Range earthPowerRange)
+{
+	this->earthPowerRange = earthPowerRange;
+}
+
+void RandomGenerator::setEarthHealthRange(Range earthHealthRange)
+{
+	this->earthPowerRange = earthHealthRange;
+}
+
+void RandomGenerator::setEarthAttackCapacityRange(Range earthAtackCapacityRange)
+{
+	this->earthAttackCapacityRange = earthAttackCapacityRange;
+}
+
+void RandomGenerator::setAlienPowerRange(Range alienPowerRange)
+{
+	this->alienPowerRange = alienPowerRange;
+}
+
+void RandomGenerator::setAlienHealthRange(Range alienHealthRange)
+{
+	this->alienHealthRange = alienHealthRange;
+}
+
+void RandomGenerator::setAlienAttackCapacityRange(Range alienAttackCapacityRange)
+{
+	this->alienAttackCapacityRange = alienAttackCapacityRange;
+}
+

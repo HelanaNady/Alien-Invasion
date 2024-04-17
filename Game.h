@@ -35,7 +35,7 @@ public:
     void printAll();
     void printKilledList() const; // Prints the killed list with the console formats
 
-    std::string loadFromFile(std::string);
+    void loadParameters(std::string);
 
     // Getters
     int getCurrentTimestep() const;
