@@ -134,14 +134,14 @@ void Game::loadParameters(std::string fileName)
 	std::fstream fin(fileName);
 	std::string wholeFile;
 
-	int N; 
-	int ESPercentage; 
-	int ETPercentage; 
-	int EGPercentage; 
-	int ASPercentage; 
-	int AMPercentage; 
-	int ADPercentage; 
-	int prob; 
+	int N = 0; 
+	int ESPercentage = 0; 
+	int ETPercentage = 0;
+	int EGPercentage = 0;
+	int ASPercentage = 0;
+	int AMPercentage = 0;
+	int ADPercentage = 0;
+	int prob = 0; 
 	Range earthPowerRange; 
 	Range earthHealthRange; 
 	Range earthAttackCapacityRange; 
@@ -165,23 +165,10 @@ void Game::loadParameters(std::string fileName)
 
 
 		randomGenerator->setN(N);
-		randomGenerator->setESPercentage(ESPercentage);
-		randomGenerator->setETPercentage(ETPercentage);
-		randomGenerator->setEGPercentage(EGPercentage);
-
-		randomGenerator->setASPercentage(ASPercentage);
-		randomGenerator->setAMPercentage(AMPercentage);
-		randomGenerator->setADPercentage(ADPercentage);
-
 		randomGenerator->setProb(prob);
 
-		randomGenerator->setEarthPowerRange(earthPowerRange);
-		randomGenerator->setEarthHealthRange(earthHealthRange);
-		randomGenerator->setEarthAttackCapacityRange(earthAttackCapacityRange);
-
-		randomGenerator->setAlienPowerRange(alienPowerRange);
-		randomGenerator->setAlienHealthRange(alienHealthRange);
-		randomGenerator->setAlienAttackCapacityRange(alienAttackCapacityRange);
+		randomGenerator->setEarthParameters(ESPercentage, EGPercentage, ETPercentage, earthPowerRange, earthHealthRange, earthAttackCapacityRange);
+		randomGenerator->setAlienParameters(ASPercentage, AMPercentage, ADPercentage, alienPowerRange, alienHealthRange, alienAttackCapacityRange);
 	}
 
 

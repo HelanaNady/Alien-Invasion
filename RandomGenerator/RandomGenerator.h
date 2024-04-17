@@ -38,23 +38,12 @@ public:
 
 	// Setters
 	void setN(int);
-	void setESPercentage(int);
-	void setETPercentage(int);
-	void setEGPercentage(int);
-
-	void setASPercentage(int);
-	void setAMPercentage(int);
-	void setADPercentage(int);
-
 	void setProb(int);
 
-	void setEarthPowerRange(Range);
-	void setEarthHealthRange(Range);
-	void setEarthAttackCapacityRange(Range);
+	void setEarthParameters(int, int, int, Range, Range, Range); // Sets earth parameters loaded by game class
+	void setAlienParameters(int, int, int, Range, Range, Range); // Sets alien parameters loaded by game class
+	
 
-	void setAlienPowerRange(Range);
-	void setAlienHealthRange(Range);
-	void setAlienAttackCapacityRange(Range);
 };
 
 #endif
