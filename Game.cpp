@@ -12,10 +12,10 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 {
 	// Change the game mode
 	changeGameMode(gameMode);
-
-	// Load parameters for random generator
-	std::string inputParameters = loadFromFile(inputFileName);
-	randomGenerator = new RandomGenerator(this, inputParameters);
+	// Create a Random Generator object
+	randomGenerator = new RandomGenerator(this);
+	// Load parameters for the Random Generator
+	loadParameters(inputFileName);
 
 	// Run the game
 	do
@@ -154,19 +154,62 @@ void Game::printKilledList() const
 	std::cout << "]" << std::endl;
 }
 
-std::string Game::loadFromFile(std::string fileName)
+void Game::loadParameters(std::string fileName)
 {
 	std::fstream fin(fileName);
 	std::string wholeFile;
 
+	int N; 
+	int ESPercentage; 
+	int ETPercentage; 
+	int EGPercentage; 
+	int ASPercentage; 
+	int AMPercentage; 
+	int ADPercentage; 
+	int prob; 
+	Range earthPowerRange; 
+	Range earthHealthRange; 
+	Range earthAttackCapacityRange; 
+	Range alienPowerRange;
+	Range alienHealthRange; 
+	Range alienAttackCapacityRange; 
+
 	if (fin.is_open())
 	{
-		std::string newLine;
-		while (std::getline(fin, newLine))
-			wholeFile += newLine + " ";
+		fin >> N >> ESPercentage >> ETPercentage >> EGPercentage >> ASPercentage >> AMPercentage >> ADPercentage >> prob;
+
+		char dummyHyphen;
+
+		fin >> earthPowerRange.min >> dummyHyphen >> earthPowerRange.max;
+		fin >> earthHealthRange.min >> dummyHyphen >> earthHealthRange.max;
+		fin >> earthAttackCapacityRange.min >> dummyHyphen >> earthAttackCapacityRange.max;
+
+		fin >> alienPowerRange.min >> dummyHyphen >> alienPowerRange.max;
+		fin >> alienHealthRange.min >> dummyHyphen >> alienHealthRange.max;
+		fin >> alienAttackCapacityRange.min >> dummyHyphen >> alienAttackCapacityRange.max;
+
+
+		randomGenerator->setN(N);
+		randomGenerator->setESPercentage(ESPercentage);
+		randomGenerator->setETPercentage(ETPercentage);
+		randomGenerator->setEGPercentage(EGPercentage);
+
+		randomGenerator->setASPercentage(ASPercentage);
+		randomGenerator->setAMPercentage(AMPercentage);
+		randomGenerator->setADPercentage(ADPercentage);
+
+		randomGenerator->setProb(prob);
+
+		randomGenerator->setEarthPowerRange(earthPowerRange);
+		randomGenerator->setEarthHealthRange(earthHealthRange);
+		randomGenerator->setEarthAttackCapacityRange(earthAttackCapacityRange);
+
+		randomGenerator->setAlienPowerRange(alienPowerRange);
+		randomGenerator->setAlienHealthRange(alienHealthRange);
+		randomGenerator->setAlienAttackCapacityRange(alienAttackCapacityRange);
 	}
 
-	return wholeFile;
+
 }
 
 int Game::getCurrentTimestep() const

@@ -32,7 +32,7 @@ public:
     void killUnit(Unit*);
     void printKilledList() const;
 
-    std::string loadFromFile(std::string);
+    void loadParameters(std::string);
 
     // Getters
     int getCurrentTimestep() const;

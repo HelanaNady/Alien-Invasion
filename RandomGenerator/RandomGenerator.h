@@ -29,13 +29,32 @@ private:
 	Range alienAttackCapacityRange; // Alien unit attack capacity range
 
 private:
-	void loadParameters(std::string); // Load the parameters from the string parameter
 	Unit* generateUnit(ArmyType) const; // Generate a unit of the given army type
 
 public:
-	RandomGenerator(Game*, std::string);
+	RandomGenerator(Game*);
 	void generateArmy(ArmyType) const; // Generate units for the given army type
 	int getRandomNumber(int, int) const; // Generate a random number between the given range
+
+	// Setters
+	void setN(int);
+	void setESPercentage(int);
+	void setETPercentage(int);
+	void setEGPercentage(int);
+
+	void setASPercentage(int);
+	void setAMPercentage(int);
+	void setADPercentage(int);
+
+	void setProb(int);
+
+	void setEarthPowerRange(Range);
+	void setEarthHealthRange(Range);
+	void setEarthAttackCapacityRange(Range);
+
+	void setAlienPowerRange(Range);
+	void setAlienHealthRange(Range);
+	void setAlienAttackCapacityRange(Range);
 };
 
 #endif
