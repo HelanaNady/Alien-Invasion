@@ -134,12 +134,12 @@ int Unit::getBattleDelay() const
 
 void Unit::setPower(int power)
 {
-	power = this->power;
+	this->power = power;
 }
 
 void Unit::setAttackCapacity(int attackCapacity)
 {
-	attackCapacity = this->attackCapacity;
+	this->attackCapacity = attackCapacity;
 }
 
 void Unit::setFirstTimeAttack(int Ta)
