@@ -5,15 +5,13 @@
 #include "DEFS.h"
 #include "UnitClasses/Unit.h"
 
-Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), randomGenerator(nullptr)
+Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), randomGenerator(this)
 {}
 
 void Game::run(GameMode gameMode, std::string inputFileName)
 {
 	// Change the game mode
 	changeGameMode(gameMode);
-	// Create a Random Generator object
-	randomGenerator = new RandomGenerator(this);
 	// Load parameters for the Random Generator
 	loadParameters(inputFileName);
 
@@ -36,8 +34,8 @@ void Game::incrementTimestep()
 	currentTimestep++;
 
 	// Generate units for both armies
-	randomGenerator->generateArmy(ArmyType::EARTH);
-	randomGenerator->generateArmy(ArmyType::ALIEN);
+	randomGenerator.generateArmy(ArmyType::EARTH);
+	randomGenerator.generateArmy(ArmyType::ALIEN);
 
 	// Start the battle attack
 	earthArmy.attack();
@@ -134,20 +132,20 @@ void Game::loadParameters(std::string fileName)
 	std::fstream fin(fileName);
 	std::string wholeFile;
 
-	int N = 0; 
-	int ESPercentage = 0; 
+	int N = 0;
+	int ESPercentage = 0;
 	int ETPercentage = 0;
 	int EGPercentage = 0;
 	int ASPercentage = 0;
 	int AMPercentage = 0;
 	int ADPercentage = 0;
-	int prob = 0; 
-	Range earthPowerRange; 
-	Range earthHealthRange; 
-	Range earthAttackCapacityRange; 
+	int prob = 0;
+	Range earthPowerRange;
+	Range earthHealthRange;
+	Range earthAttackCapacityRange;
 	Range alienPowerRange;
-	Range alienHealthRange; 
-	Range alienAttackCapacityRange; 
+	Range alienHealthRange;
+	Range alienAttackCapacityRange;
 
 	if (fin.is_open())
 	{
@@ -163,15 +161,12 @@ void Game::loadParameters(std::string fileName)
 		fin >> alienHealthRange.min >> dummyHyphen >> alienHealthRange.max;
 		fin >> alienAttackCapacityRange.min >> dummyHyphen >> alienAttackCapacityRange.max;
 
+		randomGenerator.setN(N);
+		randomGenerator.setProb(prob);
 
-		randomGenerator->setN(N);
-		randomGenerator->setProb(prob);
-
-		randomGenerator->setEarthParameters(ESPercentage, EGPercentage, ETPercentage, earthPowerRange, earthHealthRange, earthAttackCapacityRange);
-		randomGenerator->setAlienParameters(ASPercentage, AMPercentage, ADPercentage, alienPowerRange, alienHealthRange, alienAttackCapacityRange);
+		randomGenerator.setEarthParameters(ESPercentage, EGPercentage, ETPercentage, earthPowerRange, earthHealthRange, earthAttackCapacityRange);
+		randomGenerator.setAlienParameters(ASPercentage, AMPercentage, ADPercentage, alienPowerRange, alienHealthRange, alienAttackCapacityRange);
 	}
-
-
 }
 
 int Game::getCurrentTimestep() const
@@ -193,8 +188,4 @@ int Game::getUnitsCount(ArmyType armyType, UnitType unitType) const
 }
 
 Game::~Game()
-{
-	// Delete the random generator
-	if (randomGenerator != nullptr)
-		delete randomGenerator;
-}
+{}
