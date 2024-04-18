@@ -17,7 +17,7 @@ private:
 
     EarthArmy earthArmy;
     AlienArmy alienArmy;
-    RandomGenerator* randomGenerator;
+    RandomGenerator randomGenerator;
 
     LinkedQueue<Unit*> killedList;
 

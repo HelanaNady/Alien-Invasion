@@ -5,15 +5,13 @@
 #include "DEFS.h"
 #include "UnitClasses/Unit.h"
 
-Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), randomGenerator(nullptr)
+Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), randomGenerator(this)
 {}
 
 void Game::run(GameMode gameMode, std::string inputFileName)
 {
 	// Change the game mode
 	changeGameMode(gameMode);
-	// Create a Random Generator object
-	randomGenerator = new RandomGenerator(this);
 	// Load parameters for the Random Generator
 	loadParameters(inputFileName);
 
@@ -35,11 +33,11 @@ void Game::incrementTimestep()
 	currentTimestep++;
 
 	// Generate units for both armies
-	randomGenerator->generateArmy(ArmyType::EARTH);
-	randomGenerator->generateArmy(ArmyType::ALIEN);
+	randomGenerator.generateArmy(ArmyType::EARTH);
+	randomGenerator.generateArmy(ArmyType::ALIEN);
 
 	// Generate random number X
-	int x = randomGenerator->getRandomNumber(1, 100);
+	int x = randomGenerator.getRandomNumber(1, 100);
 	if (x < 10)
 	{
 		// Remove a soldier from the Earth army and add it back
@@ -192,11 +190,11 @@ void Game::loadParameters(std::string fileName)
 		fin >> alienHealthRange.min >> dummyHyphen >> alienHealthRange.max;
 		fin >> alienAttackCapacityRange.min >> dummyHyphen >> alienAttackCapacityRange.max;
 
-		randomGenerator->setN(N);
-		randomGenerator->setProb(prob);
+		randomGenerator.setN(N);
+		randomGenerator.setProb(prob);
 
-		randomGenerator->setEarthParameters(ESPercentage, EGPercentage, ETPercentage, earthPowerRange, earthHealthRange, earthAttackCapacityRange);
-		randomGenerator->setAlienParameters(ASPercentage, AMPercentage, ADPercentage, alienPowerRange, alienHealthRange, alienAttackCapacityRange);
+		randomGenerator.setEarthParameters(ESPercentage, EGPercentage, ETPercentage, earthPowerRange, earthHealthRange, earthAttackCapacityRange);
+		randomGenerator.setAlienParameters(ASPercentage, AMPercentage, ADPercentage, alienPowerRange, alienHealthRange, alienAttackCapacityRange);
 	}
 }
 
@@ -207,10 +205,6 @@ int Game::getCurrentTimestep() const
 
 Game::~Game()
 {
-	// Delete the random generator
-	if (randomGenerator != nullptr)
-		delete randomGenerator;
-
 	// Delete all units in the killed list
 	Unit* unit = nullptr;
 	while (!killedList.isEmpty())
