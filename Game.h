@@ -28,8 +28,11 @@ public:
     void incrementTimestep();
     void changeGameMode(GameMode);
     bool battleOver() const;
+
     void addUnit(Unit*);
     void killUnit(Unit*);
+
+    void printAll();
     void printKilledList() const;
 
     void loadParameters(std::string);

@@ -22,11 +22,7 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 	{
 		incrementTimestep();
 
-		// Print the current timestep and the armies and the killed list
-		std::cout << "\nCurrent Timestep " << currentTimestep << std::endl;
-		earthArmy.print();
-		alienArmy.print();
-		printKilledList();
+		printAll(); // Print the current timestep and the armies and the killed list
 
 		// Wait for the user to press Enter
 		std::cout << "Press Enter to continue...";
@@ -144,6 +140,14 @@ void Game::addUnit(Unit* unit)
 void Game::killUnit(Unit* unit)
 {
 	killedList.enqueue(unit);
+}
+
+void Game::printAll()
+{
+	std::cout << "\nCurrent Timestep " << currentTimestep << std::endl;
+	earthArmy.print();
+	alienArmy.print();
+	printKilledList();
 }
 
 void Game::printKilledList() const
