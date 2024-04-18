@@ -22,19 +22,24 @@ RandomGenerator::RandomGenerator(Game* gamePtr): gamePtr(gamePtr)
 	setAlienParameters(0, 0, 0, { 0, 0 }, { 0, 0 }, { 0, 0 });
 }
 
-void RandomGenerator::generateArmy(ArmyType armyType) const
+void RandomGenerator::generateUnits() const
 {
-	int A = getRandomNumber(1, 100);
-
-	if (A <= prob) // If the probability is satisfied, generate the units
+	for (int i = 0; i < 2; i++)
 	{
-		Unit* newUnit = nullptr;
+		ArmyType armyType = (i == 0) ? ArmyType::EARTH : ArmyType::ALIEN;
 
-		// Generate N units
-		for (int i = 0; i < N; i++)
+		int A = getRandomNumber(1, 100);
+
+		if (A <= prob) // If the probability is satisfied, generate the units
 		{
-			newUnit = generateUnit(armyType);
-			gamePtr->addUnit(newUnit); // Add the unit to the suitable army & list based on the unit type
+			Unit* newUnit = nullptr;
+
+			// Generate N units
+			for (int i = 0; i < N; i++)
+			{
+				newUnit = generateUnit(armyType);
+				gamePtr->addUnit(newUnit); // Add the unit to the suitable army & list based on the unit type
+			}
 		}
 	}
 }
