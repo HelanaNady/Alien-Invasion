@@ -159,20 +159,20 @@ void Game::loadParameters(std::string fileName)
 	std::fstream fin(fileName);
 	std::string wholeFile;
 
-	int N = 0; 
-	int ESPercentage = 0; 
+	int N = 0;
+	int ESPercentage = 0;
 	int ETPercentage = 0;
 	int EGPercentage = 0;
 	int ASPercentage = 0;
 	int AMPercentage = 0;
 	int ADPercentage = 0;
-	int prob = 0; 
-	Range earthPowerRange; 
-	Range earthHealthRange; 
-	Range earthAttackCapacityRange; 
+	int prob = 0;
+	Range earthPowerRange;
+	Range earthHealthRange;
+	Range earthAttackCapacityRange;
 	Range alienPowerRange;
-	Range alienHealthRange; 
-	Range alienAttackCapacityRange; 
+	Range alienHealthRange;
+	Range alienAttackCapacityRange;
 
 	if (fin.is_open())
 	{
@@ -188,15 +188,12 @@ void Game::loadParameters(std::string fileName)
 		fin >> alienHealthRange.min >> dummyHyphen >> alienHealthRange.max;
 		fin >> alienAttackCapacityRange.min >> dummyHyphen >> alienAttackCapacityRange.max;
 
-
 		randomGenerator->setN(N);
 		randomGenerator->setProb(prob);
 
 		randomGenerator->setEarthParameters(ESPercentage, EGPercentage, ETPercentage, earthPowerRange, earthHealthRange, earthAttackCapacityRange);
 		randomGenerator->setAlienParameters(ASPercentage, AMPercentage, ADPercentage, alienPowerRange, alienHealthRange, alienAttackCapacityRange);
 	}
-
-
 }
 
 int Game::getCurrentTimestep() const

@@ -13,9 +13,8 @@
 #include "../UnitClasses/AlienDrone.h"
 #include "../Game.h"
 
-RandomGenerator::RandomGenerator(Game* gamePtr):gamePtr(gamePtr)
-{
-}
+RandomGenerator::RandomGenerator(Game* gamePtr): gamePtr(gamePtr)
+{}
 
 void RandomGenerator::generateArmy(ArmyType armyType) const
 {
@@ -33,7 +32,6 @@ void RandomGenerator::generateArmy(ArmyType armyType) const
 		}
 	}
 }
-
 
 Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 {
