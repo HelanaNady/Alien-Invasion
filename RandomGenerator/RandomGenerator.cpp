@@ -14,7 +14,13 @@
 #include "../Game.h"
 
 RandomGenerator::RandomGenerator(Game* gamePtr): gamePtr(gamePtr)
-{}
+{
+	// Initialize the parameters with default values
+	setN(0);
+	setProb(0);
+	setEarthParameters(0, 0, 0, { 0, 0 }, { 0, 0 }, { 0, 0 });
+	setAlienParameters(0, 0, 0, { 0, 0 }, { 0, 0 }, { 0, 0 });
+}
 
 void RandomGenerator::generateArmy(ArmyType armyType) const
 {

@@ -207,9 +207,6 @@ Game::~Game()
 {
 	// Delete all units in the killed list
 	Unit* unit = nullptr;
-	while (!killedList.isEmpty())
-	{
-		killedList.dequeue(unit);
+	while (killedList.dequeue(unit))
 		delete unit;
-	}
 }
