@@ -78,6 +78,8 @@ void Game::incrementTimestep()
 				unit->receiveDamage(1); // Reduce health by 1
 				tempList.enqueue(unit);
 			}
+			else
+				break;
 		}
 
 		// Add the units back
@@ -97,8 +99,11 @@ void Game::incrementTimestep()
 		for (int i = 0; i < 5; i++)
 		{
 			unit = alienArmy.removeUnit(UnitType::AM);
+
 			if (unit)
 				removedMonsters.enqueue(unit);
+			else
+				break;
 		}
 
 		// Add 5 Monsters back
@@ -108,11 +113,16 @@ void Game::incrementTimestep()
 	else if (x < 60)
 	{
 		// Remove 6 drones from the front & back of the list of Alien army and add them to the killed list
+		Unit* unit = nullptr;
+
 		for (int i = 0; i < 6; i++)
 		{
-			Unit* unit = alienArmy.removeUnit(UnitType::AD);
+			unit = alienArmy.removeUnit(UnitType::AD);
+
 			if (unit)
 				killUnit(unit);
+			else
+				break;
 		}
 	}
 }
