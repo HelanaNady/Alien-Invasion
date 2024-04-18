@@ -4,7 +4,8 @@
 int Unit::lastEarthId = 0;
 int Unit::lastAlienId = 1999;
 
-Unit::Unit(Game* gamePtr, UnitType unitType, int health, int power, int attackCapacity): gamePtr(gamePtr), unitType(unitType), Ta(0), Td(0), power(power), attackCapacity(attackCapacity)
+Unit::Unit(Game* gamePtr, UnitType unitType, int health, int power, int attackCapacity)
+	: gamePtr(gamePtr), unitType(unitType), Ta(-1), Td(0), health(health), power(power), attackCapacity(attackCapacity)
 {
 	// Set the health of the unit
 	setHealth(health);
@@ -43,6 +44,9 @@ void Unit::receiveDamage(int loss)
 		health = 0;
 }
 
+int Unit::calcUAP(Unit* attackedUnit)
+{}
+
 bool Unit::isAlive() const
 {
 	return health > 0;
@@ -51,6 +55,11 @@ bool Unit::isAlive() const
 bool Unit::isDead() const
 {
 	return !isAlive();
+}
+
+bool Unit::isFirstAttack() const
+{
+	return Ta == -1;
 }
 
 int Unit::getId() const
@@ -83,6 +92,21 @@ int Unit::getAttackCapacity() const
 	return attackCapacity;
 }
 
+int Unit::getJoinTime() const
+{
+	return Tj;
+}
+
+int Unit::getFirstAttackTime() const
+{
+	return Ta;
+}
+
+int Unit::getDestructionTime() const
+{
+	return Td;
+}
+
 int Unit::getFirstAttackDelay() const
 {
 	return Ta - Tj;
@@ -106,6 +130,16 @@ void Unit::setPower(int power)
 void Unit::setAttackCapacity(int attackCapacity)
 {
 	this->attackCapacity = attackCapacity;
+}
+
+void Unit::setFirstTimeAttack(int Ta)
+{
+	this->Ta = Ta;
+}
+
+void Unit::setDestructionTime(int Td)
+{
+	this->Td = Td;
 }
 
 std::ostream& operator<<(std::ostream& oStream, Unit* unitObj)

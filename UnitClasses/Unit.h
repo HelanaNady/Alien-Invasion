@@ -10,14 +10,15 @@ class Game;
 class Unit
 {
 private:
-	Game* gamePtr; // Pointer to the game object
-
 	static int lastEarthId; // Last Earth unit ID used to generate the next ID
 	static int lastAlienId; // Last Alien unit ID used to generate the next ID
 
-	int id; // Unit ID
 	ArmyType armyType; // Army type
 	UnitType unitType; // Unit type
+
+protected:
+	Game* gamePtr; // Pointer to the game object
+	int id; // Unit ID
 
 	int Tj; // Join time 
 	int Ta; // First attack time
@@ -34,11 +35,13 @@ public:
 	Unit(Game*, UnitType, int, int, int);
 
 	void receiveDamage(int); // Receive damage from an attack
+	int calcUAP(Unit*); // Calculates the damage caused when attacked by "attackerUnit"
 	virtual void print() const = 0; // Print the unit
 	virtual void attack() = 0; // Run the attack for the unit
 
-	bool isAlive() const;
-	bool isDead() const;
+	bool isAlive() const; // Check if the unit is alive
+	bool isDead() const; // Check if the unit is dead
+	bool isFirstAttack() const; // Check if it has been attacked before
 
 	// Getters
 	int getId() const;
@@ -47,13 +50,24 @@ public:
 	int getHealth() const;
 	int getPower() const;
 	int getAttackCapacity() const;
-	int getFirstAttackDelay() const; // Get difference between first attack time and join time
-	int getDestructionDelay() const; // Get difference between destruction time and first attack time
-	int getBattleDelay() const; // Get difference between join time and destruction time
+
+	// Time
+	int getJoinTime() const;
+	int getFirstAttackTime() const;
+	int getDestructionTime() const;
+
+	// Delay
+	int getFirstAttackDelay() const;
+	int getDestructionDelay() const;
+	int getBattleDelay() const;
 
 	// Setters
 	void setPower(int);
 	void setAttackCapacity(int);
+
+	// Time
+	void setFirstTimeAttack(int);
+	void setDestructionTime(int);
 
 	friend std::ostream& operator<<(std::ostream&, Unit*);
 };
