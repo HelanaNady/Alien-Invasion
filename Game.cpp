@@ -34,8 +34,7 @@ void Game::incrementTimestep()
 	currentTimestep++;
 
 	// Generate units for both armies
-	randomGenerator.generateArmy(ArmyType::EARTH);
-	randomGenerator.generateArmy(ArmyType::ALIEN);
+	randomGenerator.generateUnits();
 
 	// Start the battle attack
 	earthArmy.attack();

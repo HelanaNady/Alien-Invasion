@@ -33,7 +33,7 @@ private:
 
 public:
 	RandomGenerator(Game*);
-	void generateArmy(ArmyType) const; // Generate units for the given army type
+	void generateUnits() const; // Generate units for the both armies
 	int getRandomNumber(int, int) const; // Generate a random number between the given range
 
 	// Setters
