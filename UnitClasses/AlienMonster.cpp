@@ -19,22 +19,13 @@ void AlienMonster::print()
 
 void AlienMonster::attack()
 {
-    // Get the counts of available units
-    int availableSoldiersCount = gamePtr->getUnitsCount(ArmyType::EARTH, UnitType::ES);
-    int availableTanksCount = gamePtr->getUnitsCount(ArmyType::EARTH, UnitType::ET);
-
-    // Calculate the attack capacity for soldiers and tanks
-    int soldiersAttackCapacity = std::min(availableSoldiersCount, attackCapacity / 2);
-    int remainingAttackCapacity = attackCapacity - soldiersAttackCapacity;
-    int tanksAttackCapacity = std::min(availableTanksCount, remainingAttackCapacity);
-
-    // If there's still remaining attack capacity add it to soldiers attack capacity
-    if (tanksAttackCapacity < remainingAttackCapacity)
-        soldiersAttackCapacity += std::min(availableSoldiersCount - soldiersAttackCapacity, remainingAttackCapacity - tanksAttackCapacity);
+    // Calculate the number of soldiers and tanks to attack
+    int soldiersCapacity = attackCapacity / 2;
+    int tanksCapacity = attackCapacity - soldiersCapacity;
 
     // Get the lists of earth soldiers and tanks to attack
-    LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, soldiersAttackCapacity);
-    LinkedQueue<Unit*> tanksList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, tanksAttackCapacity);
+    LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, soldiersCapacity);
+    LinkedQueue<Unit*> tanksList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, tanksCapacity);
 
     // Create temporary lists to store the alive units
     LinkedQueue<Unit*> soldiersTempList;
