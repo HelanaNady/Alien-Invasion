@@ -45,7 +45,9 @@ void Unit::receiveDamage(int loss)
 }
 
 int Unit::calcUAP(Unit* attackedUnit)
-{}
+{
+	return (power * health / 100) / sqrt(attackedUnit->health);
+}
 
 bool Unit::isAlive() const
 {
