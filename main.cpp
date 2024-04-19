@@ -8,7 +8,7 @@ int main()
 
     // Create a game object and run it
     Game game;
-    game.run(GameMode::INTERACTIVE, "phase1testing.txt");
+    game.run(GameMode::INTERACTIVE, "InputFiles/neutral.txt");
 
     return 0;
 }
