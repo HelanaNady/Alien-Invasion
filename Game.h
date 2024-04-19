@@ -29,7 +29,7 @@ public:
     bool battleOver();
 
     void addUnit(Unit*);
-    void killUnit(Unit*);
+    void addToKilledList(Unit*);
     LinkedQueue<Unit*> getEnemyList(ArmyType, UnitType, int);
 
     void printAll();

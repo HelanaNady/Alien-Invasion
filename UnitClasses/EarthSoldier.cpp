@@ -36,7 +36,7 @@ void EarthSoldier::attack()
         // Receive damage and check whether it's dead or not
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
         if (enemyUnit->isDead())
-            gamePtr->killUnit(enemyUnit);
+            gamePtr->addToKilledList(enemyUnit);
         else
             tempList.enqueue(enemyUnit);
 

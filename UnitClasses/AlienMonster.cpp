@@ -53,7 +53,7 @@ void AlienMonster::attack()
 
             // If the unit is dead, added to killedList, otherwise add it to the tempList
             if (enemyUnit->isDead())
-                gamePtr->killUnit(enemyUnit);
+                gamePtr->addToKilledList(enemyUnit);
             else
             {
                 if (i == 0) // If it's a soldier, add it to the soldiersTempList

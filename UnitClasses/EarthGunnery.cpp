@@ -57,7 +57,7 @@ void EarthGunnery::attack()
         attackedUnit->receiveDamage(calcUAP(attackedUnit));
 
         if (attackedUnit->isDead())
-            gamePtr->killUnit(attackedUnit);
+            gamePtr->addToKilledList(attackedUnit);
         else
             tempList.enqueue(attackedUnit);
 

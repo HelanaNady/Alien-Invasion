@@ -42,7 +42,7 @@ void AlienSoldier::attack()
 
         // If the unit is dead, added to killedList, otherwise add it to the tempList
         if (enemyUnit->isDead())
-            gamePtr->killUnit(enemyUnit);
+            gamePtr->addToKilledList(enemyUnit);
         else
             tempList.enqueue(enemyUnit);
 

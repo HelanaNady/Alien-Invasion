@@ -62,7 +62,7 @@ void EarthTank::attack()
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
         if (enemyUnit->isDead())
         {
-            gamePtr->killUnit(enemyUnit);
+            gamePtr->addToKilledList(enemyUnit);
             if (deadSoldiers < soldiersToKill)
                 deadSoldiers++;
         }
