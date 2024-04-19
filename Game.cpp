@@ -152,7 +152,7 @@ void Game::addToKilledList(Unit* unit)
 	killedList.enqueue(unit);
 }
 
-void Game::printAll()
+void Game::printAll() const
 {
 	std::cout << "\nCurrent Timestep " << currentTimestep << std::endl;
 	earthArmy.print();
