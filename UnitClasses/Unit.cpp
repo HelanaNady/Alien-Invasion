@@ -62,7 +62,7 @@ bool Unit::isFirstAttack() const
 	return Ta == -1;
 }
 
-int Unit::calcUAP(Unit* attackedUnit)
+int Unit::calcUAP(Unit* attackedUnit) const
 {
 	return (power * health / 100) / sqrt(attackedUnit->health);
 }
