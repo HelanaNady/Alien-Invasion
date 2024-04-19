@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "Unit.h"
 #include "../Game.h"
 
@@ -44,7 +46,7 @@ void Unit::receiveDamage(int loss)
 		health = 0;
 }
 
-int Unit::calcUAP(Unit* attackedUnit)
+int Unit::calcUAP(Unit* attackedUnit) const
 {
 	return (power * health / 100) / sqrt(attackedUnit->health);
 }
