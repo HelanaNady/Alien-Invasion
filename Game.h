@@ -17,22 +17,27 @@ private:
 
     EarthArmy earthArmy;
     AlienArmy alienArmy;
-    RandomGenerator* randomGenerator;
+    RandomGenerator randomGenerator;
 
-    LinkedQueue<Unit*> killedList;
+    LinkedQueue<Unit*> killedList; // Queue of killed units
+
+private:
+    void incrementTimestep(); // Increment the current timestep by 1 and process the timestep
+    void setGameMode(GameMode); // Change the game mode
+    bool battleOver() const; // Check if the battle is over (current timestep >= 50)
+
+    void printAll() const; // Prints all the armies and the killed list
+    void printKilledList() const; // Prints the killed list
+
+    bool loadParameters(std::string); // Load the parameters from the file and sets parameters in the random generator
 
 public:
     Game();
 
-    void run(GameMode, std::string);
-    void incrementTimestep();
-    void changeGameMode(GameMode);
-    bool battleOver() const;
-    void addUnit(Unit*);
-    void killUnit(Unit*);
-    void printKilledList() const;
+    void run(GameMode, std::string); // Run the game
 
-    std::string loadFromFile(std::string);
+    void addUnit(Unit*); // Add a unit to the appropriate army and list
+    void addToKilledList(Unit*); // Add a unit to the killed list
 
     // Getters
     int getCurrentTimestep() const;

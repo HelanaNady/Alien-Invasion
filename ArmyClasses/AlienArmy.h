@@ -18,7 +18,7 @@ private:
     Array<Unit*> monsters;
     Deque<Unit*> drones;
 
-    bool dronesToggler;
+    bool dronesToggler; // Used to toggle between front and back of the deque of drones
 
 public:
     AlienArmy();

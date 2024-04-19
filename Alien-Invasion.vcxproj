@@ -33,6 +33,7 @@
     <ClCompile Include="UnitClasses\Unit.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Containers\ArrayADT.h" />
     <ClInclude Include="Containers\Array.h" />
     <ClInclude Include="Containers\ArrayStack.h" />
     <ClInclude Include="Containers\Deque.h" />
@@ -55,9 +56,6 @@
     <ClInclude Include="ArmyClasses\Army.h" />
     <ClInclude Include="ArmyClasses\EarthArmy.h" />
     <ClInclude Include="ArmyClasses\AlienArmy.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="phase1testing.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

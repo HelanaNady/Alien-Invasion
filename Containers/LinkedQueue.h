@@ -85,7 +85,7 @@ inline bool LinkedQueue<T>::peek(T& frontEntry) const
     return true;
 }
 
-template<typename T>
+template <typename T>
 inline void LinkedQueue<T>::printList() const
 {
     if (isEmpty()) return;
@@ -100,7 +100,7 @@ inline void LinkedQueue<T>::printList() const
     }
 }
 
-template<typename T>
+template <typename T>
 inline int LinkedQueue<T>::getCount() const
 {
     return itemCount;

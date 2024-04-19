@@ -2,9 +2,10 @@
 #define ARRAY_H
 
 #include <iostream>
+#include "ArrayADT.h"
 
-template<typename T>
-class Array
+template <typename T>
+class Array: public ArrayADT<T>
 {
     enum { MAX_SIZE = 1000 };
 private:
@@ -20,7 +21,6 @@ public:
     void printList() const;
     int getCount() const;
 };
-
 
 template <typename T>
 inline Array<T>::Array(): count(0)

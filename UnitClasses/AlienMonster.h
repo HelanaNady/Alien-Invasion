@@ -9,6 +9,7 @@ class AlienMonster: public Unit
 public:
 	AlienMonster(Game*, int, int, int);
 	void print() const;
-	void attack(Unit*);
+	void attack();
 };
+
 #endif

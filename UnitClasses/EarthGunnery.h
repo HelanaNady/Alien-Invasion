@@ -9,8 +9,9 @@ class EarthGunnery: public Unit
 public:
 	EarthGunnery(Game*, int, int, int);
 	void print() const;
-	void attack(Unit*);
+	void attack();
 
 	int getPriority() const;
 };
+
 #endif

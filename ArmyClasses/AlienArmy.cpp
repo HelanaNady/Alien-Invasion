@@ -21,6 +21,7 @@ void AlienArmy::addUnit(Unit* unit)
             break;
 
         case UnitType::AD:
+            // Add the drone to the front or back of the deque based on the value of dronesToggler
             if (dronesToggler)
                 drones.enqueue(unit);
             else
