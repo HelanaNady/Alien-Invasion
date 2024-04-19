@@ -37,7 +37,7 @@ void AlienSoldier::attack()
         // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
-        // If the unit is dead, added to killedList, otherwise add it to the tempList
+        // If the unit is dead, added to killedList, otherwise add it back to the army
         if (enemyUnit->isDead())
             gamePtr->addToKilledList(enemyUnit);
         else
