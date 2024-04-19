@@ -119,7 +119,10 @@ void Game::incrementTimestep()
 			unit = alienArmy.removeUnit(UnitType::AD);
 
 			if (unit)
+			{
+				unit->receiveDamage(unit->getHealth()); // Reduce health to 0
 				killUnit(unit);
+			}
 			else
 				break;
 		}
