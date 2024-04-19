@@ -30,7 +30,7 @@ public:
     bool battleOver() const;
 
     void addUnit(Unit*);
-    void killUnit(Unit*);
+    void addToKilledList(Unit*);
 
     void printAll();
     void printKilledList() const;

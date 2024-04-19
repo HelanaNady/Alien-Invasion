@@ -49,7 +49,7 @@ void Game::incrementTimestep()
 		// Remove a tank from the Earth army and added to the killed list
 		Unit* unit = earthArmy.removeUnit(UnitType::ET);
 		if (unit)
-			killUnit(unit);
+			addToKilledList(unit);
 	}
 	else if (x < 30)
 	{
@@ -86,7 +86,7 @@ void Game::incrementTimestep()
 			if (unit->isAlive())
 				alienArmy.addUnit(unit);
 			else
-				killUnit(unit);
+				addToKilledList(unit);
 	}
 	else if (x < 50)
 	{
@@ -121,7 +121,7 @@ void Game::incrementTimestep()
 			if (unit)
 			{
 				unit->receiveDamage(unit->getHealth()); // Reduce health to 0
-				killUnit(unit);
+				addToKilledList(unit);
 			}
 			else
 				break;
@@ -147,7 +147,7 @@ void Game::addUnit(Unit* unit)
 		alienArmy.addUnit(unit);
 }
 
-void Game::killUnit(Unit* unit)
+void Game::addToKilledList(Unit* unit)
 {
 	killedList.enqueue(unit);
 }
