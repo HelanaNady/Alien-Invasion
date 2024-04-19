@@ -23,13 +23,13 @@ private:
 
 private:
     void incrementTimestep();  // Increment the current timestep by 1 and process the timestep
-    void changeGameMode(GameMode); // Change the game mode
+    void setGameMode(GameMode); // Change the game mode
     bool battleOver(); // Check if the battle is over
 
     void printAll(); // Prints all the armies and the killed list and units fighting at the current timestep
     void printKilledList() const; // Prints the killed list with the console formats
 
-    void loadParameters(std::string); // Load the parameters from the file and sets parameters in the random generator
+    bool loadParameters(std::string); // Load the parameters from the file and sets parameters in the random generator
 
 public:
     Game();
