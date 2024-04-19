@@ -42,7 +42,6 @@ public:
 	virtual void print() = 0;
 	virtual void attack() = 0;
 
-	bool isAlive() const; // Check if the unit is alive
 	bool isDead() const; // Check if the unit is dead
 	bool isFirstAttack() const; // Check if it has been attacked before
 

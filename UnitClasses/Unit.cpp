@@ -6,7 +6,7 @@ int Unit::lastEarthId = 0;
 int Unit::lastAlienId = 1999;
 
 Unit::Unit(Game* gamePtr, UnitType unitType, int health, int power, int attackCapacity)
-	: gamePtr(gamePtr), unitType(unitType), Ta(-1), Td(0), health(health), power(power), attackCapacity(attackCapacity)
+	: gamePtr(gamePtr), unitType(unitType), Ta(-1), Td(0), power(power), attackCapacity(attackCapacity)
 {
 	setHealth(health);
 
@@ -52,14 +52,9 @@ void Unit::clearFoughtUnits()
 	while (foughtUnits.dequeue(i));
 }
 
-bool Unit::isAlive() const
-{
-	return health > 0;
-}
-
 bool Unit::isDead() const
 {
-	return !isAlive();
+	return health <= 0;
 }
 
 bool Unit::isFirstAttack() const
