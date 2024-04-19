@@ -27,10 +27,6 @@ void AlienMonster::attack()
     LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, soldiersCapacity);
     LinkedQueue<Unit*> tanksList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, tanksCapacity);
 
-    // Create temporary lists to store the alive units
-    LinkedQueue<Unit*> soldiersTempList;
-    ArrayStack<Unit*> tanksTempList;
-
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
 
@@ -51,27 +47,14 @@ void AlienMonster::attack()
             // Calculate the UAP and apply the damage
             enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
-            // If the unit is dead, added to killedList, otherwise add it to the tempList
+            // If the unit is dead, added to killedList, otherwise add it back to the army
             if (enemyUnit->isDead())
                 gamePtr->addToKilledList(enemyUnit);
             else
-            {
-                if (i == 0) // If it's a soldier, add it to the soldiersTempList
-                    soldiersTempList.enqueue(enemyUnit);
-                else // If it's a tank, add it to the tanksTempList
-                    tanksTempList.push(enemyUnit);
-            }
+                gamePtr->addUnit(enemyUnit);
 
             // Store the IDs of the fought units to be printed later
             foughtUnits.enqueue(enemyUnit->getId());
         }
     }
-
-    // Empty the tempList and re-add the alive units back to their lists
-    Unit* unit = nullptr;
-    while (soldiersTempList.dequeue(unit))
-        gamePtr->addUnit(unit);
-
-    while (tanksTempList.pop(unit))
-        gamePtr->addUnit(unit);
 }

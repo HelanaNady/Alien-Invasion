@@ -22,9 +22,6 @@ void AlienSoldier::attack()
     // Get the lists of earth soldiers to attack
     LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, attackCapacity);
 
-    // Create a temporary list to store the alive units
-    LinkedQueue<Unit*> tempList;
-
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
 
@@ -44,14 +41,9 @@ void AlienSoldier::attack()
         if (enemyUnit->isDead())
             gamePtr->addToKilledList(enemyUnit);
         else
-            tempList.enqueue(enemyUnit);
+            gamePtr->addUnit(enemyUnit);
 
         // Store the IDs of the fought units to be printed later
         foughtUnits.enqueue(enemyUnit->getId());
     }
-
-    // Empty the tempList and re-add the alive units back to their lists
-    Unit* unit = nullptr;
-    while (tempList.dequeue(unit))
-        gamePtr->addUnit(unit);
 }
