@@ -181,12 +181,12 @@ void Game::loadParameters(std::string fileName)
 	int AMPercentage = 0;
 	int ADPercentage = 0;
 	int prob = 0;
-	Range earthPowerRange;
-	Range earthHealthRange;
-	Range earthAttackCapacityRange;
-	Range alienPowerRange;
-	Range alienHealthRange;
-	Range alienAttackCapacityRange;
+	Range earthPowerRange = { 0, 0 };
+	Range earthHealthRange = { 0, 0 };
+	Range earthAttackCapacityRange = { 0, 0 };
+	Range alienPowerRange = { 0, 0 };
+	Range alienHealthRange = { 0, 0 };
+	Range alienAttackCapacityRange = { 0, 0 };
 
 	if (fin.is_open())
 	{
