@@ -54,7 +54,10 @@ void Game::incrementTimestep()
 		// Remove a tank from the Earth army and added to the killed list
 		Unit* unit = earthArmy.removeUnit(UnitType::ET);
 		if (unit)
+		{
+			unit->receiveDamage(unit->getHealth()); // Reduce its health to zero
 			addToKilledList(unit);
+		}
 	}
 	else if (x < 30)
 	{
@@ -88,7 +91,7 @@ void Game::incrementTimestep()
 
 		// Add the units back
 		while (tempList.dequeue(unit))
-			if (unit->isAlive())
+			if (!unit->isDead())
 				alienArmy.addUnit(unit);
 			else
 				addToKilledList(unit);

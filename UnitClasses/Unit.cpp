@@ -54,14 +54,9 @@ int Unit::calcUAP(Unit* attackedUnit) const
 	return (power * health / 100) / sqrt(attackedUnit->health);
 }
 
-bool Unit::isAlive() const
-{
-	return health > 0;
-}
-
 bool Unit::isDead() const
 {
-	return !isAlive();
+	return health <= 0;
 }
 
 bool Unit::isFirstAttack() const

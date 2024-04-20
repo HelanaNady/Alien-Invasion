@@ -4,7 +4,7 @@ EarthGunnery::EarthGunnery(Game* gamePtr, int health, int power, int attackCapac
     : Unit(gamePtr, UnitType::EG, health, power, attackCapacity)
 {}
 
-void EarthGunnery::print() const
+void EarthGunnery::printFought() const
 {}
 
 void EarthGunnery::attack()

@@ -8,7 +8,7 @@ class AlienDrone: public Unit
 {
 public:
 	AlienDrone(Game*, int, int, int);
-	void print() const;
+	void printFought() const;
 	void attack();
 };
 

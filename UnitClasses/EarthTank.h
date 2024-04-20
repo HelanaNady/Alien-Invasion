@@ -8,7 +8,7 @@ class EarthTank: public Unit
 {
 public:
 	EarthTank(Game*, int, int, int);
-	void print() const;
+	void printFought() const;
 	void attack();
 };
 

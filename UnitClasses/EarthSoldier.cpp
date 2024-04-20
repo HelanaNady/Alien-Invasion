@@ -4,7 +4,7 @@ EarthSoldier::EarthSoldier(Game* gamePtr, int health, int power, int attackCapac
     : Unit(gamePtr, UnitType::ES, health, power, attackCapacity)
 {}
 
-void EarthSoldier::print() const
+void EarthSoldier::printFought() const
 {}
 
 void EarthSoldier::attack()

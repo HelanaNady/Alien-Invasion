@@ -36,10 +36,9 @@ public:
 
 	void receiveDamage(int); // Receive damage from an attack
 	int calcUAP(Unit*) const; // Calculates the damage caused when attacked by "attackerUnit"
-	virtual void print() const = 0; // Print the unit
+	virtual void printFought() const = 0; // Print the unit
 	virtual void attack() = 0; // Run the attack for the unit
 
-	bool isAlive() const; // Check if the unit is alive
 	bool isDead() const; // Check if the unit is dead
 	bool isFirstAttack() const; // Check if it has been attacked before
 
