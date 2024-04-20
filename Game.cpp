@@ -36,15 +36,18 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 void Game::incrementTimestep()
 {
 	currentTimestep++;
+	std::cout << std::endl;
 
 	// Generate units for both armies
 	randomGenerator.generateUnits();
 
 	// Generate random number X
 	int x = randomGenerator.getRandomNumber(1, 100);
+	std::cout << "X = " << x << std::endl;
 	if (x < 10)
 	{
 		// Remove a soldier from the Earth army and add it back
+		std::cout << "Case: Remove a soldier from the Earth army and add it back" << std::endl;
 		Unit* unit = earthArmy.removeUnit(UnitType::ES);
 		if (unit)
 			earthArmy.addUnit(unit);
@@ -52,13 +55,18 @@ void Game::incrementTimestep()
 	else if (x < 20)
 	{
 		// Remove a tank from the Earth army and added to the killed list
+		std::cout << "Case: Remove a tank from the Earth army and add it to the killed list" << std::endl;
 		Unit* unit = earthArmy.removeUnit(UnitType::ET);
 		if (unit)
+		{
+			unit->receiveDamage(unit->getHealth()); // Reduce health to 0
 			addToKilledList(unit);
+		}
 	}
 	else if (x < 30)
 	{
 		// Remove a gunner from the Earth army, reduce its health by half, and add it back
+		std::cout << "Case: Remove a gunner from the Earth army, reduce its health by half, and add it back" << std::endl;
 		Unit* unit = earthArmy.removeUnit(UnitType::EG);
 		if (unit)
 		{
@@ -69,6 +77,7 @@ void Game::incrementTimestep()
 	else if (x < 40)
 	{
 		// Remove 5 soldiers from the Alien army, reduce their health by 1, and add them back
+		std::cout << "Case: Remove 5 soldiers from the Alien army, reduce their health by 1, and add them back" << std::endl;
 		LinkedQueue<Unit*> tempList;
 		Unit* unit = nullptr;
 
@@ -96,6 +105,7 @@ void Game::incrementTimestep()
 	else if (x < 50)
 	{
 		// Remove 5 monsters from the Alien army and add them back
+		std::cout << "Case: Remove 5 monsters from the Alien army and add them back" << std::endl;
 		LinkedQueue<Unit*> removedMonsters;
 		Unit* unit = nullptr;
 
@@ -117,6 +127,7 @@ void Game::incrementTimestep()
 	else if (x < 60)
 	{
 		// Remove 6 drones from the front & back of the list of Alien army and add them to the killed list
+		std::cout << "Case: Remove 6 drones from the front & back of the list of Alien army and add them to the killed list" << std::endl;
 		Unit* unit = nullptr;
 
 		for (int i = 0; i < 6; i++)
@@ -131,6 +142,10 @@ void Game::incrementTimestep()
 			else
 				break;
 		}
+	}
+	else
+	{
+		std::cout << "Case: No action" << std::endl;
 	}
 }
 

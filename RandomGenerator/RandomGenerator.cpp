@@ -30,6 +30,8 @@ void RandomGenerator::generateUnits() const
 
 		int A = getRandomNumber(1, 100);
 
+		std::cout << "For " << (armyType == ArmyType::EARTH ? "Earth Army, " : "Alien Army, ") << "A = " << A << ": " << (A <= prob ? "Generate units" : "Do not generate units") << std::endl;
+
 		if (A <= prob) // If the probability is satisfied, generate the units
 		{
 			Unit* newUnit = nullptr;
