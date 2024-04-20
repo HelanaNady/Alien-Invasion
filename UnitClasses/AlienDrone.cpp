@@ -5,7 +5,7 @@ AlienDrone::AlienDrone(Game* gamePtr, int health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::AD, health, power, attackCapacity)
 {}
 
-void AlienDrone::print()
+void AlienDrone::printFought()
 {
     if (!foughtUnits.isEmpty())
     {
