@@ -91,10 +91,10 @@ void Game::incrementTimestep()
 
 		// Add the units back
 		while (tempList.dequeue(unit))
-			if (!unit->isDead())
-				alienArmy.addUnit(unit);
-			else
+			if (unit->isDead())
 				addToKilledList(unit);
+			else
+				alienArmy.addUnit(unit);
 	}
 	else if (x < 50)
 	{
