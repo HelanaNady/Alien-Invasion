@@ -70,7 +70,11 @@ void Game::incrementTimestep()
 		Unit* unit = earthArmy.removeUnit(UnitType::EG);
 		if (unit)
 		{
+			std::cout << std::endl;
+			std::cout << "Reducing health of AG " << unit->getId() << " by half from " << unit->getHealth() << std::endl;
 			unit->receiveDamage(0.5 * unit->getHealth()); // Reduce health by half
+			std::cout << "New health of AG " << unit->getId() << " is " << unit->getHealth() << std::endl;
+			std::cout << std::endl;
 			earthArmy.addUnit(unit);
 		}
 	}
@@ -88,7 +92,11 @@ void Game::incrementTimestep()
 
 			if (unit)
 			{
+				std::cout << std::endl;
+				std::cout << "Reducing health of AS " << unit->getId() << " by 1 from " << unit->getHealth() << std::endl;
 				unit->receiveDamage(1); // Reduce health by 1
+				std::cout << "New health of AS " << unit->getId() << " is " << unit->getHealth() << std::endl;
+				std::cout << std::endl;
 				tempList.enqueue(unit);
 			}
 			else
