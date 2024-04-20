@@ -5,7 +5,7 @@ AlienMonster::AlienMonster(Game* gamePtr, int health, int power, int attackCapac
     : Unit(gamePtr, UnitType::AM, health, power, attackCapacity)
 {}
 
-void AlienMonster::print()
+void AlienMonster::printFought()
 {
     if (!foughtUnits.isEmpty())
     {

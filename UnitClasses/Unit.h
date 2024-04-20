@@ -39,7 +39,7 @@ public:
 
 	void receiveDamage(int);
 	int calcUAP(Unit*) const; // Calculates the damage caused when attacked by "attackerUnit"
-	virtual void print() = 0;
+	virtual void printFought() = 0;
 	virtual void attack() = 0;
 
 	bool isDead() const; // Check if the unit is dead
@@ -73,6 +73,7 @@ public:
 	void setFirstTimeAttack(int);
 	void setDestructionTime(int);
 
+	// Print unit
 	friend std::ostream& operator<<(std::ostream&, Unit*);
 };
 

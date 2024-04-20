@@ -5,5 +5,5 @@ void Army::printFightingUnits()
 	Unit* unit = nullptr;
 
 	while (currentAttackers.dequeue(unit))
-		unit->print();
+		unit->printFought();
 }

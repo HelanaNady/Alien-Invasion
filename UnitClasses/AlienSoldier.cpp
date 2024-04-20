@@ -5,7 +5,7 @@ AlienSoldier::AlienSoldier(Game* gamePtr, int health, int power, int attackCapac
     : Unit(gamePtr, UnitType::AS, health, power, attackCapacity)
 {}
 
-void AlienSoldier::print()
+void AlienSoldier::printFought()
 {
     if (!foughtUnits.isEmpty())
     {

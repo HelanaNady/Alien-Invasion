@@ -5,7 +5,7 @@ EarthGunnery::EarthGunnery(Game* gamePtr, int health, int power, int attackCapac
     : Unit(gamePtr, UnitType::EG, health, power, attackCapacity)
 {}
 
-void EarthGunnery::print()
+void EarthGunnery::printFought()
 {
     if (!foughtUnits.isEmpty())
     {
