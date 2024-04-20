@@ -19,14 +19,12 @@ void AlienDrone::print()
 
 void AlienDrone::attack()
 {
-    int ETnumber = (attackCapacity / 2) + 1;
+    // Attack capacity is divided 50:50 between them 
+    int ETnumber = attackCapacity/2;
     int EGnumber = attackCapacity - ETnumber;
 
     LinkedQueue<Unit*> ETlist = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, ETnumber);
     LinkedQueue<Unit*> EGlist = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::EG, EGnumber);
-
-    ArrayStack<Unit*> ETtempList;
-    LinkedQueue<Unit*> EGtempList;
 
     for (int i = 0; i < attackCapacity; i++)
     {
@@ -51,29 +49,9 @@ void AlienDrone::attack()
         if (attackedUnit->isDead())
             gamePtr->addToKilledList(attackedUnit);
         else
-        {
-            UnitType unitType = attackedUnit->getUnitType();
+            gamePtr->addUnit(attackedUnit);
 
-            switch (unitType)
-            {
-                case UnitType::ET:
-                    ETtempList.push(attackedUnit);
-                    break;
-
-                case UnitType::EG:
-                    EGtempList.enqueue(attackedUnit);
-                    break;
-            }
-        }
-
+        // Store the IDs of the fought units to be printed later
         foughtUnits.enqueue(attackedUnit->getId());
     }
-
-    // Empty the tempList and re-add the alive units back to their lists
-    Unit* unit = nullptr;
-    while (ETtempList.pop(unit))
-        gamePtr->addUnit(unit);
-
-    while (EGtempList.dequeue(unit))
-        gamePtr->addUnit(unit);
 }
