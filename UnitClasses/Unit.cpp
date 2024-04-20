@@ -38,12 +38,15 @@ void Unit::setHealth(int health)
 	this->health = health;
 }
 
-void Unit::receiveDamage(int loss)
+void Unit::receiveDamage(int UAP)
 {
-	health -= loss;
+	health -= UAP;
 
-	if (health < 0)
+	if (health <= 0)
+	{
 		health = 0;
+		Td = gamePtr->getCurrentTimestep();
+	}
 }
 
 int Unit::calcUAP(Unit* attackedUnit) const
