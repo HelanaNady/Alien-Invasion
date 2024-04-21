@@ -6,7 +6,7 @@ int main()
     srand((unsigned) time(NULL));
 
     Game game;
-    game.run(GameMode::INTERACTIVE, "testingPhase2.txt");
+    game.run(GameMode::INTERACTIVE, "InputFiles/neutral.txt");
 
     return 0;
 }
