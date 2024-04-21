@@ -22,30 +22,27 @@ void EarthSoldier::printFought()
 
 void EarthSoldier::attack()
 {
+    // Get the lists of earth soldiers to attack
     LinkedQueue<Unit*> enemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, attackCapacity);
-    LinkedQueue<Unit*> tempList;
+
+    // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
 
-    while (!enemyList.isEmpty())
-    {
-        enemyList.dequeue(enemyUnit);
+    while (enemyList.dequeue(enemyUnit))
+    { 
         // Check if it were attacked before or not
-        if (enemyUnit->isFirstAttack())
-            enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
+        if (enemyUnit->isFirstAttack()) 
+            enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep()); 
 
-        // Receive damage and check whether it's dead or not
-        enemyUnit->receiveDamage(calcUAP(enemyUnit));
-        if (enemyUnit->isDead())
-            gamePtr->addToKilledList(enemyUnit);
+        // Receive damagem and check: if dead -> add to killed list else -> add to its army back
+        enemyUnit->receiveDamage(calcUAP(enemyUnit)); 
+        if (enemyUnit->isDead()) 
+            gamePtr->addToKilledList(enemyUnit); 
         else
-            tempList.enqueue(enemyUnit);
+            gamePtr->addUnit(enemyUnit); 
 
         // Store the IDs of the fought units to be printed later
-        foughtUnits.enqueue(enemyUnit->getId());
+        foughtUnits.enqueue(enemyUnit->getId()); 
     }
 
-    // Empty the tempList and re-add the alive units back to their lists
-    Unit* unit = nullptr;
-    while (tempList.dequeue(unit))
-        gamePtr->addUnit(unit);
 }
