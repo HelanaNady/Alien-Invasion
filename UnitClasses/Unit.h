@@ -37,8 +37,8 @@ private:
 public:
 	Unit(Game*, UnitType, int, int, int);
 
-	void receiveDamage(int);
-	int calcUAP(Unit*) const; // Calculates the damage caused when attacked by "attackerUnit"
+	void receiveDamage(double);
+	double calcUAP(Unit*) const; // Calculates the damage caused when attacked by "attackerUnit"
 	virtual void printFought() = 0;
 	virtual void attack() = 0;
 
