@@ -28,24 +28,20 @@ private:
 	Range alienHealthRange;
 	Range alienAttackCapacityRange;
 
-	// Counts needed for the outputfile statistics
-	// Total units generated through the whole battle (all timesteps combined)
-	int totalAScount;
-	int totalAMcount;
-	int totalADcount;
-	int totalEScount;
-	int totalETcount;
-	int totalEGcount; 
-
 private:
-	void loadParameters(std::string);
-	Unit* generateUnit(ArmyType);
+	Unit* generateUnit(ArmyType) const; // Generate a unit of the given army type
 
 public:
-	RandomGenerator(Game*, std::string);
-	void generateArmy(ArmyType);
-	int getRandomNumber(int, int) const;
-	int getTotalUnitCount(UnitType) const;
+	RandomGenerator(Game*);
+	void generateUnits() const; // Generate units for the both armies
+	int getRandomNumber(int, int) const; // Generate a random number between the given range
+
+	// Setters
+	void setN(int);
+	void setProb(int);
+
+	void setEarthParameters(int, int, int, Range, Range, Range); // Sets earth parameters loaded by game class
+	void setAlienParameters(int, int, int, Range, Range, Range); // Sets alien parameters loaded by game class
 };
 
 #endif

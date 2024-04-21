@@ -5,7 +5,7 @@
 #include "StackADT.h"
 
 // The default size is 1000
-template<typename T>
+template <typename T>
 class ArrayStack: public StackADT<T>
 {
 	enum { MAX_SIZE = 1000 };
@@ -23,17 +23,17 @@ public:
 	int getCount() const;
 };
 
-template<typename T>
+template <typename T>
 inline ArrayStack<T>::ArrayStack(): top(-1)
 {}
 
-template<typename T>
+template <typename T>
 inline bool ArrayStack<T>::isEmpty() const
 {
 	return top == -1;
 }
 
-template<typename T>
+template <typename T>
 inline bool ArrayStack<T>::push(const T& newEntry)
 {
 	if (top == MAX_SIZE - 1) return false;
@@ -42,7 +42,7 @@ inline bool ArrayStack<T>::push(const T& newEntry)
 	return true;
 }
 
-template<typename T>
+template <typename T>
 inline bool ArrayStack<T>::pop(T& TopEntry)
 {
 	if (isEmpty()) return false;
@@ -51,7 +51,7 @@ inline bool ArrayStack<T>::pop(T& TopEntry)
 	return true;
 }
 
-template<typename T>
+template <typename T>
 inline bool ArrayStack<T>::peek(T& TopEntry) const
 {
 	if (isEmpty()) return false;
@@ -60,7 +60,7 @@ inline bool ArrayStack<T>::peek(T& TopEntry) const
 	return true;
 }
 
-template<typename T>
+template <typename T>
 inline void ArrayStack<T>::printList() const
 {
 	for (int i = 0; i <= top; i++)
@@ -71,7 +71,7 @@ inline void ArrayStack<T>::printList() const
 	}
 }
 
-template<typename T>
+template <typename T>
 inline int ArrayStack<T>::getCount() const
 {
 	return top + 1;

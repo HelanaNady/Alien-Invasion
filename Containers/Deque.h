@@ -12,7 +12,7 @@ public:
     bool enqueueFront(const T& newEntry);
 };
 
-template<typename T>
+template <typename T>
 inline bool Deque<T>::dequeueBack(T& backEntry)
 {
     if (LinkedQueue<T>::isEmpty())
@@ -35,7 +35,7 @@ inline bool Deque<T>::dequeueBack(T& backEntry)
     return true;
 }
 
-template<typename T>
+template <typename T>
 inline bool Deque<T>::peekBack(T& backEntry)
 {
     if (LinkedQueue<T>::isEmpty())
@@ -45,7 +45,7 @@ inline bool Deque<T>::peekBack(T& backEntry)
     return true;
 }
 
-template<typename T>
+template <typename T>
 inline bool Deque<T>::enqueueFront(const T& newEntry)
 {
     Node<T>* newNodePtr = new Node<T>(newEntry);
@@ -69,4 +69,3 @@ inline bool Deque<T>::enqueueFront(const T& newEntry)
 }
 
 #endif
-

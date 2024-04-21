@@ -8,7 +8,8 @@ class EarthSoldier: public Unit
 {
 public:
 	EarthSoldier(Game*, int, int, int);
-	void print() const;
+	void printFought();
 	void attack();
 };
+
 #endif

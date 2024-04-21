@@ -5,24 +5,33 @@
 #include "DEFS.h"
 #include "UnitClasses/Unit.h"
 
-Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), randomGenerator(nullptr)
+Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), randomGenerator(this)
 {}
 
 void Game::run(GameMode gameMode, std::string inputFileName)
 {
 	// Change the game mode
-	changeGameMode(gameMode);
+	setGameMode(gameMode);
 
-	// Load parameters for random generator
-	std::string inputParameters = loadFromFile(inputFileName);
-	randomGenerator = new RandomGenerator(this, inputParameters);
+	// Load the parameters from the file and set the parameters in the random generator
+	if (!loadParameters(inputFileName)) // If the file is not found, print an error message and return
+	{
+		std::cout << "Error: File not found!" << std::endl;
+		return;
+	}
 
 	// Run the game
-	while (!battleOver())
+	do
 	{
 		incrementTimestep();
-	}
-	//printOutputFile();
+
+		// Print the output
+		if (gameMode == GameMode::INTERACTIVE)
+			printAll();
+
+		std::cout << "Press Enter to continue...";
+		while (std::cin.get() != '\n');
+	} while (!battleOver());
 }
 
 void Game::incrementTimestep()
@@ -30,21 +39,21 @@ void Game::incrementTimestep()
 	currentTimestep++;
 
 	// Generate units for both armies
-	randomGenerator->generateArmy(ArmyType::EARTH);
-	randomGenerator->generateArmy(ArmyType::ALIEN);
+	randomGenerator.generateUnits();
 
-	if (gameMode == GameMode::INTERACTIVE)
-		printAll();
+	// Start the battle attack
+	earthArmy.attack();
+	alienArmy.attack();
 }
 
-void Game::changeGameMode(GameMode gameMode)
+void Game::setGameMode(GameMode gameMode)
 {
 	this->gameMode = gameMode;
 }
 
 bool Game::battleOver()
 {
-	return currentTimestep > 40 && !(earthArmy.isDead() && alienArmy.isDead());
+	return currentTimestep >= 40 && (earthArmy.isDead() || alienArmy.isDead());
 }
 
 void Game::addUnit(Unit* unit)
@@ -92,8 +101,7 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 	return enemyUnits;
 }
 
-
-void Game::killUnit(Unit* unit)
+void Game::addToKilledList(Unit* unit)
 {
 	killedList.enqueue(unit);
 }
@@ -109,7 +117,7 @@ void Game::printAll()
 	alienArmy.printArmy();
 
 	std::cout << "============== Units fighting at current step ==============" << std::endl;
-	earthArmy.printFightingUnits(); // Is this right?
+	earthArmy.printFightingUnits();
 	alienArmy.printFightingUnits();
 
 	std::cout << "============== Killed/Destructed Units ==============" << std::endl;
@@ -123,19 +131,51 @@ void Game::printKilledList() const
 	std::cout << "]" << std::endl;
 }
 
-std::string Game::loadFromFile(std::string fileName)
+bool Game::loadParameters(std::string fileName)
 {
 	std::fstream fin(fileName);
-	std::string wholeFile;
 
 	if (fin.is_open())
 	{
-		std::string newLine;
-		while (std::getline(fin, newLine))
-			wholeFile += newLine + " ";
+		int N = 0;
+		int ESPercentage = 0;
+		int ETPercentage = 0;
+		int EGPercentage = 0;
+		int ASPercentage = 0;
+		int AMPercentage = 0;
+		int ADPercentage = 0;
+		int prob = 0;
+		Range earthPowerRange = { 0, 0 };
+		Range earthHealthRange = { 0, 0 };
+		Range earthAttackCapacityRange = { 0, 0 };
+		Range alienPowerRange = { 0, 0 };
+		Range alienHealthRange = { 0, 0 };
+		Range alienAttackCapacityRange = { 0, 0 };
+
+		fin >> N >> ESPercentage >> ETPercentage >> EGPercentage >> ASPercentage >> AMPercentage >> ADPercentage >> prob;
+
+		char dummyHyphen; // Dummy variable to read the hyphen
+
+		fin >> earthPowerRange.min >> dummyHyphen >> earthPowerRange.max;
+		fin >> earthHealthRange.min >> dummyHyphen >> earthHealthRange.max;
+		fin >> earthAttackCapacityRange.min >> dummyHyphen >> earthAttackCapacityRange.max;
+
+		fin >> alienPowerRange.min >> dummyHyphen >> alienPowerRange.max;
+		fin >> alienHealthRange.min >> dummyHyphen >> alienHealthRange.max;
+		fin >> alienAttackCapacityRange.min >> dummyHyphen >> alienAttackCapacityRange.max;
+
+		randomGenerator.setN(N); // Set the number of units to generate
+		randomGenerator.setProb(prob); // Set the probability of generating a unit
+
+		randomGenerator.setEarthParameters(ESPercentage, EGPercentage, ETPercentage, earthPowerRange, earthHealthRange, earthAttackCapacityRange); // Set the parameters for the Earth army
+		randomGenerator.setAlienParameters(ASPercentage, AMPercentage, ADPercentage, alienPowerRange, alienHealthRange, alienAttackCapacityRange); // Set the parameters for the Alien army
+
+		fin.close(); // Close the file
+
+		return true; // File loaded successfully
 	}
 
-	return wholeFile;
+	return false; // File failed to load
 }
 
 int Game::getCurrentTimestep() const
@@ -152,11 +192,9 @@ int Game::getUnitsCount(ArmyType armyType, UnitType unitType) const
 		case (ArmyType::ALIEN):
 			return alienArmy.getUnitsCount(unitType);
 	}
+
+	return 0;
 }
 
 Game::~Game()
-{
-	// Delete the random generator
-	if (randomGenerator != nullptr)
-		delete randomGenerator;
-}
+{}

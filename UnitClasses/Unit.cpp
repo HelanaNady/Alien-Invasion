@@ -6,8 +6,10 @@ int Unit::lastEarthId = 0;
 int Unit::lastAlienId = 1999;
 
 Unit::Unit(Game* gamePtr, UnitType unitType, int health, int power, int attackCapacity)
-	: gamePtr(gamePtr), unitType(unitType), Ta(-1), Td(0), Df(0), Dd(0), Db(0), health(health), power(power), attackCapacity(attackCapacity)
+	: gamePtr(gamePtr), unitType(unitType), Ta(-1), Td(0), power(power), attackCapacity(attackCapacity)
 {
+	setHealth(health);
+
 	if (unitType == UnitType::ES || unitType == UnitType::EG || unitType == UnitType::ET)
 	{
 		id = ++lastEarthId;
@@ -22,15 +24,45 @@ Unit::Unit(Game* gamePtr, UnitType unitType, int health, int power, int attackCa
 	Tj = gamePtr->getCurrentTimestep();
 }
 
-void Unit::recieveDamage(int UAP)
+void Unit::setHealth(int health)
+{
+	// Check if the health value is within the range [1, 100]
+	if (health < 1)
+		health = 1;
+	if (health > 100)
+		health = 100;
+
+	this->health = health;
+}
+
+void Unit::receiveDamage(double UAP)
 {
 	health -= UAP;
 
-	if (health < 0)
+	if (health <= 0)
+	{
 		health = 0;
+		Td = gamePtr->getCurrentTimestep();
+	}
 }
 
-int Unit::calcUAP(Unit* attackedUnit)
+void Unit::clearFoughtUnits()
+{
+	int i = 0;
+	while (foughtUnits.dequeue(i));
+}
+
+bool Unit::isDead() const
+{
+	return health <= 0;
+}
+
+bool Unit::isFirstAttack() const
+{
+	return Ta == -1;
+}
+
+double Unit::calcUAP(Unit* attackedUnit) const
 {
 	return (power * health / 100) / sqrt(attackedUnit->health);
 }
@@ -82,32 +114,27 @@ int Unit::getDestructionTime() const
 
 int Unit::getFirstAttackDelay() const
 {
-	return Df;
+	return Ta - Tj;
 }
 
 int Unit::getDestructionDelay() const
 {
-	return Dd;
+	return Td - Ta;
 }
 
 int Unit::getBattleDelay() const
 {
-	return	Db;
-}
-
-void Unit::setHealth(int health)
-{
-	health = this->health;
+	return Td - Tj;
 }
 
 void Unit::setPower(int power)
 {
-	power = this->power;
+	this->power = power;
 }
 
 void Unit::setAttackCapacity(int attackCapacity)
 {
-	attackCapacity = this->attackCapacity;
+	this->attackCapacity = attackCapacity;
 }
 
 void Unit::setFirstTimeAttack(int Ta)
@@ -118,21 +145,6 @@ void Unit::setFirstTimeAttack(int Ta)
 void Unit::setDestructionTime(int Td)
 {
 	this->Td = Td;
-}
-
-void Unit::setFirstAttackDelay()
-{
-	Df = Ta - Tj; // First Attack Delay
-}
-
-void Unit::setDestructionDelay()
-{
-	Dd = Td - Ta; // Destruction Delay
-}
-
-void Unit::setBattleDelay()
-{
-	Db = Td - Tj; // Battle Time
 }
 
 std::ostream& operator<<(std::ostream& oStream, Unit* unitObj)

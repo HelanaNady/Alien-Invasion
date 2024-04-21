@@ -5,27 +5,29 @@ EarthGunnery::EarthGunnery(Game* gamePtr, int health, int power, int attackCapac
     : Unit(gamePtr, UnitType::EG, health, power, attackCapacity)
 {}
 
-void EarthGunnery::print() const
+void EarthGunnery::printFought()
 {
-    std::cout << "EG " << this->getId() << " shots [";
-    foughtUnits.printList();
-    std::cout << "]\n";
+    if (!foughtUnits.isEmpty())
+    {
+        std::cout << "EG " << getId() << " shots [";
+        foughtUnits.printList();
+        std::cout << "]" << std::endl;
+
+        clearFoughtUnits(); // Clear the list after printing
+    }
 }
 
 void EarthGunnery::attack()
 {
-    int AMnumber = (attackCapacity / 2) + 1;
-    int ADnumber = attackCapacity - AMnumber;
-
+    int AMnumber = attackCapacity;
+    int ADnumber = attackCapacity;
 
     LinkedQueue<Unit*> AMlist = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AM, AMnumber);
     LinkedQueue<Unit*> ADlist = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AD, ADnumber);
 
-    LinkedQueue<Unit*> tempList;
-
     int dronesCount = 2; // Counter to handle attacking 2 drones then a monster repeatedly
 
-    for (int i = 0; i < attackCapacity; i++)
+    for (int i = 0; i < 3*attackCapacity; i++)
     {
         Unit* attackedUnit = nullptr;
 
@@ -40,38 +42,33 @@ void EarthGunnery::attack()
             dronesCount--;
         }
 
-        if (!attackedUnit && (!AMlist.isEmpty() || !ADlist.isEmpty()))
+        if (!attackedUnit)
         {
-            i--;
             continue;
         }
 
-        // Check if it was attacked before or not
-        if (attackedUnit->getFirstAttackTime() == -1)
+        // Set the first attack time if it's the first time attacking
+        if (attackedUnit->isFirstAttack())
             attackedUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
-        // Decrement health 
-        attackedUnit->recieveDamage(calcUAP(attackedUnit));
+        // Receive damage and check whether it's dead or not
+        attackedUnit->receiveDamage(calcUAP(attackedUnit));
 
-        // Check if it was killed or not
-        if (attackedUnit->getHealth())
-        {
-            tempList.enqueue(attackedUnit);
-        }
+        if (attackedUnit->isDead())
+            gamePtr->addToKilledList(attackedUnit);
         else
-        {
-            gamePtr->killUnit(attackedUnit);
-            attackedUnit->setDestructionTime(gamePtr->getCurrentTimestep());
-            attackedUnit->setDestructionDelay();
-            attackedUnit->setBattleDelay();
-        }
+            gamePtr->addUnit(attackedUnit);
 
+        // Store the IDs of the fought units to be printed later
         foughtUnits.enqueue(attackedUnit->getId());
     }
 
-    // Re-adding attacked units to their original lists
+    // Empty rest of enemy list
     Unit* unit = nullptr;
-    while (tempList.dequeue(unit))
+    while (AMlist.dequeue(unit))
+        gamePtr->addUnit(unit);
+
+    while(ADlist.dequeue(unit))
         gamePtr->addUnit(unit);
 }
 

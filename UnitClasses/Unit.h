@@ -16,6 +16,7 @@ private:
 
 	ArmyType armyType;
 	UnitType unitType;
+
 protected:
 	Game* gamePtr;
 	int id;
@@ -24,23 +25,27 @@ protected:
 	int Ta; // First attack time
 	int Td; // Destruction time
 
-	int Df; // First attack delay
-	int Dd; // Destruction delay
-	int Db; // Battle time
-
 	int health; // Current health
 	int power; // Attack power
 	int attackCapacity; // Attack capacity
 
 	LinkedQueue<int> foughtUnits; // A list of the units fought in the current timestep to be printed
 
+private:
+	void setHealth(int);
+
 public:
 	Unit(Game*, UnitType, int, int, int);
 
-	void recieveDamage(int);
-	int calcUAP(Unit*); // Calculates the damage caused when attacked by "attackerUnit"
-	virtual void print() const = 0;
+	void receiveDamage(double);
+	double calcUAP(Unit*) const; // Calculates the damage caused when attacked by "attackerUnit"
+	virtual void printFought() = 0;
 	virtual void attack() = 0;
+
+	bool isDead() const; // Check if the unit is dead
+	bool isFirstAttack() const; // Check if it has been attacked before
+
+	void clearFoughtUnits(); // Clear the list of fought units
 
 	// Getters
 	int getId() const;
@@ -60,9 +65,7 @@ public:
 	int getDestructionDelay() const;
 	int getBattleDelay() const;
 
-
 	// Setters
-	void setHealth(int);
 	void setPower(int);
 	void setAttackCapacity(int);
 
@@ -70,11 +73,8 @@ public:
 	void setFirstTimeAttack(int);
 	void setDestructionTime(int);
 
-	// Delay
-	void setFirstAttackDelay();
-	void setDestructionDelay();
-	void setBattleDelay();
-
+	// Print unit
 	friend std::ostream& operator<<(std::ostream&, Unit*);
 };
+
 #endif

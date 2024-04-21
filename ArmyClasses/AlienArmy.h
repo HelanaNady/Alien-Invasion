@@ -27,14 +27,12 @@ public:
     Unit* pickAttacker(UnitType);
     void printArmy() const;
     void attack();
-    bool isDead();
+    bool isDead() const;
 
     // Getters
     int getUnitsCount(UnitType) const;
 
     ~AlienArmy();
-
-
 };
 
 #endif

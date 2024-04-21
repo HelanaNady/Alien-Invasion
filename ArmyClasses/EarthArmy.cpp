@@ -83,7 +83,6 @@ int EarthArmy::getUnitsCount(UnitType unitType) const
     return 0;
 }
 
-
 void EarthArmy::printArmy() const
 {
     std::cout << soldiers.getCount() << " ES [";
@@ -123,7 +122,7 @@ void EarthArmy::attack()
     }
 }
 
-bool EarthArmy::isDead()
+bool EarthArmy::isDead() const
 {
     return soldiers.getCount() + tanks.getCount() + gunneries.getCount() == 0;
 }

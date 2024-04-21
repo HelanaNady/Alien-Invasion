@@ -5,29 +5,35 @@ AlienMonster::AlienMonster(Game* gamePtr, int health, int power, int attackCapac
     : Unit(gamePtr, UnitType::AM, health, power, attackCapacity)
 {}
 
-void AlienMonster::print() const
+void AlienMonster::printFought()
 {
-    std::cout << "AM " << this->getId() << " shots [";
-    foughtUnits.printList();
-    std::cout << "]\n";
+    if (!foughtUnits.isEmpty())
+    {
+        std::cout << "AM " << getId() << " shots [";
+        foughtUnits.printList();
+        std::cout << "]" << std::endl;
+
+        clearFoughtUnits(); // Clear the list after printing
+    }
 }
 
 void AlienMonster::attack()
 {
+    // Calculate the number of soldiers and tanks to attack
     int soldiersCapacity = attackCapacity / 2;
     int tanksCapacity = attackCapacity - soldiersCapacity;
 
+    // Get the lists of earth soldiers and tanks to attack
     LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, soldiersCapacity);
     LinkedQueue<Unit*> tanksList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, tanksCapacity);
 
-    LinkedQueue<Unit*> soldiersTempList;
-    ArrayStack<Unit*> tanksTempList;
+    // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
 
     // Loop through the tanks and soldiers lists
     for (int i = 0; i < 2; i++)
     {
-        LinkedQueue<Unit*>& currentList = (i == 0) ? soldiersList : tanksList;
+        LinkedQueue<Unit*>& currentList = (i == 0) ? soldiersList : tanksList; // Get the current list
 
         while (!currentList.isEmpty())
         {
@@ -35,45 +41,20 @@ void AlienMonster::attack()
             currentList.dequeue(enemyUnit);
 
             // Set the first attack time if it's the first time attacking
-            if (enemyUnit->getFirstAttackTime() == -1)
-            {
+            if (enemyUnit->isFirstAttack())
                 enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
-                enemyUnit->setFirstAttackDelay();
-            }
 
-            // Receive damage and check whether it's dead or not
-            enemyUnit->recieveDamage(calcUAP(enemyUnit));
-            if (enemyUnit->getHealth() == 0)
-            {
-                gamePtr->killUnit(enemyUnit);
-                enemyUnit->setDestructionTime(gamePtr->getCurrentTimestep());
-                enemyUnit->setDestructionDelay();
-                enemyUnit->setBattleDelay();
-            }
+            // Calculate the UAP and apply the damage
+            enemyUnit->receiveDamage(calcUAP(enemyUnit));
+
+            // If the unit is dead, added to killedList, otherwise add it back to the army
+            if (enemyUnit->isDead())
+                gamePtr->addToKilledList(enemyUnit);
             else
-            {
-                if (i == 0)
-                    soldiersTempList.enqueue(enemyUnit);
-                else
-                    tanksTempList.push(enemyUnit);
-            }
+                gamePtr->addUnit(enemyUnit);
 
             // Store the IDs of the fought units to be printed later
             foughtUnits.enqueue(enemyUnit->getId());
         }
-    }
-
-    // Empty the tempList and re-add the alive units back to their lists
-    while (!soldiersTempList.isEmpty())
-    {
-        Unit* tempUnitPtr = nullptr;
-        soldiersTempList.dequeue(tempUnitPtr);
-        gamePtr->addUnit(tempUnitPtr);
-    }
-    while (!tanksTempList.isEmpty())
-    {
-        Unit* tempUnitPtr = nullptr;
-        tanksTempList.pop(tempUnitPtr);
-        gamePtr->addUnit(tempUnitPtr);
     }
 }
