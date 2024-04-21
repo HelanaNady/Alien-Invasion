@@ -1,8 +1,6 @@
 #ifndef RANDOM_GENERATOR_H
 #define RANDOM_GENERATOR_H
 
-#include <string>
-
 #include "../DEFS.h"
 #include "../UnitClasses/Unit.h"
 
