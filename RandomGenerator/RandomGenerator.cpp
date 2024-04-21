@@ -1,9 +1,5 @@
 #include "RandomGenerator.h"
 
-#include <iostream>
-#include <sstream>
-#include <cstdlib>
-
 #include "../UnitClasses/Unit.h"
 #include "../UnitClasses/EarthSoldier.h"
 #include "../UnitClasses/EarthGunnery.h"
@@ -102,7 +98,7 @@ void RandomGenerator::setEarthParameters(int ESPercentage, int ETPercentage, int
 	this->EGPercentage = EGPercentage;
 
 	this->earthPowerRange = earthPowerRange;
-	this->earthPowerRange = earthHealthRange;
+	this->earthHealthRange = earthHealthRange;
 	this->earthAttackCapacityRange = earthAttackCapacityRange;
 }
 
@@ -113,7 +109,7 @@ void RandomGenerator::setAlienParameters(int ASPercentage, int AMPercentage, int
 	this->ADPercentage = ADPercentage;
 
 	this->alienPowerRange = alienPowerRange;
-	this->alienPowerRange = alienHealthRange;
+	this->alienHealthRange = alienHealthRange;
 	this->alienAttackCapacityRange = alienAttackCapacityRange;
 }
 
