@@ -43,7 +43,7 @@ Unit* AlienArmy::removeUnit(UnitType unitType)
 
         case UnitType::AM:
             if (!monsters.isEmpty())
-                monsters.entryAt(unit, (rand() % monsters.getCount()));
+                monsters.remove((rand() % monsters.getCount()), unit);
             break;
 
         case UnitType::AD:
