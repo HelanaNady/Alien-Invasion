@@ -25,11 +25,13 @@ void EarthTank::attack()
     LinkedQueue<Unit*> monsterEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AM, attackCapacity);
     LinkedQueue<Unit*> soldierEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, attackCapacity);
     LinkedQueue<Unit*> tempList;
-    Unit* enemyUnit = nullptr;
 
     // Calculating the number of alien soldiers that needs to be killed
     int soldiersToKill = std::ceil(gamePtr->getUnitsCount(ALIEN, AS) - (gamePtr->getUnitsCount(EARTH, AS) / 0.8));
     int deadSoldiers = 0;
+
+    // Create a pointer to the enemy unit
+    Unit* enemyUnit = nullptr;
 
     for (int i = 0; i < attackCapacity; i++)
     {
@@ -66,6 +68,9 @@ void EarthTank::attack()
         }
         else
             tempList.enqueue(enemyUnit);
+
+        // Reset enemyUnit pointer to nullptr to avoid previous state duplication
+        enemyUnit = nullptr;
     }
 
     // Re-adding attacked units to their original lists

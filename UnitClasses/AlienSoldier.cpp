@@ -25,11 +25,8 @@ void AlienSoldier::attack()
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
 
-    while (!soldiersList.isEmpty())
+    while (soldiersList.dequeue(enemyUnit))
     {
-        // Get the unit and remove it from the list
-        soldiersList.dequeue(enemyUnit);
-
         // Set the first attack time if it's the first time attacking
         if (enemyUnit->isFirstAttack())
             enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
@@ -47,5 +44,8 @@ void AlienSoldier::attack()
 
         // Store the IDs of the fought units to be printed later
         foughtUnits.enqueue(enemyUnit->getId());
+
+        // Reset enemyUnit pointer to nullptr to avoid previous state duplication
+        enemyUnit = nullptr;
     }
 }

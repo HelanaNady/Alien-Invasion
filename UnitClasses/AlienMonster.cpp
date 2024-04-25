@@ -35,11 +35,8 @@ void AlienMonster::attack()
     {
         LinkedQueue<Unit*>& currentList = (i == 0) ? soldiersList : tanksList; // Get the current list
 
-        while (!currentList.isEmpty())
+        while (currentList.dequeue(enemyUnit))
         {
-            // Get the unit and remove it from the list
-            currentList.dequeue(enemyUnit);
-
             // Set the first attack time if it's the first time attacking
             if (enemyUnit->isFirstAttack())
                 enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
@@ -57,6 +54,9 @@ void AlienMonster::attack()
 
             // Store the IDs of the fought units to be printed later
             foughtUnits.enqueue(enemyUnit->getId());
+
+            // Reset enemyUnit pointer to nullptr to avoid previous state duplication
+            enemyUnit = nullptr;
         }
     }
 }

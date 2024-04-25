@@ -9,7 +9,9 @@ void HealUnit::attack()
 {
     LinkedQueue<Unit*> unitsToHeal = gamePtr->getUnitsToMaintainList(attackCapacity);
 
+    // Create a pointer to the unit to heal
     Unit* unitToHeal = nullptr;
+
     while (unitsToHeal.dequeue(unitToHeal))
     {
         // Check if unit has spend more than 10 time steps in UML
@@ -28,5 +30,8 @@ void HealUnit::attack()
             gamePtr->addUnit(unitToHeal);
         else
             gamePtr->addUnitToMaintenanceList(unitToHeal);
+
+        // Reset unitToHeal pointer to nullptr to avoid previous state duplication
+        unitToHeal = nullptr;
     }
 }

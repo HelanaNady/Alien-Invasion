@@ -117,8 +117,7 @@ LinkedQueue<Unit*> Game::getUnitsToMaintainList(int attackCapacity)
 	int dummyPri = 0;
 	for (int i = 0; i < attackCapacity; i++)
 	{
-		unitMaintenanceList.dequeue(unit, dummyPri);
-		if (unit)
+		if (unitMaintenanceList.dequeue(unit, dummyPri))
 			unitsToMaintain.enqueue(unit);
 		else
 			break;
