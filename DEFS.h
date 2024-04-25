@@ -20,7 +20,7 @@ enum ArmyType
 
 enum UnitType
 {
-	ES, EG, ET,
+	ES, EG, ET, EH,
 	AS, AD, AM
 };
 

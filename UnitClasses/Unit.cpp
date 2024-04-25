@@ -11,7 +11,7 @@ Unit::Unit(Game* gamePtr, UnitType unitType, int health, int power, int attackCa
 {
 	setHealth(health);
 
-	if (unitType == UnitType::ES || unitType == UnitType::EG || unitType == UnitType::ET)
+	if (unitType == UnitType::ES || unitType == UnitType::EG || unitType == UnitType::ET || unitType == UnitType::EH)
 	{
 		id = ++lastEarthId;
 		armyType = ArmyType::EARTH;
@@ -66,6 +66,10 @@ bool Unit::isFirstAttack() const
 double Unit::calcUAP(Unit* attackedUnit) const
 {
 	return (power * health / 100) / sqrt(attackedUnit->health);
+}
+
+void Unit::printFought()
+{
 }
 
 int Unit::getId() const

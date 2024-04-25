@@ -76,6 +76,9 @@
     <ClInclude Include="Containers\ArrayADT.h">
       <Filter>Containers Classes</Filter>
     </ClInclude>
+    <ClInclude Include="UnitClasses\HealUnit.h">
+      <Filter>Unit Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArmyClasses\AlienArmy.h">
@@ -125,6 +128,9 @@
     </ClCompile>
     <ClCompile Include="ArmyClasses\Army.cpp">
       <Filter>Army Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitClasses\HealUnit.cpp">
+      <Filter>Unit Classes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

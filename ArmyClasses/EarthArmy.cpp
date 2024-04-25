@@ -12,11 +12,17 @@ void EarthArmy::addUnit(Unit* unit)
         case UnitType::ES:
             soldiers.enqueue(unit);
             break;
+
         case UnitType::ET:
             tanks.push(unit);
             break;
+
         case UnitType::EG:
             gunneries.enqueue(unit, unit->getHealth() + unit->getPower());
+            break;
+            
+        case UnitType::EH:
+            healers.push(unit);
             break;
     }
 }
@@ -39,6 +45,10 @@ Unit* EarthArmy::removeUnit(UnitType unitType)
             int dummyPri;
             gunneries.dequeue(unit, dummyPri);
             break;
+
+        case UnitType::EH:
+            healers.pop(unit);
+            break;
     }
 
     return unit;
@@ -54,11 +64,17 @@ Unit* EarthArmy::pickAttacker(UnitType unitType)
         case UnitType::ES:
             soldiers.peek(unit);
             break;
+
         case UnitType::EG:
             gunneries.peek(unit, dummyPri);
             break;
+
         case UnitType::ET:
             tanks.peek(unit);
+            break;
+
+        case UnitType::EH:
+            healers.peek(unit);
             break;
     }
 
@@ -72,11 +88,17 @@ int EarthArmy::getUnitsCount(UnitType unitType) const
         case UnitType::ES:
             return soldiers.getCount();
             break;
+            
         case UnitType::EG:
             return gunneries.getCount();
             break;
+            
         case UnitType::ET:
             return tanks.getCount();
+            break;
+            
+        case UnitType::EH:
+            return healers.getCount();
             break;
     }
 

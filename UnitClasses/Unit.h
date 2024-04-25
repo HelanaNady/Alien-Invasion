@@ -29,7 +29,7 @@ protected:
 	int power; // Attack power
 	int attackCapacity; // Attack capacity
 
-	LinkedQueue<int> foughtUnits; // A list of the units fought in the current timestep to be printed
+	LinkedQueue<int> foughtUnits; // A list of the units fought in the current timestep to be printed 
 
 private:
 	void setHealth(int);
@@ -39,8 +39,8 @@ public:
 
 	void receiveDamage(double);
 	double calcUAP(Unit*) const; // Calculates the damage caused when attacked by "attackerUnit"
-	virtual void printFought() = 0;
 	virtual void attack() = 0;
+	virtual void printFought();
 
 	bool isDead() const; // Check if the unit is dead
 	bool isFirstAttack() const; // Check if it has been attacked before
