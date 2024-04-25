@@ -69,8 +69,7 @@ double Unit::calcUAP(Unit* attackedUnit) const
 }
 
 void Unit::printFought()
-{
-}
+{}
 
 int Unit::getId() const
 {

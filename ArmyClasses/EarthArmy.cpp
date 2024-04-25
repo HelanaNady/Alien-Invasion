@@ -20,7 +20,7 @@ void EarthArmy::addUnit(Unit* unit)
         case UnitType::EG:
             gunneries.enqueue(unit, unit->getHealth() + unit->getPower());
             break;
-            
+
         case UnitType::EH:
             healers.push(unit);
             break;
@@ -88,15 +88,15 @@ int EarthArmy::getUnitsCount(UnitType unitType) const
         case UnitType::ES:
             return soldiers.getCount();
             break;
-            
+
         case UnitType::EG:
             return gunneries.getCount();
             break;
-            
+
         case UnitType::ET:
             return tanks.getCount();
             break;
-            
+
         case UnitType::EH:
             return healers.getCount();
             break;

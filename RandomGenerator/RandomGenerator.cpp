@@ -15,7 +15,7 @@ RandomGenerator::RandomGenerator(Game* gamePtr): gamePtr(gamePtr)
 	// Initialize the parameters with default values
 	setN(0);
 	setProb(0);
-	setEarthParameters(0, 0, 0, 0,  { 0, 0 }, { 0, 0 }, { 0, 0 });
+	setEarthParameters(0, 0, 0, 0, { 0, 0 }, { 0, 0 }, { 0, 0 });
 	setAlienParameters(0, 0, 0, { 0, 0 }, { 0, 0 }, { 0, 0 });
 }
 
@@ -57,7 +57,7 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 			newUnit = new EarthSoldier(gamePtr, health, power, attackCapacity);
 		else if (B <= (ESPercentage + ETPercentage))
 			newUnit = new EarthTank(gamePtr, health, power, attackCapacity);
-		else if (B <= (ESPercentage + ETPercentage + EGPercentage)) 
+		else if (B <= (ESPercentage + ETPercentage + EGPercentage))
 			newUnit = new EarthGunnery(gamePtr, health, power, attackCapacity);
 		else
 			newUnit = new HealUnit(gamePtr, health, power, attackCapacity);

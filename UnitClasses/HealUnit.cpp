@@ -6,6 +6,4 @@ HealUnit::HealUnit(Game* gamePtr, int health, int power, int attackCapacity)
 {}
 
 void HealUnit::attack()
-{
-
-}
+{}
