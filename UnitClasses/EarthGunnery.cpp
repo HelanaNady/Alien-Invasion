@@ -1,7 +1,7 @@
 #include "EarthGunnery.h"
 #include "../Game.h"
 
-EarthGunnery::EarthGunnery(Game* gamePtr, int health, int power, int attackCapacity)
+EarthGunnery::EarthGunnery(Game* gamePtr, double health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::EG, health, power, attackCapacity)
 {}
 
@@ -25,40 +25,45 @@ void EarthGunnery::attack()
     LinkedQueue<Unit*> AMlist = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AM, AMnumber);
     LinkedQueue<Unit*> ADlist = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AD, ADnumber);
 
+    // Create a pointer to the enemy unit
+    Unit* enemyUnit = nullptr;
+
     int dronesCount = 2; // Counter to handle attacking 2 drones then a monster repeatedly
 
     for (int i = 0; i < 3 * attackCapacity; i++)
     {
-        Unit* attackedUnit = nullptr;
-
         if (dronesCount == 0)
         {
-            AMlist.dequeue(attackedUnit);
+            AMlist.dequeue(enemyUnit);
             dronesCount = 2; // Reseting the counter
         }
         else
         {
-            ADlist.dequeue(attackedUnit);
+            ADlist.dequeue(enemyUnit);
             dronesCount--;
         }
 
-        if (!attackedUnit)
+        if (!enemyUnit)
             continue;
 
         // Set the first attack time if it's the first time attacking
-        if (attackedUnit->isFirstAttack())
-            attackedUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
+        if (enemyUnit->isFirstAttack())
+            enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
-        // Receive damage and check whether it's dead or not
-        attackedUnit->receiveDamage(calcUAP(attackedUnit));
+        // Calculate the UAP and apply the damage
+        enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
-        if (attackedUnit->isDead())
-            gamePtr->addToKilledList(attackedUnit);
+        // Check if the unit is dead or can join the battle
+        if (enemyUnit->isDead())
+            gamePtr->addToKilledList(enemyUnit);
         else
-            gamePtr->addUnit(attackedUnit);
+            gamePtr->addUnit(enemyUnit);
 
         // Store the IDs of the fought units to be printed later
-        foughtUnits.enqueue(attackedUnit->getId());
+        foughtUnits.enqueue(enemyUnit->getId());
+
+        // Nullify the pointer to avoid duplication
+        enemyUnit = nullptr;
     }
 
     // Empty rest of enemy list

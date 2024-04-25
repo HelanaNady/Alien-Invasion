@@ -3,7 +3,7 @@
 #include "AlienArmy.h"
 #include "../UnitClasses/Unit.h"
 
-AlienArmy::AlienArmy(): dronesToggler(false)
+AlienArmy::AlienArmy(Game* gamePtr): Army(gamePtr), dronesToggler(false)
 {}
 
 void AlienArmy::addUnit(Unit* unit)
