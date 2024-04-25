@@ -197,8 +197,6 @@ GameStatistics Game::countStatistics()
 
 			// Delays
 			gameStatistics.totalEarthFirstAttackDelays += unit->getFirstAttackDelay();
-			gameStatistics.totalEarthBattleDelays += unit->getBattleDelay();
-			gameStatistics.totalEarthDestructionDelays += unit->getDestructionDelay();
 
 			addUnit(unit);
 
@@ -224,8 +222,6 @@ GameStatistics Game::countStatistics()
 
 			// Delays
 			gameStatistics.totalAlienFirstAttackDelays += unit->getFirstAttackDelay();
-			gameStatistics.totalAlienBattleDelays += unit->getBattleDelay();
-			gameStatistics.totalAlienDestructionDelays += unit->getDestructionDelay();
 
 			addUnit(unit);
 

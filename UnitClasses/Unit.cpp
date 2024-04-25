@@ -134,17 +134,17 @@ int Unit::getDestructionTime() const
 
 int Unit::getFirstAttackDelay() const
 {
-	return Ta - Tj;
+	return Ta == 0 ? 0 : Ta - Tj;
 }
 
 int Unit::getDestructionDelay() const
 {
-	return Td - Ta;
+	return Td == 0 ? 0 : Td - Ta;
 }
 
 int Unit::getBattleDelay() const
 {
-	return Td - Tj;
+	return Td == 0 ? 0 : Td - Tj;
 }
 
 int Unit::getUMLjoinTime() const
