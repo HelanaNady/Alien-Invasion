@@ -83,5 +83,5 @@ void EarthTank::attack()
 
 int EarthTank::getHealPriority() const
 {
-    return health;
+    return 0; // 0 to make soldiers the priority to be healed first in the game and tanks be in the order of adding them
 }

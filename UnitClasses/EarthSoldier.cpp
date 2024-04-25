@@ -51,5 +51,5 @@ void EarthSoldier::attack()
 
 int EarthSoldier::getHealPriority() const
 {
-    return 100 + health; // 100 is added to the health to give priority to the soldiers with lower health
+    return 100 - health; // The lower the health, the higher the priority
 };
