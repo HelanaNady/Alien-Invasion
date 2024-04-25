@@ -244,4 +244,5 @@ build
 bin
 .vs
 .vscode
-/log.txt
+log.txt
+BattleResults.txt
