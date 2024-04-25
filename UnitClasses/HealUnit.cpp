@@ -17,6 +17,8 @@ void HealUnit::attack()
         {
             unitToHeal->receiveDamage(unitToHeal->getHealth()); // Make unit health 0
             gamePtr->addToKilledList(unitToHeal);
+
+            continue;
         }
 
         // Heal the unit
