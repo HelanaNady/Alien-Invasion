@@ -22,6 +22,7 @@ add_executable(Alien_Invasion
         UnitClasses/EarthGunnery.cpp
         UnitClasses/EarthSoldier.cpp
         UnitClasses/EarthTank.cpp
+        UnitClasses/HealUnit.cpp
         UnitClasses/Unit.cpp
         Game.cpp
         ArmyClasses/AlienArmy.cpp

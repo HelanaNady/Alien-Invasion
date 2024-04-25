@@ -118,6 +118,10 @@ void EarthArmy::printArmy() const
     std::cout << gunneries.getCount() << " EG [";
     gunneries.printList();
     std::cout << "]" << std::endl;
+
+    std::cout << healers.getCount() << " EH [";
+    healers.printList();
+    std::cout << "]" << std::endl;
 }
 
 void EarthArmy::attack()
@@ -137,6 +141,13 @@ void EarthArmy::attack()
     }
 
     attacker = pickAttacker(UnitType::ET);
+    if (attacker)
+    {
+        attacker->attack();
+        currentAttackers.enqueue(attacker);
+    }
+
+    attacker = pickAttacker(UnitType::EH);
     if (attacker)
     {
         attacker->attack();

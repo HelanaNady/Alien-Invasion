@@ -18,6 +18,7 @@ private:
 	int ASPercentage;
 	int AMPercentage;
 	int ADPercentage;
+	int EHPercentage;
 	int prob;
 	Range earthPowerRange;
 	Range earthHealthRange;
@@ -38,7 +39,7 @@ public:
 	void setN(int);
 	void setProb(int);
 
-	void setEarthParameters(int, int, int, Range, Range, Range); // Sets earth parameters loaded by game class
+	void setEarthParameters(int, int, int, int, Range, Range, Range); // Sets earth parameters loaded by game class
 	void setAlienParameters(int, int, int, Range, Range, Range); // Sets alien parameters loaded by game class
 };
 

@@ -144,6 +144,7 @@ bool Game::loadParameters(std::string fileName)
 		int ASPercentage = 0;
 		int AMPercentage = 0;
 		int ADPercentage = 0;
+		int EHPercentage = 0;
 		int prob = 0;
 		Range earthPowerRange = { 0, 0 };
 		Range earthHealthRange = { 0, 0 };
@@ -152,7 +153,7 @@ bool Game::loadParameters(std::string fileName)
 		Range alienHealthRange = { 0, 0 };
 		Range alienAttackCapacityRange = { 0, 0 };
 
-		fin >> N >> ESPercentage >> ETPercentage >> EGPercentage >> ASPercentage >> AMPercentage >> ADPercentage >> prob;
+		fin >> N >> ESPercentage >> ETPercentage >> EGPercentage >> ASPercentage >> AMPercentage >> ADPercentage >> EHPercentage >> prob;
 
 		char dummyHyphen; // Dummy variable to read the hyphen
 
@@ -167,7 +168,7 @@ bool Game::loadParameters(std::string fileName)
 		randomGenerator.setN(N); // Set the number of units to generate
 		randomGenerator.setProb(prob); // Set the probability of generating a unit
 
-		randomGenerator.setEarthParameters(ESPercentage, EGPercentage, ETPercentage, earthPowerRange, earthHealthRange, earthAttackCapacityRange); // Set the parameters for the Earth army
+		randomGenerator.setEarthParameters(ESPercentage, EGPercentage, ETPercentage, HUPercentage, earthPowerRange, earthHealthRange, earthAttackCapacityRange); // Set the parameters for the Earth army
 		randomGenerator.setAlienParameters(ASPercentage, AMPercentage, ADPercentage, alienPowerRange, alienHealthRange, alienAttackCapacityRange); // Set the parameters for the Alien army
 
 		fin.close(); // Close the file
