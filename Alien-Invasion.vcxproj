@@ -23,6 +23,7 @@
     <ClCompile Include="ArmyClasses\Army.cpp" />
     <ClCompile Include="ArmyClasses\EarthArmy.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="UnitClasses\HealUnit.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RandomGenerator\RandomGenerator.cpp" />
     <ClCompile Include="UnitClasses\AlienDrone.cpp" />
@@ -46,6 +47,7 @@
     <ClInclude Include="Containers\StackADT.h" />
     <ClInclude Include="DEFS.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="UnitClasses\HealUnit.h" />
     <ClInclude Include="RandomGenerator\RandomGenerator.h" />
     <ClInclude Include="UnitClasses\AlienDrone.h" />
     <ClInclude Include="UnitClasses\AlienMonster.h" />
