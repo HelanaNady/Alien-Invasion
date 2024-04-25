@@ -7,7 +7,7 @@ int Unit::lastEarthId = 0;
 int Unit::lastAlienId = 1999;
 
 Unit::Unit(Game* gamePtr, UnitType unitType, double health, int power, int attackCapacity)
-	: gamePtr(gamePtr), unitType(unitType), Ta(-1), Td(0), power(power), attackCapacity(attackCapacity)
+	: gamePtr(gamePtr), unitType(unitType), Ta(0), Td(0), power(power), attackCapacity(attackCapacity)
 {
 	setHealth(health);
 
@@ -76,7 +76,7 @@ bool Unit::needsHeal() const
 
 bool Unit::isFirstAttack() const
 {
-	return Ta == -1;
+	return Ta == 0;
 }
 
 double Unit::calcUAP(Unit* attackedUnit) const

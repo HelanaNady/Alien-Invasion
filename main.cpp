@@ -6,7 +6,7 @@ int main()
     srand((unsigned) time(NULL));
 
     Game game;
-    game.run(GameMode::INTERACTIVE, "InputFiles/neutral.txt");
+    game.run(GameMode::INTERACTIVE, "InputFiles/strong_earth.txt", "BattleResults.txt");
 
     return 0;
 }
