@@ -64,6 +64,8 @@ void EarthTank::attack()
             if (deadSoldiers < soldiersToKill)
                 deadSoldiers++;
         }
+        else if (enemyUnit->needsHeal())
+            gamePtr->addUnitToMaintenanceList(enemyUnit);
         else
             tempList.enqueue(enemyUnit);
     }

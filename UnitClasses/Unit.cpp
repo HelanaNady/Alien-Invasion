@@ -71,7 +71,7 @@ bool Unit::isDead() const
 
 bool Unit::needsHeal() const
 {
-	return (health / initialHealth < 0.2 && health > 0);
+	return (health / initialHealth) < 0.2;
 }
 
 bool Unit::isFirstAttack() const
