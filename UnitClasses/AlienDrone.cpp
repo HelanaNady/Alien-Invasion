@@ -40,6 +40,8 @@ void AlienDrone::attack()
         if (!enemyUnit)
             continue;
 
+        gamePtr->log("Alien " + getUnitTypeString() + " " + toString() + " is attacking Earth " + enemyUnit->getUnitTypeString() + " " + enemyUnit->toString() + " with UAP " + std::to_string(calcUAP(enemyUnit)));
+
         // Set the first attack time if it's the first time attacking
         if (enemyUnit->isFirstAttack())
             enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
@@ -58,7 +60,10 @@ void AlienDrone::attack()
         // Store the IDs of the fought units to be printed later
         foughtUnits.enqueue(enemyUnit->getId());
 
+        gamePtr->log("Alien " + getUnitTypeString() + " " + toString() + " attacked Earth " + enemyUnit->getUnitTypeString() + " " + enemyUnit->toString());
+
         // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;
+
     }
 }

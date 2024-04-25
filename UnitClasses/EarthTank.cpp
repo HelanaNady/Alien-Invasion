@@ -54,6 +54,8 @@ void EarthTank::attack()
         if (!enemyUnit)
             continue;
 
+        gamePtr->log("Earth " + getUnitTypeString() + " " + toString() + " is attacking Alien " + enemyUnit->getUnitTypeString() + " " + enemyUnit->toString() + " with UAP " + std::to_string(calcUAP(enemyUnit)));
+
         // Check if it were attacked before or not 
         if (enemyUnit->isFirstAttack())
             enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
@@ -70,6 +72,8 @@ void EarthTank::attack()
         }
         else
             tempList.enqueue(enemyUnit);
+
+        gamePtr->log("Earth " + getUnitTypeString() + " " + toString() + " attacked Alien " + enemyUnit->getUnitTypeString() + " " + enemyUnit->toString());
 
         // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;

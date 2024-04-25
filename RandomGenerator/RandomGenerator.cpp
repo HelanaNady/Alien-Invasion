@@ -19,13 +19,30 @@ RandomGenerator::RandomGenerator(Game* gamePtr): gamePtr(gamePtr)
 	setAlienParameters(0, 0, 0, { 0, 0 }, { 0, 0 }, { 0, 0 });
 }
 
+std::string RandomGenerator::armyTypeToString(ArmyType armyType) const
+{
+	switch (armyType)
+	{
+		case ArmyType::EARTH:
+			return "Earth";
+		case ArmyType::ALIEN:
+			return "Alien";
+		default:
+			return "Unknown";
+	}
+}
+
 void RandomGenerator::generateUnits() const
 {
+	gamePtr->log("Generating units...");
+
 	for (int i = 0; i < 2; i++)
 	{
 		ArmyType armyType = (i == 0) ? ArmyType::EARTH : ArmyType::ALIEN;
 
+		gamePtr->log("Generating units for " + armyTypeToString(armyType) + " army...");
 		int A = getRandomNumber(1, 100);
+		gamePtr->log("Probability: " + std::to_string(A) + " - " + ((A <= prob) ? "Success" : "Fail") + " (Prob: " + std::to_string(prob) + ", N: " + std::to_string(N) + ", Army: " + armyTypeToString(armyType) + ")");
 
 		if (A <= prob) // If the probability is satisfied, generate the units
 		{
@@ -43,9 +60,11 @@ void RandomGenerator::generateUnits() const
 
 Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 {
+	gamePtr->log("Generating a unit for " + armyTypeToString(armyType) + " army...");
 	Unit* newUnit = nullptr;
 
 	int B = getRandomNumber(1, 100);
+	gamePtr->log("B=" + std::to_string(B) + " (ES: " + std::to_string(ESPercentage) + ", ET: " + std::to_string(ETPercentage) + ", EG: " + std::to_string(EGPercentage) + ", EH: " + std::to_string(EHPercentage) + ", AS: " + std::to_string(ASPercentage) + ", AM: " + std::to_string(AMPercentage) + ", AD: " + std::to_string(ADPercentage) + ")");
 
 	if (armyType == ArmyType::EARTH)
 	{
@@ -61,6 +80,8 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 			newUnit = new EarthGunnery(gamePtr, health, power, attackCapacity);
 		else
 			newUnit = new HealUnit(gamePtr, health, power, attackCapacity);
+
+		gamePtr->log("Generated unit: " + newUnit->toString());
 	}
 	else
 	{
@@ -74,6 +95,8 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 			newUnit = new AlienMonster(gamePtr, health, power, attackCapacity);
 		else
 			newUnit = new AlienDrone(gamePtr, health, power, attackCapacity);
+
+		gamePtr->log("Generated unit: " + newUnit->toString());
 	}
 
 	return newUnit;

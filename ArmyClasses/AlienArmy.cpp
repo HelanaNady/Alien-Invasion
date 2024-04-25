@@ -2,6 +2,7 @@
 
 #include "AlienArmy.h"
 #include "../UnitClasses/Unit.h"
+#include "../Game.h"
 
 AlienArmy::AlienArmy(Game* gamePtr): Army(gamePtr), dronesToggler(false)
 {}
@@ -122,26 +123,47 @@ void AlienArmy::attack()
     Unit* attacker = pickAttacker(UnitType::AS);
     if (attacker)
     {
+        gamePtr->log("Attacking with Alien Soldier: " + attacker->toString());
         attacker->attack();
         currentAttackers.enqueue(attacker);
     }
+    else
+    {
+        gamePtr->log("No Alien Soldier to attack");
+    }
+    logCurrentAttackers();
 
     attacker = pickAttacker(UnitType::AM);
     if (attacker)
     {
+        gamePtr->log("Attacking with Alien Monster: " + attacker->toString());
         attacker->attack();
         currentAttackers.enqueue(attacker);
     }
+    else
+    {
+        gamePtr->log("No Alien Monster to attack");
+    }
+    logCurrentAttackers();
 
     if (drones.getCount() > 1)
     {
         attacker = pickAttacker(UnitType::AD);
+        gamePtr->log("Attacking with first Alien Drone " + attacker->toString());
         attacker->attack();
         currentAttackers.enqueue(attacker);
+        logCurrentAttackers();
 
         attacker = pickAttacker(UnitType::AD);
+        gamePtr->log("Attacking with second Alien Drone " + attacker->toString());
         attacker->attack();
         currentAttackers.enqueue(attacker);
+        logCurrentAttackers();
+    }
+    else
+    {
+        gamePtr->log("Not enough Alien Drones to attack. We have " + std::to_string(drones.getCount()));
+        logCurrentAttackers();
     }
 }
 

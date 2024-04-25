@@ -83,6 +83,12 @@ public:
 
 	// Print unit
 	friend std::ostream& operator<<(std::ostream&, Unit*);
+	std::string toString() const;
+
+	std::string foughtUnitToString();
+	std::string getUnitTypeString();
+
+	static std::string unitTypeString(UnitType unitType);
 };
 
 #endif

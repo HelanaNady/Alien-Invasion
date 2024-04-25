@@ -9,6 +9,7 @@
 #include "RandomGenerator/RandomGenerator.h"
 #include "Containers/LinkedQueue.h"
 #include "Containers/PriorityQueue.h"
+#include "Logger.h"
 
 class Game
 {
@@ -22,6 +23,9 @@ private:
 
     LinkedQueue<Unit*> killedList;
     PriorityQueue<Unit*> unitMaintenanceList;
+
+    // Logger
+    Logger logger;
 
 private:
     void incrementTimestep();  // Increment the current timestep by 1 and process the timestep
@@ -39,12 +43,21 @@ public:
 
     void run(GameMode, std::string);  // Run the game
 
+    std::string gameModeToString(GameMode);  // Convert the game mode to string
+
     void addUnit(Unit*);  // Add a unit to the appropriate army and list
     void addToKilledList(Unit*);  // Add a unit to the killed list
     LinkedQueue<Unit*> getEnemyList(ArmyType, UnitType, int); // Get the enemy list for the given army type, unit type and attack capacity
 
     void addUnitToMaintenanceList(Unit*); // Add a unit to the maintenance list
     LinkedQueue<Unit*> getUnitsToMaintainList(int);
+
+    // Logger
+    void logStartOfGame();
+    void logBeginOfTimeStep();
+    void log(std::string);
+    void logEndOfTimeStep();
+    void logEndOfGame();
 
     // Getters
     int getCurrentTimestep() const;

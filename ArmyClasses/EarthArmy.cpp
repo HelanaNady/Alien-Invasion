@@ -133,31 +133,55 @@ void EarthArmy::attack()
     Unit* attacker = pickAttacker(UnitType::ES);
     if (attacker)
     {
+        gamePtr->log("Attacking with Earth Soldier: " + attacker->toString());
         attacker->attack();
         currentAttackers.enqueue(attacker);
     }
+    else
+    {
+        gamePtr->log("No Earth Soldier to attack with");
+    }
+    logCurrentAttackers();
 
     attacker = pickAttacker(UnitType::EG);
     if (attacker)
     {
+        gamePtr->log("Attacking with Earth Gunnery: " + attacker->toString());
         attacker->attack();
         currentAttackers.enqueue(attacker);
     }
+    else
+    {
+        gamePtr->log("No Earth Gunnery to attack with");
+    }
+    logCurrentAttackers();
 
     attacker = pickAttacker(UnitType::ET);
     if (attacker)
     {
+        gamePtr->log("Attacking with Earth Tank: " + attacker->toString());
         attacker->attack();
         currentAttackers.enqueue(attacker);
     }
+    else
+    {
+        gamePtr->log("No Earth Tank to attack with");
+    }
+    logCurrentAttackers();
 
     attacker = removeUnit(UnitType::EH);
     if (attacker)
     {
+        gamePtr->log("Healing with Earth Healer: " + attacker->toString());
         attacker->attack();
         currentAttackers.enqueue(attacker);
         gamePtr->addToKilledList(attacker); // Kill current healing unit after it heals
     }
+    else
+    {
+        gamePtr->log("No Earth Healer to heal with");
+    }
+    logCurrentAttackers();
 }
 
 bool EarthArmy::isDead() const
