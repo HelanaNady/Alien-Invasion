@@ -20,7 +20,7 @@ private:
     bool dronesToggler;
 
 public:
-    AlienArmy();
+    AlienArmy(Game*);
 
     void addUnit(Unit*);
     Unit* removeUnit(UnitType);

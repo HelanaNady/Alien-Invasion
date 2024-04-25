@@ -11,7 +11,6 @@
 #include "..\UnitClasses\EarthGunnery.h"
 #include "..\UnitClasses\HealUnit.h"
 
-
 class EarthArmy: public Army
 {
 private:
@@ -21,6 +20,8 @@ private:
     ArrayStack<Unit*> healers;
 
 public:
+    EarthArmy(Game*);
+
     void addUnit(Unit*);
     Unit* removeUnit(UnitType);
     Unit* pickAttacker(UnitType);

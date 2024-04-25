@@ -1,7 +1,7 @@
 #include "AlienDrone.h"
 #include "../Game.h"
 
-AlienDrone::AlienDrone(Game* gamePtr, int health, int power, int attackCapacity)
+AlienDrone::AlienDrone(Game* gamePtr, double health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::AD, health, power, attackCapacity)
 {}
 
@@ -28,33 +28,41 @@ bool AlienDrone::attack()
 
     bool attackCheck = !(ETlist.isEmpty() && EGlist.isEmpty());
 
+    // Create a pointer to the enemy unit
+    Unit* enemyUnit = nullptr;
+
+
     for (int i = 0; i < attackCapacity; i++)
     {
-        Unit* attackedUnit = nullptr;
-
         // Get the unit and remove it from the list
         if (i % 2 == 0)
-            ETlist.dequeue(attackedUnit);
+            ETlist.dequeue(enemyUnit);
         else
-            EGlist.dequeue(attackedUnit);
+            EGlist.dequeue(enemyUnit);
 
-        if (!attackedUnit)
+        if (!enemyUnit)
             continue;
 
         // Set the first attack time if it's the first time attacking
-        if (attackedUnit->isFirstAttack())
-            attackedUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
+        if (enemyUnit->isFirstAttack())
+            enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
-        // Receive damage and check whether it's dead or not
-        attackedUnit->receiveDamage(calcUAP(attackedUnit));
+        // Calculate the UAP and apply the damage
+        enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
-        if (attackedUnit->isDead())
-            gamePtr->addToKilledList(attackedUnit);
+        // Check if the unit is dead, needs healing or can join the battle
+        if (enemyUnit->isDead())
+            gamePtr->addToKilledList(enemyUnit);
+        else if (enemyUnit->needsHeal())
+            gamePtr->addUnitToMaintenanceList(enemyUnit);
         else
-            gamePtr->addUnit(attackedUnit);
+            gamePtr->addUnit(enemyUnit);
 
         // Store the IDs of the fought units to be printed later
-        foughtUnits.enqueue(attackedUnit->getId());
+        foughtUnits.enqueue(enemyUnit->getId());
+
+        // Nullify the pointer to avoid duplication
+        enemyUnit = nullptr;
     }
 
     return attackCheck;

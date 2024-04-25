@@ -2,7 +2,7 @@
 #include "../Game.h"
 #include "../Containers/LinkedQueue.h"
 
-EarthSoldier::EarthSoldier(Game* gamePtr, int health, int power, int attackCapacity)
+EarthSoldier::EarthSoldier(Game* gamePtr, double health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::ES, health, power, attackCapacity)
 {}
 
@@ -35,8 +35,10 @@ bool EarthSoldier::attack()
         if (enemyUnit->isFirstAttack())
             enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
-        // Receive damage and check: if dead -> add to killed list else -> add to its army back
+        // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
+
+        // Check if the unit is dead or can join the battle
         if (enemyUnit->isDead())
             gamePtr->addToKilledList(enemyUnit);
         else
@@ -45,6 +47,13 @@ bool EarthSoldier::attack()
         // Store the IDs of the fought units to be printed later
         foughtUnits.enqueue(enemyUnit->getId());
     }
+        // Nullify the pointer to avoid duplication
+        enemyUnit = nullptr;
+    }
     return attackCheck;
-
 }
+
+int EarthSoldier::getHealPriority() const
+{
+    return 100 - health; // The lower the health, the higher the priority
+};

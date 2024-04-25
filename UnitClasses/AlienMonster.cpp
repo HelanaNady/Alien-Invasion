@@ -1,7 +1,7 @@
 #include "AlienMonster.h"
 #include "../Game.h"
 
-AlienMonster::AlienMonster(Game* gamePtr, int health, int power, int attackCapacity)
+AlienMonster::AlienMonster(Game* gamePtr, double health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::AM, health, power, attackCapacity)
 {}
 
@@ -38,11 +38,8 @@ bool AlienMonster::attack()
     {
         LinkedQueue<Unit*>& currentList = (i == 0) ? soldiersList : tanksList; // Get the current list
 
-        while (!currentList.isEmpty())
+        while (currentList.dequeue(enemyUnit))
         {
-            // Get the unit and remove it from the list
-            currentList.dequeue(enemyUnit);
-
             // Set the first attack time if it's the first time attacking
             if (enemyUnit->isFirstAttack())
                 enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
@@ -50,14 +47,19 @@ bool AlienMonster::attack()
             // Calculate the UAP and apply the damage
             enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
-            // If the unit is dead, added to killedList, otherwise add it back to the army
+            // Check if the unit is dead, needs healing or can join the battle
             if (enemyUnit->isDead())
                 gamePtr->addToKilledList(enemyUnit);
+            else if (enemyUnit->needsHeal())
+                gamePtr->addUnitToMaintenanceList(enemyUnit);
             else
                 gamePtr->addUnit(enemyUnit);
 
             // Store the IDs of the fought units to be printed later
             foughtUnits.enqueue(enemyUnit->getId());
+
+            // Nullify the pointer to avoid duplication
+            enemyUnit = nullptr;
         }
     }
 

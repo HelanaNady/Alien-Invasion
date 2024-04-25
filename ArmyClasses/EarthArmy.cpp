@@ -2,6 +2,10 @@
 
 #include "EarthArmy.h"
 #include "../UnitClasses/Unit.h"
+#include "../Game.h"
+
+EarthArmy::EarthArmy(Game* gamePtr): Army(gamePtr)
+{}
 
 void EarthArmy::addUnit(Unit* unit)
 {
@@ -140,7 +144,7 @@ bool EarthArmy::attack()
             didArmyAttack = didArmyAttack || didUnitAttack;
         }
     }
-
+  
     return didArmyAttack;
 }
 

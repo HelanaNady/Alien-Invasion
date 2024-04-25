@@ -4,7 +4,7 @@
 #include "../Game.h"
 #include "../Containers/LinkedQueue.h"
 
-EarthTank::EarthTank(Game* gamePtr, int health, int power, int attackCapacity)
+EarthTank::EarthTank(Game* gamePtr, double health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::ET, health, power, attackCapacity)
 {}
 
@@ -25,7 +25,6 @@ bool EarthTank::attack()
     LinkedQueue<Unit*> monsterEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AM, attackCapacity);
     LinkedQueue<Unit*> soldierEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, attackCapacity);
     LinkedQueue<Unit*> tempList;
-    Unit* enemyUnit = nullptr;
 
     // Calculating the number of alien soldiers that needs to be killed
     int soldiersToKill = std::ceil(gamePtr->getUnitsCount(ALIEN, AS) - (gamePtr->getUnitsCount(EARTH, AS) / 0.8));
@@ -33,6 +32,9 @@ bool EarthTank::attack()
 
     // Check for a successful attack
     bool attackCheck = !(monsterEnemyList.isEmpty() && soldierEnemyList.isEmpty());
+  
+    // Create a pointer to the enemy unit
+    Unit* enemyUnit = nullptr;
 
     for (int i = 0; i < attackCapacity; i++)
     {
@@ -59,8 +61,10 @@ bool EarthTank::attack()
         if (enemyUnit->isFirstAttack())
             enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
-        // Receive damage and check whether it's dead or not
+        // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
+
+        // Check if the unit is dead or can join the battle
         if (enemyUnit->isDead())
         {
             gamePtr->addToKilledList(enemyUnit);
@@ -69,6 +73,9 @@ bool EarthTank::attack()
         }
         else
             tempList.enqueue(enemyUnit);
+
+        // Nullify the pointer to avoid duplication
+        enemyUnit = nullptr;
     }
 
     // Re-adding attacked units to their original lists
@@ -77,5 +84,9 @@ bool EarthTank::attack()
         gamePtr->addUnit(tempUnitPtr);
 
     return attackCapacity;
+}
 
+int EarthTank::getHealPriority() const
+{
+    return 0; // 0 to make soldiers the priority to be healed first in the game and tanks be in the order of adding them
 }

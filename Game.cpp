@@ -5,7 +5,7 @@
 #include "DEFS.h"
 #include "UnitClasses/Unit.h"
 
-Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), randomGenerator(this)
+Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), earthArmy(this), alienArmy(this), randomGenerator(this)
 {}
 
 void Game::run(GameMode gameMode, std::string inputFileName)
@@ -104,6 +104,38 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 	return enemyUnits;
 }
 
+void Game::addUnitToMaintenanceList(Unit* unit)
+{
+	if (unit->getUnitType() == UnitType::ES)
+	{
+		unit->setUMLjoinTime(currentTimestep); // Set the time when the unit joined the UML
+		unitMaintenanceList.enqueue(unit, dynamic_cast<EarthSoldier*>(unit)->getHealPriority());
+	}
+	else if (unit->getUnitType() == UnitType::ET)
+	{
+		unit->setUMLjoinTime(currentTimestep); // Set the time when the unit joined the UML
+		unitMaintenanceList.enqueue(unit, dynamic_cast<EarthTank*>(unit)->getHealPriority());
+	}
+}
+
+LinkedQueue<Unit*> Game::getUnitsToMaintainList(int attackCapacity)
+{
+	LinkedQueue<Unit*> unitsToMaintain;
+
+	Unit* unit = nullptr;
+	int dummyPri = 0;
+	for (int i = 0; i < attackCapacity; i++)
+	{
+		unit = nullptr;
+		if (unitMaintenanceList.dequeue(unit, dummyPri))
+			unitsToMaintain.enqueue(unit);
+		else
+			break;
+	}
+
+	return unitsToMaintain;
+}
+
 void Game::addToKilledList(Unit* unit)
 {
 	killedList.enqueue(unit);
@@ -123,6 +155,9 @@ void Game::printAll()
 	earthArmy.printFightingUnits();
 	alienArmy.printFightingUnits();
 
+	std::cout << "============== Maintenance List Units ==============" << std::endl;
+	printUnitMaintenanceList();
+
 	std::cout << "============== Killed/Destructed Units ==============" << std::endl;
 	printKilledList();
 }
@@ -131,6 +166,13 @@ void Game::printKilledList() const
 {
 	std::cout << killedList.getCount() << " units [";
 	killedList.printList();
+	std::cout << "]" << std::endl;
+}
+
+void Game::printUnitMaintenanceList() const
+{
+	std::cout << unitMaintenanceList.getCount() << " units [";
+	unitMaintenanceList.printList();
 	std::cout << "]" << std::endl;
 }
 
