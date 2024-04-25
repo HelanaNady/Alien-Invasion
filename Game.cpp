@@ -176,7 +176,7 @@ void Game::printAll()
 
 GameStatistics Game::countStatistics()
 {
-	GameStatistics gameStatistics;
+	GameStatistics gameStatistics = { { 0 }, 0, 0, { 0 }, 0, 0, 0, 0, 0, 0, 0 };
 
 	Unit* unit = nullptr;
 
@@ -276,7 +276,7 @@ GameStatistics Game::countStatistics()
 void Game::printOutputFile(std::string outputFileName)
 {
 	// Open the output file
-	std::fstream fout(outputFileName);
+	std::ofstream fout(outputFileName);
 
 	// Count the statistics
 	GameStatistics gameStatistics = countStatistics();
