@@ -8,6 +8,7 @@
 #include "ArmyClasses/AlienArmy.h"
 #include "RandomGenerator/RandomGenerator.h"
 #include "Containers/LinkedQueue.h"
+#include "Containers/PriorityQueue.h"
 
 class Game
 {
@@ -20,6 +21,7 @@ private:
     RandomGenerator randomGenerator;
 
     LinkedQueue<Unit*> killedList;
+    PriorityQueue<Unit*> unitMaintenanceList;
 
 private:
     void incrementTimestep();  // Increment the current timestep by 1 and process the timestep
@@ -39,6 +41,9 @@ public:
     void addUnit(Unit*);  // Add a unit to the appropriate army and list
     void addToKilledList(Unit*);  // Add a unit to the killed list
     LinkedQueue<Unit*> getEnemyList(ArmyType, UnitType, int); // Get the enemy list for the given army type, unit type and attack capacity
+
+    void addUnitToMaintenanceList(Unit*); // Add a unit to the maintenance list
+    LinkedQueue<Unit*> getUnitsToMaintainList(int);
 
     // Getters
     int getCurrentTimestep() const;

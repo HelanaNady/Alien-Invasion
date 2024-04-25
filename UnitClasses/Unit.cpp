@@ -33,7 +33,13 @@ void Unit::setHealth(int health)
 	if (health > 100)
 		health = 100;
 
+	this->initialHealth = health;
 	this->health = health;
+}
+
+int Unit::getInitialHealth() const
+{
+	return initialHealth;
 }
 
 void Unit::receiveDamage(double UAP)
@@ -47,6 +53,11 @@ void Unit::receiveDamage(double UAP)
 	}
 }
 
+void Unit::receiveHeal(double UHP)
+{
+	health += UHP;
+}
+
 void Unit::clearFoughtUnits()
 {
 	int i = 0;
@@ -56,6 +67,11 @@ void Unit::clearFoughtUnits()
 bool Unit::isDead() const
 {
 	return health <= 0;
+}
+
+bool Unit::needsHeal() const
+{
+	return (health / initialHealth < 0.2 && health > 0);
 }
 
 bool Unit::isFirstAttack() const
@@ -129,6 +145,11 @@ int Unit::getDestructionDelay() const
 int Unit::getBattleDelay() const
 {
 	return Td - Tj;
+}
+
+int Unit::getUMLjoinTime() const
+{
+	return UMLjoinTime;
 }
 
 void Unit::setPower(int power)

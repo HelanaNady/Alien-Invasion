@@ -72,5 +72,9 @@ void EarthTank::attack()
     Unit* tempUnitPtr = nullptr;
     while (tempList.dequeue(tempUnitPtr))
         gamePtr->addUnit(tempUnitPtr);
+}
 
+int EarthTank::getHealPriority() const
+{
+    return health;
 }

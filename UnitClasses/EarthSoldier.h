@@ -10,6 +10,7 @@ public:
 	EarthSoldier(Game*, int, int, int);
 	void printFought();
 	void attack();
+	int getHealPriority() const;
 };
 
 #endif

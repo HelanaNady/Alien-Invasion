@@ -42,5 +42,9 @@ void EarthSoldier::attack()
         // Store the IDs of the fought units to be printed later
         foughtUnits.enqueue(enemyUnit->getId());
     }
-
 }
+
+int EarthSoldier::getHealPriority() const
+{
+    return 100 + health; // 100 is added to the health to give priority to the soldiers with lower health
+};

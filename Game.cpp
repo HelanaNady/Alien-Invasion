@@ -5,7 +5,7 @@
 #include "DEFS.h"
 #include "UnitClasses/Unit.h"
 
-Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), randomGenerator(this)
+Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), earthArmy(this), alienArmy(this), randomGenerator(this)
 {}
 
 void Game::run(GameMode gameMode, std::string inputFileName)
@@ -99,6 +99,32 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 	}
 
 	return enemyUnits;
+}
+
+void Game::addUnitToMaintenanceList(Unit* unit)
+{
+	if (unit->getUnitType() == UnitType::ES)
+		unitMaintenanceList.enqueue(unit, dynamic_cast<EarthSoldier*>(unit)->getHealPriority());
+	else if (unit->getUnitType() == UnitType::ET)
+		unitMaintenanceList.enqueue(unit, dynamic_cast<EarthTank*>(unit)->getHealPriority());
+}
+
+LinkedQueue<Unit*> Game::getUnitsToMaintainList(int attackCapacity)
+{
+	LinkedQueue<Unit*> unitsToMaintain;
+
+	Unit* unit = nullptr;
+	int dummyPri = 0;
+	for (int i = 0; i < attackCapacity; i++)
+	{
+		unitMaintenanceList.dequeue(unit, dummyPri);
+		if (unit)
+			unitsToMaintain.enqueue(unit);
+		else
+			break;
+	}
+
+	return unitsToMaintain;
 }
 
 void Game::addToKilledList(Unit* unit)
