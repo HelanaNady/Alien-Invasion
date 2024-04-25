@@ -26,18 +26,18 @@ protected:
 	int Td; // Destruction time
 	int UMLjoinTime; // Time when the unit joined the UML
 
-	int initialHealth; // Initial health
-	int health; // Current health
+	double initialHealth; // Initial health
+	double health; // Current health
 	int power; // Attack power
 	int attackCapacity; // Attack capacity
 
 	LinkedQueue<int> foughtUnits; // A list of the units fought in the current timestep to be printed 
 
 private:
-	void setHealth(int);
+	void setHealth(double);
 
 public:
-	Unit(Game*, UnitType, int, int, int);
+	Unit(Game*, UnitType, double, int, int);
 
 	void receiveDamage(double); // Decrease the health of the unit by "UAP"
 	void receiveHeal(double); // Increase the health of the unit by "UHP"

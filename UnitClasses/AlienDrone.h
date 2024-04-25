@@ -7,7 +7,7 @@
 class AlienDrone: public Unit
 {
 public:
-	AlienDrone(Game*, int, int, int);
+	AlienDrone(Game*, double, int, int);
 	void printFought();
 	void attack();
 };

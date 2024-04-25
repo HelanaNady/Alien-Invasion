@@ -7,7 +7,7 @@
 class EarthSoldier: public Unit
 {
 public:
-	EarthSoldier(Game*, int, int, int);
+	EarthSoldier(Game*, double, int, int);
 	void printFought();
 	void attack();
 	int getHealPriority() const;

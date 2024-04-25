@@ -4,7 +4,7 @@
 #include "../Game.h"
 #include "../Containers/LinkedQueue.h"
 
-EarthTank::EarthTank(Game* gamePtr, int health, int power, int attackCapacity)
+EarthTank::EarthTank(Game* gamePtr, double health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::ET, health, power, attackCapacity)
 {}
 

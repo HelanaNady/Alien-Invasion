@@ -2,7 +2,7 @@
 #include "../Game.h"
 #include "../Containers/LinkedQueue.h"
 
-EarthSoldier::EarthSoldier(Game* gamePtr, int health, int power, int attackCapacity)
+EarthSoldier::EarthSoldier(Game* gamePtr, double health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::ES, health, power, attackCapacity)
 {}
 

@@ -52,7 +52,6 @@ Unit* EarthArmy::removeUnit(UnitType unitType)
 
         case UnitType::EH:
             healers.pop(unit);
-            gamePtr->addToKilledList(unit);
             break;
     }
 

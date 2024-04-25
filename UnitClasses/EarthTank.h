@@ -7,7 +7,7 @@
 class EarthTank: public Unit
 {
 public:
-	EarthTank(Game*, int, int, int);
+	EarthTank(Game*, double, int, int);
 	void printFought();
 	void attack();
 	int getHealPriority() const;

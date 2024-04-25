@@ -6,7 +6,7 @@
 int Unit::lastEarthId = 0;
 int Unit::lastAlienId = 1999;
 
-Unit::Unit(Game* gamePtr, UnitType unitType, int health, int power, int attackCapacity)
+Unit::Unit(Game* gamePtr, UnitType unitType, double health, int power, int attackCapacity)
 	: gamePtr(gamePtr), unitType(unitType), Ta(-1), Td(0), power(power), attackCapacity(attackCapacity)
 {
 	setHealth(health);
@@ -25,7 +25,7 @@ Unit::Unit(Game* gamePtr, UnitType unitType, int health, int power, int attackCa
 	Tj = gamePtr->getCurrentTimestep();
 }
 
-void Unit::setHealth(int health)
+void Unit::setHealth(double health)
 {
 	// Check if the health value is within the range [1, 100]
 	if (health < 1)
@@ -71,7 +71,7 @@ bool Unit::isDead() const
 
 bool Unit::needsHeal() const
 {
-	return ((health / initialHealth) < 0.2);
+	return (unitType == UnitType::ES || unitType == UnitType::ET) && (health / initialHealth) < 0.2;
 }
 
 bool Unit::isFirstAttack() const
