@@ -75,6 +75,7 @@ public:
 	// Setters
 	void setPower(int);
 	void setAttackCapacity(int);
+	void setUMLjoinTime(int);
 
 	// Time
 	void setFirstTimeAttack(int);

@@ -157,6 +157,11 @@ void Unit::setPower(int power)
 	this->power = power;
 }
 
+void Unit::setUMLjoinTime(int UMLjoinTime)
+{
+	this->UMLjoinTime = UMLjoinTime;
+}
+
 void Unit::setAttackCapacity(int attackCapacity)
 {
 	this->attackCapacity = attackCapacity;

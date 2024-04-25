@@ -104,9 +104,15 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 void Game::addUnitToMaintenanceList(Unit* unit)
 {
 	if (unit->getUnitType() == UnitType::ES)
+	{
+		unit->setUMLjoinTime(currentTimestep); // Set the time when the unit joined the UML
 		unitMaintenanceList.enqueue(unit, dynamic_cast<EarthSoldier*>(unit)->getHealPriority());
+	}
 	else if (unit->getUnitType() == UnitType::ET)
+	{
+		unit->setUMLjoinTime(currentTimestep); // Set the time when the unit joined the UML
 		unitMaintenanceList.enqueue(unit, dynamic_cast<EarthTank*>(unit)->getHealPriority());
+	}
 }
 
 LinkedQueue<Unit*> Game::getUnitsToMaintainList(int attackCapacity)
