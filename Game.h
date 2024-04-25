@@ -30,6 +30,7 @@ private:
 
     void printAll(); // Prints all the armies and the killed list and units fighting at the current timestep
     void printKilledList() const; // Prints the killed list with the console formats
+    void printUnitMaintenanceList() const;
 
     bool loadParameters(std::string); // Load the parameters from the file and sets parameters in the random generator
 

@@ -146,6 +146,9 @@ void Game::printAll()
 	earthArmy.printFightingUnits();
 	alienArmy.printFightingUnits();
 
+	std::cout << "============== Maintenance List Units ==============" << std::endl;
+	printUnitMaintenanceList();
+
 	std::cout << "============== Killed/Destructed Units ==============" << std::endl;
 	printKilledList();
 }
@@ -154,6 +157,13 @@ void Game::printKilledList() const
 {
 	std::cout << killedList.getCount() << " units [";
 	killedList.printList();
+	std::cout << "]" << std::endl;
+}
+
+void Game::printUnitMaintenanceList() const
+{
+	std::cout << unitMaintenanceList.getCount() << " units [";
+	unitMaintenanceList.printList();
 	std::cout << "]" << std::endl;
 }
 
