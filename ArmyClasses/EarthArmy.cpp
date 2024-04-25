@@ -2,6 +2,10 @@
 
 #include "EarthArmy.h"
 #include "../UnitClasses/Unit.h"
+#include "../Game.h"
+
+EarthArmy::EarthArmy(Game* gamePtr): Army(gamePtr)
+{}
 
 void EarthArmy::addUnit(Unit* unit)
 {
@@ -147,11 +151,12 @@ void EarthArmy::attack()
         currentAttackers.enqueue(attacker);
     }
 
-    attacker = pickAttacker(UnitType::EH);
+    attacker = removeUnit(UnitType::EH);
     if (attacker)
     {
         attacker->attack();
         currentAttackers.enqueue(attacker);
+        gamePtr->addToKilledList(attacker); // Kill current healing unit after it heals
     }
 }
 

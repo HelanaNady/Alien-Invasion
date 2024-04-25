@@ -7,8 +7,9 @@
 class HealUnit: public Unit
 {
 public:
-	HealUnit(Game*, int, int, int);
-	void attack();
+	HealUnit(Game*, double, int, int);
+
+	void attack(); // Heal units from the unit maintenance list
 };
 
 #endif

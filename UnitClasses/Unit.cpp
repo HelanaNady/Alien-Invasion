@@ -6,7 +6,7 @@
 int Unit::lastEarthId = 0;
 int Unit::lastAlienId = 1999;
 
-Unit::Unit(Game* gamePtr, UnitType unitType, int health, int power, int attackCapacity)
+Unit::Unit(Game* gamePtr, UnitType unitType, double health, int power, int attackCapacity)
 	: gamePtr(gamePtr), unitType(unitType), Ta(-1), Td(0), power(power), attackCapacity(attackCapacity)
 {
 	setHealth(health);
@@ -25,7 +25,7 @@ Unit::Unit(Game* gamePtr, UnitType unitType, int health, int power, int attackCa
 	Tj = gamePtr->getCurrentTimestep();
 }
 
-void Unit::setHealth(int health)
+void Unit::setHealth(double health)
 {
 	// Check if the health value is within the range [1, 100]
 	if (health < 1)
@@ -33,7 +33,13 @@ void Unit::setHealth(int health)
 	if (health > 100)
 		health = 100;
 
+	this->initialHealth = health; // Save the initial health value for healing purposes
 	this->health = health;
+}
+
+int Unit::getInitialHealth() const
+{
+	return initialHealth;
 }
 
 void Unit::receiveDamage(double UAP)
@@ -43,8 +49,13 @@ void Unit::receiveDamage(double UAP)
 	if (health <= 0)
 	{
 		health = 0;
-		Td = gamePtr->getCurrentTimestep();
+		Td = gamePtr->getCurrentTimestep(); // Set the destruction time
 	}
+}
+
+void Unit::receiveHeal(double UHP)
+{
+	health += UHP;
 }
 
 void Unit::clearFoughtUnits()
@@ -56,6 +67,11 @@ void Unit::clearFoughtUnits()
 bool Unit::isDead() const
 {
 	return health <= 0;
+}
+
+bool Unit::needsHeal() const
+{
+	return ((unitType == UnitType::ES || unitType == UnitType::ET) && (health / initialHealth) <= 0.2);
 }
 
 bool Unit::isFirstAttack() const
@@ -131,9 +147,19 @@ int Unit::getBattleDelay() const
 	return Td - Tj;
 }
 
+int Unit::getUMLjoinTime() const
+{
+	return UMLjoinTime;
+}
+
 void Unit::setPower(int power)
 {
 	this->power = power;
+}
+
+void Unit::setUMLjoinTime(int UMLjoinTime)
+{
+	this->UMLjoinTime = UMLjoinTime;
 }
 
 void Unit::setAttackCapacity(int attackCapacity)
