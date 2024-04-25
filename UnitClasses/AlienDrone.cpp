@@ -17,7 +17,7 @@ void AlienDrone::printFought()
     }
 }
 
-void AlienDrone::attack()
+bool AlienDrone::attack()
 {
     // Attack capacity is divided 50:50 between them 
     int ETnumber = attackCapacity / 2;
@@ -25,6 +25,8 @@ void AlienDrone::attack()
 
     LinkedQueue<Unit*> ETlist = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, ETnumber);
     LinkedQueue<Unit*> EGlist = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::EG, EGnumber);
+
+    bool attackCheck = !(ETlist.isEmpty() && EGlist.isEmpty());
 
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
@@ -61,4 +63,6 @@ void AlienDrone::attack()
         // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;
     }
+
+    return attackCheck;
 }

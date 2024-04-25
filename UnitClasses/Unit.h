@@ -43,8 +43,8 @@ public:
 	void receiveHeal(double); // Increase the health of the unit by "UHP"
 
 	double calcUAP(Unit*) const; // Calculates the damage caused when attacked by "attackerUnit"
-	virtual void attack() = 0; // Attack the enemy units
-	virtual void printFought(); // Print the fought units
+	virtual bool attack() = 0;
+	virtual void printFought();
 
 	bool isDead() const; // Check if the unit is dead
 	bool needsHeal() const; // Check if the unit is eligible for healing

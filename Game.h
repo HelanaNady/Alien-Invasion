@@ -24,9 +24,9 @@ private:
     PriorityQueue<Unit*> unitMaintenanceList;
 
 private:
-    void incrementTimestep();  // Increment the current timestep by 1 and process the timestep
+    bool startAttack(); // Makes the two armies attack each other
     void setGameMode(GameMode); // Change the game mode
-    bool battleOver(); // Check if the battle is over
+    bool battleOver(bool); // Check if the battle is over
 
     void printAll(); // Prints all the armies and the killed list and units fighting at the current timestep
     void printKilledList() const; // Prints the killed list with the console formats

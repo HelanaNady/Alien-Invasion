@@ -20,10 +20,18 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 		return;
 	}
 
+	bool didArmiesAttack = true;
 	// Run the game
 	do
 	{
-		incrementTimestep();
+		// Increment Timestep
+		currentTimestep++;
+
+		// Generate units for both armies
+		randomGenerator.generateUnits();
+
+		// Start fight
+		didArmiesAttack = startAttack();
 
 		// Print the output
 		if (gameMode == GameMode::INTERACTIVE)
@@ -31,19 +39,13 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 
 		std::cout << "Press Enter to continue...";
 		while (std::cin.get() != '\n');
-	} while (!battleOver());
+	} while (!battleOver(didArmiesAttack));
 }
 
-void Game::incrementTimestep()
+bool Game::startAttack()
 {
-	currentTimestep++;
-
-	// Generate units for both armies
-	randomGenerator.generateUnits();
-
-	// Start the battle attack
-	earthArmy.attack();
-	alienArmy.attack();
+	// Returns a boolean indicating whether any army attacked 
+	return earthArmy.attack() && alienArmy.attack();
 }
 
 void Game::setGameMode(GameMode gameMode)
@@ -51,9 +53,9 @@ void Game::setGameMode(GameMode gameMode)
 	this->gameMode = gameMode;
 }
 
-bool Game::battleOver()
+bool Game::battleOver(bool didArmiesAttack)
 {
-	return currentTimestep >= 40 && (earthArmy.isDead() || alienArmy.isDead());
+	return currentTimestep >= 40 && (earthArmy.isDead() || alienArmy.isDead() || !didArmiesAttack);
 }
 
 void Game::addUnit(Unit* unit)

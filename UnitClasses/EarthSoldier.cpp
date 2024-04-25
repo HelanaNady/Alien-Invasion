@@ -18,10 +18,13 @@ void EarthSoldier::printFought()
     }
 }
 
-void EarthSoldier::attack()
+bool EarthSoldier::attack()
 {
     // Get the lists of earth soldiers to attack
     LinkedQueue<Unit*> enemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, attackCapacity);
+
+    // Check for a successful attack
+    bool attackCheck = !enemyList.isEmpty();
 
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
@@ -47,6 +50,8 @@ void EarthSoldier::attack()
         // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;
     }
+
+    return attackCheck;
 }
 
 int EarthSoldier::getHealPriority() const

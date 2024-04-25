@@ -128,36 +128,25 @@ void EarthArmy::printArmy() const
     std::cout << "]" << std::endl;
 }
 
-void EarthArmy::attack()
+bool EarthArmy::attack()
 {
-    Unit* attacker = pickAttacker(UnitType::ES);
-    if (attacker)
+    bool didArmyAttack = false; // Flag to check if the army attacked
+
+    UnitType unitTypes[4] = { ES, EG, ET, EH };
+    for (int i = 0; i < 4; i++)
     {
-        attacker->attack();
-        currentAttackers.enqueue(attacker);
+        Unit* attacker = pickAttacker(unitTypes[i]);
+
+        if (attacker)
+        {
+            currentAttackers.enqueue(attacker);
+
+            bool didUnitAttack = attacker->attack(); // Attack the enemy
+            didArmyAttack = didArmyAttack || didUnitAttack; // If any unit attacked, the army attacked
+        }
     }
 
-    attacker = pickAttacker(UnitType::EG);
-    if (attacker)
-    {
-        attacker->attack();
-        currentAttackers.enqueue(attacker);
-    }
-
-    attacker = pickAttacker(UnitType::ET);
-    if (attacker)
-    {
-        attacker->attack();
-        currentAttackers.enqueue(attacker);
-    }
-
-    attacker = removeUnit(UnitType::EH);
-    if (attacker)
-    {
-        attacker->attack();
-        currentAttackers.enqueue(attacker);
-        gamePtr->addToKilledList(attacker); // Kill current healing unit after it heals
-    }
+    return didArmyAttack; // Return whether the army attacked
 }
 
 bool EarthArmy::isDead() const

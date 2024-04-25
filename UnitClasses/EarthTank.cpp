@@ -20,7 +20,7 @@ void EarthTank::printFought()
     }
 }
 
-void EarthTank::attack()
+bool EarthTank::attack()
 {
     LinkedQueue<Unit*> monsterEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AM, attackCapacity);
     LinkedQueue<Unit*> soldierEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, attackCapacity);
@@ -29,6 +29,9 @@ void EarthTank::attack()
     // Calculating the number of alien soldiers that needs to be killed
     int soldiersToKill = std::ceil(gamePtr->getUnitsCount(ALIEN, AS) - (gamePtr->getUnitsCount(EARTH, AS) / 0.8));
     int deadSoldiers = 0;
+
+    // Check for a successful attack
+    bool attackCheck = !(monsterEnemyList.isEmpty() && soldierEnemyList.isEmpty());
 
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
@@ -79,6 +82,8 @@ void EarthTank::attack()
     Unit* tempUnitPtr = nullptr;
     while (tempList.dequeue(tempUnitPtr))
         gamePtr->addUnit(tempUnitPtr);
+
+    return attackCapacity;
 }
 
 int EarthTank::getHealPriority() const

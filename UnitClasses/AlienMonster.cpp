@@ -17,7 +17,7 @@ void AlienMonster::printFought()
     }
 }
 
-void AlienMonster::attack()
+bool AlienMonster::attack()
 {
     // Calculate the number of soldiers and tanks to attack
     int soldiersCapacity = attackCapacity / 2;
@@ -26,6 +26,9 @@ void AlienMonster::attack()
     // Get the lists of earth soldiers and tanks to attack
     LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, soldiersCapacity);
     LinkedQueue<Unit*> tanksList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, tanksCapacity);
+
+    // Check for a successful attack
+    bool attackCheck = !(soldiersList.isEmpty() && tanksList.isEmpty());
 
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
@@ -59,4 +62,6 @@ void AlienMonster::attack()
             enemyUnit = nullptr;
         }
     }
+
+    return attackCheck;
 }
