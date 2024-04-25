@@ -168,7 +168,7 @@ bool Game::loadParameters(std::string fileName)
 		randomGenerator.setN(N); // Set the number of units to generate
 		randomGenerator.setProb(prob); // Set the probability of generating a unit
 
-		randomGenerator.setEarthParameters(ESPercentage, EGPercentage, ETPercentage, HUPercentage, earthPowerRange, earthHealthRange, earthAttackCapacityRange); // Set the parameters for the Earth army
+		randomGenerator.setEarthParameters(ESPercentage, EGPercentage, ETPercentage, EHPercentage, earthPowerRange, earthHealthRange, earthAttackCapacityRange); // Set the parameters for the Earth army
 		randomGenerator.setAlienParameters(ASPercentage, AMPercentage, ADPercentage, alienPowerRange, alienHealthRange, alienAttackCapacityRange); // Set the parameters for the Alien army
 
 		fin.close(); // Close the file
