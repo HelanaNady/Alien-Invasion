@@ -130,22 +130,23 @@ void EarthArmy::printArmy() const
 
 bool EarthArmy::attack()
 {
-    bool didArmyAttack = false;
+    bool didArmyAttack = false; // Flag to check if the army attacked
 
     UnitType unitTypes[4] = { ES, EG, ET, EH };
     for (int i = 0; i < 4; i++)
     {
         Unit* attacker = pickAttacker(unitTypes[i]);
-        bool didUnitAttack = false;
+
         if (attacker)
         {
             currentAttackers.enqueue(attacker);
-            didUnitAttack = attacker->attack();
-            didArmyAttack = didArmyAttack || didUnitAttack;
+
+            bool didUnitAttack = attacker->attack(); // Attack the enemy
+            didArmyAttack = didArmyAttack || didUnitAttack; // If any unit attacked, the army attacked
         }
     }
 
-    return didArmyAttack;
+    return didArmyAttack; // Return whether the army attacked
 }
 
 bool EarthArmy::isDead() const

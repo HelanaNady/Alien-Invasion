@@ -119,25 +119,26 @@ void AlienArmy::printArmy() const
 
 bool AlienArmy::attack()
 {
-    bool didArmyAttack = false;
+    bool didArmyAttack = false; // Flag to check if the army attacked
 
     UnitType unitTypes[4] = { AS, AM, AD, AD };
     for (int i = 0; i < 4; i++)
     {
         Unit* attacker = pickAttacker(unitTypes[i]);
-        bool didUnitAttack = false;
+
         if (attacker)
         {
-            // If only one drone exists, don't attack
+            // If only one drone exists or less, don't attack
             if (drones.getCount() < 1 && i == 2)
                 break;
+
             currentAttackers.enqueue(attacker);
-            didUnitAttack = attacker->attack();
-            didArmyAttack = didArmyAttack || didUnitAttack;
+            bool didUnitAttack = attacker->attack(); // Attack the enemy
+            didArmyAttack = didArmyAttack || didUnitAttack; // If any unit attacked, the army attacked
         }
     }
 
-    return didArmyAttack;
+    return didArmyAttack; // Return whether the army attacked
 }
 
 bool AlienArmy::isDead() const
