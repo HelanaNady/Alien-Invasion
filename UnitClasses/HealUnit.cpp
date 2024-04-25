@@ -31,7 +31,7 @@ void HealUnit::attack()
         else
             gamePtr->addUnitToMaintenanceList(unitToHeal);
 
-        // Reset unitToHeal pointer to nullptr to avoid previous state duplication
+        // Nullify the pointer to avoid duplication
         unitToHeal = nullptr;
     }
 }

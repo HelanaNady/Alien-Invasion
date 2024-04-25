@@ -45,7 +45,7 @@ void AlienSoldier::attack()
         // Store the IDs of the fought units to be printed later
         foughtUnits.enqueue(enemyUnit->getId());
 
-        // Reset enemyUnit pointer to nullptr to avoid previous state duplication
+        // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;
     }
 }

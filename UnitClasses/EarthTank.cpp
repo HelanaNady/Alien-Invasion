@@ -69,7 +69,7 @@ void EarthTank::attack()
         else
             tempList.enqueue(enemyUnit);
 
-        // Reset enemyUnit pointer to nullptr to avoid previous state duplication
+        // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;
     }
 
