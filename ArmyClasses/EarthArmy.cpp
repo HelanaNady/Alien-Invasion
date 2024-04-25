@@ -124,35 +124,24 @@ void EarthArmy::printArmy() const
     std::cout << "]" << std::endl;
 }
 
-void EarthArmy::attack()
+bool EarthArmy::attack()
 {
-    Unit* attacker = pickAttacker(UnitType::ES);
-    if (attacker)
+    bool didArmyAttack = false;
+    
+    UnitType unitTypes[4] = { ES, EG, ET, EH };
+    for (int i = 0; i < 4; i++)
     {
-        attacker->attack();
-        currentAttackers.enqueue(attacker);
+        Unit* attacker = pickAttacker(unitTypes[i]);
+        bool didUnitAttack = false;
+        if (attacker)
+        {
+            currentAttackers.enqueue(attacker);
+            didUnitAttack = attacker->attack();
+            didArmyAttack = didArmyAttack || didUnitAttack;
+        }
     }
 
-    attacker = pickAttacker(UnitType::EG);
-    if (attacker)
-    {
-        attacker->attack();
-        currentAttackers.enqueue(attacker);
-    }
-
-    attacker = pickAttacker(UnitType::ET);
-    if (attacker)
-    {
-        attacker->attack();
-        currentAttackers.enqueue(attacker);
-    }
-
-    attacker = pickAttacker(UnitType::EH);
-    if (attacker)
-    {
-        attacker->attack();
-        currentAttackers.enqueue(attacker);
-    }
+    return didArmyAttack;
 }
 
 bool EarthArmy::isDead() const

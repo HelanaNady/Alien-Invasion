@@ -25,7 +25,7 @@ public:
     Unit* removeUnit(UnitType);
     Unit* pickAttacker(UnitType);
     void printArmy() const;
-    void attack();
+    bool attack();
     bool isDead() const;
 
     // Getters

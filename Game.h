@@ -22,7 +22,7 @@ private:
     LinkedQueue<Unit*> killedList;
 
 private:
-    void incrementTimestep();  // Increment the current timestep by 1 and process the timestep
+    bool startAttack(); // Makes the two armies attack eachother
     void setGameMode(GameMode); // Change the game mode
     bool battleOver(); // Check if the battle is over
 

@@ -117,32 +117,27 @@ void AlienArmy::printArmy() const
     std::cout << "]" << std::endl;
 }
 
-void AlienArmy::attack()
+bool AlienArmy::attack()
 {
-    Unit* attacker = pickAttacker(UnitType::AS);
-    if (attacker)
+    bool didArmyAttack = false;
+
+    UnitType unitTypes[4] = { AS, AM, AD, AD }; 
+    for (int i = 0; i < 4; i++)
     {
-        attacker->attack();
-        currentAttackers.enqueue(attacker);
+        Unit* attacker = pickAttacker(unitTypes[i]);
+        bool didUnitAttack = false;
+        if (attacker)
+        {
+            // If only one drone exists, don't attack
+            if (drones.getCount() < 1 && i == 2) 
+                break;
+            currentAttackers.enqueue(attacker);  
+            didUnitAttack = attacker->attack();
+            didArmyAttack = didArmyAttack || didUnitAttack;
+        }
     }
 
-    attacker = pickAttacker(UnitType::AM);
-    if (attacker)
-    {
-        attacker->attack();
-        currentAttackers.enqueue(attacker);
-    }
-
-    if (drones.getCount() > 1)
-    {
-        attacker = pickAttacker(UnitType::AD);
-        attacker->attack();
-        currentAttackers.enqueue(attacker);
-
-        attacker = pickAttacker(UnitType::AD);
-        attacker->attack();
-        currentAttackers.enqueue(attacker);
-    }
+    return didArmyAttack; 
 }
 
 bool AlienArmy::isDead() const
