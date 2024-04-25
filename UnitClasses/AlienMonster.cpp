@@ -17,7 +17,7 @@ void AlienMonster::printFought()
     }
 }
 
-void AlienMonster::attack()
+bool AlienMonster::attack()
 {
     // Calculate the number of soldiers and tanks to attack
     int soldiersCapacity = attackCapacity / 2;

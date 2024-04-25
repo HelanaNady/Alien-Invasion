@@ -20,7 +20,7 @@ void EarthTank::printFought()
     }
 }
 
-void EarthTank::attack()
+bool EarthTank::attack()
 {
     LinkedQueue<Unit*> monsterEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AM, attackCapacity);
     LinkedQueue<Unit*> soldierEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, attackCapacity);

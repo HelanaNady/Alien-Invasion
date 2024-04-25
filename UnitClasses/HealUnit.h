@@ -8,7 +8,7 @@ class HealUnit: public Unit
 {
 public:
 	HealUnit(Game*, int, int, int);
-	void attack();
+	bool attack();
 };
 
 #endif

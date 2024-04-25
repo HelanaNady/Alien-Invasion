@@ -5,5 +5,5 @@ HealUnit::HealUnit(Game* gamePtr, int health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::EH, health, power, attackCapacity)
 {}
 
-void HealUnit::attack()
+bool HealUnit::attack()
 {}

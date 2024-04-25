@@ -17,7 +17,7 @@ void AlienDrone::printFought()
     }
 }
 
-void AlienDrone::attack()
+bool AlienDrone::attack()
 {
     // Attack capacity is divided 50:50 between them 
     int ETnumber = attackCapacity / 2;

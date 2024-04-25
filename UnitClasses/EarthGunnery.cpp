@@ -17,7 +17,7 @@ void EarthGunnery::printFought()
     }
 }
 
-void EarthGunnery::attack()
+bool EarthGunnery::attack()
 {
     int AMnumber = attackCapacity;
     int ADnumber = attackCapacity;

@@ -17,7 +17,7 @@ void AlienSoldier::printFought()
     }
 }
 
-void AlienSoldier::attack()
+bool AlienSoldier::attack()
 {
     // Get the lists of earth soldiers to attack
     LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, attackCapacity);

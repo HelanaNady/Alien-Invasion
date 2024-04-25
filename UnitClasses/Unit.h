@@ -39,7 +39,7 @@ public:
 
 	void receiveDamage(double);
 	double calcUAP(Unit*) const; // Calculates the damage caused when attacked by "attackerUnit"
-	virtual void attack() = 0;
+	virtual bool attack() = 0;
 	virtual void printFought();
 
 	bool isDead() const; // Check if the unit is dead

@@ -9,7 +9,7 @@ class AlienMonster: public Unit
 public:
 	AlienMonster(Game*, int, int, int);
 	void printFought();
-	void attack();
+	bool attack();
 };
 
 #endif
