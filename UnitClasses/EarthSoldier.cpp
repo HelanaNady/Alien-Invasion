@@ -32,8 +32,10 @@ void EarthSoldier::attack()
         if (enemyUnit->isFirstAttack())
             enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
-        // Receive damage and check: if dead -> add to killed list else -> add to its army back
+        // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
+
+        // Check if the unit is dead or can join the battle
         if (enemyUnit->isDead())
             gamePtr->addToKilledList(enemyUnit);
         else

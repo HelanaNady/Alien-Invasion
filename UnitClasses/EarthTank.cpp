@@ -58,8 +58,10 @@ void EarthTank::attack()
         if (enemyUnit->isFirstAttack())
             enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
-        // Receive damage and check whether it's dead or not
+        // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
+
+        // Check if the unit is dead or can join the battle
         if (enemyUnit->isDead())
         {
             gamePtr->addToKilledList(enemyUnit);

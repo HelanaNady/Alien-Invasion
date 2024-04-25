@@ -18,7 +18,7 @@ void HealUnit::attack()
         if (gamePtr->getCurrentTimestep() - unitToHeal->getUMLjoinTime() > 10)
         {
             unitToHeal->receiveDamage(unitToHeal->getHealth()); // Make unit health 0
-            gamePtr->addToKilledList(unitToHeal);
+            gamePtr->addToKilledList(unitToHeal); // Add unit to killed list
 
             continue;
         }
@@ -26,6 +26,7 @@ void HealUnit::attack()
         // Heal the unit
         unitToHeal->receiveHeal(calcUAP(unitToHeal));
 
+        // If unit's health is more than 20% of its initial health, make it join battle
         if (unitToHeal->getHealth() > unitToHeal->getInitialHealth() * 0.2)
             gamePtr->addUnit(unitToHeal);
         else

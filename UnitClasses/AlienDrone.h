@@ -8,8 +8,9 @@ class AlienDrone: public Unit
 {
 public:
 	AlienDrone(Game*, double, int, int);
-	void printFought();
-	void attack();
+
+	void printFought(); // Print the units that the drone has fought
+	void attack(); // Attack the enemy units
 };
 
 #endif

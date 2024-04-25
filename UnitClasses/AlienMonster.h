@@ -8,8 +8,9 @@ class AlienMonster: public Unit
 {
 public:
 	AlienMonster(Game*, double, int, int);
-	void printFought();
-	void attack();
+
+	void printFought(); // Print the units that the monster has fought
+	void attack(); // Attack the enemy units
 };
 
 #endif

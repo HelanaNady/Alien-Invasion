@@ -34,7 +34,7 @@ protected:
 	LinkedQueue<int> foughtUnits; // A list of the units fought in the current timestep to be printed 
 
 private:
-	void setHealth(double);
+	void setHealth(double); // Health setter with range check & initial health saving
 
 public:
 	Unit(Game*, UnitType, double, int, int);

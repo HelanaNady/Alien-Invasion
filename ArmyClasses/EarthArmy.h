@@ -11,7 +11,6 @@
 #include "..\UnitClasses\EarthGunnery.h"
 #include "..\UnitClasses\HealUnit.h"
 
-
 class EarthArmy: public Army
 {
 private:

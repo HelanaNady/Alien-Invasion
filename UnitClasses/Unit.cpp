@@ -33,7 +33,7 @@ void Unit::setHealth(double health)
 	if (health > 100)
 		health = 100;
 
-	this->initialHealth = health;
+	this->initialHealth = health; // Save the initial health value for healing purposes
 	this->health = health;
 }
 
@@ -49,7 +49,7 @@ void Unit::receiveDamage(double UAP)
 	if (health <= 0)
 	{
 		health = 0;
-		Td = gamePtr->getCurrentTimestep();
+		Td = gamePtr->getCurrentTimestep(); // Set the destruction time
 	}
 }
 
@@ -71,7 +71,7 @@ bool Unit::isDead() const
 
 bool Unit::needsHeal() const
 {
-	return (unitType == UnitType::ES || unitType == UnitType::ET) && (health / initialHealth) < 0.2;
+	return (unitType == UnitType::ES || unitType == UnitType::ET) && (health / initialHealth) <= 0.2;
 }
 
 bool Unit::isFirstAttack() const
