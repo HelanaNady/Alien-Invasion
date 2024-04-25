@@ -26,32 +26,35 @@ void AlienDrone::attack()
     LinkedQueue<Unit*> ETlist = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, ETnumber);
     LinkedQueue<Unit*> EGlist = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::EG, EGnumber);
 
+    // Create a pointer to the enemy unit
+    Unit* enemyUnit = nullptr;
+
     for (int i = 0; i < attackCapacity; i++)
     {
-        Unit* attackedUnit = nullptr;
-
         // Get the unit and remove it from the list
         if (i % 2 == 0)
-            ETlist.dequeue(attackedUnit);
+            ETlist.dequeue(enemyUnit);
         else
-            EGlist.dequeue(attackedUnit);
+            EGlist.dequeue(enemyUnit);
 
-        if (!attackedUnit)
+        if (!enemyUnit)
             continue;
 
         // Set the first attack time if it's the first time attacking
-        if (attackedUnit->isFirstAttack())
-            attackedUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
+        if (enemyUnit->isFirstAttack())
+            enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
         // Receive damage and check whether it's dead or not
-        attackedUnit->receiveDamage(calcUAP(attackedUnit));
+        enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
-        if (attackedUnit->isDead())
-            gamePtr->addToKilledList(attackedUnit);
+        if (enemyUnit->isDead())
+            gamePtr->addToKilledList(enemyUnit);
+        else if (enemyUnit->needsHeal())
+            gamePtr->addUnitToMaintenanceList(enemyUnit);
         else
-            gamePtr->addUnit(attackedUnit);
+            gamePtr->addUnit(enemyUnit);
 
         // Store the IDs of the fought units to be printed later
-        foughtUnits.enqueue(attackedUnit->getId());
+        foughtUnits.enqueue(enemyUnit->getId());
     }
 }

@@ -50,6 +50,8 @@ void AlienMonster::attack()
             // If the unit is dead, added to killedList, otherwise add it back to the army
             if (enemyUnit->isDead())
                 gamePtr->addToKilledList(enemyUnit);
+            else if (enemyUnit->needsHeal())
+                gamePtr->addUnitToMaintenanceList(enemyUnit);
             else
                 gamePtr->addUnit(enemyUnit);
 
