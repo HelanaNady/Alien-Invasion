@@ -63,9 +63,9 @@ bool Game::battleOver(bool didArmiesAttack)
 
 std::string Game::battleResult()
 {
-	if(earthArmy.isDead() && !alienArmy.isDead())
+	if (earthArmy.isDead() && !alienArmy.isDead())
 		return "Alien Army wins!";
-	else if(!earthArmy.isDead() && alienArmy.isDead())
+	else if (!earthArmy.isDead() && alienArmy.isDead())
 		return "Earth Army wins!";
 	else
 		return "Drawn!";
@@ -179,14 +179,14 @@ GameStatistics Game::countStatistics()
 	GameStatistics gameStatistics;
 
 	Unit* unit = nullptr;
-	
-	// Earth Army Statisics
+
+	// Earth Army Statistics
 	UnitType earthUnitTypes[4] = { UnitType::ES, UnitType::ET, UnitType::EG, UnitType::EH };
 
 	for (int i = 0; i < 4; i++)
 	{
 		int count = getUnitsCount(ArmyType::EARTH, earthUnitTypes[i]);
-		
+
 		for (int j = 0; j < count; j++)
 		{
 			unit = earthArmy.removeUnit(earthUnitTypes[i]);
@@ -207,13 +207,13 @@ GameStatistics Game::countStatistics()
 		}
 	}
 
-	// Alien Army Statisics
+	// Alien Army Statistics
 	UnitType alienUnitTypes[3] = { UnitType::AS, UnitType::AM, UnitType::AD };
 
 	for (int i = 0; i < 3; i++)
 	{
 		int count = getUnitsCount(ArmyType::ALIEN, alienUnitTypes[i]);
-		
+
 		for (int j = 0; j < count; j++)
 		{
 			unit = alienArmy.removeUnit(alienUnitTypes[i]);
@@ -265,7 +265,7 @@ GameStatistics Game::countStatistics()
 		}
 
 		killedList.enqueue(unit);
-		
+
 		// Nullify the pointer
 		unit = nullptr;
 	}
@@ -276,7 +276,7 @@ GameStatistics Game::countStatistics()
 void Game::printOutputFile(std::string outputFileName)
 {
 	// Open the output file
-	std::fstream fout (outputFileName);
+	std::fstream fout(outputFileName);
 
 	// Count the statistics
 	GameStatistics gameStatistics = countStatistics();
@@ -313,10 +313,10 @@ void Game::printOutputFile(std::string outputFileName)
 	fout << "Average of Destruction Delay = " << gameStatistics.totalEarthDestructionDelays / gameStatistics.totalEarthUnitsCount << std::endl;
 	fout << "Average of Battle Delay = " << gameStatistics.totalEarthBattleDelays / gameStatistics.totalEarthUnitsCount << std::endl;
 
-	fout <<  "Df/Db = " << gameStatistics.totalEarthFirstAttackDelays / gameStatistics.totalEarthBattleDelays << "%" << std::endl;
-	fout <<  "Dd/Db = " << gameStatistics.totalEarthDestructionDelays / gameStatistics.totalEarthDestructionDelays << "%" << std::endl;
+	fout << "Df/Db = " << gameStatistics.totalEarthFirstAttackDelays / gameStatistics.totalEarthBattleDelays << "%" << std::endl;
+	fout << "Dd/Db = " << gameStatistics.totalEarthDestructionDelays / gameStatistics.totalEarthDestructionDelays << "%" << std::endl;
 	fout << std::endl << std::endl;
-	
+
 	// Alien Army Statistics
 	fout << std::endl << "Alien Army Statistics" << std::endl;
 
@@ -334,8 +334,8 @@ void Game::printOutputFile(std::string outputFileName)
 	fout << "Average of Destruction Delay = " << gameStatistics.totalAlienDestructionDelays / gameStatistics.totalAlienUnitsCount << std::endl;
 	fout << "Average of Battle Delay = " << gameStatistics.totalAlienBattleDelays / gameStatistics.totalAlienUnitsCount << std::endl;
 
-	fout <<  "Df/Db = " << gameStatistics.totalAlienFirstAttackDelays / gameStatistics.totalAlienBattleDelays << "%" << std::endl;
-	fout <<  "Dd/Db = " << gameStatistics.totalAlienDestructionDelays / gameStatistics.totalAlienBattleDelays << "%" << std::endl;	
+	fout << "Df/Db = " << gameStatistics.totalAlienFirstAttackDelays / gameStatistics.totalAlienBattleDelays << "%" << std::endl;
+	fout << "Dd/Db = " << gameStatistics.totalAlienDestructionDelays / gameStatistics.totalAlienBattleDelays << "%" << std::endl;
 }
 
 void Game::printKilledList() const
