@@ -131,7 +131,7 @@ void EarthArmy::printArmy() const
 bool EarthArmy::attack()
 {
     bool didArmyAttack = false;
-    
+
     UnitType unitTypes[4] = { ES, EG, ET, EH };
     for (int i = 0; i < 4; i++)
     {
@@ -144,7 +144,7 @@ bool EarthArmy::attack()
             didArmyAttack = didArmyAttack || didUnitAttack;
         }
     }
-  
+
     return didArmyAttack;
 }
 

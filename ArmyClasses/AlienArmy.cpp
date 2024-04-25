@@ -121,7 +121,7 @@ bool AlienArmy::attack()
 {
     bool didArmyAttack = false;
 
-    UnitType unitTypes[4] = { AS, AM, AD, AD }; 
+    UnitType unitTypes[4] = { AS, AM, AD, AD };
     for (int i = 0; i < 4; i++)
     {
         Unit* attacker = pickAttacker(unitTypes[i]);
@@ -129,15 +129,15 @@ bool AlienArmy::attack()
         if (attacker)
         {
             // If only one drone exists, don't attack
-            if (drones.getCount() < 1 && i == 2) 
+            if (drones.getCount() < 1 && i == 2)
                 break;
-            currentAttackers.enqueue(attacker);  
+            currentAttackers.enqueue(attacker);
             didUnitAttack = attacker->attack();
             didArmyAttack = didArmyAttack || didUnitAttack;
         }
     }
 
-    return didArmyAttack; 
+    return didArmyAttack;
 }
 
 bool AlienArmy::isDead() const

@@ -24,7 +24,7 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 	do
 	{
 		// Increment Timestep
-		currentTimestep++; 
+		currentTimestep++;
 
 		// Generate units for both armies
 		randomGenerator.generateUnits();
@@ -38,10 +38,8 @@ void Game::run(GameMode gameMode, std::string inputFileName)
 
 		std::cout << "Press Enter to continue...";
 		while (std::cin.get() != '\n');
-	} 
-	while (!battleOver()); 
+	} while (!battleOver());
 }
-
 
 bool Game::startAttack()
 {

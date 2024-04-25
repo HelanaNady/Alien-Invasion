@@ -24,7 +24,7 @@ private:
     PriorityQueue<Unit*> unitMaintenanceList;
 
 private:
-    bool startAttack(); // Makes the two armies attack eachother
+    bool startAttack(); // Makes the two armies attack each other
     void setGameMode(GameMode); // Change the game mode
     bool battleOver(); // Check if the battle is over
 

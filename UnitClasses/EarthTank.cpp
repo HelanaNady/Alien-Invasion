@@ -32,7 +32,7 @@ bool EarthTank::attack()
 
     // Check for a successful attack
     bool attackCheck = !(monsterEnemyList.isEmpty() && soldierEnemyList.isEmpty());
-  
+
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
 

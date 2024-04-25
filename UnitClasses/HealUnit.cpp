@@ -5,7 +5,6 @@ HealUnit::HealUnit(Game* gamePtr, double health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::EH, health, power, attackCapacity)
 {}
 
-
 bool HealUnit::attack()
 {
     LinkedQueue<Unit*> unitsToHeal = gamePtr->getUnitsToMaintainList(attackCapacity);
@@ -36,5 +35,5 @@ bool HealUnit::attack()
         // Nullify the pointer to avoid duplication
         unitToHeal = nullptr;
     }
-  return true;
+    return true;
 }

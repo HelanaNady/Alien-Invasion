@@ -31,7 +31,6 @@ bool AlienDrone::attack()
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
 
-
     for (int i = 0; i < attackCapacity; i++)
     {
         // Get the unit and remove it from the list

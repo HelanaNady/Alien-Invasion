@@ -30,7 +30,6 @@ bool EarthGunnery::attack()
 
     Unit* enemyUnit = nullptr;
 
-
     int dronesCount = 2; // Counter to handle attacking 2 drones then a monster repeatedly
 
     for (int i = 0; i < 3 * attackCapacity; i++)
