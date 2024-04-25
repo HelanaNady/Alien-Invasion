@@ -1,6 +1,7 @@
+#include <cmath>
+
 #include "Unit.h"
 #include "../Game.h"
-#include <cmath>
 
 int Unit::lastEarthId = 0;
 int Unit::lastAlienId = 1999;

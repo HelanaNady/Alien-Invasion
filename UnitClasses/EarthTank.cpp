@@ -1,8 +1,8 @@
+#include <cmath>
+
 #include "EarthTank.h"
 #include "../Game.h"
 #include "../Containers/LinkedQueue.h"
-
-#include <cmath>
 
 EarthTank::EarthTank(Game* gamePtr, int health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::ET, health, power, attackCapacity)
@@ -50,9 +50,7 @@ void EarthTank::attack()
 
         // If no unit was received and at least one of the lists weren't empty, don't increment the counter
         if (!enemyUnit)
-        {
             continue;
-        }
 
         // Check if it were attacked before or not 
         if (enemyUnit->isFirstAttack())

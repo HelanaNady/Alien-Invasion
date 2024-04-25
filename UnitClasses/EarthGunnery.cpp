@@ -27,7 +27,7 @@ void EarthGunnery::attack()
 
     int dronesCount = 2; // Counter to handle attacking 2 drones then a monster repeatedly
 
-    for (int i = 0; i < 3*attackCapacity; i++)
+    for (int i = 0; i < 3 * attackCapacity; i++)
     {
         Unit* attackedUnit = nullptr;
 
@@ -43,9 +43,7 @@ void EarthGunnery::attack()
         }
 
         if (!attackedUnit)
-        {
             continue;
-        }
 
         // Set the first attack time if it's the first time attacking
         if (attackedUnit->isFirstAttack())
@@ -68,7 +66,7 @@ void EarthGunnery::attack()
     while (AMlist.dequeue(unit))
         gamePtr->addUnit(unit);
 
-    while(ADlist.dequeue(unit))
+    while (ADlist.dequeue(unit))
         gamePtr->addUnit(unit);
 }
 
