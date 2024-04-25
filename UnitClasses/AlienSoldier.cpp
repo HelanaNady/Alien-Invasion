@@ -22,6 +22,9 @@ bool AlienSoldier::attack()
     // Get the lists of earth soldiers to attack
     LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, attackCapacity);
 
+    // Check for a successful attack
+    bool attackCheck = !soldiersList.isEmpty();
+
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
 
@@ -46,4 +49,5 @@ bool AlienSoldier::attack()
         // Store the IDs of the fought units to be printed later
         foughtUnits.enqueue(enemyUnit->getId());
     }
+    return attackCheck;
 }

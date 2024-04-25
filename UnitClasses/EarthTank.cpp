@@ -31,6 +31,9 @@ bool EarthTank::attack()
     int soldiersToKill = std::ceil(gamePtr->getUnitsCount(ALIEN, AS) - (gamePtr->getUnitsCount(EARTH, AS) / 0.8));
     int deadSoldiers = 0;
 
+    // Check for a successful attack
+    bool attackCheck = !(monsterEnemyList.isEmpty() && soldierEnemyList.isEmpty());
+
     for (int i = 0; i < attackCapacity; i++)
     {
         /* Re-adding the fought alive soldiers to their list to be fought again
@@ -72,5 +75,7 @@ bool EarthTank::attack()
     Unit* tempUnitPtr = nullptr;
     while (tempList.dequeue(tempUnitPtr))
         gamePtr->addUnit(tempUnitPtr);
+
+    return attackCapacity;
 
 }

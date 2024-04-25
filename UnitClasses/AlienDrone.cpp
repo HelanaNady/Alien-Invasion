@@ -26,6 +26,8 @@ bool AlienDrone::attack()
     LinkedQueue<Unit*> ETlist = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, ETnumber);
     LinkedQueue<Unit*> EGlist = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::EG, EGnumber);
 
+    bool attackCheck = !(ETlist.isEmpty() && EGlist.isEmpty());
+
     for (int i = 0; i < attackCapacity; i++)
     {
         Unit* attackedUnit = nullptr;
@@ -54,4 +56,6 @@ bool AlienDrone::attack()
         // Store the IDs of the fought units to be printed later
         foughtUnits.enqueue(attackedUnit->getId());
     }
+
+    return attackCheck;
 }

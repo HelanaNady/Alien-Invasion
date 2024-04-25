@@ -27,6 +27,9 @@ bool AlienMonster::attack()
     LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, soldiersCapacity);
     LinkedQueue<Unit*> tanksList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, tanksCapacity);
 
+    // Check for a successful attack
+    bool attackCheck = !(soldiersList.isEmpty() && tanksList.isEmpty());
+
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
 
@@ -57,4 +60,6 @@ bool AlienMonster::attack()
             foughtUnits.enqueue(enemyUnit->getId());
         }
     }
+
+    return attackCheck;
 }

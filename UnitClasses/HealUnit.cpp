@@ -6,4 +6,6 @@ HealUnit::HealUnit(Game* gamePtr, int health, int power, int attackCapacity)
 {}
 
 bool HealUnit::attack()
-{}
+{
+    return true; // Just to clear the error for now
+}
