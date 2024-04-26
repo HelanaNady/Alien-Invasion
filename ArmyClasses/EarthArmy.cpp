@@ -161,11 +161,20 @@ EarthArmy::~EarthArmy()
     int dummyPri = 0;
 
     while (soldiers.dequeue(unit))
+    {
         delete unit;
+        unit = nullptr;
+    }
 
     while (tanks.pop(unit))
+    {
         delete unit;
+        unit = nullptr;
+    }
 
     while (gunneries.dequeue(unit, dummyPri))
+    {
         delete unit;
+        unit = nullptr;
+    }
 }

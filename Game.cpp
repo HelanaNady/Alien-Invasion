@@ -420,4 +420,21 @@ int Game::getUnitsCount(ArmyType armyType, UnitType unitType) const
 }
 
 Game::~Game()
-{}
+{
+	Unit* unit = nullptr;
+	int dummyPri = 0;
+
+	// Delete the units in the killed list
+	while (killedList.dequeue(unit))
+	{
+		delete unit;
+		unit = nullptr;
+	}
+
+	// Delete the units in the maintenance list
+	while (unitMaintenanceList.dequeue(unit, dummyPri))
+	{
+		delete unit;
+		unit = nullptr;
+	}
+}
