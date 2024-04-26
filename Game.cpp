@@ -116,6 +116,12 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 	return enemyUnits;
 }
 
+
+void Game::addToKilledList(Unit* unit)
+{
+	killedList.enqueue(unit);
+}
+
 void Game::addUnitToMaintenanceList(Unit* unit)
 {
 	if (unit->getUnitType() == UnitType::ES)
@@ -148,9 +154,18 @@ LinkedQueue<Unit*> Game::getUnitsToMaintainList(int attackCapacity)
 	return unitsToMaintain;
 }
 
-void Game::addToKilledList(Unit* unit)
+void Game::printKilledList() const
 {
-	killedList.enqueue(unit);
+	std::cout << killedList.getCount() << " units [";
+	killedList.printList();
+	std::cout << "]" << std::endl;
+}
+
+void Game::printUnitMaintenanceList() const
+{
+	std::cout << unitMaintenanceList.getCount() << " units [";
+	unitMaintenanceList.printList();
+	std::cout << "]" << std::endl;
 }
 
 void Game::printAll()
@@ -289,9 +304,11 @@ void Game::printOutputFile(std::string outputFileName)
 			<< killedUnit->getFirstAttackDelay() << "\t" << killedUnit->getDestructionDelay() << "\t" << killedUnit->getBattleDelay() << std::endl;
 		killedList.enqueue(killedUnit);
 	}
+
+	// Print the battle result
 	fout << std::endl << "Battle Result " << battleResult() << std::endl;
 
-	// Alien Army Statistics
+	// Earth Army Statistics
 	fout << std::endl << "Earth Army Statistics:" << std::endl;
 
 	fout << "Total ES Count: " << gameStatistics.unitCounts[UnitType::ES] << std::endl;
@@ -334,20 +351,6 @@ void Game::printOutputFile(std::string outputFileName)
 
 	// Close the output file
 	fout.close();
-}
-
-void Game::printKilledList() const
-{
-	std::cout << killedList.getCount() << " units [";
-	killedList.printList();
-	std::cout << "]" << std::endl;
-}
-
-void Game::printUnitMaintenanceList() const
-{
-	std::cout << unitMaintenanceList.getCount() << " units [";
-	unitMaintenanceList.printList();
-	std::cout << "]" << std::endl;
 }
 
 bool Game::loadParameters(std::string fileName)
