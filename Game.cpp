@@ -37,8 +37,8 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 		if (gameMode == GameMode::INTERACTIVE)
 			printAll();
 
-		std::cout << "Press Enter to continue...";
-		while (std::cin.get() != '\n');
+		// std::cout << "Press Enter to continue...";
+		// while (std::cin.get() != '\n');
 	} while (!battleOver(didArmiesAttack));
 
 	// Produce the output file
@@ -255,7 +255,6 @@ GameStatistics Game::countStatistics()
 
 		// Unit Counts
 		gameStatistics.unitCounts[unitType]++;
-		gameStatistics.totalAlienUnitsCount++;
 
 		// Destructed Unit Counts
 		gameStatistics.destructedUnitCounts[unitType]++;
@@ -264,12 +263,14 @@ GameStatistics Game::countStatistics()
 		// Delays
 		if (unit->getArmyType() == ArmyType::EARTH)
 		{
+			gameStatistics.totalEarthUnitsCount++;
 			gameStatistics.totalEarthFirstAttackDelays += unit->getFirstAttackDelay();
 			gameStatistics.totalEarthBattleDelays += unit->getBattleDelay();
 			gameStatistics.totalEarthDestructionDelays += unit->getDestructionDelay();
 		}
 		else if (unit->getArmyType() == ArmyType::ALIEN)
 		{
+			gameStatistics.totalAlienUnitsCount++;
 			gameStatistics.totalAlienFirstAttackDelays += unit->getFirstAttackDelay();
 			gameStatistics.totalAlienBattleDelays += unit->getBattleDelay();
 			gameStatistics.totalAlienDestructionDelays += unit->getDestructionDelay();
