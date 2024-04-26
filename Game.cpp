@@ -56,12 +56,12 @@ void Game::setGameMode(GameMode gameMode)
 	this->gameMode = gameMode;
 }
 
-bool Game::battleOver(bool didArmiesAttack)
+bool Game::battleOver(bool didArmiesAttack) const
 {
 	return currentTimestep >= 40 && (earthArmy.isDead() || alienArmy.isDead() || !didArmiesAttack);
 }
 
-std::string Game::battleResult()
+std::string Game::battleResult() const
 {
 	if (earthArmy.isDead() && !alienArmy.isDead())
 		return "Alien Army wins!";
