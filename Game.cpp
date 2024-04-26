@@ -37,12 +37,12 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 		if (gameMode == GameMode::INTERACTIVE)
 			printAll();
 
-		// std::cout << "Press Enter to continue...";
-		// while (std::cin.get() != '\n');
+		std::cout << "Press Enter to continue...";
+		while (std::cin.get() != '\n');
 	} while (!battleOver(didArmiesAttack));
 
 	// Produce the output file
-	printOutputFile(outputFileName);
+	generateOutputFile(outputFileName);
 }
 
 bool Game::startAttack()
@@ -284,7 +284,7 @@ GameStatistics Game::countStatistics()
 	return gameStatistics;
 }
 
-void Game::printOutputFile(std::string outputFileName)
+void Game::generateOutputFile(std::string outputFileName)
 {
 	// Open the output file
 	std::ofstream fout(outputFileName);

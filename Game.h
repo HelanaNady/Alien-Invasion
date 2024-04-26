@@ -34,7 +34,7 @@ private:
     void printAll(); // Prints all the armies and the killed list and units fighting at the current timestep
 
     GameStatistics countStatistics(); // Calculate the statistics of the game
-    void printOutputFile(std::string); // Print the output file
+    void generateOutputFile(std::string); // Generate the output file with the statistics
 
     bool loadParameters(std::string); // Load the parameters from the file and sets parameters in the random generator
 
