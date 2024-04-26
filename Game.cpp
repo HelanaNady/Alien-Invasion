@@ -331,6 +331,9 @@ void Game::printOutputFile(std::string outputFileName)
 
 	fout << "Df/Db = " << (gameStatistics.totalAlienBattleDelays != 0 ? (gameStatistics.totalAlienFirstAttackDelays / gameStatistics.totalAlienBattleDelays) : 0) << "%" << std::endl;
 	fout << "Dd/Db = " << (gameStatistics.totalAlienBattleDelays != 0 ? (gameStatistics.totalAlienDestructionDelays / gameStatistics.totalAlienBattleDelays) : 0) << "%" << std::endl;
+
+	// Close the output file
+	fout.close();
 }
 
 void Game::printKilledList() const
