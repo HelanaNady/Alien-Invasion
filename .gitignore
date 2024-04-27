@@ -246,3 +246,4 @@ bin
 .vscode
 log.txt
 BattleResults.txt
+/BattleResults.txt
