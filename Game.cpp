@@ -43,6 +43,9 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 
 	// Produce the output file
 	generateOutputFile(outputFileName);
+
+	// End the game
+	std::cout << "\nWhat a battle!\nCheck the output file for a detailed conclusion\n";
 }
 
 bool Game::startAttack()
@@ -58,6 +61,7 @@ void Game::setGameMode(GameMode gameMode)
 
 bool Game::battleOver(bool didArmiesAttack) const
 {
+	// Don't check foor endbattle condtion unless it has run for at least 40 timesteps
 	return currentTimestep >= 40 && (earthArmy.isDead() || alienArmy.isDead() || !didArmiesAttack);
 }
 
@@ -92,6 +96,8 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 	LinkedQueue<Unit*> enemyUnits;
 	Unit* enemyUnitPtr = nullptr;
 
+	// Loop on the armies' lists depending on the attacker's attack capacity
+	// if the required enemy unit is found, enqueue it to be sent
 	switch (armyType)
 	{
 		case ArmyType::EARTH:
@@ -409,6 +415,7 @@ int Game::getCurrentTimestep() const
 
 int Game::getUnitsCount(ArmyType armyType, UnitType unitType) const
 {
+	// Get the count of current alive units in their armies lists
 	switch (armyType)
 	{
 		case (ArmyType::EARTH):

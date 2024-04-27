@@ -1,5 +1,4 @@
 #include <iostream>
-#include <windows.h>
 
 #include "Game.h"
 #include "DEFS.h"
@@ -10,7 +9,7 @@ int main()
 
     Game game;
     GameMode gameMode;
-    int resultOption = 2;
+    int resultOption = 2; // Default mode is interactive mode
 
     // Get the start of game parameters
     std::cout << "============== AlIENS INVASION, let the battle begin! ==============\n\n";
@@ -19,13 +18,12 @@ int main()
     std::cout << "[2] interactive mode --> Do you want the aliens to know you're watching?\nPress enter for a timestep by step detailed results\n\n";
     std::cout << "Enter the number of your preferred choice (1/2): \n\n";
     std::cin >> resultOption;
-    gameMode = resultOption == 1 ? SILENT : INTERACTIVE;
+
+    // Set the start of game parameters 
+    gameMode = resultOption == 1 ? SILENT : INTERACTIVE; // Handles invalid input by resetting the mode to default mode
     
     // Start the game
     game.run(gameMode, "InputFiles/strong_earth.txt", "BattleResults.txt");
-    
-    // End the game
-    std::cout << "\nWhat a battle!\nCheck the output file for a detailed conclusion\n";
 
     return 0;
 }
