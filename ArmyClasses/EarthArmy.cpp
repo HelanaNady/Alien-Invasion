@@ -143,6 +143,14 @@ bool EarthArmy::attack()
 
             bool didUnitAttack = attacker->attack(); // Attack the enemy
             didArmyAttack = didArmyAttack || didUnitAttack; // If any unit attacked, the army attacked
+
+            // Healers need to be killed once they attack
+            if (attacker->getUnitType() == UnitType::EH && didUnitAttack)
+            {
+                // Remove the healer from its list and kill it
+                healers.pop(attacker);
+                gamePtr->addToKilledList(attacker);
+            }
         }
     }
 
@@ -173,6 +181,12 @@ EarthArmy::~EarthArmy()
     }
 
     while (gunneries.dequeue(unit, dummyPri))
+    {
+        delete unit;
+        unit = nullptr;
+    }
+    
+    while (healers.pop(unit))
     {
         delete unit;
         unit = nullptr;
