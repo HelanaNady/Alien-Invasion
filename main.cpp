@@ -5,9 +5,10 @@
 
 int main()
 {
+    // Seed the random number generator
     srand((unsigned) time(NULL));
 
-    Game game;
+    // Ask the user to choose the game mode
     GameMode gameMode;
     int resultOption = 2; // Default mode is interactive mode
 
@@ -23,6 +24,7 @@ int main()
     gameMode = resultOption == 1 ? SILENT : INTERACTIVE; // Handles invalid input by resetting the mode to default mode
 
     // Start the game
+    Game game;
     game.run(gameMode, "InputFiles/strong_earth.txt", "BattleResults.txt");
 
     return 0;

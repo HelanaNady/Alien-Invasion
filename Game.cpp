@@ -37,15 +37,18 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 		if (gameMode == GameMode::INTERACTIVE)
 			printAll();
 
-		// std::cout << "Press Enter to continue...";
-		// while (std::cin.get() != '\n');
+		std::cout << "Press Enter to continue...";
+		while (std::cin.get() != '\n');
 	} while (!battleOver(didArmiesAttack));
 
 	// Produce the output file
 	generateOutputFile(outputFileName);
 
-	// End the game
-	std::cout << "\nWhat a battle!\nCheck the output file for a detailed conclusion\n";
+	// Print the final result
+	std::cout << std::endl;
+	std::cout << "What a battle!" << std::endl;
+	std::cout << "Battle Result: " << battleResult() << std::endl;
+	std::cout << "Check the output file for a detailed conclusion" << std::endl;
 }
 
 bool Game::startAttack()
@@ -175,7 +178,8 @@ void Game::printUnitMaintenanceList() const
 
 void Game::printAll()
 {
-	std::cout << "\nCurrent Timestep " << currentTimestep << std::endl;
+	std::cout << std::endl;
+	std::cout << "Current Timestep " << currentTimestep << std::endl;
 
 	std::cout << "============== Earth Army Alive Units ==============" << std::endl;
 	earthArmy.printArmy();
