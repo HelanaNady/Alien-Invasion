@@ -5,6 +5,18 @@ HealUnit::HealUnit(Game* gamePtr, double health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::EH, health, power, attackCapacity)
 {}
 
+void HealUnit::printFought()
+{
+    if (!foughtUnits.isEmpty())
+    {
+        std::cout << "EH " << getId() << " heals [";
+        foughtUnits.printList();
+        std::cout << "]" << std::endl;
+
+        clearFoughtUnits(); // Clear the list after printing
+    }
+}
+
 bool HealUnit::attack()
 {
     LinkedQueue<Unit*> unitsToHeal = gamePtr->getUnitsToMaintainList(attackCapacity);
@@ -31,6 +43,9 @@ bool HealUnit::attack()
             gamePtr->addUnit(unitToHeal);
         else
             gamePtr->addUnitToMaintenanceList(unitToHeal);
+
+        // Store the IDs of the healed units to print them later
+        foughtUnits.enqueue(unitToHeal->getId());
 
         // Nullify the pointer to avoid duplication
         unitToHeal = nullptr;

@@ -44,7 +44,7 @@ public:
 
 	double calcUAP(Unit*) const; // Calculates the damage caused when attacked by "attackerUnit"
 	virtual bool attack() = 0;
-	virtual void printFought();
+	virtual void printFought() = 0;
 
 	bool isDead() const; // Check if the unit is dead
 	bool needsHeal() const; // Check if the unit is eligible for healing

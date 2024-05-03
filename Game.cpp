@@ -168,6 +168,11 @@ LinkedQueue<Unit*> Game::getUnitsToMaintainList(int attackCapacity)
 	return unitsToMaintain;
 }
 
+bool Game::hasUnitsToHeal() const
+{
+	return !unitMaintenanceList.isEmpty();
+}
+
 void Game::printKilledList() const
 {
 	std::cout << killedList.getCount() << " units [";

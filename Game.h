@@ -50,6 +50,7 @@ public:
 
     void addUnitToMaintenanceList(Unit*); // Add a unit to the maintenance list
     LinkedQueue<Unit*> getUnitsToMaintainList(int);
+    bool hasUnitsToHeal() const; // Check if there are units to heal
 
     // Getters
     int getCurrentTimestep() const;

@@ -78,7 +78,7 @@ Unit* EarthArmy::pickAttacker(UnitType unitType)
             break;
 
         case UnitType::EH:
-            healers.peek(unit);
+            healers.pop(unit);
             break;
     }
 
@@ -132,8 +132,8 @@ bool EarthArmy::attack()
 {
     bool didArmyAttack = false; // Flag to check if the army attacked
 
-    UnitType unitTypes[4] = { ES, EG, ET, EH };
-    for (int i = 0; i < 4; i++)
+    UnitType unitTypes[3] = { ES, EG, ET };
+    for (int i = 0; i < 3; i++)
     {
         Unit* attacker = pickAttacker(unitTypes[i]);
 
@@ -143,6 +143,24 @@ bool EarthArmy::attack()
 
             bool didUnitAttack = attacker->attack(); // Attack the enemy
             didArmyAttack = didArmyAttack || didUnitAttack; // If any unit attacked, the army attacked
+        }
+    }
+
+    // Heal the units
+    if (gamePtr->hasUnitsToHeal())
+    {
+        Unit* healer = pickAttacker(UnitType::EH);
+
+        if (healer)
+        {
+            // Add the healer to the list of attackers to print
+            currentAttackers.enqueue(healer);
+
+            // Heal the units
+            healer->attack();
+
+            // Add the healer to the killed list
+            gamePtr->addToKilledList(healer);
         }
     }
 
