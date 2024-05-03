@@ -36,10 +36,11 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 
 		// Print the output
 		if (gameMode == GameMode::INTERACTIVE)
+		{
 			printAll();
-
-		std::cout << "Press Enter to continue...";
-		while (std::cin.get() != '\n');
+			std::cout << "Press Enter to continue...";
+			while (std::cin.get() != '\n');
+		}
 	} while (!battleOver(didArmiesAttack));
 
 	// Produce the output file
