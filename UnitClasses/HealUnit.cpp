@@ -7,10 +7,10 @@ HealUnit::HealUnit(Game* gamePtr, double health, int power, int attackCapacity)
 
 bool HealUnit::attack()
 {
-    LinkedQueue<Unit*> unitsToHeal = gamePtr->getUnitsToMaintainList(attackCapacity);
+    LinkedQueue<HealableUnit*> unitsToHeal = gamePtr->getUnitsToMaintainList(attackCapacity);
 
     // Create a pointer to the unit to heal
-    Unit* unitToHeal = nullptr;
+    HealableUnit* unitToHeal = nullptr;
 
     while (unitsToHeal.dequeue(unitToHeal))
     {
