@@ -56,8 +56,8 @@ public:
 	int getId() const;
 	ArmyType getArmyType() const;
 	UnitType getUnitType() const;
-	int getInitialHealth() const;
-	int getHealth() const;
+	double getInitialHealth() const;
+	double getHealth() const;
 	int getPower() const;
 	int getAttackCapacity() const;
 	int getUMLjoinTime() const;
