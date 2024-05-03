@@ -7,7 +7,7 @@ int Unit::lastEarthId = 0;
 int Unit::lastAlienId = 1999;
 
 Unit::Unit(Game* gamePtr, UnitType unitType, double health, int power, int attackCapacity)
-	: gamePtr(gamePtr), unitType(unitType), Ta(-1), Td(0), power(power), attackCapacity(attackCapacity)
+	: gamePtr(gamePtr), unitType(unitType), Ta(0), Td(0), power(power), attackCapacity(attackCapacity)
 {
 	setHealth(health);
 
@@ -37,7 +37,7 @@ void Unit::setHealth(double health)
 	this->health = health;
 }
 
-int Unit::getInitialHealth() const
+double Unit::getInitialHealth() const
 {
 	return initialHealth;
 }
@@ -76,7 +76,7 @@ bool Unit::needsHeal() const
 
 bool Unit::isFirstAttack() const
 {
-	return Ta == -1;
+	return Ta == 0;
 }
 
 double Unit::calcUAP(Unit* attackedUnit) const
@@ -102,7 +102,7 @@ ArmyType Unit::getArmyType() const
 	return armyType;
 }
 
-int Unit::getHealth() const
+double Unit::getHealth() const
 {
 	return health;
 }
@@ -134,17 +134,17 @@ int Unit::getDestructionTime() const
 
 int Unit::getFirstAttackDelay() const
 {
-	return Ta - Tj;
+	return Ta == 0 ? 0 : Ta - Tj;
 }
 
 int Unit::getDestructionDelay() const
 {
-	return Td - Ta;
+	return Td == 0 ? 0 : Td - Ta;
 }
 
 int Unit::getBattleDelay() const
 {
-	return Td - Tj;
+	return Td == 0 ? 0 : Td - Tj;
 }
 
 int Unit::getUMLjoinTime() const

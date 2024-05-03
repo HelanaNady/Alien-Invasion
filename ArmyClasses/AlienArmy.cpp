@@ -133,6 +133,7 @@ bool AlienArmy::attack()
                 break;
 
             currentAttackers.enqueue(attacker);
+
             bool didUnitAttack = attacker->attack(); // Attack the enemy
             didArmyAttack = didArmyAttack || didUnitAttack; // If any unit attacked, the army attacked
         }
@@ -150,21 +151,21 @@ AlienArmy::~AlienArmy()
 {
     // Delete all units in the army
     Unit* unit = nullptr;
-    while (!soldiers.isEmpty())
+    while (soldiers.dequeue(unit))
     {
-        soldiers.dequeue(unit);
         delete unit;
+        unit = nullptr;
     }
 
-    while (!monsters.isEmpty())
+    while (monsters.remove(0, unit))
     {
-        monsters.remove(0, unit);
         delete unit;
+        unit = nullptr;
     }
 
-    while (!drones.isEmpty())
+    while (drones.dequeue(unit))
     {
-        drones.dequeue(unit);
         delete unit;
+        unit = nullptr;
     }
 }
