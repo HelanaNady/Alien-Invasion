@@ -43,12 +43,13 @@ int main()
     // Ask the user to choose the input file
     std::string inputFileName;
     std::cout << std::endl;
-    std::cout << "Enter the name of the input file (e.g. InputFiles/neutral.txt): ";
+    std::cout << "Enter the name of the input file" << std::endl;
+    std::cout << "Current options: neutral - strong_alien - strong_earth" << std::endl;
     std::cin >> inputFileName;
 
     // Ask the user to choose the output file
     std::string outputFileName;
-    std::cout << "Enter the name of the output file (e.g. BattleResults.txt): ";
+    std::cout << "Enter the name of the output file (e.g. BattleResults)" << std::endl;
     std::cin >> outputFileName;
 
     // Clear the input buffer
@@ -56,7 +57,7 @@ int main()
 
     // Start the game
     Game game;
-    game.run(gameMode, inputFileName, outputFileName);
+    game.run(gameMode, "InputFiles/" + inputFileName+ ".txt", outputFileName + ".txt");
 
     return 0;
 }
