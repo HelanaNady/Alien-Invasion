@@ -35,5 +35,6 @@ bool HealUnit::attack()
         // Nullify the pointer to avoid duplication
         unitToHeal = nullptr;
     }
+
     return true;
 }

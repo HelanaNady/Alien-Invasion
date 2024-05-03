@@ -204,7 +204,7 @@ void Game::printAll()
 
 GameStatistics Game::countStatistics()
 {
-	GameStatistics gameStatistics = { { 0 }, 0, 0, { 0 }, 0, 0, 0, 0, 0, 0, 0 };
+	GameStatistics gameStatistics = { { 0 }, 0, 0, { 0 }, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 	Unit* unit = nullptr;
 
@@ -277,6 +277,8 @@ GameStatistics Game::countStatistics()
 		if (unit->getArmyType() == ArmyType::EARTH)
 		{
 			gameStatistics.totalEarthUnitsCount++;
+			gameStatistics.totalEarthDestructedUnitsCount++;
+
 			gameStatistics.totalEarthFirstAttackDelays += unit->getFirstAttackDelay();
 			gameStatistics.totalEarthBattleDelays += unit->getBattleDelay();
 			gameStatistics.totalEarthDestructionDelays += unit->getDestructionDelay();
@@ -284,6 +286,8 @@ GameStatistics Game::countStatistics()
 		else if (unit->getArmyType() == ArmyType::ALIEN)
 		{
 			gameStatistics.totalAlienUnitsCount++;
+			gameStatistics.totalAlienDestructedUnitsCount++;
+
 			gameStatistics.totalAlienFirstAttackDelays += unit->getFirstAttackDelay();
 			gameStatistics.totalAlienBattleDelays += unit->getBattleDelay();
 			gameStatistics.totalAlienDestructionDelays += unit->getDestructionDelay();
@@ -333,9 +337,9 @@ void Game::generateOutputFile(std::string outputFileName)
 	fout << "Destructed ESs/Total ESs = " << (gameStatistics.unitCounts[UnitType::ES] != 0 ? ((float) gameStatistics.destructedUnitCounts[UnitType::ES] / gameStatistics.unitCounts[UnitType::ES] * 100) : 0) << "%" << std::endl;
 	fout << "Destructed ETs/Total ETs = " << (gameStatistics.unitCounts[UnitType::ET] != 0 ? ((float) gameStatistics.destructedUnitCounts[UnitType::ET] / gameStatistics.unitCounts[UnitType::ET] * 100) : 0) << "%" << std::endl;
 	fout << "Destructed EGs/Total EGs = " << (gameStatistics.unitCounts[UnitType::EG] != 0 ? ((float) gameStatistics.destructedUnitCounts[UnitType::EG] / gameStatistics.unitCounts[UnitType::EG] * 100) : 0) << "%" << std::endl;
-
-	fout << "Total Destructed Earth Units/Total Units = " << (gameStatistics.totalEarthUnitsCount != 0 ? ((float) gameStatistics.totalDestructedUnitsCount / gameStatistics.totalEarthUnitsCount) : 0) << "%" << std::endl;
-
+	fout << "Destructed EHs/Total EHs = " << (gameStatistics.unitCounts[UnitType::EH] != 0 ? ((float) gameStatistics.destructedUnitCounts[UnitType::EH] / gameStatistics.unitCounts[UnitType::EH] * 100) : 0) << "%" << std::endl;
+	fout << "Total Destructed Earth Units/Total Earth Units = " << (gameStatistics.totalEarthUnitsCount != 0 ? ((float) gameStatistics.totalEarthDestructedUnitsCount / gameStatistics.totalEarthUnitsCount * 100) : 0) << "%" << std::endl;
+	fout << "======================================================================" << std::endl;
 	fout << "Average of First Attack Delay = " << (gameStatistics.totalEarthUnitsCount != 0 ? ((float) gameStatistics.totalEarthFirstAttackDelays / gameStatistics.totalEarthUnitsCount) : 0) << std::endl;
 	fout << "Average of Destruction Delay = " << (gameStatistics.totalEarthUnitsCount != 0 ? ((float) gameStatistics.totalEarthDestructionDelays / gameStatistics.totalEarthUnitsCount) : 0) << std::endl;
 	fout << "Average of Battle Delay = " << (gameStatistics.totalEarthUnitsCount != 0 ? ((float) gameStatistics.totalEarthBattleDelays / gameStatistics.totalEarthUnitsCount) : 0) << std::endl;
@@ -353,9 +357,8 @@ void Game::generateOutputFile(std::string outputFileName)
 	fout << "Destructed ASs/Total ASs = " << (gameStatistics.unitCounts[UnitType::AS] != 0 ? ((float) gameStatistics.destructedUnitCounts[UnitType::AS] / gameStatistics.unitCounts[UnitType::AS] * 100) : 0) << "%" << std::endl;
 	fout << "Destructed AMs/Total AMs = " << (gameStatistics.unitCounts[UnitType::AM] != 0 ? ((float) gameStatistics.destructedUnitCounts[UnitType::AM] / gameStatistics.unitCounts[UnitType::AM] * 100) : 0) << "%" << std::endl;
 	fout << "Destructed ATs/Total ATs = " << (gameStatistics.unitCounts[UnitType::AD] != 0 ? ((float) gameStatistics.destructedUnitCounts[UnitType::AD] / gameStatistics.unitCounts[UnitType::AD] * 100) : 0) << "%" << std::endl;
-
-	fout << "Total Destructed Alien Units/Total Units = " << (gameStatistics.totalAlienUnitsCount != 0 ? ((float) gameStatistics.totalDestructedUnitsCount / gameStatistics.totalAlienUnitsCount) : 0) << "%" << std::endl;
-
+	fout << "Total Destructed Alien Units/Total Alien Units = " << (gameStatistics.totalAlienUnitsCount != 0 ? ((float) gameStatistics.totalAlienDestructedUnitsCount / gameStatistics.totalAlienUnitsCount * 100) : 0) << "%" << std::endl;
+	fout << "======================================================================" << std::endl;
 	fout << "Average of First Attack Delay = " << (gameStatistics.totalAlienUnitsCount != 0 ? ((float) gameStatistics.totalAlienFirstAttackDelays / gameStatistics.totalAlienUnitsCount) : 0) << std::endl;
 	fout << "Average of Destruction Delay = " << (gameStatistics.totalAlienUnitsCount != 0 ? ((float) gameStatistics.totalAlienDestructionDelays / gameStatistics.totalAlienUnitsCount) : 0) << std::endl;
 	fout << "Average of Battle Delay = " << (gameStatistics.totalAlienUnitsCount != 0 ? ((float) gameStatistics.totalAlienBattleDelays / gameStatistics.totalAlienUnitsCount) : 0) << std::endl;

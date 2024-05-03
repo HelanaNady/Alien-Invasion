@@ -37,6 +37,8 @@ struct GameStatistics
 	// Destructed Unit Counts
 	int destructedUnitCounts[UnitType::UNIT_TOTAL];
 	int totalDestructedUnitsCount;
+	int totalEarthDestructedUnitsCount;
+	int totalAlienDestructedUnitsCount;
 
 	// Unit Delays
 	int totalEarthFirstAttackDelays;
