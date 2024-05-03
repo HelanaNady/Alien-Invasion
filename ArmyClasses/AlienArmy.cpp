@@ -133,6 +133,7 @@ bool AlienArmy::attack()
                 break;
 
             currentAttackers.enqueue(attacker);
+
             bool didUnitAttack = attacker->attack(); // Attack the enemy
             didArmyAttack = didArmyAttack || didUnitAttack; // If any unit attacked, the army attacked
         }

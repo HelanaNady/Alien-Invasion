@@ -27,7 +27,7 @@ bool EarthTank::attack()
     LinkedQueue<Unit*> tempList;
 
     // Calculating the number of alien soldiers that needs to be killed
-    int soldiersToKill = std::ceil(gamePtr->getUnitsCount(ALIEN, AS) - (gamePtr->getUnitsCount(EARTH, AS) / 0.8));
+    int soldiersToKill = std::ceil(gamePtr->getUnitsCount(ArmyType::ALIEN, UnitType::AS) - (gamePtr->getUnitsCount(ArmyType::EARTH, UnitType::AS) / 0.8));
     int deadSoldiers = 0;
 
     // Check for a successful attack
@@ -83,7 +83,7 @@ bool EarthTank::attack()
     while (tempList.dequeue(tempUnitPtr))
         gamePtr->addUnit(tempUnitPtr);
 
-    return attackCapacity;
+    return attackCheck;
 }
 
 int EarthTank::getHealPriority() const
