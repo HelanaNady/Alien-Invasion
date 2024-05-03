@@ -20,6 +20,8 @@ public:
 
     int getUMLjoinTime() const; // Get the time when the unit joined the UML
     void setUMLjoinTime(int); // Set the time when the unit joined the UML
+    bool hasWaitedForTooLong() const; // Decides whether to kill or heal the unit based on its wait time
+    bool isHealed() const; // Checks if the unit's health has increased enough
 };
 
 #endif
