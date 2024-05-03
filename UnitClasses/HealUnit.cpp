@@ -12,6 +12,9 @@ bool HealUnit::attack()
     // Create a pointer to the unit to heal
     Unit* unitToHeal = nullptr;
 
+    // Check for a successful attack
+    bool healCheck = false; 
+
     while (unitsToHeal.dequeue(unitToHeal))
     {
         // Check if unit has spend more than 10 time steps in UML
@@ -34,7 +37,10 @@ bool HealUnit::attack()
 
         // Nullify the pointer to avoid duplication
         unitToHeal = nullptr;
+
+        // If any heal happened successfully 
+        healCheck = true;
     }
 
-    return true;
+    return healCheck;
 }
