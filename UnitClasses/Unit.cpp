@@ -37,7 +37,7 @@ void Unit::setHealth(double health)
 	this->health = health;
 }
 
-int Unit::getInitialHealth() const
+double Unit::getInitialHealth() const
 {
 	return initialHealth;
 }
@@ -102,7 +102,7 @@ ArmyType Unit::getArmyType() const
 	return armyType;
 }
 
-int Unit::getHealth() const
+double Unit::getHealth() const
 {
 	return health;
 }
