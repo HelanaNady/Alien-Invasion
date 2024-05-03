@@ -21,7 +21,7 @@ int main()
 
     // Set the start of game parameters 
     gameMode = resultOption == 1 ? SILENT : INTERACTIVE; // Handles invalid input by resetting the mode to default mode
-    
+
     // Start the game
     game.run(gameMode, "InputFiles/strong_earth.txt", "BattleResults.txt");
 

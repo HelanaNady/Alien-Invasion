@@ -61,7 +61,7 @@ void Game::setGameMode(GameMode gameMode)
 
 bool Game::battleOver(bool didArmiesAttack) const
 {
-	// Don't check foor endbattle condtion unless it has run for at least 40 timesteps
+	// Don't check for end battle condition unless it has run for at least 40 timesteps
 	return currentTimestep >= 40 && (earthArmy.isDead() || alienArmy.isDead() || !didArmiesAttack);
 }
 
@@ -121,7 +121,6 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 
 	return enemyUnits;
 }
-
 
 void Game::addToKilledList(Unit* unit)
 {
