@@ -59,9 +59,9 @@ void Unit::clearFoughtUnits()
 	while (foughtUnits.dequeue(i));
 }
 
-bool Unit::needsHeal()
+bool Unit::needsHeal() const
 {
-	return dynamic_cast<HealableUnit*>(this) && (health / initialHealth) <= 0.2;
+	return false;
 }
 
 bool Unit::isDead() const

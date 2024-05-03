@@ -12,6 +12,8 @@ protected:
 public:
     HealableUnit(Game*, UnitType, double, int, int);
 
+    virtual bool needsHeal() const; // Check if the unit is eligible for healing
+
     virtual int getHealPriority() const = 0;  // Get the heal priority of the soldier to be used in the UML
 
     void receiveHeal(double); // Increase the health of the unit by "UHP"
