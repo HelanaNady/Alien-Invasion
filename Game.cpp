@@ -53,8 +53,12 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 
 bool Game::startAttack()
 {
-	// Returns a boolean indicating whether any army attacked 
-	return earthArmy.attack() || alienArmy.attack();
+	// Attack the armies
+	bool didEarthArmyAttack = earthArmy.attack();
+	bool didAlienArmyAttack = alienArmy.attack();
+
+	// Return if any of the armies attacked
+	return didEarthArmyAttack || didAlienArmyAttack;
 }
 
 void Game::setGameMode(GameMode gameMode)
