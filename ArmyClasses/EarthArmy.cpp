@@ -146,11 +146,7 @@ bool EarthArmy::attack()
 
             // Healers need to be killed once they attack
             if (attacker->getUnitType() == UnitType::EH && didUnitAttack)
-            {
-                // Remove the healer from its list and kill it
-                healers.pop(attacker);
-                gamePtr->addToKilledList(attacker);
-            }
+                killHealUnit(attacker);
         }
     }
 
@@ -160,6 +156,14 @@ bool EarthArmy::attack()
 bool EarthArmy::isDead() const
 {
     return soldiers.getCount() + tanks.getCount() + gunneries.getCount() == 0;
+}
+
+void EarthArmy::killHealUnit(Unit* attackerHealer)
+{
+    // Remove the healer from its list and kill it
+    healers.pop(attackerHealer);
+    gamePtr->addToKilledList(attackerHealer);
+    attackerHealer->setDestructionTime(gamePtr->getCurrentTimestep());
 }
 
 EarthArmy::~EarthArmy()
