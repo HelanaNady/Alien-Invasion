@@ -61,6 +61,7 @@ public:
 	int getPower() const;
 	int getAttackCapacity() const;
 	int getUMLjoinTime() const;
+	static int getLastEarthId();
 
 	// Time
 	int getJoinTime() const;

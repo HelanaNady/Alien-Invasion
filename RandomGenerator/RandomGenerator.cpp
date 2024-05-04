@@ -35,6 +35,7 @@ void RandomGenerator::generateUnits() const
 			for (int i = 0; i < N; i++)
 			{
 				newUnit = generateUnit(armyType);
+				if(newUnit)
 				gamePtr->addUnit(newUnit); // Add the unit to the suitable army & list based on the unit type
 			}
 		}
@@ -49,6 +50,10 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 
 	if (armyType == ArmyType::EARTH)
 	{
+		// Max number of earth units is 999 
+		if (Unit::getLastEarthId() > 999)
+			return nullptr;
+
 		int power = getRandomNumber(earthPowerRange.min, earthPowerRange.max);
 		int health = getRandomNumber(earthHealthRange.min, earthHealthRange.max);
 		int attackCapacity = getRandomNumber(earthAttackCapacityRange.min, earthAttackCapacityRange.max);
