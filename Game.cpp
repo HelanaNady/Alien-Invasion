@@ -301,6 +301,30 @@ GameStatistics Game::countStatistics()
 		unit = nullptr;
 	}
 
+	// Unit Maintenance List
+	count = unitMaintenanceList.getCount();
+	int priority = 0;
+
+	for (int i = 0; i < count; i++)
+	{
+		unitMaintenanceList.dequeue(unit, priority);
+		UnitType unitType = unit->getUnitType();
+
+		// Unit Counts
+		gameStatistics.unitCounts[unitType]++;
+		gameStatistics.totalEarthUnitsCount++;
+
+		// Delays
+		gameStatistics.totalEarthFirstAttackDelays += unit->getFirstAttackDelay();
+		gameStatistics.totalEarthBattleDelays += unit->getBattleDelay();
+		gameStatistics.totalEarthDestructionDelays += unit->getDestructionDelay();
+
+		unitMaintenanceList.enqueue(unit, priority);
+
+		// Nullify the pointer
+		unit = nullptr;
+	}
+
 	return gameStatistics;
 }
 
