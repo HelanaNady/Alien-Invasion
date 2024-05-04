@@ -38,19 +38,13 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 		if (gameMode == GameMode::INTERACTIVE)
 		{
 			printAll();
-			std::cout << "Press Enter to continue...";
-			while (std::cin.get() != '\n');
+			//std::cout << "Press Enter to continue...";
+			//while (std::cin.get() != '\n');
 		}
 	} while (!battleOver(didArmiesAttack));
 
-	// Produce the output file
-	generateOutputFile(outputFileName);
-
-	// Print the final result
-	std::cout << std::endl;
-	std::cout << "What a battle!" << std::endl;
-	std::cout << "Battle Result: " << battleResult() << std::endl;
-	std::cout << "Check the output file for a detailed conclusion" << std::endl;
+	// Generate the outputput file and end of game consule printing
+	endGame(outputFileName);
 }
 
 bool Game::startAttack()
@@ -71,7 +65,21 @@ void Game::setGameMode(GameMode gameMode)
 bool Game::battleOver(bool didArmiesAttack) const
 {
 	// Don't check for end battle condition unless it has run for at least 40 timesteps
-	return currentTimestep >= 40 && (earthArmy.isDead() || alienArmy.isDead() || !didArmiesAttack);
+	return currentTimestep >= 40 && (earthArmy.isDead() || alienArmy.isDead() || !didArmiesAttack || Unit::getLastEarthId() > 999);
+}
+
+void Game::endGame(std::string outputFileName) 
+{
+	// Produce the output file
+	generateOutputFile(outputFileName);
+
+	// Print the final result
+	std::cout << std::endl;
+	if (Unit::getLastEarthId() > 999)
+		std::cout << "Battle Stopped  -->  Units Overflow: Earth Army has exceeded its max allowable units number" << std::endl;
+	std::cout << "What a battle!" << std::endl;
+	std::cout << "Battle Result: " << battleResult() << std::endl;
+	std::cout << "Check the output file for a detailed conclusion" << std::endl;
 }
 
 std::string Game::battleResult() const
