@@ -3,6 +3,8 @@
 #include "Game.h"
 #include "DEFS.h"
 
+void requestValidInput(int&); // Keeps asking the user for an input
+
 int main()
 {
     // Seed the random number generator
@@ -22,20 +24,15 @@ int main()
     std::cout << "[2] Interactive Mode --> Do you want the aliens to know you're watching? Press enter for a timestep by step detailed results" << std::endl;
     std::cout << "Enter your choice (1/2): ";
 
+    // Get user choice
+    std::cin >> userChoice;
+
+    // Keep asking the user for a valid input
     while (userChoice != 1 && userChoice != 2)
-    {
-        std::cin >> userChoice;
-        if (userChoice == 1)
-            gameMode = GameMode::SILENT;
-        else if (userChoice == 2)
-            gameMode = GameMode::INTERACTIVE;
-        else
-        {
-            std::cin.clear();
-            std::cin.ignore(1000, '\n');
-            std::cout << "Invalid input. Please enter 1 or 2: ";
-        }
-    }
+        requestValidInput(userChoice);
+    
+    // Set the gamemode
+    gameMode = userChoice == 1 ? GameMode::SILENT : GameMode::INTERACTIVE;
 
     // Ask the user to choose the input file
     const int numInputFiles = 3;
@@ -50,18 +47,15 @@ int main()
     std::cout << "[3] Strong Aliens --> Aliens have a stronger army" << std::endl;
     std::cout << "Enter your choice (1/2/3): ";
 
-    while (!(userChoice > 0 && userChoice <= numInputFiles))
-    {
-        std::cin >> userChoice;
-        if (userChoice > 0 && userChoice <= numInputFiles)
-            inputFileName = inputFiles[userChoice - 1];
-        else
-        {
-            std::cin.clear();
-            std::cin.ignore(1000, '\n');
-            std::cout << "Invalid input. Please enter 1, 2 or 3: ";
-        }
-    }
+    // Get user choice
+    std::cin >> userChoice;
+
+    // Keep asking the user for a valid input
+    while (userChoice < 0 || userChoice > numInputFiles)
+        requestValidInput(userChoice);
+
+    // Set the input file name
+    inputFileName = inputFiles[userChoice - 1]; 
 
     // Ask the user to choose the output file
     std::string outputFileName;
@@ -78,4 +72,12 @@ int main()
     game.run(gameMode, "InputFiles/" + inputFileName + ".txt", outputFileName + ".txt");
 
     return 0;
+}
+
+void requestValidInput(int& userChoice)
+{
+    std::cin.clear();
+    std::cin.ignore(1000, '\n');
+    std::cout << "Invalid input. Please enter one of the above options ";
+    std::cin >> userChoice;
 }
