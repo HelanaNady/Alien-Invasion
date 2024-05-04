@@ -43,7 +43,7 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 		}
 	} while (!battleOver(didArmiesAttack));
 
-	// Generate the outputput file and end of game consule printing
+	// Generate the output file and end of game console printing
 	endGame(outputFileName);
 }
 
@@ -65,10 +65,10 @@ void Game::setGameMode(GameMode gameMode)
 bool Game::battleOver(bool didArmiesAttack) const
 {
 	// Don't check for end battle condition unless it has run for at least 40 timesteps
-	return currentTimestep >= 40 && (earthArmy.isDead() || alienArmy.isDead() || !didArmiesAttack || Unit::getLastEarthId() > 999);
+	return currentTimestep >= 40 && (earthArmy.isDead() || alienArmy.isDead() || !didArmiesAttack || Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit());
 }
 
-void Game::endGame(std::string outputFileName) 
+void Game::endGame(std::string outputFileName)
 {
 	// Produce the output file
 	generateOutputFile(outputFileName);
@@ -76,8 +76,8 @@ void Game::endGame(std::string outputFileName)
 	// Print the final result
 	std::cout << std::endl;
 	// Print an overflow error message
-	if (Unit::getLastEarthId() > 999)
-		std::cout << "Battle Stopped  -->  Units Overflow: Earth Army has exceeded its max allowable units number" << std::endl;
+	if (Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit())
+		std::cout << "Battle Stopped  --> The maximum number of units has been reached!" << std::endl;
 
 	std::cout << "What a battle!" << std::endl;
 	std::cout << "Battle Result: " << battleResult() << std::endl;
@@ -86,19 +86,17 @@ void Game::endGame(std::string outputFileName)
 
 std::string Game::battleResult() const
 {
-	int totalEarthUnits = earthArmy.getUnitsCount(UnitType::ES) + earthArmy.getUnitsCount(UnitType::ET) + earthArmy.getUnitsCount(UnitType::EG); 
-	int totalAlienUnits = alienArmy.getUnitsCount(UnitType::AS) + alienArmy.getUnitsCount(UnitType::AM) + alienArmy.getUnitsCount(UnitType::AD); 
+	int totalEarthUnits = earthArmy.getUnitsCount(UnitType::ES) + earthArmy.getUnitsCount(UnitType::ET) + earthArmy.getUnitsCount(UnitType::EG);
+	int totalAlienUnits = alienArmy.getUnitsCount(UnitType::AS) + alienArmy.getUnitsCount(UnitType::AM) + alienArmy.getUnitsCount(UnitType::AD);
 
-	if (earthArmy.isDead() && !alienArmy.isDead())
+	if (earthArmy.isDead() && !alienArmy.isDead()) // If the Earth army is dead and the Alien army is not dead, the Alien army wins
 		return "Alien Army wins!";
-	else if (!earthArmy.isDead() && alienArmy.isDead())
+	else if (!earthArmy.isDead() && alienArmy.isDead()) // If the Earth army is dead and the Alien army is not dead, the Earth army wins
 		return "Earth Army wins!";
-	// If the battle ended due to a units overflow, the winner is the army with more alive units
-	else if (Unit::getLastEarthId() > 999)
+	else if (Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit()) // If the battle ended due to a units overflow, the winner is the army with more alive units
 		return totalEarthUnits > totalAlienUnits ? "Earth Army wins!" : "Alien Army wins!";
-	// Bothe armies are did or no army was able to attack
-	else
-		return "Drawn!"; 
+	else // If both armies are dead or no army was able to attack, the result is a draw
+		return "Draw!";
 }
 
 void Game::addUnit(Unit* unit)
