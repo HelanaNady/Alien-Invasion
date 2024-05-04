@@ -43,8 +43,11 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 		}
 	} while (!battleOver(didArmiesAttack));
 
-	// Generate the output file and end of game console printing
-	endGame(outputFileName);
+	// Produce the output file
+	generateOutputFile(outputFileName);
+
+	// Print the final results
+	printFinalResults();
 }
 
 bool Game::startAttack()
@@ -68,17 +71,15 @@ bool Game::battleOver(bool didArmiesAttack) const
 	return currentTimestep >= 40 && (earthArmy.isDead() || alienArmy.isDead() || !didArmiesAttack || Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit());
 }
 
-void Game::endGame(std::string outputFileName)
+void Game::printFinalResults() const
 {
-	// Produce the output file
-	generateOutputFile(outputFileName);
-
-	// Print the final result
 	std::cout << std::endl;
+
 	// Print an overflow error message
 	if (Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit())
-		std::cout << "Battle Stopped  --> The maximum number of units has been reached!" << std::endl;
+		std::cout << "Battle Stopped: The maximum number of units has been reached!" << std::endl;
 
+	// Print battle results
 	std::cout << "What a battle!" << std::endl;
 	std::cout << "Battle Result: " << battleResult() << std::endl;
 	std::cout << "Check the output file for a detailed conclusion" << std::endl;
