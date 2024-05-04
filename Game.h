@@ -27,7 +27,7 @@ private:
     bool startAttack(); // Makes the two armies attack each other
     void setGameMode(GameMode); // Change the game mode
     bool battleOver(bool) const; // Check if the battle is over
-    void endGame(std::string);
+    void endGame(std::string); // Handles all post end of fight procedures
     std::string battleResult() const; // Get the result of the battle
 
     void printKilledList() const; // Prints the killed list with the console formats
