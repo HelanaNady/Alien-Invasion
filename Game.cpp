@@ -67,8 +67,12 @@ void Game::setGameMode(GameMode gameMode)
 
 bool Game::battleOver(bool didArmiesAttack) const
 {
+	bool anArmyDied = earthArmy.isDead() || alienArmy.isDead();
+	bool unitsOverflow = Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit();
+	bool noAttackTie = !didArmiesAttack;
+
 	// Don't check for end battle condition unless it has run for at least 40 timesteps
-	return currentTimestep >= 40 && (earthArmy.isDead() || alienArmy.isDead() || !didArmiesAttack || Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit());
+	return currentTimestep >= 40 && ( anArmyDied || unitsOverflow || noAttackTie);
 }
 
 void Game::printFinalResults() const
