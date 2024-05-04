@@ -185,7 +185,7 @@ EarthArmy::~EarthArmy()
         delete unit;
         unit = nullptr;
     }
-    
+
     while (healers.pop(unit))
     {
         delete unit;

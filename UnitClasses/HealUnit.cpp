@@ -12,8 +12,8 @@ bool HealUnit::attack()
     // Create a pointer to the unit to heal
     Unit* unitToHeal = nullptr;
 
-    // Check for a successful attack
-    bool healCheck = false; 
+    // Check if any heal happened
+    bool healCheck = false;
 
     while (unitsToHeal.dequeue(unitToHeal))
     {
@@ -35,11 +35,11 @@ bool HealUnit::attack()
         else
             gamePtr->addUnitToMaintenanceList(unitToHeal);
 
-        // Nullify the pointer to avoid duplication
-        unitToHeal = nullptr;
-
         // If any heal happened successfully 
         healCheck = true;
+
+        // Nullify the pointer to avoid duplication
+        unitToHeal = nullptr;
     }
 
     return healCheck;
