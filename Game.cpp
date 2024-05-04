@@ -52,11 +52,11 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 
 bool Game::startAttack()
 {
-	// Attack the armies
+	// Make both armies attack
 	bool didEarthArmyAttack = earthArmy.attack();
 	bool didAlienArmyAttack = alienArmy.attack();
 
-	// Return if any of the armies attacked
+	// Return if any of the armies successfully attacked
 	return didEarthArmyAttack || didAlienArmyAttack;
 }
 
@@ -67,9 +67,10 @@ void Game::setGameMode(GameMode gameMode)
 
 bool Game::battleOver(bool didArmiesAttack) const
 {
-	bool anArmyDied = earthArmy.isDead() || alienArmy.isDead();
-	bool unitsOverflow = Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit();
-	bool noAttackTie = !didArmiesAttack;
+	// Game ending cases
+	bool anArmyDied = earthArmy.isDead() || alienArmy.isDead(); // If one army completely killed the other
+	bool unitsOverflow = Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit(); // If one army has reached its maximum units capacity
+	bool noAttackTie = !didArmiesAttack; // If both armies weren't able to attack - considered as a tie
 
 	// Don't check for end battle condition unless it has run for at least 40 timesteps
 	return currentTimestep >= 40 && ( anArmyDied || unitsOverflow || noAttackTie);
