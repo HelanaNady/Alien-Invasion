@@ -38,8 +38,8 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 		if (gameMode == GameMode::INTERACTIVE)
 		{
 			printAll();
-			//std::cout << "Press Enter to continue...";
-			//while (std::cin.get() != '\n');
+			std::cout << "Press Enter to continue...";
+			while (std::cin.get() != '\n');
 		}
 	} while (!battleOver(didArmiesAttack));
 
@@ -84,11 +84,18 @@ void Game::endGame(std::string outputFileName)
 
 std::string Game::battleResult() const
 {
+	int totalEarthUnits = earthArmy.getUnitsCount(UnitType::ES) + earthArmy.getUnitsCount(UnitType::ET) + earthArmy.getUnitsCount(UnitType::EG); 
+	int totalAlienUnits = alienArmy.getUnitsCount(UnitType::AS) + alienArmy.getUnitsCount(UnitType::AM) + alienArmy.getUnitsCount(UnitType::AD); 
+
 	if (earthArmy.isDead() && !alienArmy.isDead())
 		return "Alien Army wins!";
 	else if (!earthArmy.isDead() && alienArmy.isDead())
 		return "Earth Army wins!";
+	// If the battle ended due to a units overflow, the winner is the army with more alive units
+	else if (Unit::getLastEarthId() > 999)
+		return totalEarthUnits > totalAlienUnits ? "Earth Army wins!" : "Alien Army wins!";
 	else
+		// Bothe armies are did or no army was able to attack
 		return "Drawn!";
 }
 
