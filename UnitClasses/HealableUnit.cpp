@@ -17,11 +17,6 @@ void HealableUnit::receiveHeal(double UHP)
     health += UHP;
 }
 
-int HealableUnit::getUMLjoinTime() const
-{
-    return UMLjoinTime;
-}
-
 void HealableUnit::setUMLjoinTime(int UMLjoinTime)
 {
     this->UMLjoinTime = UMLjoinTime;
@@ -30,11 +25,11 @@ void HealableUnit::setUMLjoinTime(int UMLjoinTime)
 bool HealableUnit::hasWaitedForTooLong() const
 {
     // Check if it has spent more than 10 consecutive timesteps in the UML
-    return gamePtr->getCurrentTimestep() - this->getUMLjoinTime() > 10;
+    return gamePtr->getCurrentTimestep() - UMLjoinTime > 10;
 }
 
 bool HealableUnit::isHealed() const
 {
     // A unit is healed if its health is more than 20% of its initial health
-    return this->getHealth() > this->getInitialHealth() * 0.2;
+    return health > initialHealth * 0.2;
 }
