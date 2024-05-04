@@ -75,8 +75,10 @@ void Game::endGame(std::string outputFileName)
 
 	// Print the final result
 	std::cout << std::endl;
+	// Print an overflow error message
 	if (Unit::getLastEarthId() > 999)
 		std::cout << "Battle Stopped  -->  Units Overflow: Earth Army has exceeded its max allowable units number" << std::endl;
+
 	std::cout << "What a battle!" << std::endl;
 	std::cout << "Battle Result: " << battleResult() << std::endl;
 	std::cout << "Check the output file for a detailed conclusion" << std::endl;
@@ -94,9 +96,9 @@ std::string Game::battleResult() const
 	// If the battle ended due to a units overflow, the winner is the army with more alive units
 	else if (Unit::getLastEarthId() > 999)
 		return totalEarthUnits > totalAlienUnits ? "Earth Army wins!" : "Alien Army wins!";
+	// Bothe armies are did or no army was able to attack
 	else
-		// Bothe armies are did or no army was able to attack
-		return "Drawn!";
+		return "Drawn!"; 
 }
 
 void Game::addUnit(Unit* unit)
