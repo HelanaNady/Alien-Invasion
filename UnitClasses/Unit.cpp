@@ -84,9 +84,6 @@ double Unit::calcUAP(Unit* attackedUnit) const
 	return (power * health / 100) / sqrt(attackedUnit->health);
 }
 
-void Unit::printFought()
-{}
-
 int Unit::getId() const
 {
 	return id;
