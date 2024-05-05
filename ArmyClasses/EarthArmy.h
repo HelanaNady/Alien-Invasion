@@ -28,7 +28,7 @@ public:
     void printArmy() const;
     bool attack();
     bool isDead() const;
-    void killHealUnit(Unit*);
+    void killHealUnit();
 
     // Getters
     int getUnitsCount(UnitType) const;
