@@ -136,25 +136,17 @@ void Game::addToKilledList(Unit* unit)
 	killedList.enqueue(unit);
 }
 
-void Game::addUnitToMaintenanceList(Unit* unit)
+void Game::addUnitToMaintenanceList(HealableUnit* unit)
 {
-	if (unit->getUnitType() == UnitType::ES)
-	{
-		unit->setUMLjoinTime(currentTimestep); // Set the time when the unit joined the UML
-		unitMaintenanceList.enqueue(unit, dynamic_cast<EarthSoldier*>(unit)->getHealPriority());
-	}
-	else if (unit->getUnitType() == UnitType::ET)
-	{
-		unit->setUMLjoinTime(currentTimestep); // Set the time when the unit joined the UML
-		unitMaintenanceList.enqueue(unit, dynamic_cast<EarthTank*>(unit)->getHealPriority());
-	}
+	unit->setUMLjoinTime(currentTimestep); // Set the time when the unit joined the UML
+	unitMaintenanceList.enqueue(unit, unit->getHealPriority()); // Enqueue the unit with its priority
 }
 
-LinkedQueue<Unit*> Game::getUnitsToMaintainList(int attackCapacity)
+LinkedQueue<HealableUnit*> Game::getUnitsToMaintainList(int attackCapacity)
 {
-	LinkedQueue<Unit*> unitsToMaintain;
+	LinkedQueue<HealableUnit*> unitsToMaintain;
 
-	Unit* unit = nullptr;
+	HealableUnit* unit = nullptr;
 	int dummyPri = 0;
 	for (int i = 0; i < attackCapacity; i++)
 	{
@@ -505,10 +497,11 @@ Game::~Game()
 		unit = nullptr;
 	}
 
+	HealableUnit* healableUnit = nullptr;
 	// Delete the units in the maintenance list
-	while (unitMaintenanceList.dequeue(unit, dummyPri))
+	while (unitMaintenanceList.dequeue(healableUnit, dummyPri))
 	{
 		delete unit;
-		unit = nullptr;
+		healableUnit = nullptr;
 	}
 }
