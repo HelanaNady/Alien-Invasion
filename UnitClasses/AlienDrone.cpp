@@ -53,7 +53,7 @@ bool AlienDrone::attack()
         if (enemyUnit->isDead())
             gamePtr->addToKilledList(enemyUnit);
         else if (enemyUnit->needsHeal())
-            gamePtr->addUnitToMaintenanceList(enemyUnit);
+            gamePtr->addUnitToMaintenanceList(dynamic_cast<HealableUnit*>(enemyUnit));
         else
             gamePtr->addUnit(enemyUnit);
 

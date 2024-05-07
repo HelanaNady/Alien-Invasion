@@ -3,7 +3,7 @@
 #include "../Containers/LinkedQueue.h"
 
 EarthSoldier::EarthSoldier(Game* gamePtr, double health, int power, int attackCapacity)
-    : Unit(gamePtr, UnitType::ES, health, power, attackCapacity)
+    : HealableUnit(gamePtr, UnitType::ES, health, power, attackCapacity)
 {}
 
 void EarthSoldier::printFought()

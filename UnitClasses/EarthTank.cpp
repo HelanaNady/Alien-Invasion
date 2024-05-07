@@ -5,7 +5,7 @@
 #include "../Containers/LinkedQueue.h"
 
 EarthTank::EarthTank(Game* gamePtr, double health, int power, int attackCapacity)
-    : Unit(gamePtr, UnitType::ET, health, power, attackCapacity)
+    : HealableUnit(gamePtr, UnitType::ET, health, power, attackCapacity)
 {}
 
 void EarthTank::printFought()
