@@ -1,10 +1,10 @@
 #ifndef EARTH_TANK_H
 #define EARTH_TANK_H
 
-#include "Unit.h"
+#include "HealableUnit.h"
 #include "../DEFS.h"
 
-class EarthTank: public Unit
+class EarthTank: public HealableUnit
 {
 public:
 	EarthTank(Game*, double, int, int);

@@ -1,10 +1,10 @@
 #ifndef EARTH_SOLDIER_H
 #define EARTH_SOLDIER_H
 
-#include "Unit.h"
+#include "HealableUnit.h"
 #include "../DEFS.h"
 
-class EarthSoldier: public Unit
+class EarthSoldier: public HealableUnit
 {
 public:
 	EarthSoldier(Game*, double, int, int);

@@ -53,25 +53,20 @@ void Unit::receiveDamage(double UAP)
 	}
 }
 
-void Unit::receiveHeal(double UHP)
-{
-	health += UHP;
-}
-
 void Unit::clearFoughtUnits()
 {
 	int i = 0;
 	while (foughtUnits.dequeue(i));
 }
 
+bool Unit::needsHeal() const
+{
+	return false;
+}
+
 bool Unit::isDead() const
 {
 	return health <= 0;
-}
-
-bool Unit::needsHeal() const
-{
-	return ((unitType == UnitType::ES || unitType == UnitType::ET) && (health / initialHealth) <= 0.2);
 }
 
 bool Unit::isFirstAttack() const
@@ -144,19 +139,9 @@ int Unit::getBattleDelay() const
 	return Td == 0 ? 0 : Td - Tj;
 }
 
-int Unit::getUMLjoinTime() const
-{
-	return UMLjoinTime;
-}
-
 void Unit::setPower(int power)
 {
 	this->power = power;
-}
-
-void Unit::setUMLjoinTime(int UMLjoinTime)
-{
-	this->UMLjoinTime = UMLjoinTime;
 }
 
 void Unit::setAttackCapacity(int attackCapacity)
