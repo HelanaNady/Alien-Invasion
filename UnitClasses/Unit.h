@@ -41,8 +41,8 @@ public:
 	void receiveDamage(double); // Decrease the health of the unit by "UAP"
 
 	double calcUAP(Unit*) const; // Calculates the damage caused when attacked by "attackerUnit"
-	virtual bool attack() = 0; // Attack units from the enemy army
-	virtual void printFought(); // Print the list of fought units in the current timestep
+	virtual bool attack() = 0;
+	virtual void printFought() = 0;
 
 	virtual bool needsHeal() const; // Check if the unit is eligible for healing
 	bool isDead() const; // Check if the unit is dead
