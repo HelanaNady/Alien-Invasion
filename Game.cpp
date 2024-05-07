@@ -293,6 +293,31 @@ GameStatistics Game::countStatistics()
 		unit = nullptr;
 	}
 
+	// Unit Maintenance List
+	HealableUnit* healableUnit = nullptr;
+	count = unitMaintenanceList.getCount();
+	int priority = 0;
+
+	for (int i = 0; i < count; i++)
+	{
+		unitMaintenanceList.dequeue(healableUnit, priority);
+		UnitType unitType = healableUnit->getUnitType();
+
+		// Unit Counts
+		gameStatistics.unitCounts[unitType]++;
+		gameStatistics.totalEarthUnitsCount++;
+
+		// Delays
+		gameStatistics.totalEarthFirstAttackDelays += healableUnit->getFirstAttackDelay();
+		gameStatistics.totalEarthBattleDelays += healableUnit->getBattleDelay();
+		gameStatistics.totalEarthDestructionDelays += healableUnit->getDestructionDelay();
+
+		unitMaintenanceList.enqueue(healableUnit, priority);
+
+		// Nullify the pointer
+		healableUnit = nullptr;
+	}
+
 	return gameStatistics;
 }
 
