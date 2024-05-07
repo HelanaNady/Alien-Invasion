@@ -9,6 +9,7 @@
 #include "RandomGenerator/RandomGenerator.h"
 #include "Containers/LinkedQueue.h"
 #include "Containers/PriorityQueue.h"
+#include "UnitClasses/HealableUnit.h"
 
 class Game
 {
@@ -21,7 +22,7 @@ private:
     RandomGenerator randomGenerator;
 
     LinkedQueue<Unit*> killedList;
-    PriorityQueue<Unit*> unitMaintenanceList;
+    PriorityQueue<HealableUnit*> unitMaintenanceList;
 
 private:
     bool startAttack(); // Makes the two armies attack each other
@@ -50,8 +51,8 @@ public:
 
     void addToKilledList(Unit*);  // Add a unit to the killed list
 
-    void addUnitToMaintenanceList(Unit*); // Add a unit to the maintenance list
-    LinkedQueue<Unit*> getUnitsToMaintainList(int);
+    void addUnitToMaintenanceList(HealableUnit*); // Add a unit to the maintenance list
+    LinkedQueue<HealableUnit*> getUnitsToMaintainList(int);
 
     // Getters
     int getCurrentTimestep() const;

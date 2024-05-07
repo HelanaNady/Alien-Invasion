@@ -26,7 +26,6 @@ protected:
 	int Tj; // Join time 
 	int Ta; // First attack time
 	int Td; // Destruction time
-	int UMLjoinTime; // Time when the unit joined the UML
 
 	double initialHealth; // Initial health
 	double health; // Current health
@@ -46,14 +45,13 @@ public:
 	static bool cantCreateAlienUnit(); // Check if the max number of alien units is reached
 
 	void receiveDamage(double); // Decrease the health of the unit by "UAP"
-	void receiveHeal(double); // Increase the health of the unit by "UHP"
 
 	double calcUAP(Unit*) const; // Calculates the damage caused when attacked by "attackerUnit"
 	virtual bool attack() = 0;
-	virtual void printFought();
+	virtual void printFought() = 0;
 
+	virtual bool needsHeal() const; // Check if the unit is eligible for healing
 	bool isDead() const; // Check if the unit is dead
-	bool needsHeal() const; // Check if the unit is eligible for healing
 	bool isFirstAttack() const; // Check if it has been attacked before
 
 	void clearFoughtUnits(); // Clear the list of fought units
@@ -66,7 +64,6 @@ public:
 	double getHealth() const;
 	int getPower() const;
 	int getAttackCapacity() const;
-	int getUMLjoinTime() const;
 
 	// Time
 	int getJoinTime() const;
@@ -81,7 +78,6 @@ public:
 	// Setters
 	void setPower(int);
 	void setAttackCapacity(int);
-	void setUMLjoinTime(int);
 
 	// Time
 	void setFirstTimeAttack(int);
