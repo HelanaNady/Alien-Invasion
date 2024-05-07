@@ -139,10 +139,18 @@ bool EarthArmy::attack()
 
         if (attacker)
         {
+            // Add the attacker to the current attackers queue
             currentAttackers.enqueue(attacker);
 
-            bool didUnitAttack = attacker->attack(); // Attack the enemy
-            didArmyAttack = didArmyAttack || didUnitAttack; // If any unit attacked, the army attacked
+            // Attack the enemy
+            bool didUnitAttack = attacker->attack();
+
+            // If any unit attacked, the army attacked
+            didArmyAttack = didArmyAttack || didUnitAttack;
+
+            // Healers need to be killed once they attack
+            if (attacker->getUnitType() == UnitType::EH && didUnitAttack)
+                killHealUnit();
         }
     }
 
@@ -152,6 +160,15 @@ bool EarthArmy::attack()
 bool EarthArmy::isDead() const
 {
     return soldiers.getCount() + tanks.getCount() + gunneries.getCount() == 0;
+}
+
+void EarthArmy::killHealUnit()
+{
+    Unit* attackerHealer = nullptr;
+    // Remove the healer from its list and kill it
+    healers.pop(attackerHealer);
+    gamePtr->addToKilledList(attackerHealer);
+    attackerHealer->setDestructionTime(gamePtr->getCurrentTimestep());
 }
 
 EarthArmy::~EarthArmy()
@@ -173,6 +190,12 @@ EarthArmy::~EarthArmy()
     }
 
     while (gunneries.dequeue(unit, dummyPri))
+    {
+        delete unit;
+        unit = nullptr;
+    }
+
+    while (healers.pop(unit))
     {
         delete unit;
         unit = nullptr;

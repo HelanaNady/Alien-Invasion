@@ -128,14 +128,18 @@ bool AlienArmy::attack()
 
         if (attacker)
         {
-            // If only one drone exists or less, don't attack
-            if (drones.getCount() < 1 && i == 2)
-                break;
+            // If drone is attacking and there are less than 2 drones, skip the attack
+            if (unitTypes[i] == UnitType::AD && drones.getCount() < 2)
+                continue;
 
+            // Add the attacker to the current attackers queue
             currentAttackers.enqueue(attacker);
 
-            bool didUnitAttack = attacker->attack(); // Attack the enemy
-            didArmyAttack = didArmyAttack || didUnitAttack; // If any unit attacked, the army attacked
+            // Attack the enemy
+            bool didUnitAttack = attacker->attack();
+
+            // If any unit attacked, the army attacked
+            didArmyAttack = didArmyAttack || didUnitAttack;
         }
     }
 
