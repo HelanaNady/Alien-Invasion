@@ -22,7 +22,7 @@ void EarthArmy::addUnit(Unit* unit)
             break;
 
         case UnitType::EG:
-            gunneries.enqueue(unit, unit->getHealth() + unit->getPower());
+            gunneries.enqueue(unit, dynamic_cast<EarthGunnery*>(unit)->getPriority());
             break;
 
         case UnitType::EH:

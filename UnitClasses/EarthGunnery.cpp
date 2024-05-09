@@ -81,5 +81,5 @@ bool EarthGunnery::attack()
 
 int EarthGunnery::getPriority() const
 {
-    return getHealth() + getPower();
+    return (int) getHealth() + getPower();
 }
