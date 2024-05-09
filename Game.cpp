@@ -46,20 +46,17 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 	// Produce the output file
 	generateOutputFile(outputFileName);
 
-	// Print the final result
-	std::cout << std::endl;
-	std::cout << "What a battle!" << std::endl;
-	std::cout << "Battle Result: " << battleResult() << std::endl;
-	std::cout << "Check the output file for a detailed conclusion" << std::endl;
+	// Print the final results
+	printFinalResults();
 }
 
 bool Game::startAttack()
 {
-	// Attack the armies
+	// Make both armies attack
 	bool didEarthArmyAttack = earthArmy.attack();
 	bool didAlienArmyAttack = alienArmy.attack();
 
-	// Return if any of the armies attacked
+	// Return if any of the armies successfully attacked
 	return didEarthArmyAttack || didAlienArmyAttack;
 }
 
@@ -70,18 +67,42 @@ void Game::setGameMode(GameMode gameMode)
 
 bool Game::battleOver(bool didArmiesAttack) const
 {
+	// Game ending cases
+	bool anArmyDied = earthArmy.isDead() || alienArmy.isDead(); // If one army completely killed the other
+	bool unitsOverflow = Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit(); // If one army has reached its maximum units capacity
+	bool noAttackTie = !didArmiesAttack; // If both armies weren't able to attack - considered as a tie
+
 	// Don't check for end battle condition unless it has run for at least 40 timesteps
-	return currentTimestep >= 40 && (earthArmy.isDead() || alienArmy.isDead() || !didArmiesAttack);
+	return currentTimestep >= 40 && ( anArmyDied || unitsOverflow || noAttackTie);
+}
+
+void Game::printFinalResults() const
+{
+	std::cout << std::endl;
+
+	// Print an overflow error message
+	if (Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit())
+		std::cout << "Battle Stopped: The maximum number of units has been reached!" << std::endl;
+
+	// Print battle results
+	std::cout << "What a battle!" << std::endl;
+	std::cout << "Battle Result: " << battleResult() << std::endl;
+	std::cout << "Check the output file for a detailed conclusion" << std::endl;
 }
 
 std::string Game::battleResult() const
 {
-	if (earthArmy.isDead() && !alienArmy.isDead())
+	int totalEarthUnits = earthArmy.getUnitsCount(UnitType::ES) + earthArmy.getUnitsCount(UnitType::ET) + earthArmy.getUnitsCount(UnitType::EG);
+	int totalAlienUnits = alienArmy.getUnitsCount(UnitType::AS) + alienArmy.getUnitsCount(UnitType::AM) + alienArmy.getUnitsCount(UnitType::AD);
+
+	if (earthArmy.isDead() && !alienArmy.isDead()) // If the Earth army is dead and the Alien army is not dead, the Alien army wins
 		return "Alien Army wins!";
-	else if (!earthArmy.isDead() && alienArmy.isDead())
+	else if (!earthArmy.isDead() && alienArmy.isDead()) // If the Earth army is dead and the Alien army is not dead, the Earth army wins
 		return "Earth Army wins!";
-	else
-		return "Drawn!";
+	else if (Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit()) // If the battle ended due to a units overflow, the winner is the army with more alive units
+		return totalEarthUnits > totalAlienUnits ? "Earth Army wins!" : "Alien Army wins!";
+	else // If both armies are dead or no army was able to attack, the result is a draw
+		return "Draw!";
 }
 
 void Game::addUnit(Unit* unit)

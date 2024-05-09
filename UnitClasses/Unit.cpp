@@ -3,8 +3,8 @@
 #include "Unit.h"
 #include "../Game.h"
 
-int Unit::lastEarthId = 0;
-int Unit::lastAlienId = 1999;
+int Unit::nextEarthId = 1;
+int Unit::nextAlienId = 2000;
 
 Unit::Unit(Game* gamePtr, UnitType unitType, double health, int power, int attackCapacity)
 	: gamePtr(gamePtr), unitType(unitType), Ta(0), Td(0), power(power), attackCapacity(attackCapacity)
@@ -13,16 +13,26 @@ Unit::Unit(Game* gamePtr, UnitType unitType, double health, int power, int attac
 
 	if (unitType == UnitType::ES || unitType == UnitType::EG || unitType == UnitType::ET || unitType == UnitType::EH)
 	{
-		id = ++lastEarthId;
+		id = nextEarthId++;
 		armyType = ArmyType::EARTH;
 	}
 	else
 	{
-		id = ++lastAlienId;
+		id = nextAlienId++;
 		armyType = ArmyType::ALIEN;
 	}
 
 	Tj = gamePtr->getCurrentTimestep();
+}
+
+bool Unit::cantCreateEarthUnit()
+{
+	return nextEarthId > MAX_EARTH_ID;
+}
+
+bool Unit::cantCreateAlienUnit()
+{
+	return nextAlienId > MAX_ALIEN_ID;
 }
 
 void Unit::setHealth(double health)
