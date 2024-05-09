@@ -45,19 +45,12 @@ double Unit::getInitialHealth() const
 
 void Unit::receiveDamage(double UAP)
 {
-	// Decrement the unit's health
-	health -= UAP;
+	// Decrement the unit's health, force it to its minimum value if it exceeded it
+	health = health - UAP > 0 ? health - UAP : 0;
 
 	// Check if it's the unit's first time being attacked and set it if needed
-	if (isFirstAttack()) 
-		Ta = gamePtr->getCurrentTimestep(); 
-
-	// Check to set the destruction time and force the minimum health to zero 
-	if (health <= 0)
-	{
-		Td = gamePtr->getCurrentTimestep();
-		health = 0; 
-	}
+	if (isFirstAttack())
+		Ta = gamePtr->getCurrentTimestep();
 }
 
 void Unit::clearFoughtUnits()
