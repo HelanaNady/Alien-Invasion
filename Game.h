@@ -28,11 +28,13 @@ private:
     bool startAttack(); // Makes the two armies attack each other
     void setGameMode(GameMode); // Change the game mode
     bool battleOver(bool) const; // Check if the battle is over
-    std::string battleResult() const; // Get the result of the battle
 
     void printKilledList() const; // Prints the killed list with the console formats
     void printUnitMaintenanceList() const; // Print the units at the maintence list
     void printAll(); // Prints all the armies and the killed list and units fighting at the current timestep
+
+    std::string battleResult() const; // Returns the result of the battle
+    void printFinalResults() const; // Print the final results of the game
 
     GameStatistics countStatistics(); // Calculate the statistics of the game
     void generateOutputFile(std::string); // Generate the output file with the statistics
