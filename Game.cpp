@@ -136,6 +136,8 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 				enemyUnitPtr = earthArmy.removeUnit(unitType);
 				if (enemyUnitPtr)
 					enemyUnits.enqueue(enemyUnitPtr);
+				else
+					break;
 			}
 			break;
 
@@ -145,6 +147,8 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 				enemyUnitPtr = alienArmy.removeUnit(unitType);
 				if (enemyUnitPtr)
 					enemyUnits.enqueue(enemyUnitPtr);
+				else
+					break;
 			}
 			break;
 	}
