@@ -57,10 +57,6 @@ bool EarthTank::attack()
         if (!enemyUnit)
             continue;
 
-        // Check if it were attacked before or not 
-        if (enemyUnit->isFirstAttack())
-            enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
-
         // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
