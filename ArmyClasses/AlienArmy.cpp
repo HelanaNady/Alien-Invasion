@@ -93,8 +93,10 @@ int AlienArmy::getUnitsCount(UnitType unitType) const
     {
         case UnitType::AS:
             return soldiers.getCount();
+
         case UnitType::AM:
             return monsters.getCount();
+
         case UnitType::AD:
             return drones.getCount();
     }

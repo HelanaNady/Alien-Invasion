@@ -73,7 +73,7 @@ bool Game::battleOver(bool didArmiesAttack) const
 	bool noAttackTie = !didArmiesAttack; // If both armies weren't able to attack - considered as a tie
 
 	// Don't check for end battle condition unless it has run for at least 40 timesteps
-	return currentTimestep >= 40 && ( anArmyDied || unitsOverflow || noAttackTie);
+	return currentTimestep >= 40 && (anArmyDied || unitsOverflow || noAttackTie);
 }
 
 void Game::printFinalResults() const
@@ -119,6 +119,20 @@ void Game::addUnit(Unit* unit)
 			alienArmy.addUnit(unit);
 			break;
 	}
+}
+
+Unit* Game::removeUnit(ArmyType armyType, UnitType unitType)
+{
+	switch (armyType)
+	{
+		case ArmyType::EARTH:
+			return earthArmy.removeUnit(unitType);
+
+		case ArmyType::ALIEN:
+			return alienArmy.removeUnit(unitType);
+	}
+
+	return nullptr;
 }
 
 LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int attackCapacity)
@@ -225,64 +239,68 @@ GameStatistics Game::countStatistics()
 {
 	GameStatistics gameStatistics = { { 0 }, 0, 0, { 0 }, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
+	// Earth Army Statistics
+	const int earthUnitTypesCount = 4;
+	UnitType earthUnitTypes[] = { UnitType::ES, UnitType::ET, UnitType::EG, UnitType::EH };
+
+	countArmyStatistics(gameStatistics, ArmyType::EARTH, earthUnitTypes, earthUnitTypesCount);
+
+	// Alien Army Statistics
+	const int alienUnitTypesCount = 3;
+	UnitType alienUnitTypes[] = { UnitType::AS, UnitType::AM, UnitType::AD };
+
+	countArmyStatistics(gameStatistics, ArmyType::ALIEN, alienUnitTypes, alienUnitTypesCount);
+
+	// Killed Units Statistics
+	countKilledUnitsStatistics(gameStatistics);
+
+	// Unit Maintenance List
+	countUnitMaintenanceStatistics(gameStatistics);
+
+	return gameStatistics;
+}
+
+void Game::countArmyStatistics(GameStatistics& gameStatistics, ArmyType armyType, UnitType unitTypes[], int unitTypesCount)
+{
+	// Count the statistics of the given army
 	Unit* unit = nullptr;
 
-	// Earth Army Statistics
-	UnitType earthUnitTypes[4] = { UnitType::ES, UnitType::ET, UnitType::EG, UnitType::EH };
-
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < unitTypesCount; i++)
 	{
-		int count = getUnitsCount(ArmyType::EARTH, earthUnitTypes[i]);
+		int count = getUnitsCount(armyType, unitTypes[i]);
 
 		for (int j = 0; j < count; j++)
 		{
-			unit = earthArmy.removeUnit(earthUnitTypes[i]);
+			// Remove the unit from the army
+			unit = removeUnit(armyType, unitTypes[i]);
 
 			// Unit Counts
-			gameStatistics.unitCounts[earthUnitTypes[i]]++;
+			gameStatistics.unitCounts[unitTypes[i]]++;
 			gameStatistics.totalEarthUnitsCount++;
 
 			// Delays
 			gameStatistics.totalEarthFirstAttackDelays += unit->getFirstAttackDelay();
 
+			// Add the unit back to the army
 			addUnit(unit);
 
 			// Nullify the pointer
 			unit = nullptr;
 		}
 	}
+}
 
-	// Alien Army Statistics
-	UnitType alienUnitTypes[3] = { UnitType::AS, UnitType::AM, UnitType::AD };
-
-	for (int i = 0; i < 3; i++)
-	{
-		int count = getUnitsCount(ArmyType::ALIEN, alienUnitTypes[i]);
-
-		for (int j = 0; j < count; j++)
-		{
-			unit = alienArmy.removeUnit(alienUnitTypes[i]);
-
-			// Unit Counts
-			gameStatistics.unitCounts[alienUnitTypes[i]]++;
-			gameStatistics.totalAlienUnitsCount++;
-
-			// Delays
-			gameStatistics.totalAlienFirstAttackDelays += unit->getFirstAttackDelay();
-
-			addUnit(unit);
-
-			// Nullify the pointer
-			unit = nullptr;
-		}
-	}
-
-	// Killed Units Statistics
+void Game::countKilledUnitsStatistics(GameStatistics& gameStatistics)
+{
+	Unit* unit = nullptr;
 	int count = killedList.getCount();
 
 	for (int i = 0; i < count; i++)
 	{
+		// Remove the unit from the killed list
 		killedList.dequeue(unit);
+
+		// Get the unit type
 		UnitType unitType = unit->getUnitType();
 
 		// Unit Counts
@@ -312,20 +330,26 @@ GameStatistics Game::countStatistics()
 			gameStatistics.totalAlienDestructionDelays += unit->getDestructionDelay();
 		}
 
+		// Add the unit back to the killed list
 		killedList.enqueue(unit);
 
 		// Nullify the pointer
 		unit = nullptr;
 	}
+}
 
-	// Unit Maintenance List
+void Game::countUnitMaintenanceStatistics(GameStatistics& gameStatistics)
+{
 	HealableUnit* healableUnit = nullptr;
-	count = unitMaintenanceList.getCount();
+	int count = unitMaintenanceList.getCount();
 	int priority = 0;
 
 	for (int i = 0; i < count; i++)
 	{
+		// Remove the unit from the maintenance list
 		unitMaintenanceList.dequeue(healableUnit, priority);
+
+		// Get the unit type
 		UnitType unitType = healableUnit->getUnitType();
 
 		// Unit Counts
@@ -337,13 +361,12 @@ GameStatistics Game::countStatistics()
 		gameStatistics.totalEarthBattleDelays += healableUnit->getBattleDelay();
 		gameStatistics.totalEarthDestructionDelays += healableUnit->getDestructionDelay();
 
+		// Add the unit back to the maintenance list
 		unitMaintenanceList.enqueue(healableUnit, priority);
 
 		// Nullify the pointer
 		healableUnit = nullptr;
 	}
-
-	return gameStatistics;
 }
 
 void Game::generateOutputFile(std::string outputFileName)
@@ -502,9 +525,10 @@ int Game::getUnitsCount(ArmyType armyType, UnitType unitType) const
 	// Get the count of current alive units in their armies lists
 	switch (armyType)
 	{
-		case (ArmyType::EARTH):
+		case ArmyType::EARTH:
 			return earthArmy.getUnitsCount(unitType);
-		case (ArmyType::ALIEN):
+
+		case ArmyType::ALIEN:
 			return alienArmy.getUnitsCount(unitType);
 	}
 

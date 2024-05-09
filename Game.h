@@ -37,6 +37,9 @@ private:
     void printFinalResults() const; // Print the final results of the game
 
     GameStatistics countStatistics(); // Calculate the statistics of the game
+    void countArmyStatistics(GameStatistics&, ArmyType, UnitType[], int); // Count the statistics of the given army
+    void countKilledUnitsStatistics(GameStatistics&); // Count the statistics of the killed units
+    void countUnitMaintenanceStatistics(GameStatistics&); // Count the statistics of the units at the maintenance list
     void generateOutputFile(std::string); // Generate the output file with the statistics
 
     bool loadParameters(std::string); // Load the parameters from the file and sets parameters in the random generator
@@ -47,6 +50,7 @@ public:
     void run(GameMode, std::string, std::string);  // Run the game
 
     void addUnit(Unit*);  // Add a unit to the appropriate army and list
+    Unit* removeUnit(ArmyType, UnitType);  // Remove a unit from the appropriate army and list
     LinkedQueue<Unit*> getEnemyList(ArmyType, UnitType, int); // Get the enemy list for the given army type, unit type and attack capacity
 
     void addToKilledList(Unit*);  // Add a unit to the killed list
