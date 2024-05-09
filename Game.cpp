@@ -252,7 +252,7 @@ void Game::printAll()
 
 GameStatistics Game::countStatistics()
 {
-	GameStatistics gameStatistics = { { 0 }, 0, 0, { 0 }, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+	GameStatistics gameStatistics = { 0 };
 
 	// Earth Army Statistics
 	const int earthUnitTypesCount = 4;
