@@ -3,7 +3,7 @@
 #include "../Containers/LinkedQueue.h"
 
 EarthSoldier::EarthSoldier(Game* gamePtr, double health, int power, int attackCapacity)
-    : HealableUnit(gamePtr, UnitType::ES, health, power, attackCapacity)
+    : HealableUnit(gamePtr, UnitType::ES, health, power, attackCapacity), infected(false)
 {}
 
 void EarthSoldier::printFought()
@@ -51,6 +51,16 @@ bool EarthSoldier::attack()
     }
 
     return attackCheck;
+}
+
+void EarthSoldier::infect()
+{
+    infected = true;
+}
+
+bool EarthSoldier::isInfected() const
+{
+    return infected;
 }
 
 int EarthSoldier::getHealPriority() const
