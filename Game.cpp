@@ -73,7 +73,7 @@ bool Game::battleOver(bool didArmiesAttack) const
 	bool noAttackTie = !didArmiesAttack; // If both armies weren't able to attack - considered as a tie
 
 	// Don't check for end battle condition unless it has run for at least 40 timesteps
-	return currentTimestep >= 40 && ( anArmyDied || unitsOverflow || noAttackTie);
+	return currentTimestep >= 40 && (anArmyDied || unitsOverflow || noAttackTie);
 }
 
 void Game::printFinalResults() const
@@ -466,7 +466,7 @@ bool Game::loadParameters(std::string fileName)
 		Range alienHealthRange = { 0, 0 };
 		Range alienAttackCapacityRange = { 0, 0 };
 
-		fin >> N >> ESPercentage >> ETPercentage >> EGPercentage >> ASPercentage >> AMPercentage >> ADPercentage >> EHPercentage >> prob;
+		fin >> N >> ESPercentage >> ETPercentage >> EGPercentage >> EHPercentage >> ASPercentage >> AMPercentage >> ADPercentage >> prob;
 
 		char dummyHyphen; // Dummy variable to read the hyphen
 
