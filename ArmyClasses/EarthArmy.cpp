@@ -139,7 +139,7 @@ bool EarthArmy::attack()
             bool didUnitAttack = attacker->attack();
 
             // Add the attacker to the current attackers queue
-            if(didUnitAttack)
+            if (didUnitAttack)
                 currentAttackers.enqueue(attacker);
 
             // If any unit attacked, the army attacked
