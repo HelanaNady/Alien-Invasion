@@ -17,6 +17,7 @@ public:
 	// Infection functions
 	void infect(); // Infect the soldier
 	bool isInfected() const; // Check if the soldier is infected
+	bool isImmune() const; // Check if the soldier is immune
 
 	// Getters
 	int getHealPriority() const; // Get the heal priority of the soldier to be used in the UML

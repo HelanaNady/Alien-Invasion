@@ -71,6 +71,11 @@ bool EarthSoldier::isInfected() const
     return infected;
 }
 
+bool EarthSoldier::isImmune() const
+{
+    return false;
+}
+
 int EarthSoldier::getHealPriority() const
 {
     return 100 - (int) health; // The lower the health, the higher the priority

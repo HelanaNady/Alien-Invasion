@@ -316,8 +316,17 @@ void Game::countArmyStatistics(GameStatistics& gameStatistics, ArmyType armyType
 
 			// Army Statistics
 			gameStatistics.armyStatistics[armyType].totalUnitsCount++;
+
 			if (unit->hasBeenAttackedBefore()) // Check if unit has been attacked before and add the delays
 				gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += unit->getFirstAttackDelay();
+
+			// Count the infected Earth Soldiers
+			if (unitTypes[i] == UnitType::ES)
+			{
+				EarthSoldier* earthSoldier = dynamic_cast<EarthSoldier*>(unit);
+				if (earthSoldier->isInfected() || earthSoldier->isImmune()) // Check if the unit is infected or immune (has been infected before)
+					gameStatistics.totalInfectedESCount++;
+			}
 
 			// Add the unit back to the army
 			addUnit(unit);
@@ -354,6 +363,14 @@ void Game::countKilledUnitsStatistics(GameStatistics& gameStatistics)
 		gameStatistics.armyStatistics[armyType].totalUnitsCount++;
 		gameStatistics.armyStatistics[armyType].totalDestructedUnitsCount++;
 
+		// Count the infected Earth Soldiers
+		if (unitType == UnitType::ES)
+		{
+			EarthSoldier* earthSoldier = dynamic_cast<EarthSoldier*>(unit);
+			if (earthSoldier->isInfected() || earthSoldier->isImmune()) // Check if the unit is infected or immune (has been infected before)
+				gameStatistics.totalInfectedESCount++;
+		}
+
 		// Delays
 		gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += unit->getFirstAttackDelay();
 		gameStatistics.armyStatistics[armyType].totalBattleDelays += unit->getBattleDelay();
@@ -385,6 +402,14 @@ void Game::countUnitMaintenanceStatistics(GameStatistics& gameStatistics)
 		// Unit Counts
 		gameStatistics.unitCounts[unitType]++;
 		gameStatistics.totalUnitsCount++;
+
+		// Count the infected Earth Soldiers
+		if (unitType == UnitType::ES)
+		{
+			EarthSoldier* earthSoldier = dynamic_cast<EarthSoldier*>(healableUnit);
+			if (earthSoldier->isInfected() || earthSoldier->isImmune()) // Check if the unit is infected or immune (has been infected before)
+				gameStatistics.totalInfectedESCount++;
+		}
 
 		// Delays
 		gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += healableUnit->getFirstAttackDelay();
@@ -461,6 +486,7 @@ void Game::generateOutputFile(std::string outputFileName)
 	fout << "Destructed EGs/Total EGs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::EG], gameStatistics.unitCounts[UnitType::EG]) << "%" << std::endl;
 	fout << "Destructed EHs/Total EHs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::EH], gameStatistics.unitCounts[UnitType::EH]) << "%" << std::endl;
 	fout << "Total Destructed Earth Units/Total Earth Units = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::EARTH].totalDestructedUnitsCount, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << "%" << std::endl;
+	fout << "Total Infected ESs/Total Earth Units = " << calculatePercentage(gameStatistics.totalInfectedESCount, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << "%" << std::endl;
 	fout << "======================================================================" << std::endl;
 	fout << "Average of First Attack Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::EARTH].totalFirstAttackDelays, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << std::endl;
 	fout << "Average of Destruction Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::EARTH].totalDestructionDelays, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << std::endl;
