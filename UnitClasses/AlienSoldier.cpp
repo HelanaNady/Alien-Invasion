@@ -23,7 +23,7 @@ bool AlienSoldier::attack()
     LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, attackCapacity);
 
     // Check for a successful attack
-    bool attackCheck = !soldiersList.isEmpty();
+    bool attackCheck = false;
 
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
@@ -46,6 +46,9 @@ bool AlienSoldier::attack()
 
         // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;
+
+        // If this line is reached, at least one unit was attacked
+        attackCheck = true;
     }
     return attackCheck;
 }
