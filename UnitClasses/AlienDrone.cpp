@@ -31,17 +31,8 @@ bool AlienDrone::attack()
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
 
-    for (int i = 0; i < attackCapacity; i++)
+    while (ETlist.dequeue(enemyUnit) || EGlist.dequeue(enemyUnit))
     {
-        // Get the unit and remove it from the list
-        if (i % 2 == 0)
-            ETlist.dequeue(enemyUnit);
-        else
-            EGlist.dequeue(enemyUnit);
-
-        if (!enemyUnit)
-            continue;
-
         // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
