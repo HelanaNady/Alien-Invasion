@@ -48,10 +48,6 @@ bool EarthGunnery::attack()
         if (!enemyUnit)
             continue;
 
-        // Set the first attack time if it's the first time attacking
-        if (enemyUnit->isFirstAttack())
-            enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
-
         // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
 

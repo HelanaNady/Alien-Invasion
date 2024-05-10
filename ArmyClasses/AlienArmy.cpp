@@ -3,7 +3,8 @@
 #include "AlienArmy.h"
 #include "../UnitClasses/Unit.h"
 
-AlienArmy::AlienArmy(Game* gamePtr): Army(gamePtr), dronesToggler(false)
+AlienArmy::AlienArmy(Game* gamePtr): Army(gamePtr), 
+dronesAddingToggler(false), dronesRemovingToggler(false), dronesPickingToggler(false)
 {}
 
 void AlienArmy::addUnit(Unit* unit)
@@ -21,12 +22,12 @@ void AlienArmy::addUnit(Unit* unit)
             break;
 
         case UnitType::AD:
-            if (dronesToggler)
+            if (dronesAddingToggler)
                 drones.enqueue(unit);
             else
                 drones.enqueueFront(unit);
 
-            dronesToggler = !dronesToggler;
+            dronesAddingToggler = !dronesAddingToggler;
             break;
     }
 }
@@ -47,12 +48,12 @@ Unit* AlienArmy::removeUnit(UnitType unitType)
             break;
 
         case UnitType::AD:
-            if (dronesToggler)
+            if (dronesRemovingToggler)
                 drones.dequeue(unit);
             else
                 drones.dequeueBack(unit);
 
-            dronesToggler = !dronesToggler;
+            dronesRemovingToggler = !dronesRemovingToggler;
             break;
     }
 
@@ -75,12 +76,12 @@ Unit* AlienArmy::pickAttacker(UnitType unitType)
             break;
 
         case UnitType::AD:
-            if (dronesToggler)
+            if (dronesPickingToggler)
                 drones.peek(unit);
             else
                 drones.peekBack(unit);
 
-            dronesToggler = !dronesToggler;
+            dronesPickingToggler = !dronesPickingToggler;
             break;
     }
 

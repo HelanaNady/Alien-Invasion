@@ -6,10 +6,12 @@
 
 class EarthTank: public HealableUnit
 {
+	static bool isAttackingSoldiers;
 public:
 	EarthTank(Game*, double, int, int);
 	void printFought(); // Print the units that the tank has fought
 	bool attack(); // Attack the enemy units
+	bool willAttackSoldiers();
 
 	// Getters
 	int getHealPriority() const;  // Get the heal priority of the soldier to be used in the UML
