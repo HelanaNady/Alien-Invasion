@@ -59,6 +59,9 @@ bool EarthSoldier::attack()
 
 void EarthSoldier::infect()
 {
+    if (isInfected())
+        return;
+
     // Set the infected flag to true
     infected = true;
 

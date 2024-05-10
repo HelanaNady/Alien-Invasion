@@ -176,12 +176,20 @@ void EarthArmy::incrementInfectedSoldiersCount()
 void EarthArmy::spreadInfection()
 {
     int soldiersCount = soldiers.getCount();
+    int soldiersToInfect = infectedSoldiersCount;
 
     // Infect random soldiers
-    for (int i = 0; i < infectedSoldiersCount; i++)
+    for (int i = 0; i < soldiersToInfect; i++)
     {
+        // Generate random number and decide to infect or not accordingly
+        int x = rand() % 100 + 1;
+        if (x > INFECTION_SPREAD_CHANCE)
+            continue;
+
+        // Get a random index to infect
         int randomIndex = rand() % soldiersCount;
 
+        // Infect the soldier at the random index and re-enqueue the soldiers
         Unit* soldier = nullptr;
         for (int j = 0; j < soldiersCount; j++)
         {

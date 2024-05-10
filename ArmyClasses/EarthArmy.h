@@ -14,6 +14,8 @@
 class EarthArmy: public Army
 {
 private:
+    enum { INFECTION_SPREAD_CHANCE = 2 }; // Chance to spread infection
+
     LinkedQueue<Unit*> soldiers;
     ArrayStack<Unit*> tanks;
     PriorityQueue<Unit*> gunneries;

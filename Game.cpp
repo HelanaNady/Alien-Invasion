@@ -263,7 +263,6 @@ void Game::printAll()
 	else
 		std::cout << std::endl << "============== No units fighting at current step ==============" << std::endl;
 
-
 	std::cout << std::endl << "============== Maintenance List Units =========================" << std::endl;
 	printUnitMaintenanceList();
 
