@@ -17,7 +17,9 @@ private:
     Array<Unit*> monsters;
     Deque<Unit*> drones;
 
-    bool dronesToggler;
+    bool dronesAddingToggler;
+    bool dronesRemovingToggler;
+    bool dronesPickingToggler;
 
 public:
     AlienArmy(Game*);

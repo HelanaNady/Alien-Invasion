@@ -34,30 +34,25 @@ bool AlienMonster::attack()
     Unit* enemyUnit = nullptr;
 
     // Loop through the tanks and soldiers lists
-    for (int i = 0; i < 2; i++)
+    while (soldiersList.dequeue(enemyUnit) || tanksList.dequeue(enemyUnit))
     {
-        LinkedQueue<Unit*>& currentList = (i == 0) ? soldiersList : tanksList; // Get the current list
+        // Calculate the UAP and apply the damage
+        enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
-        while (currentList.dequeue(enemyUnit))
-        {
-            // Calculate the UAP and apply the damage
-            enemyUnit->receiveDamage(calcUAP(enemyUnit));
+        // Check if the unit is dead, needs healing or can join the battle
+        if (enemyUnit->isDead())
+            gamePtr->addToKilledList(enemyUnit);
+        else if (enemyUnit->needsHeal())
+            gamePtr->addUnitToMaintenanceList(dynamic_cast<HealableUnit*>(enemyUnit));
+        else
+            gamePtr->addUnit(enemyUnit);
 
-            // Check if the unit is dead, needs healing or can join the battle
-            if (enemyUnit->isDead())
-                gamePtr->addToKilledList(enemyUnit);
-            else if (enemyUnit->needsHeal())
-                gamePtr->addUnitToMaintenanceList(dynamic_cast<HealableUnit*>(enemyUnit));
-            else
-                gamePtr->addUnit(enemyUnit);
+        // Store the IDs of the fought units to be printed later
+        foughtUnits.enqueue(enemyUnit->getId());
 
-            // Store the IDs of the fought units to be printed later
-            foughtUnits.enqueue(enemyUnit->getId());
+        // Nullify the pointer to avoid duplication
+        enemyUnit = nullptr;
 
-            // Nullify the pointer to avoid duplication
-            enemyUnit = nullptr;
-        }
     }
-
     return attackCheck;
 }
