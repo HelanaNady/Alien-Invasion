@@ -26,7 +26,7 @@ bool AlienDrone::attack()
     LinkedQueue<Unit*> ETlist = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, ETnumber);
     LinkedQueue<Unit*> EGlist = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::EG, EGnumber);
 
-    bool attackCheck = !(ETlist.isEmpty() && EGlist.isEmpty());
+    bool attackCheck = false;
 
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
@@ -49,6 +49,9 @@ bool AlienDrone::attack()
 
         // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;
+
+        // If this line is reached, at least one unit was attacked
+        attackCheck = true;
     }
 
     return attackCheck;
