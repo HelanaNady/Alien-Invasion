@@ -7,7 +7,7 @@ int Unit::nextEarthId = 1;
 int Unit::nextAlienId = 2000;
 
 Unit::Unit(Game* gamePtr, UnitType unitType, double health, int power, int attackCapacity)
-	: gamePtr(gamePtr), unitType(unitType), Ta(0), Td(0), power(power), attackCapacity(attackCapacity)
+	: gamePtr(gamePtr), unitType(unitType), Ta(-1), Td(-1), power(power), attackCapacity(attackCapacity)
 {
 	setHealth(health);
 
@@ -81,7 +81,7 @@ bool Unit::isDead() const
 
 bool Unit::hasBeenAttackedBefore() const
 {
-	return Ta != 0;
+	return Ta != -1;
 }
 
 double Unit::calcUAP(Unit* attackedUnit) const
@@ -136,17 +136,17 @@ int Unit::getDestructionTime() const
 
 int Unit::getFirstAttackDelay() const
 {
-	return Ta == 0 ? -1 : Ta - Tj;
+	return Ta == -1 ? Ta : Ta - Tj;
 }
 
 int Unit::getDestructionDelay() const
 {
-	return Td == 0 ? -1 : Td - Ta;
+	return Td == -1 ? Td : Td - Ta;
 }
 
 int Unit::getBattleDelay() const
 {
-	return Td == 0 ? -1 : Td - Tj;
+	return Td == -1 ? Td : Td - Tj;
 }
 
 void Unit::setPower(int power)
