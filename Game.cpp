@@ -234,20 +234,26 @@ void Game::printAll()
 	std::cout << std::endl;
 	std::cout << "Current Timestep " << currentTimestep << std::endl;
 
-	std::cout << "============== Earth Army Alive Units ==============" << std::endl;
+	std::cout << "============== Earth Army Alive Units =========================" << std::endl;
 	earthArmy.printArmy();
 
-	std::cout << "============== Alien Army Alive Units ==============" << std::endl;
+	std::cout << std::endl << "============== Alien Army Alive Units =========================" << std::endl;
 	alienArmy.printArmy();
 
-	std::cout << "============== Units fighting at current step ==============" << std::endl;
-	earthArmy.printFightingUnits();
-	alienArmy.printFightingUnits();
+	if (earthArmy.getFightingUnitsCount() || alienArmy.getFightingUnitsCount())
+	{
+		std::cout << std::endl << "============== Units fighting at current step =================" << std::endl;
+		earthArmy.printFightingUnits();
+		alienArmy.printFightingUnits();
+	}
+	else
+		std::cout << std::endl << "============== No units fighting at current step ==============" << std::endl;
 
-	std::cout << "============== Maintenance List Units ==============" << std::endl;
+
+	std::cout << std::endl << "============== Maintenance List Units =========================" << std::endl;
 	printUnitMaintenanceList();
 
-	std::cout << "============== Killed/Destructed Units ==============" << std::endl;
+	std::cout << std::endl << "============== Killed/Destructed Units ========================" << std::endl;
 	printKilledList();
 }
 

@@ -35,8 +35,8 @@ int main()
 
 void displayWelcomeMessage()
 {
-    std::cout << std::endl << "==================== ALIEN INVASION ====================" << std::endl;
-    std::cout << "================= Let the battle begin! ================" << std::endl;
+    std::cout << std::endl << "==================== ALIEN INVASION ===========================" << std::endl;
+    std::cout << "================= Let the battle begin! =======================" << std::endl;
 }
 
 int requestValidInput(int minChoice, int maxChoice)
