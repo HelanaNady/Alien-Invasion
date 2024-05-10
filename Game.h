@@ -59,6 +59,8 @@ public:
     void addUnitToMaintenanceList(HealableUnit*); // Add a unit to the maintenance list
     LinkedQueue<HealableUnit*> getUnitsToMaintainList(int);
 
+    void incrementInfectedESCount(); // Increment the infected soldiers count of the Earth Army
+
     // Getters
     int getCurrentTimestep() const;
     int getUnitsCount(ArmyType, UnitType) const;

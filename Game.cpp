@@ -50,6 +50,9 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 		// Start fight
 		didArmiesAttack = startAttack();
 
+		// Spread infection in the Earth Army
+		earthArmy.spreadInfection();
+
 		// Print the output
 		if (gameMode == GameMode::INTERACTIVE)
 		{
@@ -219,6 +222,11 @@ LinkedQueue<HealableUnit*> Game::getUnitsToMaintainList(int attackCapacity)
 	}
 
 	return unitsToMaintain;
+}
+
+void Game::incrementInfectedESCount()
+{
+	earthArmy.incrementInfectedSoldiersCount();
 }
 
 void Game::printKilledList() const

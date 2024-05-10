@@ -4,7 +4,7 @@
 #include "../UnitClasses/Unit.h"
 #include "../Game.h"
 
-EarthArmy::EarthArmy(Game* gamePtr): Army(gamePtr)
+EarthArmy::EarthArmy(Game* gamePtr): Army(gamePtr), infectedSoldiersCount(0)
 {}
 
 void EarthArmy::addUnit(Unit* unit)
@@ -166,6 +166,33 @@ void EarthArmy::killHealUnit()
     healers.pop(attackerHealer);
     gamePtr->addToKilledList(attackerHealer);
     attackerHealer->setDestructionTime(gamePtr->getCurrentTimestep());
+}
+
+void EarthArmy::incrementInfectedSoldiersCount()
+{
+    infectedSoldiersCount++;
+}
+
+void EarthArmy::spreadInfection()
+{
+    int soldiersCount = soldiers.getCount();
+
+    // Infect random soldiers
+    for (int i = 0; i < infectedSoldiersCount; i++)
+    {
+        int randomIndex = rand() % soldiersCount;
+
+        Unit* soldier = nullptr;
+        for (int j = 0; j < soldiersCount; j++)
+        {
+            soldiers.dequeue(soldier);
+
+            if (j == randomIndex)
+                dynamic_cast<EarthSoldier*>(soldier)->infect();
+
+            soldiers.enqueue(soldier);
+        }
+    }
 }
 
 EarthArmy::~EarthArmy()

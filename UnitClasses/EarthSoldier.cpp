@@ -55,7 +55,11 @@ bool EarthSoldier::attack()
 
 void EarthSoldier::infect()
 {
+    // Set the infected flag to true
     infected = true;
+
+    // Increment the infected earth soldier count
+    gamePtr->incrementInfectedESCount();
 }
 
 bool EarthSoldier::isInfected() const

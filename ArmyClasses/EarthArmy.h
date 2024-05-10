@@ -19,6 +19,8 @@ private:
     PriorityQueue<Unit*> gunneries;
     ArrayStack<Unit*> healers;
 
+    int infectedSoldiersCount;
+
 public:
     EarthArmy(Game*);
 
@@ -29,6 +31,10 @@ public:
     bool attack();
     bool isDead() const;
     void killHealUnit();
+
+    // Infection functions
+    void incrementInfectedSoldiersCount();
+    void spreadInfection();
 
     // Getters
     int getUnitsCount(UnitType) const;
