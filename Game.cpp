@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "DEFS.h"
 #include "UnitClasses/Unit.h"
+#include "UnitClasses/AlienMonster.h"
 
 // Helper function to calculate the ratio of two numbers
 float calculateRatio(int numerator, int denominator)
@@ -493,24 +494,29 @@ bool Game::loadParameters(std::string fileName)
 	if (fin.is_open())
 	{
 		int N = 0;
+		int prob = 0;
+
 		int ESPercentage = 0;
 		int ETPercentage = 0;
 		int EGPercentage = 0;
+		int EHPercentage = 0;
+
 		int ASPercentage = 0;
 		int AMPercentage = 0;
 		int ADPercentage = 0;
-		int EHPercentage = 0;
-		int prob = 0;
+
 		Range earthPowerRange = { 0, 0 };
 		Range earthHealthRange = { 0, 0 };
 		Range earthAttackCapacityRange = { 0, 0 };
+
 		Range alienPowerRange = { 0, 0 };
 		Range alienHealthRange = { 0, 0 };
 		Range alienAttackCapacityRange = { 0, 0 };
+		int infectingProbability = 0;
 
 		fin >> N >> ESPercentage >> ETPercentage >> EGPercentage >> EHPercentage >> ASPercentage >> AMPercentage >> ADPercentage >> prob;
 
-		char dummyHyphen; // Dummy variable to read the hyphen
+		char dummyHyphen = '\0'; // Dummy variable to read the hyphen
 
 		fin >> earthPowerRange.min >> dummyHyphen >> earthPowerRange.max;
 		fin >> earthHealthRange.min >> dummyHyphen >> earthHealthRange.max;
@@ -519,12 +525,15 @@ bool Game::loadParameters(std::string fileName)
 		fin >> alienPowerRange.min >> dummyHyphen >> alienPowerRange.max;
 		fin >> alienHealthRange.min >> dummyHyphen >> alienHealthRange.max;
 		fin >> alienAttackCapacityRange.min >> dummyHyphen >> alienAttackCapacityRange.max;
+		fin >> infectingProbability;
 
 		randomGenerator.setN(N); // Set the number of units to generate
 		randomGenerator.setProb(prob); // Set the probability of generating a unit
 
 		randomGenerator.setEarthParameters(ESPercentage, EGPercentage, ETPercentage, EHPercentage, earthPowerRange, earthHealthRange, earthAttackCapacityRange); // Set the parameters for the Earth army
 		randomGenerator.setAlienParameters(ASPercentage, AMPercentage, ADPercentage, alienPowerRange, alienHealthRange, alienAttackCapacityRange); // Set the parameters for the Alien army
+
+		AlienMonster::setInfectingProbability(infectingProbability); // Set the infecting probability for the Alien Monster
 
 		fin.close(); // Close the file
 

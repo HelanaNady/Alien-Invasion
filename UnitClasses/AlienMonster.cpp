@@ -1,9 +1,16 @@
 #include "AlienMonster.h"
 #include "../Game.h"
 
+int AlienMonster::infectingProbability = 0;
+
 AlienMonster::AlienMonster(Game* gamePtr, double health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::AM, health, power, attackCapacity)
 {}
+
+void AlienMonster::setInfectingProbability(int probability)
+{
+    infectingProbability = probability;
+}
 
 void AlienMonster::printFought()
 {
