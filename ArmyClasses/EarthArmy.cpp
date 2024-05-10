@@ -22,7 +22,7 @@ void EarthArmy::addUnit(Unit* unit)
             break;
 
         case UnitType::EG:
-            gunneries.enqueue(unit, unit->getHealth() + unit->getPower());
+            gunneries.enqueue(unit, dynamic_cast<EarthGunnery*>(unit)->getPriority());
             break;
 
         case UnitType::EH:
@@ -91,19 +91,15 @@ int EarthArmy::getUnitsCount(UnitType unitType) const
     {
         case UnitType::ES:
             return soldiers.getCount();
-            break;
 
         case UnitType::EG:
             return gunneries.getCount();
-            break;
 
         case UnitType::ET:
             return tanks.getCount();
-            break;
 
         case UnitType::EH:
             return healers.getCount();
-            break;
     }
 
     return 0;

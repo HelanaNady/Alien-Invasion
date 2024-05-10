@@ -6,6 +6,21 @@
 #include "DEFS.h"
 #include "UnitClasses/Unit.h"
 
+// Helper function to calculate the ratio of two numbers
+float calculateRatio(int numerator, int denominator)
+{
+	if (denominator == 0)
+		return 0;
+
+	return (float) numerator / denominator;
+}
+
+// Helper function to calculate the percentage of two numbers
+float calculatePercentage(int numerator, int denominator)
+{
+	return calculateRatio(numerator, denominator) * 100;
+}
+
 Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), earthArmy(this), alienArmy(this), randomGenerator(this)
 {}
 
@@ -121,6 +136,20 @@ void Game::addUnit(Unit* unit)
 	}
 }
 
+Unit* Game::removeUnit(ArmyType armyType, UnitType unitType)
+{
+	switch (armyType)
+	{
+		case ArmyType::EARTH:
+			return earthArmy.removeUnit(unitType);
+
+		case ArmyType::ALIEN:
+			return alienArmy.removeUnit(unitType);
+	}
+
+	return nullptr;
+}
+
 LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int attackCapacity)
 {
 	LinkedQueue<Unit*> enemyUnits;
@@ -224,127 +253,127 @@ void Game::printAll()
 
 GameStatistics Game::countStatistics()
 {
-	GameStatistics gameStatistics = { { 0 }, 0, 0, { 0 }, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
-	Unit* unit = nullptr;
+	GameStatistics gameStatistics = { 0 };
 
 	// Earth Army Statistics
-	UnitType earthUnitTypes[4] = { UnitType::ES, UnitType::ET, UnitType::EG, UnitType::EH };
+	const int earthUnitTypesCount = 4;
+	UnitType earthUnitTypes[] = { UnitType::ES, UnitType::ET, UnitType::EG, UnitType::EH };
 
-	for (int i = 0; i < 4; i++)
-	{
-		int count = getUnitsCount(ArmyType::EARTH, earthUnitTypes[i]);
-
-		for (int j = 0; j < count; j++)
-		{
-			unit = earthArmy.removeUnit(earthUnitTypes[i]);
-
-			// Unit Counts
-			gameStatistics.unitCounts[earthUnitTypes[i]]++;
-			gameStatistics.totalEarthUnitsCount++;
-
-			// Delays
-			gameStatistics.totalEarthFirstAttackDelays += unit->getFirstAttackDelay();
-
-			addUnit(unit);
-
-			// Nullify the pointer
-			unit = nullptr;
-		}
-	}
+	countArmyStatistics(gameStatistics, ArmyType::EARTH, earthUnitTypes, earthUnitTypesCount);
 
 	// Alien Army Statistics
-	UnitType alienUnitTypes[3] = { UnitType::AS, UnitType::AM, UnitType::AD };
+	const int alienUnitTypesCount = 3;
+	UnitType alienUnitTypes[] = { UnitType::AS, UnitType::AM, UnitType::AD };
 
-	for (int i = 0; i < 3; i++)
+	countArmyStatistics(gameStatistics, ArmyType::ALIEN, alienUnitTypes, alienUnitTypesCount);
+
+	// Killed Units Statistics
+	countKilledUnitsStatistics(gameStatistics);
+
+	// Unit Maintenance List
+	countUnitMaintenanceStatistics(gameStatistics);
+
+	return gameStatistics;
+}
+
+void Game::countArmyStatistics(GameStatistics& gameStatistics, ArmyType armyType, UnitType unitTypes[], int unitTypesCount)
+{
+	// Count the statistics of the given army
+	Unit* unit = nullptr;
+
+	for (int i = 0; i < unitTypesCount; i++)
 	{
-		int count = getUnitsCount(ArmyType::ALIEN, alienUnitTypes[i]);
+		int count = getUnitsCount(armyType, unitTypes[i]);
 
 		for (int j = 0; j < count; j++)
 		{
-			unit = alienArmy.removeUnit(alienUnitTypes[i]);
+			// Remove the unit from the army
+			unit = removeUnit(armyType, unitTypes[i]);
 
 			// Unit Counts
-			gameStatistics.unitCounts[alienUnitTypes[i]]++;
-			gameStatistics.totalAlienUnitsCount++;
+			gameStatistics.unitCounts[unitTypes[i]]++;
+			gameStatistics.totalUnitsCount++;
 
-			// Delays
-			gameStatistics.totalAlienFirstAttackDelays += unit->getFirstAttackDelay();
+			// Army Statistics
+			gameStatistics.armyStatistics[armyType].totalUnitsCount++;
+			gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += unit->getFirstAttackDelay();
 
+			// Add the unit back to the army
 			addUnit(unit);
 
 			// Nullify the pointer
 			unit = nullptr;
 		}
 	}
+}
 
-	// Killed Units Statistics
+void Game::countKilledUnitsStatistics(GameStatistics& gameStatistics)
+{
+	Unit* unit = nullptr;
 	int count = killedList.getCount();
 
 	for (int i = 0; i < count; i++)
 	{
+		// Remove the unit from the killed list
 		killedList.dequeue(unit);
+
+		// Get the unit type and army type
+		ArmyType armyType = unit->getArmyType();
 		UnitType unitType = unit->getUnitType();
 
 		// Unit Counts
 		gameStatistics.unitCounts[unitType]++;
+		gameStatistics.totalUnitsCount++;
 
 		// Destructed Unit Counts
 		gameStatistics.destructedUnitCounts[unitType]++;
 		gameStatistics.totalDestructedUnitsCount++;
 
+		// Total Units Count
+		gameStatistics.armyStatistics[armyType].totalUnitsCount++;
+		gameStatistics.armyStatistics[armyType].totalDestructedUnitsCount++;
+
 		// Delays
-		if (unit->getArmyType() == ArmyType::EARTH)
-		{
-			gameStatistics.totalEarthUnitsCount++;
-			gameStatistics.totalEarthDestructedUnitsCount++;
+		gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += unit->getFirstAttackDelay();
+		gameStatistics.armyStatistics[armyType].totalBattleDelays += unit->getBattleDelay();
+		gameStatistics.armyStatistics[armyType].totalDestructionDelays += unit->getDestructionDelay();
 
-			gameStatistics.totalEarthFirstAttackDelays += unit->getFirstAttackDelay();
-			gameStatistics.totalEarthBattleDelays += unit->getBattleDelay();
-			gameStatistics.totalEarthDestructionDelays += unit->getDestructionDelay();
-		}
-		else if (unit->getArmyType() == ArmyType::ALIEN)
-		{
-			gameStatistics.totalAlienUnitsCount++;
-			gameStatistics.totalAlienDestructedUnitsCount++;
-
-			gameStatistics.totalAlienFirstAttackDelays += unit->getFirstAttackDelay();
-			gameStatistics.totalAlienBattleDelays += unit->getBattleDelay();
-			gameStatistics.totalAlienDestructionDelays += unit->getDestructionDelay();
-		}
-
+		// Add the unit back to the killed list
 		killedList.enqueue(unit);
 
 		// Nullify the pointer
 		unit = nullptr;
 	}
+}
 
-	// Unit Maintenance List
+void Game::countUnitMaintenanceStatistics(GameStatistics& gameStatistics)
+{
 	HealableUnit* healableUnit = nullptr;
-	count = unitMaintenanceList.getCount();
+	int count = unitMaintenanceList.getCount();
 	int priority = 0;
 
 	for (int i = 0; i < count; i++)
 	{
+		// Remove the unit from the maintenance list
 		unitMaintenanceList.dequeue(healableUnit, priority);
+
+		// Get the unit type & army type
+		ArmyType armyType = healableUnit->getArmyType();
 		UnitType unitType = healableUnit->getUnitType();
 
 		// Unit Counts
 		gameStatistics.unitCounts[unitType]++;
-		gameStatistics.totalEarthUnitsCount++;
+		gameStatistics.totalUnitsCount++;
 
 		// Delays
-		gameStatistics.totalEarthFirstAttackDelays += healableUnit->getFirstAttackDelay();
-		gameStatistics.totalEarthBattleDelays += healableUnit->getBattleDelay();
-		gameStatistics.totalEarthDestructionDelays += healableUnit->getDestructionDelay();
+		gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += healableUnit->getFirstAttackDelay();
 
+		// Add the unit back to the maintenance list
 		unitMaintenanceList.enqueue(healableUnit, priority);
 
 		// Nullify the pointer
 		healableUnit = nullptr;
 	}
-
-	return gameStatistics;
 }
 
 void Game::generateOutputFile(std::string outputFileName)
@@ -406,18 +435,18 @@ void Game::generateOutputFile(std::string outputFileName)
 	fout << "Total EG Count: " << gameStatistics.unitCounts[UnitType::EG] << std::endl;
 	fout << "Total EH Count: " << gameStatistics.unitCounts[UnitType::EH] << std::endl;
 	fout << "======================================================================" << std::endl;
-	fout << "Destructed ESs/Total ESs = " << (gameStatistics.unitCounts[UnitType::ES] != 0 ? ((float) gameStatistics.destructedUnitCounts[UnitType::ES] / gameStatistics.unitCounts[UnitType::ES] * 100) : 0) << "%" << std::endl;
-	fout << "Destructed ETs/Total ETs = " << (gameStatistics.unitCounts[UnitType::ET] != 0 ? ((float) gameStatistics.destructedUnitCounts[UnitType::ET] / gameStatistics.unitCounts[UnitType::ET] * 100) : 0) << "%" << std::endl;
-	fout << "Destructed EGs/Total EGs = " << (gameStatistics.unitCounts[UnitType::EG] != 0 ? ((float) gameStatistics.destructedUnitCounts[UnitType::EG] / gameStatistics.unitCounts[UnitType::EG] * 100) : 0) << "%" << std::endl;
-	fout << "Destructed EHs/Total EHs = " << (gameStatistics.unitCounts[UnitType::EH] != 0 ? ((float) gameStatistics.destructedUnitCounts[UnitType::EH] / gameStatistics.unitCounts[UnitType::EH] * 100) : 0) << "%" << std::endl;
-	fout << "Total Destructed Earth Units/Total Earth Units = " << (gameStatistics.totalEarthUnitsCount != 0 ? ((float) gameStatistics.totalEarthDestructedUnitsCount / gameStatistics.totalEarthUnitsCount * 100) : 0) << "%" << std::endl;
+	fout << "Destructed ESs/Total ESs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::ES], gameStatistics.unitCounts[UnitType::ES]) << "%" << std::endl;
+	fout << "Destructed ETs/Total ETs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::ET], gameStatistics.unitCounts[UnitType::ET]) << "%" << std::endl;
+	fout << "Destructed EGs/Total EGs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::EG], gameStatistics.unitCounts[UnitType::EG]) << "%" << std::endl;
+	fout << "Destructed EHs/Total EHs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::EH], gameStatistics.unitCounts[UnitType::EH]) << "%" << std::endl;
+	fout << "Total Destructed Earth Units/Total Earth Units = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::EARTH].totalDestructedUnitsCount, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << "%" << std::endl;
 	fout << "======================================================================" << std::endl;
-	fout << "Average of First Attack Delay = " << (gameStatistics.totalEarthUnitsCount != 0 ? ((float) gameStatistics.totalEarthFirstAttackDelays / gameStatistics.totalEarthUnitsCount) : 0) << std::endl;
-	fout << "Average of Destruction Delay = " << (gameStatistics.totalEarthUnitsCount != 0 ? ((float) gameStatistics.totalEarthDestructionDelays / gameStatistics.totalEarthUnitsCount) : 0) << std::endl;
-	fout << "Average of Battle Delay = " << (gameStatistics.totalEarthUnitsCount != 0 ? ((float) gameStatistics.totalEarthBattleDelays / gameStatistics.totalEarthUnitsCount) : 0) << std::endl;
+	fout << "Average of First Attack Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::EARTH].totalFirstAttackDelays, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << std::endl;
+	fout << "Average of Destruction Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::EARTH].totalDestructionDelays, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << std::endl;
+	fout << "Average of Battle Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::EARTH].totalBattleDelays, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << std::endl;
 	fout << "======================================================================" << std::endl;
-	fout << "Df/Db = " << (gameStatistics.totalEarthBattleDelays != 0 ? ((float) gameStatistics.totalEarthFirstAttackDelays / gameStatistics.totalEarthBattleDelays * 100) : 0) << "%" << std::endl;
-	fout << "Dd/Db = " << (gameStatistics.totalEarthBattleDelays != 0 ? ((float) gameStatistics.totalEarthDestructionDelays / gameStatistics.totalEarthBattleDelays * 100) : 0) << "%" << std::endl;
+	fout << "Df/Db = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::EARTH].totalFirstAttackDelays, gameStatistics.armyStatistics[ArmyType::EARTH].totalBattleDelays) << "%" << std::endl;
+	fout << "Dd/Db = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::EARTH].totalDestructionDelays, gameStatistics.armyStatistics[ArmyType::EARTH].totalBattleDelays) << "%" << std::endl;
 
 	// Alien Army Statistics
 	fout << std::endl;
@@ -429,17 +458,17 @@ void Game::generateOutputFile(std::string outputFileName)
 	fout << "Total AM Count: " << gameStatistics.unitCounts[UnitType::AM] << std::endl;
 	fout << "Total AD Count: " << gameStatistics.unitCounts[UnitType::AD] << std::endl;
 	fout << "======================================================================" << std::endl;
-	fout << "Destructed ASs/Total ASs = " << (gameStatistics.unitCounts[UnitType::AS] != 0 ? ((float) gameStatistics.destructedUnitCounts[UnitType::AS] / gameStatistics.unitCounts[UnitType::AS] * 100) : 0) << "%" << std::endl;
-	fout << "Destructed AMs/Total AMs = " << (gameStatistics.unitCounts[UnitType::AM] != 0 ? ((float) gameStatistics.destructedUnitCounts[UnitType::AM] / gameStatistics.unitCounts[UnitType::AM] * 100) : 0) << "%" << std::endl;
-	fout << "Destructed ATs/Total ATs = " << (gameStatistics.unitCounts[UnitType::AD] != 0 ? ((float) gameStatistics.destructedUnitCounts[UnitType::AD] / gameStatistics.unitCounts[UnitType::AD] * 100) : 0) << "%" << std::endl;
-	fout << "Total Destructed Alien Units/Total Alien Units = " << (gameStatistics.totalAlienUnitsCount != 0 ? ((float) gameStatistics.totalAlienDestructedUnitsCount / gameStatistics.totalAlienUnitsCount * 100) : 0) << "%" << std::endl;
+	fout << "Destructed ASs/Total ASs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::AS], gameStatistics.unitCounts[UnitType::AS]) << "%" << std::endl;
+	fout << "Destructed AMs/Total AMs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::AM], gameStatistics.unitCounts[UnitType::AM]) << "%" << std::endl;
+	fout << "Destructed ATs/Total ATs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::AD], gameStatistics.unitCounts[UnitType::AD]) << "%" << std::endl;
+	fout << "Total Destructed Alien Units/Total Alien Units = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::ALIEN].totalDestructedUnitsCount, gameStatistics.armyStatistics[ArmyType::ALIEN].totalUnitsCount) << "%" << std::endl;
 	fout << "======================================================================" << std::endl;
-	fout << "Average of First Attack Delay = " << (gameStatistics.totalAlienUnitsCount != 0 ? ((float) gameStatistics.totalAlienFirstAttackDelays / gameStatistics.totalAlienUnitsCount) : 0) << std::endl;
-	fout << "Average of Destruction Delay = " << (gameStatistics.totalAlienUnitsCount != 0 ? ((float) gameStatistics.totalAlienDestructionDelays / gameStatistics.totalAlienUnitsCount) : 0) << std::endl;
-	fout << "Average of Battle Delay = " << (gameStatistics.totalAlienUnitsCount != 0 ? ((float) gameStatistics.totalAlienBattleDelays / gameStatistics.totalAlienUnitsCount) : 0) << std::endl;
+	fout << "Average of First Attack Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::ALIEN].totalFirstAttackDelays, gameStatistics.armyStatistics[ArmyType::ALIEN].totalUnitsCount) << std::endl;
+	fout << "Average of Destruction Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::ALIEN].totalDestructionDelays, gameStatistics.armyStatistics[ArmyType::ALIEN].totalUnitsCount) << std::endl;
+	fout << "Average of Battle Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::ALIEN].totalBattleDelays, gameStatistics.armyStatistics[ArmyType::ALIEN].totalUnitsCount) << std::endl;
 	fout << "======================================================================" << std::endl;
-	fout << "Df/Db = " << (gameStatistics.totalAlienBattleDelays != 0 ? ((float) gameStatistics.totalAlienFirstAttackDelays / gameStatistics.totalAlienBattleDelays * 100) : 0) << "%" << std::endl;
-	fout << "Dd/Db = " << (gameStatistics.totalAlienBattleDelays != 0 ? ((float) gameStatistics.totalAlienDestructionDelays / gameStatistics.totalAlienBattleDelays * 100) : 0) << "%" << std::endl;
+	fout << "Df/Db = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::ALIEN].totalFirstAttackDelays, gameStatistics.armyStatistics[ArmyType::ALIEN].totalBattleDelays) << "%" << std::endl;
+	fout << "Dd/Db = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::ALIEN].totalDestructionDelays, gameStatistics.armyStatistics[ArmyType::ALIEN].totalBattleDelays) << "%" << std::endl;
 
 	// Close the output file
 	fout.close();
@@ -503,9 +532,10 @@ int Game::getUnitsCount(ArmyType armyType, UnitType unitType) const
 	// Get the count of current alive units in their armies lists
 	switch (armyType)
 	{
-		case (ArmyType::EARTH):
+		case ArmyType::EARTH:
 			return earthArmy.getUnitsCount(unitType);
-		case (ArmyType::ALIEN):
+
+		case ArmyType::ALIEN:
 			return alienArmy.getUnitsCount(unitType);
 	}
 
@@ -524,8 +554,8 @@ Game::~Game()
 		unit = nullptr;
 	}
 
-	HealableUnit* healableUnit = nullptr;
 	// Delete the units in the maintenance list
+	HealableUnit* healableUnit = nullptr;
 	while (unitMaintenanceList.dequeue(healableUnit, dummyPri))
 	{
 		delete unit;
