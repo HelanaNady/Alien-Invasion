@@ -136,17 +136,17 @@ int Unit::getDestructionTime() const
 
 int Unit::getFirstAttackDelay() const
 {
-	return Ta == -1 ? Ta : Ta - Tj;
+	return hasBeenAttackedBefore() ? Ta - Tj : -1;
 }
 
 int Unit::getDestructionDelay() const
 {
-	return Td == -1 ? Td : Td - Ta;
+	return isDead() ? Td - Ta : -1;
 }
 
 int Unit::getBattleDelay() const
 {
-	return Td == -1 ? Td : Td - Tj;
+	return isDead() ? Td - Tj : -1;
 }
 
 void Unit::setPower(int power)
