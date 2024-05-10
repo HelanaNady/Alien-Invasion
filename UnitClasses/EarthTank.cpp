@@ -24,10 +24,16 @@ void EarthTank::printFought()
 
 bool EarthTank::attack()
 {
-    LinkedQueue<Unit*> monsterEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AM, attackCapacity);
-    LinkedQueue<Unit*> soldierEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, attackCapacity);
-
+    // Check if the tank will attack monsters only or soldiers as well
     willAttackSoldiers();
+
+    // If the tank is attacking soldiers, divide the attack capacity 50-50 between soldiers and monsters
+    int soldiersAttackCapacity = isAttackingSoldiers ? attackCapacity / 2 : 0;
+    int monstersAttackCapacity = attackCapacity - soldiersAttackCapacity;
+
+    // Get the lists of alien soldiers and monsters to attack
+    LinkedQueue<Unit*> monsterEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AM, monstersAttackCapacity);
+    LinkedQueue<Unit*> soldierEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, soldiersAttackCapacity);
 
     // Check for a successful attack
     bool attackCheck = false;
@@ -35,41 +41,26 @@ bool EarthTank::attack()
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
 
-    for (int i = 0; i < attackCapacity; i++)
+    while (monsterEnemyList.dequeue(enemyUnit) || soldierEnemyList.dequeue(enemyUnit))
     {
-        if (isAttackingSoldiers)
-            i % 2 == 0 ? soldierEnemyList.dequeue(enemyUnit) : monsterEnemyList.dequeue(enemyUnit); // Divide attack capacity 50 50
-        else
-            monsterEnemyList.dequeue(enemyUnit); // Only attack soldiers
-
-        if (!enemyUnit)
-            continue;
-
         // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
         // Check if the unit is dead or can join the battle
-        if (enemyUnit->isDead()) 
-            gamePtr->addToKilledList(enemyUnit); 
+        if (enemyUnit->isDead())
+            gamePtr->addToKilledList(enemyUnit);
         else
-            gamePtr->addUnit(enemyUnit); 
+            gamePtr->addUnit(enemyUnit);
 
         // Store the IDs of the fought units to be printed later
-        foughtUnits.enqueue(enemyUnit->getId()); 
+        foughtUnits.enqueue(enemyUnit->getId());
 
         // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;
 
+        // Set attack check to true if one unit at least was attacked successfully
         attackCheck = true;
     }
-
-    // Re-adding extra units -if any- to their original lists
-    Unit* tempUnitPtr = nullptr;
-    while (monsterEnemyList.dequeue(tempUnitPtr))
-        gamePtr->addUnit(tempUnitPtr);
-
-    while (soldierEnemyList.dequeue(tempUnitPtr)) 
-        gamePtr->addUnit(tempUnitPtr); 
 
     return attackCheck;
 }
