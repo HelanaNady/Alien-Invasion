@@ -291,10 +291,13 @@ void Game::countArmyStatistics(GameStatistics& gameStatistics, ArmyType armyType
 
 			// Unit Counts
 			gameStatistics.unitCounts[unitTypes[i]]++;
-			gameStatistics.totalEarthUnitsCount++;
 
-			// Delays
-			gameStatistics.totalEarthFirstAttackDelays += unit->getFirstAttackDelay();
+			// Total Units Count
+			gameStatistics.totalUnitsCount++;
+
+			// Army Statistics
+			gameStatistics.armyStatistics[armyType].totalUnitsCount++;
+			gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += unit->getFirstAttackDelay();
 
 			// Add the unit back to the army
 			addUnit(unit);
@@ -315,7 +318,8 @@ void Game::countKilledUnitsStatistics(GameStatistics& gameStatistics)
 		// Remove the unit from the killed list
 		killedList.dequeue(unit);
 
-		// Get the unit type
+		// Get the unit type and army type
+		ArmyType armyType = unit->getArmyType();
 		UnitType unitType = unit->getUnitType();
 
 		// Unit Counts
@@ -325,25 +329,14 @@ void Game::countKilledUnitsStatistics(GameStatistics& gameStatistics)
 		gameStatistics.destructedUnitCounts[unitType]++;
 		gameStatistics.totalDestructedUnitsCount++;
 
+		// Total Units Count
+		gameStatistics.armyStatistics[armyType].totalUnitsCount++;
+		gameStatistics.armyStatistics[armyType].totalDestructedUnitsCount++;
+
 		// Delays
-		if (unit->getArmyType() == ArmyType::EARTH)
-		{
-			gameStatistics.totalEarthUnitsCount++;
-			gameStatistics.totalEarthDestructedUnitsCount++;
-
-			gameStatistics.totalEarthFirstAttackDelays += unit->getFirstAttackDelay();
-			gameStatistics.totalEarthBattleDelays += unit->getBattleDelay();
-			gameStatistics.totalEarthDestructionDelays += unit->getDestructionDelay();
-		}
-		else if (unit->getArmyType() == ArmyType::ALIEN)
-		{
-			gameStatistics.totalAlienUnitsCount++;
-			gameStatistics.totalAlienDestructedUnitsCount++;
-
-			gameStatistics.totalAlienFirstAttackDelays += unit->getFirstAttackDelay();
-			gameStatistics.totalAlienBattleDelays += unit->getBattleDelay();
-			gameStatistics.totalAlienDestructionDelays += unit->getDestructionDelay();
-		}
+		gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += unit->getFirstAttackDelay();
+		gameStatistics.armyStatistics[armyType].totalBattleDelays += unit->getBattleDelay();
+		gameStatistics.armyStatistics[armyType].totalDestructionDelays += unit->getDestructionDelay();
 
 		// Add the unit back to the killed list
 		killedList.enqueue(unit);
@@ -364,17 +357,18 @@ void Game::countUnitMaintenanceStatistics(GameStatistics& gameStatistics)
 		// Remove the unit from the maintenance list
 		unitMaintenanceList.dequeue(healableUnit, priority);
 
-		// Get the unit type
+		// Get the unit type & army type
+		ArmyType armyType = healableUnit->getArmyType();
 		UnitType unitType = healableUnit->getUnitType();
 
 		// Unit Counts
 		gameStatistics.unitCounts[unitType]++;
-		gameStatistics.totalEarthUnitsCount++;
+
+		// Total Units Count
+		gameStatistics.totalUnitsCount++;
 
 		// Delays
-		gameStatistics.totalEarthFirstAttackDelays += healableUnit->getFirstAttackDelay();
-		gameStatistics.totalEarthBattleDelays += healableUnit->getBattleDelay();
-		gameStatistics.totalEarthDestructionDelays += healableUnit->getDestructionDelay();
+		gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += healableUnit->getFirstAttackDelay();
 
 		// Add the unit back to the maintenance list
 		unitMaintenanceList.enqueue(healableUnit, priority);
@@ -447,14 +441,14 @@ void Game::generateOutputFile(std::string outputFileName)
 	fout << "Destructed ETs/Total ETs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::ET], gameStatistics.unitCounts[UnitType::ET]) << "%" << std::endl;
 	fout << "Destructed EGs/Total EGs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::EG], gameStatistics.unitCounts[UnitType::EG]) << "%" << std::endl;
 	fout << "Destructed EHs/Total EHs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::EH], gameStatistics.unitCounts[UnitType::EH]) << "%" << std::endl;
-	fout << "Total Destructed Earth Units/Total Earth Units = " << calculatePercentage(gameStatistics.totalEarthDestructedUnitsCount, gameStatistics.totalEarthUnitsCount) << "%" << std::endl;
+	fout << "Total Destructed Earth Units/Total Earth Units = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::EARTH].totalDestructedUnitsCount, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << "%" << std::endl;
 	fout << "======================================================================" << std::endl;
-	fout << "Average of First Attack Delay = " << calculateRatio(gameStatistics.totalEarthFirstAttackDelays, gameStatistics.totalEarthUnitsCount) << std::endl;
-	fout << "Average of Destruction Delay = " << calculateRatio(gameStatistics.totalEarthDestructionDelays, gameStatistics.totalEarthUnitsCount) << std::endl;
-	fout << "Average of Battle Delay = " << calculateRatio(gameStatistics.totalEarthBattleDelays, gameStatistics.totalEarthUnitsCount) << std::endl;
+	fout << "Average of First Attack Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::EARTH].totalFirstAttackDelays, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << std::endl;
+	fout << "Average of Destruction Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::EARTH].totalDestructionDelays, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << std::endl;
+	fout << "Average of Battle Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::EARTH].totalBattleDelays, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << std::endl;
 	fout << "======================================================================" << std::endl;
-	fout << "Df/Db = " << calculatePercentage(gameStatistics.totalEarthFirstAttackDelays, gameStatistics.totalEarthBattleDelays) << "%" << std::endl;
-	fout << "Dd/Db = " << calculatePercentage(gameStatistics.totalEarthDestructionDelays, gameStatistics.totalEarthBattleDelays) << "%" << std::endl;
+	fout << "Df/Db = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::EARTH].totalFirstAttackDelays, gameStatistics.armyStatistics[ArmyType::EARTH].totalBattleDelays) << "%" << std::endl;
+	fout << "Dd/Db = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::EARTH].totalDestructionDelays, gameStatistics.armyStatistics[ArmyType::EARTH].totalBattleDelays) << "%" << std::endl;
 
 	// Alien Army Statistics
 	fout << std::endl;
@@ -469,14 +463,14 @@ void Game::generateOutputFile(std::string outputFileName)
 	fout << "Destructed ASs/Total ASs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::AS], gameStatistics.unitCounts[UnitType::AS]) << "%" << std::endl;
 	fout << "Destructed AMs/Total AMs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::AM], gameStatistics.unitCounts[UnitType::AM]) << "%" << std::endl;
 	fout << "Destructed ATs/Total ATs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::AD], gameStatistics.unitCounts[UnitType::AD]) << "%" << std::endl;
-	fout << "Total Destructed Alien Units/Total Alien Units = " << calculatePercentage(gameStatistics.totalAlienDestructedUnitsCount, gameStatistics.totalAlienUnitsCount) << "%" << std::endl;
+	fout << "Total Destructed Alien Units/Total Alien Units = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::ALIEN].totalDestructedUnitsCount, gameStatistics.armyStatistics[ArmyType::ALIEN].totalUnitsCount) << "%" << std::endl;
 	fout << "======================================================================" << std::endl;
-	fout << "Average of First Attack Delay = " << calculateRatio(gameStatistics.totalAlienFirstAttackDelays, gameStatistics.totalAlienUnitsCount) << std::endl;
-	fout << "Average of Destruction Delay = " << calculateRatio(gameStatistics.totalAlienDestructionDelays, gameStatistics.totalAlienUnitsCount) << std::endl;
-	fout << "Average of Battle Delay = " << calculateRatio(gameStatistics.totalAlienBattleDelays, gameStatistics.totalAlienUnitsCount) << std::endl;
+	fout << "Average of First Attack Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::ALIEN].totalFirstAttackDelays, gameStatistics.armyStatistics[ArmyType::ALIEN].totalUnitsCount) << std::endl;
+	fout << "Average of Destruction Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::ALIEN].totalDestructionDelays, gameStatistics.armyStatistics[ArmyType::ALIEN].totalUnitsCount) << std::endl;
+	fout << "Average of Battle Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::ALIEN].totalBattleDelays, gameStatistics.armyStatistics[ArmyType::ALIEN].totalUnitsCount) << std::endl;
 	fout << "======================================================================" << std::endl;
-	fout << "Df/Db = " << calculatePercentage(gameStatistics.totalAlienFirstAttackDelays, gameStatistics.totalAlienBattleDelays) << "%" << std::endl;
-	fout << "Dd/Db = " << calculatePercentage(gameStatistics.totalAlienDestructionDelays, gameStatistics.totalAlienBattleDelays) << "%" << std::endl;
+	fout << "Df/Db = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::ALIEN].totalFirstAttackDelays, gameStatistics.armyStatistics[ArmyType::ALIEN].totalBattleDelays) << "%" << std::endl;
+	fout << "Dd/Db = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::ALIEN].totalDestructionDelays, gameStatistics.armyStatistics[ArmyType::ALIEN].totalBattleDelays) << "%" << std::endl;
 
 	// Close the output file
 	fout.close();

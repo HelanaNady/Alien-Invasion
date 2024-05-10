@@ -9,7 +9,8 @@ enum GameMode
 
 enum ArmyType
 {
-	EARTH, ALIEN
+	EARTH, ALIEN,
+	ARMY_TOTAL,
 };
 
 enum UnitType
@@ -25,28 +26,36 @@ struct Range
 	int max;
 };
 
+struct ArmyStatistics
+{
+	// Total Unit Counts
+	int totalUnitsCount;
+
+	// Total Destructed Unit Counts
+	int totalDestructedUnitsCount;
+
+	// Unit Delays
+	int totalFirstAttackDelays;
+	int totalBattleDelays;
+	int totalDestructionDelays;
+};
+
 struct GameStatistics
 {
 	// Unit Counts
 	int unitCounts[UnitType::UNIT_TOTAL];
 
-	// Total Unit Counts
-	int totalEarthUnitsCount;
-	int totalAlienUnitsCount;
-
 	// Destructed Unit Counts
 	int destructedUnitCounts[UnitType::UNIT_TOTAL];
+
+	// Total Unit Counts
+	int totalUnitsCount;
+
+	// Total Destructed Unit Counts
 	int totalDestructedUnitsCount;
-	int totalEarthDestructedUnitsCount;
-	int totalAlienDestructedUnitsCount;
 
-	// Unit Delays
-	int totalEarthFirstAttackDelays;
-	int totalEarthBattleDelays;
-	int totalEarthDestructionDelays;
-
-	int totalAlienFirstAttackDelays;
-	int totalAlienBattleDelays;
-	int totalAlienDestructionDelays;
+	// Armies Statistics
+	ArmyStatistics armyStatistics[ArmyType::ARMY_TOTAL];
 };
+
 #endif
