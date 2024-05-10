@@ -26,7 +26,7 @@ bool EarthGunnery::attack()
     LinkedQueue<Unit*> ADlist = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AD, ADnumber);
 
     // Check for a successful attack
-    bool attackCheck = !(AMlist.isEmpty() && ADlist.isEmpty());
+    bool attackCheck = false;
 
     Unit* enemyUnit = nullptr;
 
@@ -62,6 +62,9 @@ bool EarthGunnery::attack()
 
         // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;
+
+        // If this line is reached, at least one unit was attacked
+        attackCheck = true;
     }
 
     // Empty rest of enemy list
