@@ -73,7 +73,7 @@ bool Game::battleOver(bool didArmiesAttack) const
 	bool noAttackTie = !didArmiesAttack; // If both armies weren't able to attack - considered as a tie
 
 	// Don't check for end battle condition unless it has run for at least 40 timesteps
-	return currentTimestep >= 40 && ( anArmyDied || unitsOverflow || noAttackTie);
+	return currentTimestep >= 40 && (anArmyDied || unitsOverflow || noAttackTie);
 }
 
 void Game::printFinalResults() const
@@ -159,12 +159,13 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 void Game::addToKilledList(Unit* unit)
 {
 	killedList.enqueue(unit);
+	unit->setDestructionTime(currentTimestep);
 }
 
 void Game::addUnitToMaintenanceList(HealableUnit* unit)
 {
-	unit->setUMLjoinTime(currentTimestep); // Set the time when the unit joined the UML
 	unitMaintenanceList.enqueue(unit, unit->getHealPriority()); // Enqueue the unit with its priority
+	unit->setUMLjoinTime(currentTimestep); // Set the time when the unit joined the UML
 }
 
 LinkedQueue<HealableUnit*> Game::getUnitsToMaintainList(int attackCapacity)
@@ -466,7 +467,7 @@ bool Game::loadParameters(std::string fileName)
 		Range alienHealthRange = { 0, 0 };
 		Range alienAttackCapacityRange = { 0, 0 };
 
-		fin >> N >> ESPercentage >> ETPercentage >> EGPercentage >> ASPercentage >> AMPercentage >> ADPercentage >> EHPercentage >> prob;
+		fin >> N >> ESPercentage >> ETPercentage >> EGPercentage >> EHPercentage >> ASPercentage >> AMPercentage >> ADPercentage >> prob;
 
 		char dummyHyphen; // Dummy variable to read the hyphen
 
