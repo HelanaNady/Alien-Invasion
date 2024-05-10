@@ -20,7 +20,7 @@ void EarthSoldier::printFought()
 
 bool EarthSoldier::attack()
 {
-    // Check if the unit is infected and decide whether what to attack
+    // Check if the unit is infected and decide what to attack
     ArmyType enemyArmyType = isInfected() ? ArmyType::EARTH : ArmyType::ALIEN;
     UnitType enemyUnitType = isInfected() ? UnitType::ES : UnitType::AS;
 
