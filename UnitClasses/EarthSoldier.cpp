@@ -20,8 +20,12 @@ void EarthSoldier::printFought()
 
 bool EarthSoldier::attack()
 {
-    // Get the lists of earth soldiers to attack
-    LinkedQueue<Unit*> enemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, attackCapacity);
+    // Check if the unit is infected and decide whether what to attack
+    ArmyType enemyArmyType = isInfected() ? ArmyType::EARTH : ArmyType::ALIEN;
+    UnitType enemyUnitType = isInfected() ? UnitType::ES : UnitType::AS;
+
+    // Get the lists of units to attack
+    LinkedQueue<Unit*> enemyList = gamePtr->getEnemyList(enemyArmyType, enemyUnitType, attackCapacity);
 
     // Check for a successful attack
     bool attackCheck = false;
