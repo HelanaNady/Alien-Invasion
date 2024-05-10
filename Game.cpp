@@ -291,8 +291,6 @@ void Game::countArmyStatistics(GameStatistics& gameStatistics, ArmyType armyType
 
 			// Unit Counts
 			gameStatistics.unitCounts[unitTypes[i]]++;
-
-			// Total Units Count
 			gameStatistics.totalUnitsCount++;
 
 			// Army Statistics
@@ -324,6 +322,7 @@ void Game::countKilledUnitsStatistics(GameStatistics& gameStatistics)
 
 		// Unit Counts
 		gameStatistics.unitCounts[unitType]++;
+		gameStatistics.totalUnitsCount++;
 
 		// Destructed Unit Counts
 		gameStatistics.destructedUnitCounts[unitType]++;
@@ -363,8 +362,6 @@ void Game::countUnitMaintenanceStatistics(GameStatistics& gameStatistics)
 
 		// Unit Counts
 		gameStatistics.unitCounts[unitType]++;
-
-		// Total Units Count
 		gameStatistics.totalUnitsCount++;
 
 		// Delays
