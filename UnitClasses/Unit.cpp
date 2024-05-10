@@ -22,6 +22,7 @@ Unit::Unit(Game* gamePtr, UnitType unitType, double health, int power, int attac
 		armyType = ArmyType::ALIEN;
 	}
 
+	// set the unit's join time
 	Tj = gamePtr->getCurrentTimestep();
 }
 
@@ -54,13 +55,12 @@ double Unit::getInitialHealth() const
 
 void Unit::receiveDamage(double UAP)
 {
-	health -= UAP;
+	// Decrement the unit's health, force it to its minimum value if it exceeded it
+	health = health - UAP > 0 ? health - UAP : 0;
 
-	if (health <= 0)
-	{
-		health = 0;
-		Td = gamePtr->getCurrentTimestep(); // Set the destruction time
-	}
+	// Check if it's the unit's first time being attacked and set it if needed
+	if (isFirstAttack())
+		Ta = gamePtr->getCurrentTimestep();
 }
 
 void Unit::clearFoughtUnits()
