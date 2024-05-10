@@ -6,7 +6,7 @@
 
 class EarthTank: public HealableUnit
 {
-	bool isAttackingSoldiers;
+	static bool isAttackingSoldiers;
 public:
 	EarthTank(Game*, double, int, int);
 	void printFought(); // Print the units that the tank has fought
