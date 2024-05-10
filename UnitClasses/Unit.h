@@ -52,7 +52,7 @@ public:
 
 	virtual bool needsHeal() const; // Check if the unit is eligible for healing
 	bool isDead() const; // Check if the unit is dead
-	bool isFirstAttack() const; // Check if it has been attacked before
+	bool hasBeenAttackedBefore() const; // Check if it has been attacked before
 
 	void clearFoughtUnits(); // Clear the list of fought units
 
