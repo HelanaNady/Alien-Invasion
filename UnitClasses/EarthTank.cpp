@@ -4,11 +4,11 @@
 #include "../Game.h"
 #include "../Containers/LinkedQueue.h"
 
+bool EarthTank::isAttackingSoldiers = false;
+
 EarthTank::EarthTank(Game* gamePtr, double health, int power, int attackCapacity)
     : HealableUnit(gamePtr, UnitType::ET, health, power, attackCapacity)
-{
-    isAttackingSoldiers = false;
-}
+{}
 
 void EarthTank::printFought()
 {
@@ -67,7 +67,7 @@ bool EarthTank::attack()
 
 bool EarthTank::willAttackSoldiers()
 {
-    int soldiersRatio = gamePtr->getUnitsCount(ALIEN, AS) > 0 ? gamePtr->getUnitsCount(EARTH, ES) / gamePtr->getUnitsCount(ALIEN, AS) : -1;
+    float soldiersRatio = gamePtr->getUnitsCount(ALIEN, AS) > 0 ? (float) gamePtr->getUnitsCount(EARTH, ES) / gamePtr->getUnitsCount(ALIEN, AS) : -1;
 
     if (soldiersRatio < 0.3 && soldiersRatio >= 0)
         isAttackingSoldiers = true;
