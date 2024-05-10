@@ -31,10 +31,6 @@ bool EarthSoldier::attack()
 
     while (enemyList.dequeue(enemyUnit))
     {
-        // Check if it were attacked before or not
-        if (enemyUnit->isFirstAttack())
-            enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
-
         // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
