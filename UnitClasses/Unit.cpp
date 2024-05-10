@@ -59,7 +59,7 @@ void Unit::receiveDamage(double UAP)
 	health = health - UAP > 0 ? health - UAP : 0;
 
 	// Check if it's the unit's first time being attacked and set it if needed
-	if (isFirstAttack())
+	if (!hasBeenAttackedBefore())
 		Ta = gamePtr->getCurrentTimestep();
 }
 
@@ -79,9 +79,9 @@ bool Unit::isDead() const
 	return health <= 0;
 }
 
-bool Unit::isFirstAttack() const
+bool Unit::hasBeenAttackedBefore() const
 {
-	return Ta == 0;
+	return Ta != 0;
 }
 
 double Unit::calcUAP(Unit* attackedUnit) const

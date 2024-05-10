@@ -296,7 +296,8 @@ void Game::countArmyStatistics(GameStatistics& gameStatistics, ArmyType armyType
 
 			// Army Statistics
 			gameStatistics.armyStatistics[armyType].totalUnitsCount++;
-			gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += unit->getFirstAttackDelay();
+			if (unit->hasBeenAttackedBefore()) // Check if unit has been attacked before and add the delays
+				gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += unit->getFirstAttackDelay();
 
 			// Add the unit back to the army
 			addUnit(unit);
