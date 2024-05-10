@@ -22,7 +22,7 @@ public:
     virtual int getUnitsCount(UnitType) const = 0;
     virtual void printArmy() const = 0;
     void printFightingUnits();
-    int getFightingUnitsCount();
+    int getFightingUnitsCount() const;
 };
 
 #endif

@@ -12,7 +12,7 @@ void Army::printFightingUnits()
 		unit->printFought();
 }
 
-int Army::getFightingUnitsCount()
+int Army::getFightingUnitsCount() const
 {
 	return currentAttackers.getCount();
 }
