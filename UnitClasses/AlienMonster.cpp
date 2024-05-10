@@ -52,6 +52,7 @@ bool AlienMonster::attack()
 
         // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;
+
     }
     return attackCheck;
 }
