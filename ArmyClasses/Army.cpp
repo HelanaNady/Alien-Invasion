@@ -11,3 +11,8 @@ void Army::printFightingUnits()
 	while (currentAttackers.dequeue(unit))
 		unit->printFought();
 }
+
+int Army::getFightingUnitsCount() const
+{
+	return currentAttackers.getCount();
+}

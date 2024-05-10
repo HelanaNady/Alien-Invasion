@@ -135,11 +135,12 @@ bool AlienArmy::attack()
             if (unitTypes[i] == UnitType::AD && drones.getCount() < 2)
                 continue;
 
-            // Add the attacker to the current attackers queue
-            currentAttackers.enqueue(attacker);
-
             // Attack the enemy
             bool didUnitAttack = attacker->attack();
+
+            // Add the attacker to the current attackers queue
+            if(didUnitAttack)
+                currentAttackers.enqueue(attacker);
 
             // If any unit attacked, the army attacked
             didArmyAttack = didArmyAttack || didUnitAttack;
