@@ -418,7 +418,7 @@ void Game::generateOutputFile(std::string outputFileName)
 		fout << std::setw(12) << killedUnit->getDestructionTime();
 		fout << std::setw(12) << killedUnit->getId();
 		fout << std::setw(12) << killedUnit->getJoinTime();
-		fout << std::setw(12) << killedUnit->getFirstAttackDelay();
+		fout << std::setw(12) << (killedUnit->hasBeenAttackedBefore() ? std::to_string(killedUnit->getFirstAttackDelay()) : "N/A");
 		fout << std::setw(12) << killedUnit->getDestructionDelay();
 		fout << std::setw(12) << killedUnit->getBattleDelay() << std::endl;
 
