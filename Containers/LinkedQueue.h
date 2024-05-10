@@ -14,6 +14,7 @@ protected:
     int itemCount;
 public:
     LinkedQueue();
+    LinkedQueue(const LinkedQueue<T>&);
 
     bool isEmpty() const;
     bool enqueue(const T& newEntry);
@@ -28,6 +29,31 @@ public:
 template <typename T>
 inline LinkedQueue<T>::LinkedQueue(): itemCount(0), backPtr(nullptr), frontPtr(nullptr)
 {}
+
+template <typename T>
+inline LinkedQueue<T>::LinkedQueue(const LinkedQueue<T>& LQ)
+{
+    Node<T>* NodePtr = LQ.frontPtr;
+    if (!NodePtr) 
+    {
+        frontPtr = backPtr = nullptr;
+        return;
+    }
+
+    //insert the first node
+    Node<T>* ptr = new Node<T>(NodePtr->getItem());
+    frontPtr = backPtr = ptr;
+    NodePtr = NodePtr->getNext();
+
+    //insert remaining nodes
+    while (NodePtr)
+    {
+        Node<T>* ptr = new Node<T>(NodePtr->getItem());
+        backPtr->setNext(ptr);
+        backPtr = ptr;
+        NodePtr = NodePtr->getNext();
+    }
+}
 
 template <typename T>
 inline bool LinkedQueue<T>::isEmpty() const
