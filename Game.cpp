@@ -307,7 +307,8 @@ void Game::countArmyStatistics(GameStatistics& gameStatistics, ArmyType armyType
 
 			// Army Statistics
 			gameStatistics.armyStatistics[armyType].totalUnitsCount++;
-			gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += unit->getFirstAttackDelay();
+			if (unit->hasBeenAttackedBefore()) // Check if unit has been attacked before and add the delays
+				gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += unit->getFirstAttackDelay();
 
 			// Add the unit back to the army
 			addUnit(unit);
@@ -428,7 +429,7 @@ void Game::generateOutputFile(std::string outputFileName)
 		fout << std::setw(12) << killedUnit->getDestructionTime();
 		fout << std::setw(12) << killedUnit->getId();
 		fout << std::setw(12) << killedUnit->getJoinTime();
-		fout << std::setw(12) << killedUnit->getFirstAttackDelay();
+		fout << std::setw(12) << (killedUnit->hasBeenAttackedBefore() ? std::to_string(killedUnit->getFirstAttackDelay()) : "N/A");
 		fout << std::setw(12) << killedUnit->getDestructionDelay();
 		fout << std::setw(12) << killedUnit->getBattleDelay() << std::endl;
 

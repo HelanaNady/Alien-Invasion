@@ -7,7 +7,7 @@ int Unit::nextEarthId = 1;
 int Unit::nextAlienId = 2000;
 
 Unit::Unit(Game* gamePtr, UnitType unitType, double health, int power, int attackCapacity)
-	: gamePtr(gamePtr), unitType(unitType), Ta(0), Td(0), power(power), attackCapacity(attackCapacity)
+	: gamePtr(gamePtr), unitType(unitType), Ta(-1), Td(-1), power(power), attackCapacity(attackCapacity)
 {
 	setHealth(health);
 
@@ -59,7 +59,7 @@ void Unit::receiveDamage(double UAP)
 	health = health - UAP > 0 ? health - UAP : 0;
 
 	// Check if it's the unit's first time being attacked and set it if needed
-	if (isFirstAttack())
+	if (!hasBeenAttackedBefore())
 		Ta = gamePtr->getCurrentTimestep();
 }
 
@@ -79,9 +79,9 @@ bool Unit::isDead() const
 	return health <= 0;
 }
 
-bool Unit::isFirstAttack() const
+bool Unit::hasBeenAttackedBefore() const
 {
-	return Ta == 0;
+	return Ta != -1;
 }
 
 double Unit::calcUAP(Unit* attackedUnit) const
@@ -136,17 +136,17 @@ int Unit::getDestructionTime() const
 
 int Unit::getFirstAttackDelay() const
 {
-	return Ta == 0 ? 0 : Ta - Tj;
+	return hasBeenAttackedBefore() ? Ta - Tj : -1;
 }
 
 int Unit::getDestructionDelay() const
 {
-	return Td == 0 ? 0 : Td - Ta;
+	return isDead() ? Td - Ta : -1;
 }
 
 int Unit::getBattleDelay() const
 {
-	return Td == 0 ? 0 : Td - Tj;
+	return isDead() ? Td - Tj : -1;
 }
 
 void Unit::setPower(int power)
