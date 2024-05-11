@@ -3,7 +3,7 @@
 #include "AlienArmy.h"
 #include "../UnitClasses/Unit.h"
 
-AlienArmy::AlienArmy(Game* gamePtr): Army(gamePtr), 
+AlienArmy::AlienArmy(Game* gamePtr): Army(gamePtr),
 dronesAddingToggler(false), dronesRemovingToggler(false), dronesPickingToggler(false)
 {}
 
@@ -139,7 +139,7 @@ bool AlienArmy::attack()
             bool didUnitAttack = attacker->attack();
 
             // Add the attacker to the current attackers queue
-            if(didUnitAttack)
+            if (didUnitAttack)
                 currentAttackers.enqueue(attacker);
 
             // If any unit attacked, the army attacked

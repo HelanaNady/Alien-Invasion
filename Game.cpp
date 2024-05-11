@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "DEFS.h"
 #include "UnitClasses/Unit.h"
+#include "UnitClasses/AlienMonster.h"
 
 // Global helper functions
 float calculateRatio(int numerator, int denominator) // Helper function to calculate the ratio of two numbers
@@ -48,6 +49,9 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 
 		// Start fight
 		didArmiesAttack = startAttack();
+
+		// Spread infection in the Earth Army
+		earthArmy.spreadInfection();
 
 		// Print the output
 		if (gameMode == GameMode::INTERACTIVE)
@@ -220,6 +224,11 @@ LinkedQueue<HealableUnit*> Game::getUnitsToMaintainList(int attackCapacity)
 	return unitsToMaintain;
 }
 
+void Game::incrementInfectedESCount()
+{
+	earthArmy.incrementInfectedSoldiersCount();
+}
+
 void Game::printKilledList() const
 {
 	std::cout << killedList.getCount() << " units [";
@@ -253,7 +262,6 @@ void Game::printAll()
 	}
 	else
 		std::cout << std::endl << "============== No units fighting at current step ==============" << std::endl;
-
 
 	std::cout << std::endl << "============== Maintenance List Units =========================" << std::endl;
 	printUnitMaintenanceList();
@@ -307,8 +315,17 @@ void Game::countArmyStatistics(GameStatistics& gameStatistics, ArmyType armyType
 
 			// Army Statistics
 			gameStatistics.armyStatistics[armyType].totalUnitsCount++;
+
 			if (unit->hasBeenAttackedBefore()) // Check if unit has been attacked before and add the delays
 				gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += unit->getFirstAttackDelay();
+
+			// Count the infected Earth Soldiers
+			if (unitTypes[i] == UnitType::ES)
+			{
+				EarthSoldier* earthSoldier = dynamic_cast<EarthSoldier*>(unit);
+				if (earthSoldier->isInfected() || earthSoldier->isImmune()) // Check if the unit is infected or immune (has been infected before)
+					gameStatistics.totalInfectedESCount++;
+			}
 
 			// Add the unit back to the army
 			addUnit(unit);
@@ -345,6 +362,14 @@ void Game::countKilledUnitsStatistics(GameStatistics& gameStatistics)
 		gameStatistics.armyStatistics[armyType].totalUnitsCount++;
 		gameStatistics.armyStatistics[armyType].totalDestructedUnitsCount++;
 
+		// Count the infected Earth Soldiers
+		if (unitType == UnitType::ES)
+		{
+			EarthSoldier* earthSoldier = dynamic_cast<EarthSoldier*>(unit);
+			if (earthSoldier->isInfected() || earthSoldier->isImmune()) // Check if the unit is infected or immune (has been infected before)
+				gameStatistics.totalInfectedESCount++;
+		}
+
 		// Delays
 		gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += unit->getFirstAttackDelay();
 		gameStatistics.armyStatistics[armyType].totalBattleDelays += unit->getBattleDelay();
@@ -376,6 +401,14 @@ void Game::countUnitMaintenanceStatistics(GameStatistics& gameStatistics)
 		// Unit Counts
 		gameStatistics.unitCounts[unitType]++;
 		gameStatistics.totalUnitsCount++;
+
+		// Count the infected Earth Soldiers
+		if (unitType == UnitType::ES)
+		{
+			EarthSoldier* earthSoldier = dynamic_cast<EarthSoldier*>(healableUnit);
+			if (earthSoldier->isInfected() || earthSoldier->isImmune()) // Check if the unit is infected or immune (has been infected before)
+				gameStatistics.totalInfectedESCount++;
+		}
 
 		// Delays
 		gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += healableUnit->getFirstAttackDelay();
@@ -452,6 +485,7 @@ void Game::generateOutputFile(std::string outputFileName)
 	fout << "Destructed EGs/Total EGs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::EG], gameStatistics.unitCounts[UnitType::EG]) << "%" << std::endl;
 	fout << "Destructed EHs/Total EHs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::EH], gameStatistics.unitCounts[UnitType::EH]) << "%" << std::endl;
 	fout << "Total Destructed Earth Units/Total Earth Units = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::EARTH].totalDestructedUnitsCount, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << "%" << std::endl;
+	fout << "Total Infected ESs/Total Earth Units = " << calculatePercentage(gameStatistics.totalInfectedESCount, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << "%" << std::endl;
 	fout << "======================================================================" << std::endl;
 	fout << "Average of First Attack Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::EARTH].totalFirstAttackDelays, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << std::endl;
 	fout << "Average of Destruction Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::EARTH].totalDestructionDelays, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << std::endl;
@@ -493,24 +527,29 @@ bool Game::loadParameters(std::string fileName)
 	if (fin.is_open())
 	{
 		int N = 0;
+		int prob = 0;
+
 		int ESPercentage = 0;
 		int ETPercentage = 0;
 		int EGPercentage = 0;
+		int EHPercentage = 0;
+
 		int ASPercentage = 0;
 		int AMPercentage = 0;
 		int ADPercentage = 0;
-		int EHPercentage = 0;
-		int prob = 0;
+
 		Range earthPowerRange = { 0, 0 };
 		Range earthHealthRange = { 0, 0 };
 		Range earthAttackCapacityRange = { 0, 0 };
+
 		Range alienPowerRange = { 0, 0 };
 		Range alienHealthRange = { 0, 0 };
 		Range alienAttackCapacityRange = { 0, 0 };
+		int infectingProbability = 0;
 
 		fin >> N >> ESPercentage >> ETPercentage >> EGPercentage >> EHPercentage >> ASPercentage >> AMPercentage >> ADPercentage >> prob;
 
-		char dummyHyphen; // Dummy variable to read the hyphen
+		char dummyHyphen = '\0'; // Dummy variable to read the hyphen
 
 		fin >> earthPowerRange.min >> dummyHyphen >> earthPowerRange.max;
 		fin >> earthHealthRange.min >> dummyHyphen >> earthHealthRange.max;
@@ -519,12 +558,15 @@ bool Game::loadParameters(std::string fileName)
 		fin >> alienPowerRange.min >> dummyHyphen >> alienPowerRange.max;
 		fin >> alienHealthRange.min >> dummyHyphen >> alienHealthRange.max;
 		fin >> alienAttackCapacityRange.min >> dummyHyphen >> alienAttackCapacityRange.max;
+		fin >> infectingProbability;
 
 		randomGenerator.setN(N); // Set the number of units to generate
 		randomGenerator.setProb(prob); // Set the probability of generating a unit
 
 		randomGenerator.setEarthParameters(ESPercentage, EGPercentage, ETPercentage, EHPercentage, earthPowerRange, earthHealthRange, earthAttackCapacityRange); // Set the parameters for the Earth army
 		randomGenerator.setAlienParameters(ASPercentage, AMPercentage, ADPercentage, alienPowerRange, alienHealthRange, alienAttackCapacityRange); // Set the parameters for the Alien army
+
+		AlienMonster::setInfectingProbability(infectingProbability); // Set the infecting probability for the Alien Monster
 
 		fin.close(); // Close the file
 

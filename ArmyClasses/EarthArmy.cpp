@@ -4,7 +4,7 @@
 #include "../UnitClasses/Unit.h"
 #include "../Game.h"
 
-EarthArmy::EarthArmy(Game* gamePtr): Army(gamePtr)
+EarthArmy::EarthArmy(Game* gamePtr): Army(gamePtr), infectedSoldiersCount(0)
 {}
 
 void EarthArmy::addUnit(Unit* unit)
@@ -139,7 +139,7 @@ bool EarthArmy::attack()
             bool didUnitAttack = attacker->attack();
 
             // Add the attacker to the current attackers queue
-            if(didUnitAttack)
+            if (didUnitAttack)
                 currentAttackers.enqueue(attacker);
 
             // If any unit attacked, the army attacked
@@ -166,6 +166,41 @@ void EarthArmy::killHealUnit()
     healers.pop(attackerHealer);
     gamePtr->addToKilledList(attackerHealer);
     attackerHealer->setDestructionTime(gamePtr->getCurrentTimestep());
+}
+
+void EarthArmy::incrementInfectedSoldiersCount()
+{
+    infectedSoldiersCount++;
+}
+
+void EarthArmy::spreadInfection()
+{
+    int soldiersCount = soldiers.getCount();
+    int soldiersToInfect = infectedSoldiersCount;
+
+    // Infect random soldiers
+    for (int i = 0; i < soldiersToInfect; i++)
+    {
+        // Generate random number and decide to infect or not accordingly
+        int x = rand() % 100 + 1;
+        if (x > INFECTION_SPREAD_CHANCE)
+            continue;
+
+        // Get a random index to infect
+        int randomIndex = rand() % soldiersCount;
+
+        // Infect the soldier at the random index and re-enqueue the soldiers
+        Unit* soldier = nullptr;
+        for (int j = 0; j < soldiersCount; j++)
+        {
+            soldiers.dequeue(soldier);
+
+            if (j == randomIndex)
+                dynamic_cast<EarthSoldier*>(soldier)->infect();
+
+            soldiers.enqueue(soldier);
+        }
+    }
 }
 
 EarthArmy::~EarthArmy()

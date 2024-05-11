@@ -25,7 +25,7 @@ void EarthTank::printFought()
 bool EarthTank::attack()
 {
     // If the tank is attacking soldiers, divide the attack capacity 50-50 between soldiers and monsters
-    int soldiersAttackCapacity = willAttackSoldiers() ? attackCapacity / 2 : 0; 
+    int soldiersAttackCapacity = willAttackSoldiers() ? attackCapacity / 2 : 0;
     int monstersAttackCapacity = attackCapacity - soldiersAttackCapacity;
 
     // Get the lists of alien soldiers and monsters to attack

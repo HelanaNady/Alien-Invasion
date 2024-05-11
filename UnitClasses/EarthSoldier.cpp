@@ -3,7 +3,7 @@
 #include "../Containers/LinkedQueue.h"
 
 EarthSoldier::EarthSoldier(Game* gamePtr, double health, int power, int attackCapacity)
-    : HealableUnit(gamePtr, UnitType::ES, health, power, attackCapacity)
+    : HealableUnit(gamePtr, UnitType::ES, health, power, attackCapacity), infected(false)
 {}
 
 void EarthSoldier::printFought()
@@ -20,8 +20,12 @@ void EarthSoldier::printFought()
 
 bool EarthSoldier::attack()
 {
-    // Get the lists of earth soldiers to attack
-    LinkedQueue<Unit*> enemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, attackCapacity);
+    // Check if the unit is infected and decide what to attack
+    ArmyType enemyArmyType = isInfected() ? ArmyType::EARTH : ArmyType::ALIEN;
+    UnitType enemyUnitType = isInfected() ? UnitType::ES : UnitType::AS;
+
+    // Get the lists of units to attack
+    LinkedQueue<Unit*> enemyList = gamePtr->getEnemyList(enemyArmyType, enemyUnitType, attackCapacity);
 
     // Check for a successful attack
     bool attackCheck = false;
@@ -51,6 +55,28 @@ bool EarthSoldier::attack()
     }
 
     return attackCheck;
+}
+
+void EarthSoldier::infect()
+{
+    if (isInfected())
+        return;
+
+    // Set the infected flag to true
+    infected = true;
+
+    // Increment the infected earth soldier count
+    gamePtr->incrementInfectedESCount();
+}
+
+bool EarthSoldier::isInfected() const
+{
+    return infected;
+}
+
+bool EarthSoldier::isImmune() const
+{
+    return false;
 }
 
 int EarthSoldier::getHealPriority() const
