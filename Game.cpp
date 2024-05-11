@@ -322,9 +322,6 @@ void Game::countArmyStatistics(GameStatistics& gameStatistics, ArmyType armyType
 			// Army Statistics
 			gameStatistics.armyStatistics[armyType].totalUnitsCount++;
 
-			if (unit->hasBeenAttackedBefore()) // Check if unit has been attacked before and add the delays
-				gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += unit->getFirstAttackDelay();
-
 			// Count the infected Earth Soldiers
 			if (unitTypes[i] == UnitType::ES)
 			{
@@ -416,9 +413,6 @@ void Game::countUnitMaintenanceStatistics(GameStatistics& gameStatistics)
 				gameStatistics.totalInfectedESCount++;
 		}
 
-		// Delays
-		gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += healableUnit->getFirstAttackDelay();
-
 		// Add the unit back to the maintenance list
 		unitMaintenanceList.enqueue(healableUnit, priority);
 
@@ -468,7 +462,7 @@ void Game::generateOutputFile(std::string outputFileName)
 		fout << std::setw(12) << killedUnit->getDestructionTime();
 		fout << std::setw(12) << killedUnit->getId();
 		fout << std::setw(12) << killedUnit->getJoinTime();
-		fout << std::setw(12) << (killedUnit->hasBeenAttackedBefore() ? std::to_string(killedUnit->getFirstAttackDelay()) : "N/A");
+		fout << std::setw(12) << killedUnit->getFirstAttackDelay();
 		fout << std::setw(12) << killedUnit->getDestructionDelay();
 		fout << std::setw(12) << killedUnit->getBattleDelay() << std::endl;
 
@@ -618,7 +612,7 @@ Game::~Game()
 	HealableUnit* healableUnit = nullptr;
 	while (unitMaintenanceList.dequeue(healableUnit, dummyPri))
 	{
-		delete healableUnit; 
+		delete healableUnit;
 		healableUnit = nullptr;
 	}
 }
