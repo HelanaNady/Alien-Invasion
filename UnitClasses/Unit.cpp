@@ -2,9 +2,11 @@
 
 #include "Unit.h"
 #include "../Game.h"
+#include <iostream>
 
 int Unit::nextEarthId = 1;
 int Unit::nextAlienId = 2000;
+int Unit::nextAlliedId = 4000;
 
 Unit::Unit(Game* gamePtr, UnitType unitType, double health, int power, int attackCapacity)
 	: gamePtr(gamePtr), unitType(unitType), Ta(-1), Td(-1), power(power), attackCapacity(attackCapacity)
@@ -16,7 +18,12 @@ Unit::Unit(Game* gamePtr, UnitType unitType, double health, int power, int attac
 		id = nextEarthId++;
 		armyType = ArmyType::EARTH;
 	}
-	else
+	else if (unitType == UnitType::SU)
+	{
+		id = nextAlliedId++;
+		armyType = ArmyType::ALLIED;
+	}
+	else 
 	{
 		id = nextAlienId++;
 		armyType = ArmyType::ALIEN;
@@ -34,6 +41,11 @@ bool Unit::cantCreateEarthUnit()
 bool Unit::cantCreateAlienUnit()
 {
 	return nextAlienId > MAX_ALIEN_ID;
+}
+
+bool Unit::cantCreateAlliedUnit()
+{
+	return nextAlliedId > MAX_ALLIED_ID;
 }
 
 void Unit::setHealth(double health)

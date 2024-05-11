@@ -20,7 +20,6 @@ private:
 	int ADPercentage;
 	int EHPercentage;
 	int prob;
-	int infectionThreshold;
 
 	Range earthPowerRange;
 	Range earthHealthRange;
@@ -46,6 +45,7 @@ public:
 
 	void setEarthParameters(int, int, int, int, Range, Range, Range); // Sets earth parameters loaded by game class
 	void setAlienParameters(int, int, int, Range, Range, Range); // Sets alien parameters loaded by game class
+	void setAlliedParameters(Range, Range, Range); // Sets allied parameters loaded by game class
 };
 
 #endif

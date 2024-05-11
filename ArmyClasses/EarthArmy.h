@@ -15,6 +15,7 @@ class EarthArmy: public Army
 {
 private:
     enum { INFECTION_SPREAD_CHANCE = 2 }; // Chance to spread infection
+    static int infectionThreshold;
 
     LinkedQueue<Unit*> soldiers;
     ArrayStack<Unit*> tanks;
@@ -38,8 +39,13 @@ public:
     void incrementInfectedSoldiersCount();
     void spreadInfection();
 
+    bool needAllyHelp() const;
+
     // Getters
     int getUnitsCount(UnitType) const;
+
+    // Static functions
+    static void setInfectionThreshold(int);
 
     ~EarthArmy();
 };

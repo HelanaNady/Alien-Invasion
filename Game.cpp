@@ -22,7 +22,7 @@ float calculatePercentage(int numerator, int denominator) // Helper function to 
 }
 
 
-Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), earthArmy(this), alienArmy(this), randomGenerator(this)
+Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), earthArmy(this), alienArmy(this), alliedArmy(this), randomGenerator(this)
 {}
 
 void Game::run(GameMode gameMode, std::string inputFileName, std::string outputFileName)
@@ -74,6 +74,8 @@ bool Game::startAttack()
 	// Make both armies attack
 	bool didEarthArmyAttack = earthArmy.attack();
 	bool didAlienArmyAttack = alienArmy.attack();
+
+	alliedArmy.attack();
 
 	// Return if any of the armies successfully attacked
 	return didEarthArmyAttack || didAlienArmyAttack;
@@ -142,6 +144,10 @@ void Game::addUnit(Unit* unit)
 		case ArmyType::ALIEN:
 			alienArmy.addUnit(unit);
 			break;
+
+		case ArmyType::ALLIED:
+			alliedArmy.addUnit(unit);
+			break;
 	}
 }
 
@@ -154,6 +160,9 @@ Unit* Game::removeUnit(ArmyType armyType, UnitType unitType)
 
 		case ArmyType::ALIEN:
 			return alienArmy.removeUnit(unitType);
+
+		case ArmyType::ALLIED:
+			return alliedArmy.removeUnit(unitType);
 	}
 
 	return nullptr;
@@ -254,11 +263,15 @@ void Game::printAll()
 	std::cout << std::endl << "============== Alien Army Alive Units =========================" << std::endl;
 	alienArmy.printArmy();
 
+	std::cout << std::endl << "============== Allied Army Alive Units ========================" << std::endl;
+	alliedArmy.printArmy();
+
 	if (areUnitsFighting())
 	{
 		std::cout << std::endl << "============== Units fighting at current step =================" << std::endl;
 		earthArmy.printFightingUnits();
 		alienArmy.printFightingUnits();
+		alliedArmy.printFightingUnits();
 	}
 	else
 		std::cout << std::endl << "============== No units fighting at current step ==============" << std::endl;
@@ -545,7 +558,13 @@ bool Game::loadParameters(std::string fileName)
 		Range alienPowerRange = { 0, 0 };
 		Range alienHealthRange = { 0, 0 };
 		Range alienAttackCapacityRange = { 0, 0 };
+
+		Range alliedPowerRange = { 0, 0 };
+		Range alliedHealthRange = { 0, 0 };
+		Range alliedAttackCapacityRange = { 0, 0 };
+		
 		int infectingProbability = 0;
+		int infectionThreshold = 0;
 
 		fin >> N >> ESPercentage >> ETPercentage >> EGPercentage >> EHPercentage >> ASPercentage >> AMPercentage >> ADPercentage >> prob;
 
@@ -560,13 +579,20 @@ bool Game::loadParameters(std::string fileName)
 		fin >> alienAttackCapacityRange.min >> dummyHyphen >> alienAttackCapacityRange.max;
 		fin >> infectingProbability;
 
+		fin >> alliedPowerRange.min >> dummyHyphen >> alliedPowerRange.max;
+		fin >> alliedHealthRange.min >> dummyHyphen >> alliedHealthRange.max;
+		fin >> alliedAttackCapacityRange.min >> alliedAttackCapacityRange.max;
+		fin >> infectionThreshold;
+
 		randomGenerator.setN(N); // Set the number of units to generate
 		randomGenerator.setProb(prob); // Set the probability of generating a unit
 
 		randomGenerator.setEarthParameters(ESPercentage, EGPercentage, ETPercentage, EHPercentage, earthPowerRange, earthHealthRange, earthAttackCapacityRange); // Set the parameters for the Earth army
 		randomGenerator.setAlienParameters(ASPercentage, AMPercentage, ADPercentage, alienPowerRange, alienHealthRange, alienAttackCapacityRange); // Set the parameters for the Alien army
+		randomGenerator.setAlliedParameters(alliedPowerRange, alliedHealthRange, alliedAttackCapacityRange);
 
 		AlienMonster::setInfectingProbability(infectingProbability); // Set the infecting probability for the Alien Monster
+		EarthArmy::setInfectionThreshold(infectionThreshold); // Set the infection threshold percantage for the Earth Army
 
 		fin.close(); // Close the file
 

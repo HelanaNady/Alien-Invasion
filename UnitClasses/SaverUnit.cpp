@@ -1,8 +1,9 @@
 #include "SaverUnit.h"
 #include "../Game.h"
+#include <iostream>
 
 SaverUnit::SaverUnit(Game* gamePtr, double health, int power, int attackCapacity)
-    : Unit(gamePtr, UnitType::AM, health, power, attackCapacity)
+    : Unit(gamePtr, UnitType::SU, health, power, attackCapacity)
 {}
 
 void SaverUnit::printFought()
@@ -48,6 +49,5 @@ bool SaverUnit::attack()
         // If this line is reached, at least one unit was attacked
         attackCheck = true;
     }
-
     return attackCheck;
 }

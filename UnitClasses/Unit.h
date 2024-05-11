@@ -11,10 +11,11 @@ class Game;
 class Unit
 {
 private:
-	enum { MAX_EARTH_ID = 999, MAX_ALIEN_ID = 2999 };
+	enum { MAX_EARTH_ID = 999, MAX_ALIEN_ID = 2999, MAX_ALLIED_ID = 4999};
 
 	static int nextEarthId;
 	static int nextAlienId;
+	static int nextAlliedId;
 
 	ArmyType armyType;
 	UnitType unitType;
@@ -43,6 +44,7 @@ public:
 	// Static functions
 	static bool cantCreateEarthUnit(); // Check if the max number of earth units is reached
 	static bool cantCreateAlienUnit(); // Check if the max number of alien units is reached
+	static bool cantCreateAlliedUnit(); // Check if the max number of allied units is reached 
 
 	void receiveDamage(double); // Decrease the health of the unit by "UAP"
 

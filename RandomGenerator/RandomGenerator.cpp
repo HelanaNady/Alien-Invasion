@@ -8,6 +8,7 @@
 #include "../UnitClasses/AlienSoldier.h"
 #include "../UnitClasses/AlienMonster.h"
 #include "../UnitClasses/AlienDrone.h"
+#include "../UnitClasses/SaverUnit.h"
 #include "../Game.h"
 
 RandomGenerator::RandomGenerator(Game* gamePtr): gamePtr(gamePtr)
@@ -22,10 +23,10 @@ RandomGenerator::RandomGenerator(Game* gamePtr): gamePtr(gamePtr)
 
 void RandomGenerator::generateUnits() const
 {
-	for (int i = 0; i < 2; i++)
-	{
-		ArmyType armyType = (i == 0) ? ArmyType::EARTH : ArmyType::ALIEN;
+	ArmyType armyTypes[3] = { EARTH, ALIEN, ALLIED };
 
+	for (int i = 0; i < 3; i++)
+	{
 		int A = getRandomNumber(1, 100);
 
 		if (A <= prob) // If the probability is satisfied, generate the units
@@ -35,7 +36,8 @@ void RandomGenerator::generateUnits() const
 			// Generate N units
 			for (int i = 0; i < N; i++)
 			{
-				newUnit = generateUnit(armyType);
+				// Don't forget to handle no generation in allied army  
+				newUnit = generateUnit(armyTypes[i]); 
 
 				if (newUnit) // Unit may be nullptr if the max number of units is reached
 					gamePtr->addUnit(newUnit); // Add the unit to the suitable army & list based on the unit type
@@ -47,7 +49,7 @@ void RandomGenerator::generateUnits() const
 Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 {
 	Unit* newUnit = nullptr;
-
+	
 	int B = getRandomNumber(1, 100);
 
 	if (armyType == ArmyType::EARTH)
@@ -69,7 +71,7 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 		else
 			newUnit = new HealUnit(gamePtr, health, power, attackCapacity);
 	}
-	else
+	else if(armyType == ArmyType:: ALIEN)
 	{
 		// Check if the max number of alien units is reached
 		if (Unit::cantCreateAlienUnit())
@@ -85,6 +87,18 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 			newUnit = new AlienMonster(gamePtr, health, power, attackCapacity);
 		else
 			newUnit = new AlienDrone(gamePtr, health, power, attackCapacity);
+	}
+	else
+	{
+		// Check if the max number of allied units is reached
+		if (Unit::cantCreateAlliedUnit())
+			return nullptr;
+
+		int power = getRandomNumber(alliedPowerRange.min, alienPowerRange.max);
+		int health = getRandomNumber(alliedHealthRange.min, alliedHealthRange.max);
+		int attackCapacity = getRandomNumber(alliedAttackCapacityRange.min, alliedAttackCapacityRange.max);
+
+		newUnit = new SaverUnit(gamePtr, health, power, attackCapacity);
 	}
 
 	return newUnit;
