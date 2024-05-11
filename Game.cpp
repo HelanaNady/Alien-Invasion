@@ -88,11 +88,10 @@ bool Game::battleOver(bool didArmiesAttack) const
 {
 	// Game ending cases
 	bool anArmyDied = earthArmy.isDead() || alienArmy.isDead(); // If one army completely killed the other
-	bool unitsOverflow = Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit(); // If one army has reached its maximum units capacity
 	bool noAttackTie = !didArmiesAttack; // If both armies weren't able to attack - considered as a tie
 
 	// Don't check for end battle condition unless it has run for at least 40 timesteps
-	return currentTimestep >= 40 && (anArmyDied || unitsOverflow || noAttackTie);
+	return currentTimestep >= 40 && (anArmyDied || noAttackTie);
 }
 
 bool Game::areUnitsFighting() const
@@ -106,7 +105,7 @@ void Game::printFinalResults() const
 
 	// Print an overflow error message
 	if (Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit())
-		std::cout << "Battle Stopped: The maximum number of units has been reached!" << std::endl;
+		std::cout << "Warning: The maximum number of units has been reached!" << std::endl << std::endl;
 
 	// Print battle results
 	std::cout << "What a battle!" << std::endl;
@@ -123,8 +122,6 @@ std::string Game::battleResult() const
 		return "Alien Army wins!";
 	else if (!earthArmy.isDead() && alienArmy.isDead()) // If the Earth army is dead and the Alien army is not dead, the Earth army wins
 		return "Earth Army wins!";
-	else if (Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit()) // If the battle ended due to a units overflow, the winner is the army with more alive units
-		return totalEarthUnits > totalAlienUnits ? "Earth Army wins!" : "Alien Army wins!";
 	else // If both armies are dead or no army was able to attack, the result is a draw
 		return "Draw!";
 }
@@ -612,7 +609,7 @@ Game::~Game()
 	HealableUnit* healableUnit = nullptr;
 	while (unitMaintenanceList.dequeue(healableUnit, dummyPri))
 	{
-		delete healableUnit; 
+		delete healableUnit;
 		healableUnit = nullptr;
 	}
 }
