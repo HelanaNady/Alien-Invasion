@@ -67,3 +67,13 @@ int AlliedArmy::getUnitsCount(UnitType) const
 	return savers.getCount();
 }
 
+AlliedArmy::~AlliedArmy()
+{
+	Unit* unit = nullptr;
+	while (savers.dequeue(unit))
+	{
+		delete unit;
+		unit = nullptr;
+	}
+}
+
