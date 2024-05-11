@@ -20,12 +20,17 @@ private:
 	int ADPercentage;
 	int EHPercentage;
 	int prob;
+	int infectionThreshold;
+
 	Range earthPowerRange;
 	Range earthHealthRange;
 	Range earthAttackCapacityRange;
 	Range alienPowerRange;
 	Range alienHealthRange;
 	Range alienAttackCapacityRange;
+	Range alliedPowerRange;
+	Range alliedHealthRange;
+	Range alliedAttackCapacityRange;
 
 private:
 	Unit* generateUnit(ArmyType) const; // Generate a unit of the given army type

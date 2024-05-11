@@ -17,6 +17,7 @@ RandomGenerator::RandomGenerator(Game* gamePtr): gamePtr(gamePtr)
 	setProb(0);
 	setEarthParameters(0, 0, 0, 0, { 0, 0 }, { 0, 0 }, { 0, 0 });
 	setAlienParameters(0, 0, 0, { 0, 0 }, { 0, 0 }, { 0, 0 });
+	setAlliedParameters({ 0, 0 }, { 0, 0 }, { 0, 0 });
 }
 
 void RandomGenerator::generateUnits() const
@@ -125,5 +126,12 @@ void RandomGenerator::setAlienParameters(int ASPercentage, int AMPercentage, int
 	this->alienPowerRange = alienPowerRange;
 	this->alienHealthRange = alienHealthRange;
 	this->alienAttackCapacityRange = alienAttackCapacityRange;
+}
+
+void RandomGenerator::setAlliedParameters(Range alliedPowerRange, Range alliedHealthRange, Range alliedAttackCapacityRange)
+{
+	this->alliedPowerRange = alliedPowerRange;
+	this->alliedHealthRange = alliedHealthRange;
+	this->alliedAttackCapacityRange = alliedAttackCapacityRange;
 }
 
