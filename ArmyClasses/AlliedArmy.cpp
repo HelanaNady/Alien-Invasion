@@ -61,7 +61,7 @@ bool AlliedArmy::isDead() const
 	return savers.getCount();
 }
 
-//this is bad code 
+// will be removed 
 int AlliedArmy::getUnitsCount(UnitType) const
 {
 	return savers.getCount();
