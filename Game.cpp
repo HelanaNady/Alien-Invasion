@@ -319,7 +319,7 @@ void Game::countArmyStatistics(GameStatistics& gameStatistics, ArmyType armyType
 			gameStatistics.unitCounts[unitTypes[i]]++;
 			gameStatistics.totalUnitsCount++;
 
-			// Army Statistics
+			// Total Army Units Count
 			gameStatistics.armyStatistics[armyType].totalUnitsCount++;
 
 			// Count the infected Earth Soldiers
@@ -361,7 +361,7 @@ void Game::countKilledUnitsStatistics(GameStatistics& gameStatistics)
 		gameStatistics.destructedUnitCounts[unitType]++;
 		gameStatistics.totalDestructedUnitsCount++;
 
-		// Total Units Count
+		// Total Army Units Count
 		gameStatistics.armyStatistics[armyType].totalUnitsCount++;
 		gameStatistics.armyStatistics[armyType].totalDestructedUnitsCount++;
 
@@ -404,6 +404,9 @@ void Game::countUnitMaintenanceStatistics(GameStatistics& gameStatistics)
 		// Unit Counts
 		gameStatistics.unitCounts[unitType]++;
 		gameStatistics.totalUnitsCount++;
+
+		// Total Army Units Count
+		gameStatistics.armyStatistics[armyType].totalUnitsCount++;
 
 		// Count the infected Earth Soldiers
 		if (unitType == UnitType::ES)
