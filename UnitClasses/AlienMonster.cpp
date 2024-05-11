@@ -1,9 +1,16 @@
 #include "AlienMonster.h"
 #include "../Game.h"
 
+int AlienMonster::infectingProbability = 0;
+
 AlienMonster::AlienMonster(Game* gamePtr, double health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::AM, health, power, attackCapacity)
 {}
+
+void AlienMonster::setInfectingProbability(int probability)
+{
+    infectingProbability = probability;
+}
 
 void AlienMonster::printFought()
 {
@@ -36,6 +43,15 @@ bool AlienMonster::attack()
     // Loop through the tanks and soldiers lists
     while (soldiersList.dequeue(enemyUnit) || tanksList.dequeue(enemyUnit))
     {
+        // Check if the enemy unit is an Earth Soldier and infect it if the probability is met
+        int x = rand() % 100 + 1;
+        if (enemyUnit->getUnitType() == UnitType::ES && x <= infectingProbability)
+        {
+            dynamic_cast<EarthSoldier*>(enemyUnit)->infect();
+            gamePtr->addUnit(enemyUnit);
+            continue;
+        }
+
         // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
