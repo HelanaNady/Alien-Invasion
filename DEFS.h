@@ -17,6 +17,7 @@ enum UnitType
 {
 	ES, EG, ET, EH,
 	AS, AD, AM,
+	SU,
 	UNIT_TOTAL,
 };
 

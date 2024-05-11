@@ -82,6 +82,10 @@
     <ClInclude Include="UnitClasses\HealableUnit.h">
       <Filter>Unit Classes</Filter>
     </ClInclude>
+    <ClInclude Include="UnitClasses\SaverUnit.h">
+      <Filter>Unit Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="ArmyClasses\AlliedArmy.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArmyClasses\AlienArmy.h">
@@ -138,5 +142,9 @@
     <ClCompile Include="UnitClasses\HealableUnit.cpp">
       <Filter>Unit Classes</Filter>
     </ClCompile>
+    <ClCompile Include="UnitClasses\SaverUnit.cpp">
+      <Filter>Unit Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="ArmyClasses\AlliedArmy.cpp" />
   </ItemGroup>
 </Project>
