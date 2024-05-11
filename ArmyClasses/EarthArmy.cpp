@@ -161,11 +161,16 @@ bool EarthArmy::isDead() const
 
 void EarthArmy::killHealUnit()
 {
-    Unit* attackerHealer = nullptr;
-    // Remove the healer from its list and kill it
-    healers.pop(attackerHealer);
-    gamePtr->addToKilledList(attackerHealer);
-    attackerHealer->setDestructionTime(gamePtr->getCurrentTimestep());
+    Unit* healerUnit = nullptr;
+
+    // Remove the healer from its list
+    healers.pop(healerUnit);
+
+    healerUnit->receiveDamage(healerUnit->getHealth()); // Make unit health 0
+    healerUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep()); // Set first attack time to current timestep
+
+    // Add healer unit to killed list
+    gamePtr->addToKilledList(healerUnit);
 }
 
 void EarthArmy::incrementInfectedSoldiersCount()

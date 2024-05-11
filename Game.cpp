@@ -196,14 +196,20 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 
 void Game::addToKilledList(Unit* unit)
 {
+	// Add the unit to the killed list
 	killedList.enqueue(unit);
+
+	// Set the destruction time of the unit
 	unit->setDestructionTime(currentTimestep);
 }
 
 void Game::addUnitToMaintenanceList(HealableUnit* unit)
 {
-	unitMaintenanceList.enqueue(unit, unit->getHealPriority()); // Enqueue the unit with its priority
-	unit->setUMLjoinTime(currentTimestep); // Set the time when the unit joined the UML
+	// Enqueue the unit with its priority to the maintenance list
+	unitMaintenanceList.enqueue(unit, unit->getHealPriority());
+
+	// Set the time when the unit joined the UML
+	unit->setUMLjoinTime(currentTimestep);
 }
 
 LinkedQueue<HealableUnit*> Game::getUnitsToMaintainList(int attackCapacity)
