@@ -6,8 +6,8 @@
 #include "DEFS.h"
 #include "UnitClasses/Unit.h"
 
-// Helper function to calculate the ratio of two numbers
-float calculateRatio(int numerator, int denominator)
+// Global helper functions
+float calculateRatio(int numerator, int denominator) // Helper function to calculate the ratio of two numbers
 {
 	if (denominator == 0)
 		return 0;
@@ -15,11 +15,11 @@ float calculateRatio(int numerator, int denominator)
 	return (float) numerator / denominator;
 }
 
-// Helper function to calculate the percentage of two numbers
-float calculatePercentage(int numerator, int denominator)
+float calculatePercentage(int numerator, int denominator) // Helper function to calculate the percentage of two numbers
 {
 	return calculateRatio(numerator, denominator) * 100;
 }
+
 
 Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), earthArmy(this), alienArmy(this), randomGenerator(this)
 {}
@@ -570,7 +570,7 @@ Game::~Game()
 	HealableUnit* healableUnit = nullptr;
 	while (unitMaintenanceList.dequeue(healableUnit, dummyPri))
 	{
-		delete unit;
+		delete healableUnit; 
 		healableUnit = nullptr;
 	}
 }
