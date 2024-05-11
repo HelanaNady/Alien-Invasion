@@ -166,8 +166,8 @@ void EarthArmy::killHealUnit()
     // Remove the healer from its list
     healers.pop(healerUnit);
 
-    healerUnit->receiveDamage(healerUnit->getHealth()); // Make unit health 0
-    healerUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep()); // Set first attack time to current timestep
+    // Make unit health 0
+    healerUnit->receiveDamage(healerUnit->getHealth());
 
     // Add healer unit to killed list
     gamePtr->addToKilledList(healerUnit);
