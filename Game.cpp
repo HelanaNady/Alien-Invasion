@@ -74,8 +74,9 @@ bool Game::startAttack()
 	// Make both armies attack
 	bool didEarthArmyAttack = earthArmy.attack();
 	bool didAlienArmyAttack = alienArmy.attack();
-
-	alliedArmy.attack();
+	
+	if (earthArmy.needAllyHelp())
+		alliedArmy.attack();
 
 	// Return if any of the armies successfully attacked
 	return didEarthArmyAttack || didAlienArmyAttack;

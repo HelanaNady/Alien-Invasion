@@ -207,7 +207,7 @@ void EarthArmy::spreadInfection()
 
 bool EarthArmy::needAllyHelp() const
 {
-    float infectedSoldiersPercentage = 0;
+    int infectedSoldiersPercentage = 0;
 
     if (getUnitsCount(UnitType::ES))
         infectedSoldiersPercentage = infectedSoldiersCount * 100 / getUnitsCount(UnitType::ES);
