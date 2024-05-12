@@ -39,8 +39,10 @@ bool HealUnit::attack()
         }
 
         // Infected units take twice as long to get healed
-        if(unitToHeal->getUnitType() == UnitType::ES)
-        dynamic_cast<EarthSoldier*>(unitToHeal)->isInfected() ? slowHeal(unitToHeal) : normalHeal(unitToHeal);  
+        if (unitToHeal->getUnitType() == UnitType::ES && dynamic_cast<EarthSoldier*>(unitToHeal)->isInfected())
+            slowHeal(unitToHeal);
+        else
+            normalHeal(unitToHeal);  
 
         // Store the IDs of the units that recieved heal to be printed later
         foughtUnits.enqueue(unitToHeal->getId());
