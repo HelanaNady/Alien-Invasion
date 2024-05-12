@@ -114,9 +114,6 @@ bool RandomGenerator::willGenerateSavers()
 		gamePtr->killSaverUnits(); // Kill the remaining savers
 	}
 	return isGeneratingSavers;
-
-
-
 }
 
 int RandomGenerator::getRandomNumber(int min, int max) const
