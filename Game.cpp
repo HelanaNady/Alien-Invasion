@@ -105,6 +105,19 @@ bool Game::doesEarthNeedHelp() const
 	return earthArmy.needAllyHelp();
 }
 
+void Game::killSaverUnits()
+{
+	Unit* saverToKill = earthAlliedArmy.removeUnit(UnitType::SU);
+	while (saverToKill)
+	{
+		saverToKill->receiveDamage(saverToKill->getHealth());
+		addToKilledList(saverToKill);
+		saverToKill = nullptr;
+		saverToKill = earthAlliedArmy.removeUnit(UnitType::SU); 
+	}
+
+}
+
 void Game::printFinalResults() const
 {
 	std::cout << std::endl;

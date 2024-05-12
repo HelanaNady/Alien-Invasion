@@ -109,9 +109,14 @@ bool RandomGenerator::willGenerateSavers()
 	if (gamePtr->doesEarthNeedHelp()) // Only generate when needed
 		isGeneratingSavers = true;
 	else if (gamePtr->getInfectedUnitsCount() == 0) // stop generating after all units have been healed
+	{
 		isGeneratingSavers = false;
-
+		gamePtr->killSaverUnits();
+	}
 	return isGeneratingSavers;
+
+
+
 }
 
 int RandomGenerator::getRandomNumber(int min, int max) const

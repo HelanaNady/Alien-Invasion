@@ -65,6 +65,7 @@ public:
     void decrementInfectedESCount(); // Decrement the infected soldiers count of the Earth Army
 
     bool doesEarthNeedHelp() const;
+    void killSaverUnits();
 
     // Getters
     int getCurrentTimestep() const;
