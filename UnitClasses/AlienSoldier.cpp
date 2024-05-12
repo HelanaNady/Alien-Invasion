@@ -19,8 +19,13 @@ void AlienSoldier::printFought()
 
 bool AlienSoldier::attack()
 {
-    // Get the lists of earth soldiers to attack
-    LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, attackCapacity);
+    // Calculate the number of earth soldiers and saver units to attack
+    int soldiersCapacity = attackCapacity / 2;
+    int saversCapacity = attackCapacity - soldiersCapacity;
+
+    // Get the lists of earth soldiers and saver units to attack
+    LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, soldiersCapacity);
+    LinkedQueue<Unit*> saversList = gamePtr->getEnemyList(ArmyType::EARTH_ALLIED, UnitType::SU, saversCapacity);
 
     // Check for a successful attack
     bool attackCheck = false;
@@ -28,7 +33,7 @@ bool AlienSoldier::attack()
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
 
-    while (soldiersList.dequeue(enemyUnit))
+    while (soldiersList.dequeue(enemyUnit) || saversList.dequeue(enemyUnit))
     {
         // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));

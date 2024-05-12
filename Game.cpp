@@ -22,7 +22,7 @@ float calculatePercentage(int numerator, int denominator) // Helper function to 
 }
 
 
-Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), earthArmy(this), alienArmy(this), randomGenerator(this)
+Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), earthArmy(this), alienArmy(this), earthAlliedArmy(this), randomGenerator(this)
 {}
 
 void Game::run(GameMode gameMode, std::string inputFileName, std::string outputFileName)
@@ -74,9 +74,10 @@ bool Game::startAttack()
 	// Make both armies attack
 	bool didEarthArmyAttack = earthArmy.attack();
 	bool didAlienArmyAttack = alienArmy.attack();
+	bool didEarthAlliedAttack = earthAlliedArmy.attack();
 
 	// Return if any of the armies successfully attacked
-	return didEarthArmyAttack || didAlienArmyAttack;
+	return didEarthArmyAttack || didAlienArmyAttack || didEarthAlliedAttack;
 }
 
 void Game::setGameMode(GameMode gameMode)
@@ -139,6 +140,10 @@ void Game::addUnit(Unit* unit)
 		case ArmyType::ALIEN:
 			alienArmy.addUnit(unit);
 			break;
+
+		case ArmyType::EARTH_ALLIED:
+			earthAlliedArmy.addUnit(unit);
+			break;
 	}
 }
 
@@ -151,6 +156,9 @@ Unit* Game::removeUnit(ArmyType armyType, UnitType unitType)
 
 		case ArmyType::ALIEN:
 			return alienArmy.removeUnit(unitType);
+
+		case ArmyType::EARTH_ALLIED:
+			return earthAlliedArmy.removeUnit(unitType);
 	}
 
 	return nullptr;
@@ -186,8 +194,17 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 					break;
 			}
 			break;
-	}
 
+		case ArmyType::EARTH_ALLIED:
+			for (int i = 0; i < attackCapacity; i++)
+			{
+				enemyUnitPtr = earthAlliedArmy.removeUnit(unitType);
+				if (enemyUnitPtr)
+					enemyUnits.enqueue(enemyUnitPtr);
+				else
+					break;
+			}
+	}
 	return enemyUnits;
 }
 
@@ -257,11 +274,15 @@ void Game::printAll()
 	std::cout << std::endl << "============== Alien Army Alive Units =========================" << std::endl;
 	alienArmy.printArmy();
 
+	std::cout << std::endl << "============== Earth Allied Army Alive Units ===================" << std::endl;
+	earthAlliedArmy.printArmy();
+
 	if (areUnitsFighting())
 	{
 		std::cout << std::endl << "============== Units fighting at current step =================" << std::endl;
 		earthArmy.printFightingUnits();
 		alienArmy.printFightingUnits();
+		earthAlliedArmy.printFightingUnits();
 	}
 	else
 		std::cout << std::endl << "============== No units fighting at current step ==============" << std::endl;
@@ -288,6 +309,11 @@ GameStatistics Game::countStatistics()
 	UnitType alienUnitTypes[] = { UnitType::AS, UnitType::AM, UnitType::AD };
 
 	countArmyStatistics(gameStatistics, ArmyType::ALIEN, alienUnitTypes, alienUnitTypesCount);
+
+	// Allied Army Statistics
+	const int alliedUnitTypesCount = 1;
+	UnitType alliedUnitTypes[] = { UnitType::SU };
+	countArmyStatistics(gameStatistics, ArmyType::EARTH_ALLIED, alliedUnitTypes, alliedUnitTypesCount);
 
 	// Killed Units Statistics
 	countKilledUnitsStatistics(gameStatistics);
@@ -516,6 +542,18 @@ void Game::generateOutputFile(std::string outputFileName)
 	fout << "Df/Db = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::ALIEN].totalFirstAttackDelays, gameStatistics.armyStatistics[ArmyType::ALIEN].totalBattleDelays) << "%" << std::endl;
 	fout << "Dd/Db = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::ALIEN].totalDestructionDelays, gameStatistics.armyStatistics[ArmyType::ALIEN].totalBattleDelays) << "%" << std::endl;
 
+	// Allied Army Statistics
+	fout << std::endl;
+	fout << "======================================================================" << std::endl;
+	fout << std::right << std::setw(45);
+	fout << "Earth Allied Army Statistics" << std::endl;
+	fout << "======================================================================" << std::endl;
+	fout << "Total SU Count: " << gameStatistics.unitCounts[UnitType::SU] << std::endl;
+	fout << "======================================================================" << std::endl;
+	fout << "Destructed SUs/Total SUs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::SU], gameStatistics.unitCounts[UnitType::SU]) << "%" << std::endl;
+	fout << "======================================================================" << std::endl;
+	fout << "Average of Battle Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::EARTH_ALLIED].totalBattleDelays, gameStatistics.armyStatistics[ArmyType::EARTH_ALLIED].totalUnitsCount) << std::endl;
+
 	// Close the output file
 	fout.close();
 }
@@ -545,7 +583,13 @@ bool Game::loadParameters(std::string fileName)
 		Range alienPowerRange = { 0, 0 };
 		Range alienHealthRange = { 0, 0 };
 		Range alienAttackCapacityRange = { 0, 0 };
+
+		Range earthAlliedPowerRange = { 0, 0 };
+		Range earthAlliedHealthRange = { 0, 0 };
+		Range earthAlliedAttackCapacityRange = { 0, 0 };
+		
 		int infectingProbability = 0;
+		int infectionThreshold = 0;
 
 		fin >> N >> ESPercentage >> ETPercentage >> EGPercentage >> EHPercentage >> ASPercentage >> AMPercentage >> ADPercentage >> prob;
 
@@ -560,13 +604,20 @@ bool Game::loadParameters(std::string fileName)
 		fin >> alienAttackCapacityRange.min >> dummyHyphen >> alienAttackCapacityRange.max;
 		fin >> infectingProbability;
 
+		fin >> earthAlliedPowerRange.min >> dummyHyphen >> earthAlliedPowerRange.max;
+		fin >> earthAlliedHealthRange.min >> dummyHyphen >> earthAlliedHealthRange.max;
+		fin >> earthAlliedAttackCapacityRange.min >> earthAlliedAttackCapacityRange.max;
+		fin >> infectionThreshold;
+
 		randomGenerator.setN(N); // Set the number of units to generate
 		randomGenerator.setProb(prob); // Set the probability of generating a unit
 
 		randomGenerator.setEarthParameters(ESPercentage, EGPercentage, ETPercentage, EHPercentage, earthPowerRange, earthHealthRange, earthAttackCapacityRange); // Set the parameters for the Earth army
 		randomGenerator.setAlienParameters(ASPercentage, AMPercentage, ADPercentage, alienPowerRange, alienHealthRange, alienAttackCapacityRange); // Set the parameters for the Alien army
+		randomGenerator.setEarthAlliedParameters(earthAlliedPowerRange, earthAlliedHealthRange, earthAlliedAttackCapacityRange);
 
 		AlienMonster::setInfectingProbability(infectingProbability); // Set the infecting probability for the Alien Monster
+		EarthArmy::setInfectionThreshold(infectionThreshold); // Set the infection threshold percantage for the Earth Army
 
 		fin.close(); // Close the file
 
@@ -591,6 +642,8 @@ int Game::getUnitsCount(ArmyType armyType, UnitType unitType) const
 
 		case ArmyType::ALIEN:
 			return alienArmy.getUnitsCount(unitType);
+		case ArmyType:: EARTH_ALLIED:
+			return earthAlliedArmy.getUnitsCount(unitType);
 	}
 
 	return 0;

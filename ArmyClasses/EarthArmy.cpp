@@ -4,6 +4,8 @@
 #include "../UnitClasses/Unit.h"
 #include "../Game.h"
 
+int EarthArmy::infectionThreshold = 0;
+
 EarthArmy::EarthArmy(Game* gamePtr): Army(gamePtr), infectedSoldiersCount(0)
 {}
 
@@ -109,7 +111,7 @@ float EarthArmy::getInfectionPercentage() const
 {
     if (soldiers.getCount() == 0)
         return 0;
-  
+
     return (float) infectedSoldiersCount * 100 / soldiers.getCount();
 }
 
@@ -220,6 +222,16 @@ void EarthArmy::spreadInfection()
             soldiers.enqueue(soldier);
         }
     }
+}
+
+bool EarthArmy::needAllyHelp() const
+{
+    return (getInfectionPercentage() >= infectionThreshold);
+}
+
+void EarthArmy::setInfectionThreshold(int threshold)
+{
+    infectionThreshold = threshold;
 }
 
 EarthArmy::~EarthArmy()

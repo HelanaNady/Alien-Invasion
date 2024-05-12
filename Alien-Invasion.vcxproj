@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArmyClasses\AlienArmy.cpp" />
+    <ClCompile Include="ArmyClasses\EarthAlliedArmy.cpp" />
     <ClCompile Include="ArmyClasses\Army.cpp" />
     <ClCompile Include="ArmyClasses\EarthArmy.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -33,9 +34,11 @@
     <ClCompile Include="UnitClasses\EarthGunnery.cpp" />
     <ClCompile Include="UnitClasses\EarthSoldier.cpp" />
     <ClCompile Include="UnitClasses\EarthTank.cpp" />
+    <ClCompile Include="UnitClasses\SaverUnit.cpp" />
     <ClCompile Include="UnitClasses\Unit.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArmyClasses\EarthAlliedArmy.h" />
     <ClInclude Include="Containers\Array.h" />
     <ClInclude Include="Containers\ArrayADT.h" />
     <ClInclude Include="Containers\ArrayStack.h" />
@@ -57,6 +60,7 @@
     <ClInclude Include="UnitClasses\EarthGunnery.h" />
     <ClInclude Include="UnitClasses\EarthSoldier.h" />
     <ClInclude Include="UnitClasses\EarthTank.h" />
+    <ClInclude Include="UnitClasses\SaverUnit.h" />
     <ClInclude Include="UnitClasses\Unit.h" />
     <ClInclude Include="ArmyClasses\Army.h" />
     <ClInclude Include="ArmyClasses\EarthArmy.h" />
