@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArmyClasses\AlienArmy.cpp" />
-    <ClCompile Include="ArmyClasses\AlliedArmy.cpp" />
+    <ClCompile Include="ArmyClasses\EarthAlliedArmy.cpp" />
     <ClCompile Include="ArmyClasses\Army.cpp" />
     <ClCompile Include="ArmyClasses\EarthArmy.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -38,7 +38,7 @@
     <ClCompile Include="UnitClasses\Unit.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ArmyClasses\AlliedArmy.h" />
+    <ClInclude Include="ArmyClasses\EarthAlliedArmy.h" />
     <ClInclude Include="Containers\Array.h" />
     <ClInclude Include="Containers\ArrayADT.h" />
     <ClInclude Include="Containers\ArrayStack.h" />

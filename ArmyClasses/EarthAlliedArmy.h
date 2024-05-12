@@ -1,17 +1,17 @@
-#ifndef ALLIED_ARMY_H
-#define ALLIED_ARMY_H
+#ifndef EARTH_ALLIED_ARMY_H
+#define EARTH_ALLIED_ARMY_H
 
 #include "Army.h"
 #include "../Containers/LinkedQueue.h"
 #include "../UnitClasses/Unit.h"
 #include "../UnitClasses/SaverUnit.h"
 
-class AlliedArmy: public Army
+class EarthAlliedArmy: public Army
 {
 private:
 	LinkedQueue<Unit*> savers;
 public:
-	AlliedArmy(Game*);
+	EarthAlliedArmy(Game*);
 
 	void addUnit(Unit*);
 	Unit* removeUnit(UnitType);
@@ -22,7 +22,7 @@ public:
 
 	// Getters
 	int getUnitsCount(UnitType) const;
-	~AlliedArmy();
+	~EarthAlliedArmy();
 };
 
 #endif

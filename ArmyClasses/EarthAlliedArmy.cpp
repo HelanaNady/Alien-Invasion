@@ -1,39 +1,39 @@
 #include <iostream>
 
-#include "AlliedArmy.h"
+#include "EarthAlliedArmy.h"
 #include "../UnitClasses/Unit.h"
 #include "../Game.h"
 
-AlliedArmy::AlliedArmy(Game*): Army(gamePtr)
+EarthAlliedArmy::EarthAlliedArmy(Game*): Army(gamePtr)
 {}
 
-void AlliedArmy::addUnit(Unit* unit)
+void EarthAlliedArmy::addUnit(Unit* unit)
 {
 	savers.enqueue(unit);
 }
 
-Unit* AlliedArmy::removeUnit(UnitType unitType)
+Unit* EarthAlliedArmy::removeUnit(UnitType unitType)
 {
 	Unit* unit = nullptr;
 	savers.dequeue(unit);
 	return unit;
 }
 
-Unit* AlliedArmy::pickAttacker(UnitType unitType)
+Unit* EarthAlliedArmy::pickAttacker(UnitType unitType)
 {
 	Unit* unit = nullptr;
 	savers.peek(unit);
 	return unit;
 }
 
-void AlliedArmy::printArmy() const
+void EarthAlliedArmy::printArmy() const
 {
 	std::cout << savers.getCount() << " SU [";
 	savers.printList();
 	std::cout << "]" << std::endl;
 }
 
-bool AlliedArmy::attack()
+bool EarthAlliedArmy::attack()
 {
 	bool didArmyAttack = false; // Flag to check if the army attacked
 	
@@ -54,18 +54,17 @@ bool AlliedArmy::attack()
 	return didArmyAttack;
 }
 
-bool AlliedArmy::isDead() const
+bool EarthAlliedArmy::isDead() const
 {
 	return savers.getCount();
 }
 
-// will be removed -> no point 
-int AlliedArmy::getUnitsCount(UnitType) const
+int EarthAlliedArmy::getUnitsCount(UnitType) const
 {
 	return savers.getCount();
 }
 
-AlliedArmy::~AlliedArmy()
+EarthAlliedArmy::~EarthAlliedArmy()
 {
 	Unit* unit = nullptr;
 	while (savers.dequeue(unit))

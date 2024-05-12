@@ -18,12 +18,12 @@ RandomGenerator::RandomGenerator(Game* gamePtr): gamePtr(gamePtr)
 	setProb(0);
 	setEarthParameters(0, 0, 0, 0, { 0, 0 }, { 0, 0 }, { 0, 0 });
 	setAlienParameters(0, 0, 0, { 0, 0 }, { 0, 0 }, { 0, 0 });
-	setAlliedParameters({ 0, 0 }, { 0, 0 }, { 0, 0 });
+	setEarthAlliedParameters({ 0, 0 }, { 0, 0 }, { 0, 0 });
 }
 
 void RandomGenerator::generateUnits() const
 {
-	ArmyType armyTypes[3] = { EARTH, ALIEN, ALLIED };
+	ArmyType armyTypes[3] = { EARTH, ALIEN, EARTH_ALLIED };
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -91,12 +91,12 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 	else
 	{
 		// Check if the max number of allied units is reached
-		if (Unit::cantCreateAlliedUnit())
+		if (Unit::cantCreateEarthAlliedUnit())
 			return nullptr;
 
-		int power = getRandomNumber(alliedPowerRange.min, alienPowerRange.max);
-		int health = getRandomNumber(alliedHealthRange.min, alliedHealthRange.max);
-		int attackCapacity = getRandomNumber(alliedAttackCapacityRange.min, alliedAttackCapacityRange.max);
+		int power = getRandomNumber(earthAlliedPowerRange.min, alienPowerRange.max);
+		int health = getRandomNumber(earthAlliedHealthRange.min, earthAlliedHealthRange.max);
+		int attackCapacity = getRandomNumber(earthAlliedAttackCapacityRange.min, earthAlliedAttackCapacityRange.max);
 
 		newUnit = new SaverUnit(gamePtr, health, power, attackCapacity);
 	}
@@ -142,10 +142,10 @@ void RandomGenerator::setAlienParameters(int ASPercentage, int AMPercentage, int
 	this->alienAttackCapacityRange = alienAttackCapacityRange;
 }
 
-void RandomGenerator::setAlliedParameters(Range alliedPowerRange, Range alliedHealthRange, Range alliedAttackCapacityRange)
+void RandomGenerator::setEarthAlliedParameters(Range alliedPowerRange, Range alliedHealthRange, Range alliedAttackCapacityRange)
 {
-	this->alliedPowerRange = alliedPowerRange;
-	this->alliedHealthRange = alliedHealthRange;
-	this->alliedAttackCapacityRange = alliedAttackCapacityRange;
+	this->earthAlliedPowerRange = alliedPowerRange;
+	this->earthAlliedHealthRange = alliedHealthRange;
+	this->earthAlliedAttackCapacityRange = alliedAttackCapacityRange;
 }
 

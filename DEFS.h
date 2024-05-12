@@ -9,7 +9,7 @@ enum GameMode
 
 enum ArmyType
 {
-	EARTH, ALIEN, ALLIED,
+	EARTH, ALIEN, EARTH_ALLIED,
 	ARMY_TOTAL,
 };
 

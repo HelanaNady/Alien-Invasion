@@ -6,7 +6,7 @@
 #include "DEFS.h"
 #include "ArmyClasses/EarthArmy.h"
 #include "ArmyClasses/AlienArmy.h"
-#include "ArmyClasses/AlliedArmy.h"
+#include "ArmyClasses/EarthAlliedArmy.h"
 #include "RandomGenerator/RandomGenerator.h"
 #include "Containers/LinkedQueue.h"
 #include "Containers/PriorityQueue.h"
@@ -20,7 +20,7 @@ private:
 
     EarthArmy earthArmy;
     AlienArmy alienArmy;
-    AlliedArmy alliedArmy;
+    EarthAlliedArmy earthAlliedArmy;
     RandomGenerator randomGenerator;
 
     LinkedQueue<Unit*> killedList;
