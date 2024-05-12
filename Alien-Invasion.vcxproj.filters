@@ -85,7 +85,9 @@
     <ClInclude Include="UnitClasses\SaverUnit.h">
       <Filter>Unit Classes</Filter>
     </ClInclude>
-    <ClInclude Include="ArmyClasses\AlliedArmy.h" />
+    <ClInclude Include="ArmyClasses\EarthAlliedArmy.h">
+      <Filter>Army Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArmyClasses\AlienArmy.h">
@@ -145,6 +147,8 @@
     <ClCompile Include="UnitClasses\SaverUnit.cpp">
       <Filter>Unit Classes</Filter>
     </ClCompile>
-    <ClCompile Include="ArmyClasses\AlliedArmy.cpp" />
+    <ClCompile Include="ArmyClasses\EarthAlliedArmy.cpp">
+      <Filter>Army Classes</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
