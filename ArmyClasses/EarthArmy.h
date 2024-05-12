@@ -36,6 +36,7 @@ public:
 
     // Infection functions
     void incrementInfectedSoldiersCount();
+    void decrementInfectedSoldiersCount();
     void spreadInfection();
 
     // Getters

@@ -60,6 +60,7 @@ public:
     LinkedQueue<HealableUnit*> getUnitsToMaintainList(int);
 
     void incrementInfectedESCount(); // Increment the infected soldiers count of the Earth Army
+    void decrementInfectedESCount(); // Decrement the infected soldiers count of the Earth Army
 
     // Getters
     int getCurrentTimestep() const;

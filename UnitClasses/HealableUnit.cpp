@@ -15,7 +15,7 @@ bool HealableUnit::needsHeal() const
 void HealableUnit::receiveHeal(double UHP)
 {
     // Infected units get twice the time to get healed
-    if (wasInfected()) 
+    if (dynamic_cast<EarthSoldier*>(this) && dynamic_cast<EarthSoldier*>(this)->isInfected())
         health += UHP / 2;
     else
         health += UHP;

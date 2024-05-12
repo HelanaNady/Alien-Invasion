@@ -173,6 +173,11 @@ void EarthArmy::incrementInfectedSoldiersCount()
     infectedSoldiersCount++;
 }
 
+void EarthArmy::decrementInfectedSoldiersCount()
+{
+    infectedSoldiersCount--;
+}
+
 void EarthArmy::spreadInfection()
 {
     int soldiersCount = soldiers.getCount();
