@@ -175,7 +175,7 @@ std::ostream& operator<<(std::ostream& oStream, Unit* unitObj)
 	EarthSoldier* ESunit = dynamic_cast<EarthSoldier*>(unitObj);
 	if (ESunit && ESunit->isInfected())
 	{
-		oStream << "-x";
+		oStream << "*";
 	}
 	return oStream;
 }
