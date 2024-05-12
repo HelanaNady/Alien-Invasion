@@ -57,7 +57,7 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 		if (gameMode == GameMode::INTERACTIVE)
 		{
 			printAll();
-			std::cout << "Press Enter to continue...";
+			std::cout << "Press Enter to continue..." << std::endl;
 			while (std::cin.get() != '\n');
 		}
 	} while (!battleOver(didArmiesAttack));
@@ -131,6 +131,9 @@ std::string Game::battleResult() const
 
 void Game::addUnit(Unit* unit)
 {
+	if (!unit)
+		return;
+
 	ArmyType armyType = unit->getArmyType();
 
 	switch (armyType)

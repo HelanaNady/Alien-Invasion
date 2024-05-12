@@ -38,11 +38,19 @@ bool HealUnit::attack()
             continue;
         }
 
-        // Infected units take twice as long to get healed
-        if (unitToHeal->getUnitType() == UnitType::ES && dynamic_cast<EarthSoldier*>(unitToHeal)->isInfected())
-            slowHeal(unitToHeal);
+        // Heal each unit with the appropriate heal power
+        unitToHeal->receiveHeal(calcUAP(unitToHeal));
+        
+        // Add the unit back to its list if completely healed, otherwise re-add to the UML
+        if (unitToHeal->isHealed())
+        {
+            if (unitToHeal->wasInfected()) // If the unit was an infected, additional heal is needed
+               healInfection(unitToHeal);
+
+            gamePtr->addUnit(unitToHeal);
+        }
         else
-            normalHeal(unitToHeal);  
+            gamePtr->addUnitToMaintenanceList(unitToHeal);
 
         // Store the IDs of the units that recieved heal to be printed later
         foughtUnits.enqueue(unitToHeal->getId());
@@ -57,29 +65,10 @@ bool HealUnit::attack()
     return healCheck;
 }
 
-void HealUnit::normalHeal(HealableUnit* unitToHeal)
+void HealUnit::healInfection(HealableUnit* recoveredUnit)
 {
-    unitToHeal->receiveHeal(calcUAP(unitToHeal));
-
-    if (unitToHeal->isHealed())
-        gamePtr->addUnit(unitToHeal);
-    else
-        gamePtr->addUnitToMaintenanceList(unitToHeal);
-}
-
-void HealUnit::slowHeal(HealableUnit* unitToHeal)
-{
-    EarthSoldier* soldierToHeal = dynamic_cast<EarthSoldier*>(unitToHeal);
-
-    // Infected units take twice as long to get healed
-    soldierToHeal->receiveHeal(calcUAP(unitToHeal) / 2);
-
-    if (soldierToHeal->isHealed())
-    {
-        soldierToHeal->loseInfection();
-        soldierToHeal->gainImmunity();
-        gamePtr->addUnit(unitToHeal);
-    }
-    else
-        gamePtr->addUnitToMaintenanceList(unitToHeal);
+    EarthSoldier* recoveredSoldier = dynamic_cast<EarthSoldier*>(recoveredUnit);
+    
+    recoveredSoldier->loseInfection(); // Turn the infection flag off
+    recoveredSoldier->gainImmunity(); // Make it immune to furure infections
 }
