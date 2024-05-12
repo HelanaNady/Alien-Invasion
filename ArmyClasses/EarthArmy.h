@@ -40,6 +40,7 @@ public:
 
     // Getters
     int getUnitsCount(UnitType) const;
+    float getInfectionPercentage() const;
 
     ~EarthArmy();
 };

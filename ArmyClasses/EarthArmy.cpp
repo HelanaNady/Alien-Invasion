@@ -105,9 +105,19 @@ int EarthArmy::getUnitsCount(UnitType unitType) const
     return 0;
 }
 
+float EarthArmy::getInfectionPercentage() const
+{
+    if (soldiers.getCount() == 0)
+        return 0;
+  
+    return (float) infectedSoldiersCount * 100 / soldiers.getCount();
+}
+
 void EarthArmy::printArmy() const
 {
-    std::cout << soldiers.getCount() << " ES [";
+    std::cout << "Infected percentage = " << getInfectionPercentage() << "%" << std::endl;
+
+    std::cout << std::endl << soldiers.getCount() << " ES [";
     soldiers.printList();
     std::cout << "]" << std::endl;
 

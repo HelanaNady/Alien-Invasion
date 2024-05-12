@@ -171,7 +171,11 @@ void Unit::setDestructionTime(int Td)
 
 std::ostream& operator<<(std::ostream& oStream, Unit* unitObj)
 {
+	EarthSoldier* ESunit = dynamic_cast<EarthSoldier*>(unitObj);
+	if (ESunit && ESunit->isInfected())
+	{
+		oStream << "X";
+	}
 	oStream << unitObj->id;
-
 	return oStream;
 }
