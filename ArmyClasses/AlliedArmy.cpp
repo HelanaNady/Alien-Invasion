@@ -15,8 +15,7 @@ void AlliedArmy::addUnit(Unit* unit)
 Unit* AlliedArmy::removeUnit(UnitType unitType)
 {
 	Unit* unit = nullptr;
-	if (unitType == UnitType::SU) // A check that I might remove later
-		savers.dequeue(unit);
+	savers.dequeue(unit);
 	return unit;
 }
 

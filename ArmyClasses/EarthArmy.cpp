@@ -209,8 +209,8 @@ bool EarthArmy::needAllyHelp() const
 {
     int infectedSoldiersPercentage = 0;
 
-    if (getUnitsCount(UnitType::ES))
-        infectedSoldiersPercentage = infectedSoldiersCount * 100 / getUnitsCount(UnitType::ES);
+    if (soldiers.getCount())
+        infectedSoldiersPercentage = infectedSoldiersCount * 100 / soldiers.getCount();
     
     return (infectedSoldiersPercentage >= infectionThreshold);
 }
