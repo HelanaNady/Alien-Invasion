@@ -15,7 +15,7 @@ public:
 	bool attack(); // Attack the enemy units
 
 	// Infection functions
-	void infect(); // Infect the soldier
+	void getInfection(); // Infect the soldier
 	bool isInfected() const; // Check if the soldier is infected
 	bool isImmune() const; // Check if the soldier is immune
 

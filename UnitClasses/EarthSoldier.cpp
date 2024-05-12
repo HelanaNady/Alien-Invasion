@@ -57,7 +57,7 @@ bool EarthSoldier::attack()
     return attackCheck;
 }
 
-void EarthSoldier::infect()
+void EarthSoldier::getInfection()
 {
     if (isInfected())
         return;

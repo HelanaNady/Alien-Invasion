@@ -196,7 +196,7 @@ void EarthArmy::spreadInfection()
             soldiers.dequeue(soldier);
 
             if (j == randomIndex)
-                dynamic_cast<EarthSoldier*>(soldier)->infect();
+                dynamic_cast<EarthSoldier*>(soldier)->getInfection();
 
             soldiers.enqueue(soldier);
         }

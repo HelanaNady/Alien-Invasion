@@ -47,7 +47,7 @@ bool AlienMonster::attack()
         int x = rand() % 100 + 1;
         if (enemyUnit->getUnitType() == UnitType::ES && x <= infectingProbability)
         {
-            dynamic_cast<EarthSoldier*>(enemyUnit)->infect();
+            dynamic_cast<EarthSoldier*>(enemyUnit)->getInfection();
             gamePtr->addUnit(enemyUnit);
             continue;
         }
