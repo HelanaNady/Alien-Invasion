@@ -39,7 +39,7 @@ bool HealUnit::attack()
         }
 
         // Heal each unit with the appropriate heal power
-        unitToHeal->receiveHeal(calcUAP(unitToHeal));
+        unitToHeal->receiveHeal(calcUnitPower(unitToHeal));
         
         // Add the unit back to its list if completely healed, otherwise re-add to the UML
         if (unitToHeal->isHealed())

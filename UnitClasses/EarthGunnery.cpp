@@ -49,7 +49,7 @@ bool EarthGunnery::attack()
             continue;
 
         // Calculate the UAP and apply the damage
-        enemyUnit->receiveDamage(calcUAP(enemyUnit));
+        enemyUnit->receiveDamage(calcUnitPower(enemyUnit));
 
         // Check if the unit is dead or can join the battle
         if (enemyUnit->isDead())

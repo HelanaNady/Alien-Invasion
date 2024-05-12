@@ -84,9 +84,9 @@ bool Unit::hasBeenAttackedBefore() const
 	return Ta != -1;
 }
 
-double Unit::calcUAP(Unit* attackedUnit) const
+double Unit::calcUnitPower(Unit* recievingUnit) const
 {
-	return (power * health / 100) / sqrt(attackedUnit->health);
+	return (power * health / 100) / sqrt(recievingUnit->health);
 }
 
 int Unit::getId() const
