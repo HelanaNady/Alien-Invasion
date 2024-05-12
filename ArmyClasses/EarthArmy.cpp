@@ -190,6 +190,11 @@ void EarthArmy::incrementInfectedSoldiersCount()
     infectedSoldiersCount++;
 }
 
+void EarthArmy::decrementInfectedSoldiersCount()
+{
+    infectedSoldiersCount--;
+}
+
 void EarthArmy::spreadInfection()
 {
     // If there are no soldiers, return
@@ -198,6 +203,10 @@ void EarthArmy::spreadInfection()
 
     int soldiersCount = soldiers.getCount();
     int soldiersToInfect = infectedSoldiersCount;
+
+    // if there are no soldiers to infect, return
+    if (soldiersCount == 0)
+        return;
 
     // Infect random soldiers
     for (int i = 0; i < soldiersToInfect; i++)
@@ -217,7 +226,7 @@ void EarthArmy::spreadInfection()
             soldiers.dequeue(soldier);
 
             if (j == randomIndex)
-                dynamic_cast<EarthSoldier*>(soldier)->infect();
+                dynamic_cast<EarthSoldier*>(soldier)->getInfection();
 
             soldiers.enqueue(soldier);
         }

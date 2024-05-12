@@ -38,16 +38,22 @@ bool HealUnit::attack()
             continue;
         }
 
-        // Heal the unit
+        // Heal each unit with the appropriate heal power
         unitToHeal->receiveHeal(calcUAP(unitToHeal));
-
-        // If unit's health is more than 20% of its initial health, make it join battle
+        
+        // Add the unit back to its list if completely healed, otherwise re-add to the UML
         if (unitToHeal->isHealed())
-            gamePtr->addUnit(unitToHeal);
+        {
+            EarthSoldier* infectedSoldier = dynamic_cast<EarthSoldier*>(unitToHeal); // If the unit was an infected, additional heal is needed
+            if (infectedSoldier && infectedSoldier->isInfected()) 
+               healInfection(infectedSoldier);
+
+            gamePtr->addUnit(unitToHeal); // Add it to its list whether it was infected or not
+        }
         else
             gamePtr->addUnitToMaintenanceList(unitToHeal);
 
-        // Store the IDs of the healed units to be printed later
+        // Store the IDs of the units that recieved heal to be printed later
         foughtUnits.enqueue(unitToHeal->getId());
 
         // Nullify the pointer to avoid duplication
@@ -58,4 +64,11 @@ bool HealUnit::attack()
     }
 
     return healCheck;
+}
+
+void HealUnit::healInfection(EarthSoldier* recoveredSoldier)
+{   
+    recoveredSoldier->loseInfection(); // Turn the infection flag off
+    recoveredSoldier->gainImmunity(); // Make it immune to furure infections
+    gamePtr->decrementInfectedESCount(); // Decrement the infected soldiers count of the Earth Army
 }

@@ -17,12 +17,12 @@ private:
 	static int nextAlienId;
 	static int nextEarthAlliedId;
 
-	ArmyType armyType;
-	UnitType unitType;
-
 protected:
 	Game* gamePtr;
 	int id;
+
+	ArmyType armyType; 
+	UnitType unitType; 
 
 	int Tj; // Join time 
 	int Ta; // First attack time
