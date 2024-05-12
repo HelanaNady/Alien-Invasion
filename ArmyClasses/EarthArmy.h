@@ -43,6 +43,7 @@ public:
 
     // Getters
     int getUnitsCount(UnitType) const;
+    float getInfectionPercentage() const;
 
     // Static functions
     static void setInfectionThreshold(int);

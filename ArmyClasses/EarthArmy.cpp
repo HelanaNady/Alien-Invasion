@@ -107,6 +107,14 @@ int EarthArmy::getUnitsCount(UnitType unitType) const
     return 0;
 }
 
+float EarthArmy::getInfectionPercentage() const
+{
+    if (soldiers.getCount() == 0)
+        return 0;
+
+    return (float) infectedSoldiersCount * 100 / soldiers.getCount();
+}
+
 void EarthArmy::printArmy() const
 {
     std::cout << soldiers.getCount() << " ES [";
@@ -207,12 +215,7 @@ void EarthArmy::spreadInfection()
 
 bool EarthArmy::needAllyHelp() const
 {
-    int infectedSoldiersPercentage = 0;
-
-    if (soldiers.getCount())
-        infectedSoldiersPercentage = infectedSoldiersCount * 100 / soldiers.getCount();
-    
-    return (infectedSoldiersPercentage >= infectionThreshold);
+    return (getInfectionPercentage() >= infectionThreshold);
 }
 
 void EarthArmy::setInfectionThreshold(int threshold)
