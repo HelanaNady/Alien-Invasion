@@ -178,6 +178,10 @@ void EarthArmy::spreadInfection()
     int soldiersCount = soldiers.getCount();
     int soldiersToInfect = infectedSoldiersCount;
 
+    // if there are no soldiers to infect, return
+    if (soldiersCount == 0)
+        return;
+
     // Infect random soldiers
     for (int i = 0; i < soldiersToInfect; i++)
     {
