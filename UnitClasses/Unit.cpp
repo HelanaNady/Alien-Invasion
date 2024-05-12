@@ -2,7 +2,6 @@
 
 #include "Unit.h"
 #include "../Game.h"
-#include <iostream>
 
 int Unit::nextEarthId = 1;
 int Unit::nextAlienId = 2000;

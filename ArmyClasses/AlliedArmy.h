@@ -20,9 +20,9 @@ public:
 	bool attack();
 	bool isDead() const;
 
-	int getUnitsCount(UnitType) const;
-
 	// Getters
+	int getUnitsCount(UnitType) const;
+	~AlliedArmy();
 };
 
 #endif

@@ -23,8 +23,7 @@ Unit* AlliedArmy::removeUnit(UnitType unitType)
 Unit* AlliedArmy::pickAttacker(UnitType unitType)
 {
 	Unit* unit = nullptr;
-	if (unitType == UnitType::SU)
-		savers.peek(unit);
+	savers.peek(unit);
 	return unit;
 }
 
@@ -61,7 +60,7 @@ bool AlliedArmy::isDead() const
 	return savers.getCount();
 }
 
-// will be removed 
+// will be removed -> no point 
 int AlliedArmy::getUnitsCount(UnitType) const
 {
 	return savers.getCount();

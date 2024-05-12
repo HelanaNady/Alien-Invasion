@@ -75,7 +75,7 @@ bool Game::startAttack()
 	bool didEarthArmyAttack = earthArmy.attack();
 	bool didAlienArmyAttack = alienArmy.attack();
 	
-	if (earthArmy.needAllyHelp())
+	//if (earthArmy.needAllyHelp())
 		alliedArmy.attack();
 
 	// Return if any of the armies successfully attacked
@@ -299,6 +299,11 @@ GameStatistics Game::countStatistics()
 	UnitType alienUnitTypes[] = { UnitType::AS, UnitType::AM, UnitType::AD };
 
 	countArmyStatistics(gameStatistics, ArmyType::ALIEN, alienUnitTypes, alienUnitTypesCount);
+
+	// Allied Army Statistics
+	const int alliedUnitTypesCount = 1;
+	UnitType alliedUnitTypes[] = { UnitType::SU };
+	countArmyStatistics(gameStatistics, ArmyType::ALLIED, alliedUnitTypes, alliedUnitTypesCount);
 
 	// Killed Units Statistics
 	countKilledUnitsStatistics(gameStatistics);
@@ -530,6 +535,18 @@ void Game::generateOutputFile(std::string outputFileName)
 	fout << "Df/Db = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::ALIEN].totalFirstAttackDelays, gameStatistics.armyStatistics[ArmyType::ALIEN].totalBattleDelays) << "%" << std::endl;
 	fout << "Dd/Db = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::ALIEN].totalDestructionDelays, gameStatistics.armyStatistics[ArmyType::ALIEN].totalBattleDelays) << "%" << std::endl;
 
+	// Allied Army Statistics
+	fout << std::endl;
+	fout << "======================================================================" << std::endl;
+	fout << std::right << std::setw(45);
+	fout << "Allied Army Statistics" << std::endl;
+	fout << "======================================================================" << std::endl;
+	fout << "Total SU Count: " << gameStatistics.unitCounts[UnitType::SU] << std::endl;
+	fout << "======================================================================" << std::endl;
+	fout << "Destructed SUs/Total SUs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::SU], gameStatistics.unitCounts[UnitType::SU]) << "%" << std::endl;
+	fout << "======================================================================" << std::endl;
+	fout << "Average of Battle Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::ALLIED].totalBattleDelays, gameStatistics.armyStatistics[ArmyType::ALLIED].totalUnitsCount) << std::endl;
+
 	// Close the output file
 	fout.close();
 }
@@ -618,6 +635,8 @@ int Game::getUnitsCount(ArmyType armyType, UnitType unitType) const
 
 		case ArmyType::ALIEN:
 			return alienArmy.getUnitsCount(unitType);
+		case ArmyType:: ALLIED:
+			return alliedArmy.getUnitsCount(unitType);
 	}
 
 	return 0;
