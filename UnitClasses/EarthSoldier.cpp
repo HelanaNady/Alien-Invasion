@@ -59,7 +59,7 @@ bool EarthSoldier::attack()
 
 void EarthSoldier::getInfection()
 {
-    if (isInfected())
+    if (isInfected() || isImmune())
         return;
 
     // Set the infected flag to true
@@ -74,9 +74,14 @@ bool EarthSoldier::isInfected() const
     return infected;
 }
 
+void EarthSoldier::gainImmunity()
+{
+    immune = true;
+}
+
 bool EarthSoldier::isImmune() const
 {
-    return false;
+    return immune;
 }
 
 int EarthSoldier::getHealPriority() const
