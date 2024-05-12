@@ -27,12 +27,14 @@ void AlienMonster::printFought()
 bool AlienMonster::attack()
 {
     // Calculate the number of soldiers and tanks to attack
-    int soldiersCapacity = attackCapacity / 2;
-    int tanksCapacity = attackCapacity - soldiersCapacity;
+    int soldiersCapacity = attackCapacity / 3;
+    int tanksCapacity = attackCapacity / 3;
+    int saversCapacity = attackCapacity - soldiersCapacity - tanksCapacity;
 
     // Get the lists of earth soldiers and tanks to attack
     LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, soldiersCapacity);
     LinkedQueue<Unit*> tanksList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, tanksCapacity);
+    LinkedQueue<Unit*> saversList = gamePtr->getEnemyList(ArmyType::EARTH_ALLIED, UnitType::SU, saversCapacity);
 
     // Check for a successful attack
     bool attackCheck = false;
@@ -41,7 +43,7 @@ bool AlienMonster::attack()
     Unit* enemyUnit = nullptr;
 
     // Loop through the tanks and soldiers lists
-    while (soldiersList.dequeue(enemyUnit) || tanksList.dequeue(enemyUnit))
+    while (soldiersList.dequeue(enemyUnit) || tanksList.dequeue(enemyUnit) || saversList.dequeue(enemyUnit))
     {
         // Check if the enemy unit is an Earth Soldier and infect it if the probability is met
         int x = rand() % 100 + 1;
