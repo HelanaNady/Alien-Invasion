@@ -194,6 +194,7 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 					break;
 			}
 			break;
+
 		case ArmyType::EARTH_ALLIED:
 			for (int i = 0; i < attackCapacity; i++)
 			{
