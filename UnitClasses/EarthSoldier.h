@@ -18,6 +18,7 @@ public:
 	// Infection and immunity functions
 	void getInfection(); // Infect the soldier
 	bool isInfected() const; // Check if the soldier is infected
+	void loseInfection(); // Heal the soldier from the infection
 	void gainImmunity(); // Make the soldier immune to infections
 	bool isImmune() const; // Check if the soldier is immune
 

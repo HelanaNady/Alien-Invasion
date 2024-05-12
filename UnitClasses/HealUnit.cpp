@@ -38,12 +38,20 @@ bool HealUnit::attack()
             continue;
         }
 
-        // Heal the unit
-        unitToHeal->receiveHeal(calcUAP(unitToHeal));
+        // Infected units take twice as long to get healed
+        double UHP = dynamic_cast<EarthSoldier*>(unitToHeal)->isInfected() ? calcUAP(unitToHeal) / 2 : calcUAP(unitToHeal); 
+        unitToHeal->receiveHeal(UHP);  // Heal the unit
 
         // If unit's health is more than 20% of its initial health, make it join battle
         if (unitToHeal->isHealed())
+        {
+            if (dynamic_cast<EarthSoldier*> (unitToHeal)->isInfected())
+            {
+                dynamic_cast<EarthSoldier*>(unitToHeal)->loseInfection();
+                dynamic_cast<EarthSoldier*>(unitToHeal)->gainImmunity(); 
+            }
             gamePtr->addUnit(unitToHeal);
+        }
         else
             gamePtr->addUnitToMaintenanceList(unitToHeal);
 

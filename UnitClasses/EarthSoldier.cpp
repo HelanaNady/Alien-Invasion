@@ -74,9 +74,14 @@ bool EarthSoldier::isInfected() const
     return infected;
 }
 
+void EarthSoldier::loseInfection()
+{
+    infected = false; // Set the infected flag to false since the unit is healed
+}
+
 void EarthSoldier::gainImmunity()
 {
-    immune = true;
+    immune = true; // Set the immunity flag to true
 }
 
 bool EarthSoldier::isImmune() const
