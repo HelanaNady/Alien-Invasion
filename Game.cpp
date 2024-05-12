@@ -100,6 +100,11 @@ bool Game::areUnitsFighting() const
 	return earthArmy.getFightingUnitsCount() + alienArmy.getFightingUnitsCount();
 }
 
+bool Game::doesEarthNeedHelp() const
+{
+	return earthArmy.needAllyHelp();
+}
+
 void Game::printFinalResults() const
 {
 	std::cout << std::endl;
@@ -655,6 +660,11 @@ int Game::getUnitsCount(ArmyType armyType, UnitType unitType) const
 	}
 
 	return 0;
+}
+
+int Game::getInfectedUnitsCount() const
+{
+	return earthArmy.getInfectedSoldiersCount();
 }
 
 Game::~Game()

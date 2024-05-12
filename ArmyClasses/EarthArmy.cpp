@@ -115,6 +115,11 @@ float EarthArmy::getInfectionPercentage() const
     return (float) infectedSoldiersCount * 100 / soldiers.getCount();
 }
 
+int EarthArmy::getInfectedSoldiersCount() const
+{
+    return infectedSoldiersCount;
+}
+
 void EarthArmy::printArmy() const
 {
     std::cout << "Infected percentage = " << getInfectionPercentage() << "%" << std::endl;

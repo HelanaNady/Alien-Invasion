@@ -11,7 +11,7 @@
 #include "../UnitClasses/SaverUnit.h"
 #include "../Game.h"
 
-RandomGenerator::RandomGenerator(Game* gamePtr): gamePtr(gamePtr)
+RandomGenerator::RandomGenerator(Game* gamePtr): gamePtr(gamePtr), isGeneratingSavers(false)
 {
 	// Initialize the parameters with default values
 	setN(0);
@@ -21,7 +21,7 @@ RandomGenerator::RandomGenerator(Game* gamePtr): gamePtr(gamePtr)
 	setEarthAlliedParameters({ 0, 0 }, { 0, 0 }, { 0, 0 });
 }
 
-void RandomGenerator::generateUnits() const
+void RandomGenerator::generateUnits() 
 {
 	ArmyType armyTypes[3] = { EARTH, ALIEN, EARTH_ALLIED };
 
@@ -46,7 +46,7 @@ void RandomGenerator::generateUnits() const
 	}
 }
 
-Unit* RandomGenerator::generateUnit(ArmyType armyType) const
+Unit* RandomGenerator::generateUnit(ArmyType armyType) 
 {
 	Unit* newUnit = nullptr;
 	
@@ -88,7 +88,7 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 		else
 			newUnit = new AlienDrone(gamePtr, health, power, attackCapacity);
 	}
-	else
+	else if(armyType == EARTH_ALLIED && willGenerateSavers())
 	{
 		// Check if the max number of allied units is reached
 		if (Unit::cantCreateEarthAlliedUnit())
@@ -102,6 +102,16 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType) const
 	}
 
 	return newUnit;
+}
+
+bool RandomGenerator::willGenerateSavers()
+{
+	if (gamePtr->doesEarthNeedHelp()) // Only generate when needed
+		isGeneratingSavers = true;
+	else if (gamePtr->getInfectedUnitsCount() == 0) // stop generating after all units have been healed
+		isGeneratingSavers = false;
+
+	return isGeneratingSavers;
 }
 
 int RandomGenerator::getRandomNumber(int min, int max) const

@@ -64,9 +64,12 @@ public:
     void incrementInfectedESCount(); // Increment the infected soldiers count of the Earth Army
     void decrementInfectedESCount(); // Decrement the infected soldiers count of the Earth Army
 
+    bool doesEarthNeedHelp() const;
+
     // Getters
     int getCurrentTimestep() const;
     int getUnitsCount(ArmyType, UnitType) const;
+    int getInfectedUnitsCount() const;
 
     ~Game();
 };
