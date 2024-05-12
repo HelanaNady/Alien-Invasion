@@ -26,6 +26,9 @@ private:
 
 public:
     EarthArmy(Game*);
+    
+    // Static functions
+    static void setInfectionThreshold(int);
 
     void addUnit(Unit*);
     Unit* removeUnit(UnitType);
@@ -44,9 +47,6 @@ public:
     // Getters
     int getUnitsCount(UnitType) const;
     float getInfectionPercentage() const;
-
-    // Static functions
-    static void setInfectionThreshold(int);
 
     ~EarthArmy();
 };
