@@ -37,12 +37,3 @@ bool HealableUnit::isHealed() const
     // A unit is healed if its health is more than 20% of its initial health
     return health > initialHealth * 0.2;
 }
-
-bool HealableUnit::wasInfected() 
-{
-    if (unitType == UnitType::ES)
-    {
-        return dynamic_cast<EarthSoldier*>(this)->isInfected();
-    }
-    return false;
-}
