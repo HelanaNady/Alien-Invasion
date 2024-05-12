@@ -39,23 +39,10 @@ bool HealUnit::attack()
         }
 
         // Infected units take twice as long to get healed
-        double UHP = dynamic_cast<EarthSoldier*>(unitToHeal)->isInfected() ? calcUAP(unitToHeal) / 2 : calcUAP(unitToHeal); 
-        unitToHeal->receiveHeal(UHP);  // Heal the unit
+        if(unitToHeal->getUnitType() == UnitType::ES)
+        dynamic_cast<EarthSoldier*>(unitToHeal)->isInfected() ? slowHeal(unitToHeal) : normalHeal(unitToHeal);  
 
-        // If unit's health is more than 20% of its initial health, make it join battle
-        if (unitToHeal->isHealed())
-        {
-            if (dynamic_cast<EarthSoldier*> (unitToHeal)->isInfected())
-            {
-                dynamic_cast<EarthSoldier*>(unitToHeal)->loseInfection();
-                dynamic_cast<EarthSoldier*>(unitToHeal)->gainImmunity(); 
-            }
-            gamePtr->addUnit(unitToHeal);
-        }
-        else
-            gamePtr->addUnitToMaintenanceList(unitToHeal);
-
-        // Store the IDs of the healed units to be printed later
+        // Store the IDs of the units that recieved heal to be printed later
         foughtUnits.enqueue(unitToHeal->getId());
 
         // Nullify the pointer to avoid duplication
@@ -66,4 +53,31 @@ bool HealUnit::attack()
     }
 
     return healCheck;
+}
+
+void HealUnit::normalHeal(HealableUnit* unitToHeal)
+{
+    unitToHeal->receiveHeal(calcUAP(unitToHeal));
+
+    if (unitToHeal->isHealed())
+        gamePtr->addUnit(unitToHeal);
+    else
+        gamePtr->addUnitToMaintenanceList(unitToHeal);
+}
+
+void HealUnit::slowHeal(HealableUnit* unitToHeal)
+{
+    EarthSoldier* soldierToHeal = dynamic_cast<EarthSoldier*>(unitToHeal);
+
+    // Infected units take twice as long to get healed
+    soldierToHeal->receiveHeal(calcUAP(unitToHeal) / 2);
+
+    if (soldierToHeal->isHealed())
+    {
+        soldierToHeal->loseInfection();
+        soldierToHeal->gainImmunity();
+        gamePtr->addUnit(unitToHeal);
+    }
+    else
+        gamePtr->addUnitToMaintenanceList(unitToHeal);
 }
