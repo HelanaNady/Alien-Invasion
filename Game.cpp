@@ -100,6 +100,25 @@ bool Game::areUnitsFighting() const
 	return earthArmy.getFightingUnitsCount() + alienArmy.getFightingUnitsCount();
 }
 
+bool Game::doesEarthNeedHelp() const
+{
+	return earthArmy.needAllyHelp();
+}
+
+void Game::killSaverUnits()
+{
+	Unit* saverToKill = earthAlliedArmy.removeUnit(UnitType::SU); // Remove a saver from its list
+	
+	while (saverToKill)
+	{
+		saverToKill->receiveDamage(saverToKill->getHealth()); // Prepare it to be killed
+		addToKilledList(saverToKill); // Add it to the killed list
+		saverToKill = nullptr;
+		saverToKill = earthAlliedArmy.removeUnit(UnitType::SU); // Remove another saver
+	}
+
+}
+
 void Game::printFinalResults() const
 {
 	std::cout << std::endl;
@@ -655,6 +674,11 @@ int Game::getUnitsCount(ArmyType armyType, UnitType unitType) const
 	}
 
 	return 0;
+}
+
+int Game::getInfectedUnitsCount() const
+{
+	return earthArmy.getInfectedSoldiersCount();
 }
 
 Game::~Game()

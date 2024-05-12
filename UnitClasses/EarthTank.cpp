@@ -66,9 +66,9 @@ bool EarthTank::willAttackSoldiers()
 {
     float soldiersRatio = gamePtr->getUnitsCount(ALIEN, AS) > 0 ? (float) gamePtr->getUnitsCount(EARTH, ES) / gamePtr->getUnitsCount(ALIEN, AS) : -1;
 
-    if (soldiersRatio < 0.3 && soldiersRatio >= 0)
+    if (soldiersRatio < 0.3 && soldiersRatio >= 0) // Attacks soldiers if the soldiers ration is below 30%
         isAttackingSoldiers = true;
-    else if (soldiersRatio > 0.8)
+    else if (soldiersRatio > 0.8) // Unitil it exceeds 80%
         isAttackingSoldiers = false;
 
     return isAttackingSoldiers;

@@ -10,6 +10,7 @@ class RandomGenerator
 {
 private:
 	Game* gamePtr;
+	bool isGeneratingSavers;
 
 	int N;
 	int ESPercentage;
@@ -32,11 +33,12 @@ private:
 	Range earthAlliedAttackCapacityRange;
 
 private:
-	Unit* generateUnit(ArmyType) const; // Generate a unit of the given army type
+	Unit* generateUnit(ArmyType); // Generate a unit of the given army type
+	bool willGenerateSavers(); // A check to determine the need of generating savers
 
 public:
 	RandomGenerator(Game*);
-	void generateUnits() const; // Generate units for the both armies
+	void generateUnits(); // Generate units for the both armies
 	int getRandomNumber(int, int) const; // Generate a random number between the given range
 
 	// Setters
