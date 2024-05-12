@@ -107,13 +107,14 @@ bool Game::doesEarthNeedHelp() const
 
 void Game::killSaverUnits()
 {
-	Unit* saverToKill = earthAlliedArmy.removeUnit(UnitType::SU);
+	Unit* saverToKill = earthAlliedArmy.removeUnit(UnitType::SU); // Remove a saver from its list
+	
 	while (saverToKill)
 	{
-		saverToKill->receiveDamage(saverToKill->getHealth());
-		addToKilledList(saverToKill);
+		saverToKill->receiveDamage(saverToKill->getHealth()); // Prepare it to be killed
+		addToKilledList(saverToKill); // Add it to the killed list
 		saverToKill = nullptr;
-		saverToKill = earthAlliedArmy.removeUnit(UnitType::SU); 
+		saverToKill = earthAlliedArmy.removeUnit(UnitType::SU); // Remove another saver
 	}
 
 }

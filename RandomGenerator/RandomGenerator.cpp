@@ -111,7 +111,7 @@ bool RandomGenerator::willGenerateSavers()
 	else if (gamePtr->getInfectedUnitsCount() == 0) // stop generating after all units have been healed
 	{
 		isGeneratingSavers = false;
-		gamePtr->killSaverUnits();
+		gamePtr->killSaverUnits(); // Kill the remaining savers
 	}
 	return isGeneratingSavers;
 

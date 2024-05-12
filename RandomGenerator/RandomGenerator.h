@@ -34,7 +34,7 @@ private:
 
 private:
 	Unit* generateUnit(ArmyType); // Generate a unit of the given army type
-	bool willGenerateSavers();
+	bool willGenerateSavers(); // A check to determine the need of generating savers
 
 public:
 	RandomGenerator(Game*);
