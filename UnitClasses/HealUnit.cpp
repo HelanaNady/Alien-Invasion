@@ -44,10 +44,11 @@ bool HealUnit::attack()
         // Add the unit back to its list if completely healed, otherwise re-add to the UML
         if (unitToHeal->isHealed())
         {
-            if (unitToHeal->wasInfected()) // If the unit was an infected, additional heal is needed
-               healInfection(unitToHeal);
+            EarthSoldier* InfectedSoldier = dynamic_cast<EarthSoldier*>(unitToHeal); // If the unit was an infected, additional heal is needed
+            if (InfectedSoldier && InfectedSoldier->isInfected()) 
+               healInfection(InfectedSoldier);
 
-            gamePtr->addUnit(unitToHeal);
+            gamePtr->addUnit(unitToHeal); // Add it to its list whether it was infected or not
         }
         else
             gamePtr->addUnitToMaintenanceList(unitToHeal);
@@ -65,10 +66,8 @@ bool HealUnit::attack()
     return healCheck;
 }
 
-void HealUnit::healInfection(HealableUnit* recoveredUnit)
-{
-    EarthSoldier* recoveredSoldier = dynamic_cast<EarthSoldier*>(recoveredUnit);
-    
+void HealUnit::healInfection(EarthSoldier* recoveredSoldier)
+{   
     recoveredSoldier->loseInfection(); // Turn the infection flag off
     recoveredSoldier->gainImmunity(); // Make it immune to furure infections
     gamePtr->decrementInfectedESCount(); // Decrement the infected soldiers count of the Earth Army
