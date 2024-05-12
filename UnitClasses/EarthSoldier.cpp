@@ -36,7 +36,7 @@ bool EarthSoldier::attack()
     while (enemyList.dequeue(enemyUnit))
     {
         // Calculate the UAP and apply the damage
-        enemyUnit->receiveDamage(calcUnitPower(enemyUnit));
+        enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
         // Check if the unit is dead or can join the battle
         if (enemyUnit->isDead())

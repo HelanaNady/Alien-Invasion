@@ -46,7 +46,7 @@ public:
 
 	void receiveDamage(double); // Decrease the health of the unit by "UAP"
 
-	double calcUnitPower(Unit*) const; // Calculates the damage caused when attacked by "attackerUnit"
+	double calcUAP(Unit*) const; // Calculates the damage caused when attacked by "attackerUnit"
 	virtual bool attack() = 0;
 	virtual void printFought() = 0;
 

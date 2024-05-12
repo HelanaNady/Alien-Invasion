@@ -53,7 +53,7 @@ bool AlienMonster::attack()
         }
 
         // Calculate the UAP and apply the damage
-        enemyUnit->receiveDamage(calcUnitPower(enemyUnit));
+        enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
         // Check if the unit is dead, needs healing or can join the battle
         if (enemyUnit->isDead())
