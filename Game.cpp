@@ -88,11 +88,10 @@ bool Game::battleOver(bool didArmiesAttack) const
 {
 	// Game ending cases
 	bool anArmyDied = earthArmy.isDead() || alienArmy.isDead(); // If one army completely killed the other
-	bool unitsOverflow = Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit(); // If one army has reached its maximum units capacity
 	bool noAttackTie = !didArmiesAttack; // If both armies weren't able to attack - considered as a tie
 
 	// Don't check for end battle condition unless it has run for at least 40 timesteps
-	return currentTimestep >= 40 && (anArmyDied || unitsOverflow || noAttackTie);
+	return currentTimestep >= 40 && (anArmyDied || noAttackTie);
 }
 
 bool Game::areUnitsFighting() const
@@ -106,7 +105,7 @@ void Game::printFinalResults() const
 
 	// Print an overflow error message
 	if (Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit())
-		std::cout << "Battle Stopped: The maximum number of units has been reached!" << std::endl;
+		std::cout << "Warning: The maximum number of units has been reached!" << std::endl << std::endl;
 
 	// Print battle results
 	std::cout << "What a battle!" << std::endl;
@@ -123,8 +122,6 @@ std::string Game::battleResult() const
 		return "Alien Army wins!";
 	else if (!earthArmy.isDead() && alienArmy.isDead()) // If the Earth army is dead and the Alien army is not dead, the Earth army wins
 		return "Earth Army wins!";
-	else if (Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit()) // If the battle ended due to a units overflow, the winner is the army with more alive units
-		return totalEarthUnits > totalAlienUnits ? "Earth Army wins!" : "Alien Army wins!";
 	else // If both armies are dead or no army was able to attack, the result is a draw
 		return "Draw!";
 }
@@ -199,14 +196,20 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 
 void Game::addToKilledList(Unit* unit)
 {
+	// Add the unit to the killed list
 	killedList.enqueue(unit);
+
+	// Set the destruction time of the unit
 	unit->setDestructionTime(currentTimestep);
 }
 
 void Game::addUnitToMaintenanceList(HealableUnit* unit)
 {
-	unitMaintenanceList.enqueue(unit, unit->getHealPriority()); // Enqueue the unit with its priority
-	unit->setUMLjoinTime(currentTimestep); // Set the time when the unit joined the UML
+	// Enqueue the unit with its priority to the maintenance list
+	unitMaintenanceList.enqueue(unit, unit->getHealPriority());
+
+	// Set the time when the unit joined the UML
+	unit->setUMLjoinTime(currentTimestep);
 }
 
 LinkedQueue<HealableUnit*> Game::getUnitsToMaintainList(int attackCapacity)
@@ -316,11 +319,8 @@ void Game::countArmyStatistics(GameStatistics& gameStatistics, ArmyType armyType
 			gameStatistics.unitCounts[unitTypes[i]]++;
 			gameStatistics.totalUnitsCount++;
 
-			// Army Statistics
+			// Total Army Units Count
 			gameStatistics.armyStatistics[armyType].totalUnitsCount++;
-
-			if (unit->hasBeenAttackedBefore()) // Check if unit has been attacked before and add the delays
-				gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += unit->getFirstAttackDelay();
 
 			// Count the infected Earth Soldiers
 			if (unitTypes[i] == UnitType::ES)
@@ -361,7 +361,7 @@ void Game::countKilledUnitsStatistics(GameStatistics& gameStatistics)
 		gameStatistics.destructedUnitCounts[unitType]++;
 		gameStatistics.totalDestructedUnitsCount++;
 
-		// Total Units Count
+		// Total Army Units Count
 		gameStatistics.armyStatistics[armyType].totalUnitsCount++;
 		gameStatistics.armyStatistics[armyType].totalDestructedUnitsCount++;
 
@@ -405,6 +405,9 @@ void Game::countUnitMaintenanceStatistics(GameStatistics& gameStatistics)
 		gameStatistics.unitCounts[unitType]++;
 		gameStatistics.totalUnitsCount++;
 
+		// Total Army Units Count
+		gameStatistics.armyStatistics[armyType].totalUnitsCount++;
+
 		// Count the infected Earth Soldiers
 		if (unitType == UnitType::ES)
 		{
@@ -412,9 +415,6 @@ void Game::countUnitMaintenanceStatistics(GameStatistics& gameStatistics)
 			if (earthSoldier->isInfected() || earthSoldier->isImmune()) // Check if the unit is infected or immune (has been infected before)
 				gameStatistics.totalInfectedESCount++;
 		}
-
-		// Delays
-		gameStatistics.armyStatistics[armyType].totalFirstAttackDelays += healableUnit->getFirstAttackDelay();
 
 		// Add the unit back to the maintenance list
 		unitMaintenanceList.enqueue(healableUnit, priority);
@@ -465,7 +465,7 @@ void Game::generateOutputFile(std::string outputFileName)
 		fout << std::setw(12) << killedUnit->getDestructionTime();
 		fout << std::setw(12) << killedUnit->getId();
 		fout << std::setw(12) << killedUnit->getJoinTime();
-		fout << std::setw(12) << (killedUnit->hasBeenAttackedBefore() ? std::to_string(killedUnit->getFirstAttackDelay()) : "N/A");
+		fout << std::setw(12) << killedUnit->getFirstAttackDelay();
 		fout << std::setw(12) << killedUnit->getDestructionDelay();
 		fout << std::setw(12) << killedUnit->getBattleDelay() << std::endl;
 
@@ -615,7 +615,7 @@ Game::~Game()
 	HealableUnit* healableUnit = nullptr;
 	while (unitMaintenanceList.dequeue(healableUnit, dummyPri))
 	{
-		delete healableUnit; 
+		delete healableUnit;
 		healableUnit = nullptr;
 	}
 }
