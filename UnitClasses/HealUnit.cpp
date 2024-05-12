@@ -44,9 +44,9 @@ bool HealUnit::attack()
         // Add the unit back to its list if completely healed, otherwise re-add to the UML
         if (unitToHeal->isHealed())
         {
-            EarthSoldier* InfectedSoldier = dynamic_cast<EarthSoldier*>(unitToHeal); // If the unit was an infected, additional heal is needed
-            if (InfectedSoldier && InfectedSoldier->isInfected()) 
-               healInfection(InfectedSoldier);
+            EarthSoldier* infectedSoldier = dynamic_cast<EarthSoldier*>(unitToHeal); // If the unit was an infected, additional heal is needed
+            if (infectedSoldier && infectedSoldier->isInfected()) 
+               healInfection(infectedSoldier);
 
             gamePtr->addUnit(unitToHeal); // Add it to its list whether it was infected or not
         }

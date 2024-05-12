@@ -1,7 +1,7 @@
 #ifndef HEAL_UNIT_H
 #define HEAL_UNIT_H
 
-#include "HealableUnit.h"
+#include "../UnitClasses/EarthSoldier.h"
 #include "../DEFS.h"
 
 class HealUnit: public Unit
