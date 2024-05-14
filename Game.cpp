@@ -135,9 +135,6 @@ void Game::printFinalResults() const
 
 std::string Game::battleResult() const
 {
-	int totalEarthUnits = earthArmy.getUnitsCount(UnitType::ES) + earthArmy.getUnitsCount(UnitType::ET) + earthArmy.getUnitsCount(UnitType::EG);
-	int totalAlienUnits = alienArmy.getUnitsCount(UnitType::AS) + alienArmy.getUnitsCount(UnitType::AM) + alienArmy.getUnitsCount(UnitType::AD);
-
 	if (earthArmy.isDead() && !alienArmy.isDead()) // If the Earth army is dead and the Alien army is not dead, the Alien army wins
 		return "Alien Army wins!";
 	else if (!earthArmy.isDead() && alienArmy.isDead()) // If the Earth army is dead and the Alien army is not dead, the Earth army wins
@@ -264,16 +261,6 @@ LinkedQueue<HealableUnit*> Game::getUnitsToMaintainList(int attackCapacity)
 	}
 
 	return unitsToMaintain;
-}
-
-void Game::incrementInfectedESCount()
-{
-	earthArmy.incrementInfectedSoldiersCount();
-}
-
-void Game::decrementInfectedESCount()
-{
-	earthArmy.decrementInfectedSoldiersCount();
 }
 
 void Game::printKilledList() const

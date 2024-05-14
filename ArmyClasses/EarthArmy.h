@@ -39,8 +39,6 @@ public:
     void killHealUnit();
 
     // Infection functions
-    void incrementInfectedSoldiersCount();
-    void decrementInfectedSoldiersCount();
     void spreadInfection();
 
     bool needAllyHelp() const;
