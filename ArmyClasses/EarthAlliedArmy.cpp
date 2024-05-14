@@ -42,6 +42,7 @@ bool EarthAlliedArmy::attack()
 
 	if (attacker)
 	{
+		gamePtr->log("Attacking with SU: " + attacker->toString());
 		bool didUnitAttack = attacker->attack();
 
 		// Add the attacker to the current attackers queue
@@ -50,7 +51,12 @@ bool EarthAlliedArmy::attack()
 
 		// If any unit attacked, the army attacked
 		didArmyAttack = didArmyAttack || didUnitAttack;
-	}	
+	}
+	else
+	{
+		gamePtr->log("no su to attack with");
+	}
+	logCurrentAttackers();
 	return didArmyAttack;
 }
 

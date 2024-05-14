@@ -45,6 +45,8 @@ bool AlienMonster::attack()
     // Loop through the tanks and soldiers lists
     while (soldiersList.dequeue(enemyUnit) || tanksList.dequeue(enemyUnit) || saversList.dequeue(enemyUnit))
     {
+        gamePtr->log("Alien " + getUnitTypeString() + " " + toString() + " is attacking Earth " + enemyUnit->getUnitTypeString() + " " + enemyUnit->toString() + " with UAP " + std::to_string(calcUAP(enemyUnit)));
+
         // Check if the enemy unit is an Earth Soldier and infect it if the probability is met
         int x = rand() % 100 + 1;
         if (enemyUnit->getUnitType() == UnitType::ES && x <= infectingProbability)
@@ -67,6 +69,8 @@ bool AlienMonster::attack()
 
         // Store the IDs of the fought units to be printed later
         foughtUnits.enqueue(enemyUnit->getId());
+
+        gamePtr->log("Alien " + getUnitTypeString() + " " + toString() + " attacked Earth " + enemyUnit->getUnitTypeString() + " " + enemyUnit->toString());
 
         // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;

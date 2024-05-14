@@ -6,6 +6,7 @@
 #include "DEFS.h"
 #include "UnitClasses/Unit.h"
 #include "UnitClasses/AlienMonster.h"
+#include "logger.h"
 
 // Global helper functions
 float calculateRatio(int numerator, int denominator) // Helper function to calculate the ratio of two numbers
@@ -22,13 +23,14 @@ float calculatePercentage(int numerator, int denominator) // Helper function to 
 }
 
 
-Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), earthArmy(this), alienArmy(this), earthAlliedArmy(this), randomGenerator(this)
+Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), earthArmy(this), alienArmy(this), earthAlliedArmy(this), randomGenerator(this), logger(this, "log.txt")
 {}
 
 void Game::run(GameMode gameMode, std::string inputFileName, std::string outputFileName)
 {
 	// Change the game mode 
 	setGameMode(gameMode);
+	logger.log("Game mode changed to " + gameModeToString(gameMode));
 
 	// Load the parameters from the file and set the parameters in the random generator
 	if (!loadParameters(inputFileName)) // If the file is not found, print an error message and return
@@ -36,6 +38,7 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 		std::cout << "Error: File not found!" << std::endl;
 		return;
 	}
+	logger.log("Parameters loaded from file " + inputFileName);
 
 	// Run the game
 	bool didArmiesAttack = true;
@@ -43,6 +46,7 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 	{
 		// Increment Timestep
 		currentTimestep++;
+		logBeginOfTimeStep();
 
 		// Generate units for both armies
 		randomGenerator.generateUnits();
@@ -60,6 +64,7 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 			std::cout << "Press Enter to continue..." << std::endl;
 			while (std::cin.get() != '\n');
 		}
+		logEndOfTimeStep();
 	} while (!battleOver(didArmiesAttack));
 
 	// Produce the output file
@@ -69,11 +74,29 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 	printFinalResults();
 }
 
+std::string Game::gameModeToString(GameMode)
+{
+	switch (gameMode)
+	{
+		case GameMode::INTERACTIVE:
+			return "Interactive";
+		case GameMode::SILENT:
+			return "Silent";
+	}
+
+	return "Unknown";
+}
+
 bool Game::startAttack()
 {
 	// Make both armies attack
+	logger.log("Earth Army attacking...");
 	bool didEarthArmyAttack = earthArmy.attack();
+
+	logger.log("Alien Army attacking...");
 	bool didAlienArmyAttack = alienArmy.attack();
+
+	logger.log("Allied Earth Army attacking...");
 	bool didEarthAlliedAttack = earthAlliedArmy.attack();
 
 	// Return if any of the armies successfully attacked
@@ -119,6 +142,37 @@ void Game::killSaverUnits()
 
 }
 
+void Game::logStartOfGame()
+{
+	logger.log("Game started.");
+}
+
+void Game::logBeginOfTimeStep()
+{
+	logger.log("Begin of timestep.");
+}
+
+void Game::addToKilledList(Unit* unit)
+{
+	logger.log("Adding unit to killed list: " + unit->toString());
+	killedList.enqueue(unit);
+}
+
+void Game::log(std::string message)
+{
+	logger.log(message);
+}
+
+void Game::logEndOfTimeStep()
+{
+	logger.log("End of timestep.");
+}
+
+void Game::logEndOfGame()
+{
+	logger.log("Game ended.");
+}
+
 void Game::printFinalResults() const
 {
 	std::cout << std::endl;
@@ -148,8 +202,13 @@ std::string Game::battleResult() const
 
 void Game::addUnit(Unit* unit)
 {
-	if (!unit)
+	if (unit)
+		logger.log("Adding unit: " + unit->toString());
+	else
+	{
+		logger.log("Adding unit: nullptr");
 		return;
+	}
 
 	ArmyType armyType = unit->getArmyType();
 
@@ -202,7 +261,10 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 				if (enemyUnitPtr)
 					enemyUnits.enqueue(enemyUnitPtr);
 				else
+				{
+					logger.log(Unit::unitTypeString(unitType) + " to attack: []");
 					break;
+				}
 			}
 			break;
 
@@ -213,7 +275,10 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 				if (enemyUnitPtr)
 					enemyUnits.enqueue(enemyUnitPtr);
 				else
+				{
+					logger.log(Unit::unitTypeString(unitType) + " to attack: []");
 					break;
+				}
 			}
 			break;
 
@@ -224,23 +289,36 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 				if (enemyUnitPtr)
 					enemyUnits.enqueue(enemyUnitPtr);
 				else
+				{
+					logger.log(Unit::unitTypeString(unitType) + " to attack: []");
 					break;
+				}
 			}
 	}
+
+	logger.log(Unit::unitTypeString(unitType) + " to attack: [");
+	for (int i = 0; i < enemyUnits.getCount(); i++)
+	{
+		Unit* unit = nullptr;
+		enemyUnits.dequeue(unit);
+		logger.log(unit->toString());
+		enemyUnits.enqueue(unit);
+	}
+	logger.log("]");
+
 	return enemyUnits;
-}
-
-void Game::addToKilledList(Unit* unit)
-{
-	// Add the unit to the killed list
-	killedList.enqueue(unit);
-
-	// Set the destruction time of the unit
-	unit->setDestructionTime(currentTimestep);
 }
 
 void Game::addUnitToMaintenanceList(HealableUnit* unit)
 {
+	if (unit)
+		logger.log("Adding unit to maintenance list: " + unit->toString());
+	else
+	{
+		logger.log("Adding unit to maintenance list: nullptr");
+		return;
+	}
+
 	// Enqueue the unit with its priority to the maintenance list
 	unitMaintenanceList.enqueue(unit, unit->getHealPriority());
 
@@ -263,6 +341,18 @@ LinkedQueue<HealableUnit*> Game::getUnitsToMaintainList(int attackCapacity)
 			break;
 	}
 
+	logger.log("Units to maintain: " + std::to_string(unitsToMaintain.getCount()));
+	logger.log("Units to maintain: [");
+	for (int i = 0; i < unitsToMaintain.getCount(); i++)
+	{
+		HealableUnit* unit = nullptr;
+		unitsToMaintain.dequeue(unit);
+		logger.log(unit->toString());
+		unitsToMaintain.enqueue(unit);
+	}
+	logger.log("]");
+
+	return unitsToMaintain;
 	return unitsToMaintain;
 }
 

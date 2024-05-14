@@ -24,6 +24,7 @@
     <ClCompile Include="ArmyClasses\Army.cpp" />
     <ClCompile Include="ArmyClasses\EarthArmy.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="logger.cpp" />
     <ClCompile Include="UnitClasses\HealableUnit.cpp" />
     <ClCompile Include="UnitClasses\HealUnit.cpp" />
     <ClCompile Include="main.cpp" />
@@ -51,6 +52,7 @@
     <ClInclude Include="Containers\StackADT.h" />
     <ClInclude Include="DEFS.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="logger.h" />
     <ClInclude Include="UnitClasses\HealableUnit.h" />
     <ClInclude Include="UnitClasses\HealUnit.h" />
     <ClInclude Include="RandomGenerator\RandomGenerator.h" />

@@ -21,13 +21,32 @@ RandomGenerator::RandomGenerator(Game* gamePtr): gamePtr(gamePtr), isGeneratingS
 	setEarthAlliedParameters({ 0, 0 }, { 0, 0 }, { 0, 0 });
 }
 
+std::string RandomGenerator::armyTypeToString(ArmyType armyType) const
+{
+	switch (armyType)
+	{
+		case ArmyType::EARTH:
+			return "Earth";
+		case ArmyType::ALIEN:
+			return "Alien";
+		case ArmyType:: EARTH_ALLIED:
+			return "Earth Allied";
+		default:
+			return "Unknown";
+	}
+}
+
 void RandomGenerator::generateUnits() 
 {
+	gamePtr->log("Generating units...");
+
 	ArmyType armyTypes[3] = { EARTH, ALIEN, EARTH_ALLIED };
 
 	for (int i = 0; i < 3; i++)
 	{
+		gamePtr->log("Generating units for " + armyTypeToString(armyTypes[i]) + " army...");
 		int A = getRandomNumber(1, 100);
+		gamePtr->log("Probability: " + std::to_string(A) + " - " + ((A <= prob) ? "Success" : "Fail") + " (Prob: " + std::to_string(prob) + ", N: " + std::to_string(N) + ", Army: " + armyTypeToString(armyTypes[i]) + ")");
 
 		if (A <= prob) // If the probability is satisfied, generate the units
 		{
@@ -48,9 +67,12 @@ void RandomGenerator::generateUnits()
 
 Unit* RandomGenerator::generateUnit(ArmyType armyType) 
 {
+	gamePtr->log("Generating a unit for " + armyTypeToString(armyType) + " army...");
 	Unit* newUnit = nullptr;
 	
 	int B = getRandomNumber(1, 100);
+	gamePtr->log("B=" + std::to_string(B) + " (ES: " + std::to_string(ESPercentage) + ", ET: " + std::to_string(ETPercentage) + ", EG: " + std::to_string(EGPercentage) + ", EH: " + std::to_string(EHPercentage) + 
+		", AS: " + std::to_string(ASPercentage) + ", AM: " + std::to_string(AMPercentage) + ", AD: " + std::to_string(ADPercentage) + ")");
 
 	if (armyType == ArmyType::EARTH)
 	{
@@ -70,6 +92,8 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType)
 			newUnit = new EarthGunnery(gamePtr, health, power, attackCapacity);
 		else
 			newUnit = new HealUnit(gamePtr, health, power, attackCapacity);
+
+		gamePtr->log("Generated unit: " + newUnit->toString());
 	}
 	else if(armyType == ArmyType:: ALIEN)
 	{
@@ -87,6 +111,8 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType)
 			newUnit = new AlienMonster(gamePtr, health, power, attackCapacity);
 		else
 			newUnit = new AlienDrone(gamePtr, health, power, attackCapacity);
+
+		gamePtr->log("Generated unit: " + newUnit->toString());
 	}
 	else if(armyType == EARTH_ALLIED && willGenerateSavers())
 	{
@@ -99,6 +125,8 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType)
 		int attackCapacity = getRandomNumber(earthAlliedAttackCapacityRange.min, earthAlliedAttackCapacityRange.max);
 
 		newUnit = new SaverUnit(gamePtr, health, power, attackCapacity);
+
+		gamePtr->log("Generated unit: " + newUnit->toString());
 	}
 
 	return newUnit;

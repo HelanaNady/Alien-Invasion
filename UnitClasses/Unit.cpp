@@ -180,6 +180,89 @@ void Unit::setDestructionTime(int Td)
 	this->Td = Td;
 }
 
+std::string Unit::toString() const
+{
+	std::string unitTypeStr;
+	switch (unitType)
+	{
+	case UnitType::ES:
+		unitTypeStr = "Earth Soldier";
+		break;
+	case UnitType::ET:
+		unitTypeStr = "Earth Tank";
+		break;
+	case UnitType::EG:
+		unitTypeStr = "Earth Gunnery";
+		break;
+	case UnitType::EH:
+		unitTypeStr = "Heal Unit";
+		break;
+	case UnitType::AS:
+		unitTypeStr = "Alien Soldier";
+		break;
+	case UnitType::AM:
+		unitTypeStr = "Alien Monster";
+		break;
+	case UnitType::AD:
+		unitTypeStr = "Alien Drone";
+		break;
+	case UnitType::SU:
+		unitTypeStr = "Saver Unit";
+		break;
+	}
+
+	return unitTypeStr + " (ID: " + std::to_string(id) + ", Health: " + std::to_string(health) + ", Power: " + std::to_string(power) + ", Attack Capacity: " + std::to_string(attackCapacity) + ")";
+}
+
+std::string Unit::foughtUnitToString()
+{
+	std::string foughtUnitsStr = "";
+
+	int i = 0;
+	for (int i = 0; i < foughtUnits.getCount(); i++)
+	{
+		int foughtUnitId;
+		foughtUnits.dequeue(foughtUnitId);
+		foughtUnitsStr += std::to_string(foughtUnitId) + ", ";
+		foughtUnits.enqueue(foughtUnitId);
+	}
+
+	// Remove the last comma and space
+	if (foughtUnitsStr.size() > 0)
+		foughtUnitsStr = foughtUnitsStr.substr(0, foughtUnitsStr.size() - 2);
+
+	return foughtUnitsStr;
+}
+
+std::string Unit::getUnitTypeString()
+{
+	return Unit::unitTypeString(unitType);
+}
+
+std::string Unit::unitTypeString(UnitType unitType)
+{
+	switch (unitType)
+	{
+	case UnitType::ES:
+		return "ES";
+	case UnitType::ET:
+		return "ET";
+	case UnitType::EG:
+		return "EG";
+	case UnitType::EH:
+		return "EH";
+	case UnitType::AS:
+		return "AS";
+	case UnitType::AM:
+		return "AM";
+	case UnitType::AD:
+		return "AD";
+	case UnitType::SU:
+		return "SU";
+	}
+	return "";
+}
+
 std::ostream& operator<<(std::ostream& oStream, Unit* unitObj)
 {
 	oStream << unitObj->id;

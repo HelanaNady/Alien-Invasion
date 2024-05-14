@@ -29,17 +29,23 @@ bool HealUnit::attack()
 
     while (unitsToHeal.dequeue(unitToHeal))
     {
+        gamePtr->log("Earth " + getUnitTypeString() + " " + toString() + " is healing " + unitToHeal->getUnitTypeString() + " " + unitToHeal->toString() + " with UHP " + std::to_string(calcUAP(unitToHeal)));
+
         // Check if unit has spent more than 10  consecutive time steps in UML
         if (unitToHeal->hasWaitedForTooLong())
         {
             unitToHeal->receiveDamage(unitToHeal->getHealth()); // Make unit health 0 
             gamePtr->addToKilledList(unitToHeal); // Add unit to killed list
 
+            gamePtr->log("Earth " + unitToHeal->getUnitTypeString() + " " + unitToHeal->toString() + " has been killed because it spent more than 10 time steps in UML");
+
             continue;
         }
 
         // Heal each unit with the appropriate heal power
         unitToHeal->receiveHeal(calcUAP(unitToHeal));
+
+        gamePtr->log("Earth " + unitToHeal->getUnitTypeString() + " " + unitToHeal->toString() + " has been healed to " + std::to_string(unitToHeal->getHealth()) + " health");
         
         // Add the unit back to its list if completely healed, otherwise re-add to the UML
         if (unitToHeal->isHealed())
@@ -55,6 +61,8 @@ bool HealUnit::attack()
 
         // Store the IDs of the units that recieved heal to be printed later
         foughtUnits.enqueue(unitToHeal->getId());
+
+        gamePtr->log("Earth " + unitToHeal->getUnitTypeString() + " " + unitToHeal->toString() + " has healed Earth " + unitToHeal->getUnitTypeString() + " " + unitToHeal->toString());
 
         // Nullify the pointer to avoid duplication
         unitToHeal = nullptr;

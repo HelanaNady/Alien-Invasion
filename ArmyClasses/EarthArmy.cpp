@@ -152,6 +152,24 @@ bool EarthArmy::attack()
 
         if (attacker)
         {
+            switch (unitTypes[i])
+            {
+                case UnitType::ES:
+                    gamePtr->log("Attacking with Earth Soldier: " + attacker->toString());
+                    break;
+
+                case UnitType::EG:
+                    gamePtr->log("Attacking with Earth Gunnery: " + attacker->toString());
+                    break;
+
+                case UnitType::ET:
+                    gamePtr->log("Attacking with Earth Tank: " + attacker->toString());
+                    break;
+
+                case UnitType::EH:
+                    gamePtr->log("Healing with Earth Healer: " + attacker->toString());
+                    break;
+            }
             // Attack the enemy
             bool didUnitAttack = attacker->attack();
 
@@ -166,6 +184,28 @@ bool EarthArmy::attack()
             if (attacker->getUnitType() == UnitType::EH && didUnitAttack)
                 killHealUnit();
         }
+        else
+        {
+            switch (unitTypes[i])
+            {
+                case UnitType::ES:
+                    gamePtr->log("No Earth Soldier to attack with");
+                    break;
+
+                case UnitType::EG:
+                    gamePtr->log("No Earth Gunnery to attack with");
+                    break;
+
+                case UnitType::ET:
+                    gamePtr->log("No Earth Tank to attack with");
+                    break;
+
+                case UnitType::EH:
+                    gamePtr->log("No Earth Healer to heal with");
+                    break;
+            }
+        }
+        logCurrentAttackers();
     }
 
     return didArmyAttack; // Return whether the army attacked

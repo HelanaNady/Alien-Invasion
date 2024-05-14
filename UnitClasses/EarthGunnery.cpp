@@ -48,6 +48,8 @@ bool EarthGunnery::attack()
         if (!enemyUnit)
             continue;
 
+        gamePtr->log("Earth " + getUnitTypeString() + " " + toString() + " is attacking Alien " + enemyUnit->getUnitTypeString() + " " + enemyUnit->toString() + " with UAP " + std::to_string(calcUAP(enemyUnit)));
+
         // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
@@ -59,6 +61,8 @@ bool EarthGunnery::attack()
 
         // Store the IDs of the fought units to be printed later
         foughtUnits.enqueue(enemyUnit->getId());
+
+        gamePtr->log("Earth " + getUnitTypeString() + " " + toString() + " attacked Alien " + enemyUnit->getUnitTypeString() + " " + enemyUnit->toString());
 
         // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;

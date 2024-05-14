@@ -23,6 +23,8 @@ public:
     virtual void printArmy() const = 0;
     void printFightingUnits();
     int getFightingUnitsCount() const;
+
+    void logCurrentAttackers();
 };
 
 #endif

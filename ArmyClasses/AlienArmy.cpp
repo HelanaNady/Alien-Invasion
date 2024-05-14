@@ -2,6 +2,7 @@
 
 #include "AlienArmy.h"
 #include "../UnitClasses/Unit.h"
+#include "../Game.h"
 
 AlienArmy::AlienArmy(Game* gamePtr): Army(gamePtr),
 dronesAddingToggler(false), dronesRemovingToggler(false), dronesPickingToggler(false)
@@ -131,6 +132,24 @@ bool AlienArmy::attack()
 
         if (attacker)
         {
+            switch (unitTypes[i])
+            {
+                case UnitType::AS:
+                    gamePtr->log("Attacking with Alien Soldier: " + attacker->toString());
+                    break;
+
+                case UnitType::AM:
+                    gamePtr->log("Attacking with Alien Monster: " + attacker->toString());
+                    break;
+
+                case UnitType::AD:
+                    if(i == 3)
+                        gamePtr->log("Attacking with the first Alien Drone: " + attacker->toString());
+                    else
+                        gamePtr->log("Attacking with the second Alien Drone: " + attacker->toString());
+                    break;
+
+            }
             // If drone is attacking and there are less than 2 drones, skip the attack
             if (unitTypes[i] == UnitType::AD && drones.getCount() < 2)
                 continue;
@@ -145,6 +164,25 @@ bool AlienArmy::attack()
             // If any unit attacked, the army attacked
             didArmyAttack = didArmyAttack || didUnitAttack;
         }
+        else
+        {
+            switch (unitTypes[i])
+            {
+                case UnitType::AS:
+                    gamePtr->log("No Alien Soldier to attack with");
+                    break;
+
+                case UnitType::AM:
+                    gamePtr->log("No Alien Soldier to attack with");
+                    break;
+
+                case UnitType::AD:
+                    gamePtr->log("No Alien Soldier to attack with");
+                    break;
+
+            }
+        }
+        logCurrentAttackers();
     }
 
     return didArmyAttack; // Return whether the army attacked

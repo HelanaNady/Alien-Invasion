@@ -35,6 +35,8 @@ bool EarthSoldier::attack()
 
     while (enemyList.dequeue(enemyUnit))
     {
+        gamePtr->log("Earth " + getUnitTypeString() + " " + toString() + " is attacking Alien " + enemyUnit->getUnitTypeString() + " " + enemyUnit->toString() + " with UAP " + std::to_string(calcUAP(enemyUnit)));
+
         // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
@@ -46,6 +48,8 @@ bool EarthSoldier::attack()
 
         // Store the IDs of the fought units to be printed later
         foughtUnits.enqueue(enemyUnit->getId());
+
+        gamePtr->log("Earth " + getUnitTypeString() + " " + toString() + " attacked Alien " + enemyUnit->getUnitTypeString() + " " + enemyUnit->toString());
 
         // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;
@@ -60,10 +64,18 @@ bool EarthSoldier::attack()
 void EarthSoldier::getInfection()
 {
     if (isInfected() || isImmune())
+    {
+        if (isImmune())
+            gamePtr->log("Earth " + getUnitTypeString() + " " + toString() + "is immune");
+        if(isInfected())
+            gamePtr->log("Earth " + getUnitTypeString() + " " + toString() + "is already infected");
         return;
+    }
+        
 
     // Set the infected flag to true
     infected = true;
+    gamePtr->log("Earth " + getUnitTypeString() + " " + toString() + "is infected");
 
     // Increment the infected earth soldier count
     gamePtr->incrementInfectedESCount();

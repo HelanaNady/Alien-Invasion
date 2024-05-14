@@ -11,6 +11,7 @@
 #include "Containers/LinkedQueue.h"
 #include "Containers/PriorityQueue.h"
 #include "UnitClasses/HealableUnit.h"
+#include "logger.h"
 
 class Game
 {
@@ -25,6 +26,9 @@ private:
 
     LinkedQueue<Unit*> killedList;
     PriorityQueue<HealableUnit*> unitMaintenanceList;
+
+    // Logger
+    Logger logger;
 
 private:
     bool startAttack(); // Makes the two armies attack each other
@@ -52,6 +56,8 @@ public:
 
     void run(GameMode, std::string, std::string);  // Run the game
 
+    std::string gameModeToString(GameMode);  // Convert the game mode to string
+
     void addUnit(Unit*);  // Add a unit to the appropriate army and list
     Unit* removeUnit(ArmyType, UnitType);  // Remove a unit from the appropriate army and list
     LinkedQueue<Unit*> getEnemyList(ArmyType, UnitType, int); // Get the enemy list for the given army type, unit type and attack capacity
@@ -66,6 +72,13 @@ public:
 
     bool doesEarthNeedHelp() const; // A check for the infection perecentage for saver units generation
     void killSaverUnits(); // Savers need to be killed once all infected units are healed
+
+    // Logger
+    void logStartOfGame();
+    void logBeginOfTimeStep();
+    void log(std::string);
+    void logEndOfTimeStep();
+    void logEndOfGame();
 
     // Getters
     int getCurrentTimestep() const;

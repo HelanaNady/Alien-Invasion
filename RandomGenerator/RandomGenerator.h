@@ -38,6 +38,9 @@ private:
 
 public:
 	RandomGenerator(Game*);
+
+	std::string armyTypeToString(ArmyType) const; // Convert the army type to string
+
 	void generateUnits(); // Generate units for the both armies
 	int getRandomNumber(int, int) const; // Generate a random number between the given range
 

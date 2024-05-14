@@ -16,6 +16,9 @@
     <Filter Include="Unit Classes">
       <UniqueIdentifier>{d6265d0d-9e06-4a0b-9c88-39e5e3415fa3}</UniqueIdentifier>
     </Filter>
+      <Filter Include="Logger Class">
+      <UniqueIdentifier>{95e5a3b4-d60f-4074-aca1-70aa469963dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Containers\PriorityQueue.h">
@@ -99,6 +102,9 @@
     <ClInclude Include="ArmyClasses\EarthArmy.h">
       <Filter>Army Classes</Filter>
     </ClInclude>
+      <ClInclude Include="Logger.h">
+      <Filter>Logger Class</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -150,5 +156,9 @@
     <ClCompile Include="ArmyClasses\EarthAlliedArmy.cpp">
       <Filter>Army Classes</Filter>
     </ClCompile>
+      <ClCompile Include="Logger.cpp">
+      <Filter>Logger Class</Filter>
+    </ClCompile>
+
   </ItemGroup>
 </Project>

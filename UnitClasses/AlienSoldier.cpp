@@ -35,6 +35,8 @@ bool AlienSoldier::attack()
 
     while (soldiersList.dequeue(enemyUnit) || saversList.dequeue(enemyUnit))
     {
+        gamePtr->log("Alien " + getUnitTypeString() + " " + toString() + " is attacking Earth " + enemyUnit->getUnitTypeString() + " " + enemyUnit->toString() + " with UAP " + std::to_string(calcUAP(enemyUnit)));
+
         // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
@@ -48,6 +50,8 @@ bool AlienSoldier::attack()
 
         // Store the IDs of the fought units to be printed later
         foughtUnits.enqueue(enemyUnit->getId());
+
+        gamePtr->log("Alien " + getUnitTypeString() + " " + toString() + " attacked Earth " + enemyUnit->getUnitTypeString() + " " + enemyUnit->toString());
 
         // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;
