@@ -62,7 +62,6 @@ public:
     LinkedQueue<HealableUnit*> getUnitsToMaintainList(int);
 
     void incrementInfectedESCount(); // Increment the infected soldiers count of the Earth Army
-    void decrementInfectedESCount(); // Decrement the infected soldiers count of the Earth Army
 
     bool doesEarthNeedHelp() const; // A check for the infection perecentage for saver units generation
     void killSaverUnits(); // Savers need to be killed once all infected units are healed

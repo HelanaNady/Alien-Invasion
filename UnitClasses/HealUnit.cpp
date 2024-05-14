@@ -70,5 +70,4 @@ void HealUnit::healInfection(EarthSoldier* recoveredSoldier)
 {   
     recoveredSoldier->loseInfection(); // Turn the infection flag off
     recoveredSoldier->gainImmunity(); // Make it immune to furure infections
-    gamePtr->decrementInfectedESCount(); // Decrement the infected soldiers count of the Earth Army
 }

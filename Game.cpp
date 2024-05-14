@@ -271,11 +271,6 @@ void Game::incrementInfectedESCount()
 	earthArmy.incrementInfectedSoldiersCount();
 }
 
-void Game::decrementInfectedESCount()
-{
-	earthArmy.decrementInfectedSoldiersCount();
-}
-
 void Game::printKilledList() const
 {
 	std::cout << killedList.getCount() << " units [";

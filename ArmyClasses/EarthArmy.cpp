@@ -17,6 +17,8 @@ void EarthArmy::addUnit(Unit* unit)
     {
         case UnitType::ES:
             soldiers.enqueue(unit);
+            if (dynamic_cast<EarthSoldier*>(unit)->isInfected())
+                infectedSoldiersCount++;
             break;
 
         case UnitType::ET:
@@ -41,6 +43,8 @@ Unit* EarthArmy::removeUnit(UnitType unitType)
     {
         case UnitType::ES:
             soldiers.dequeue(unit);
+            if (unit && dynamic_cast<EarthSoldier*>(unit)->isInfected())
+                infectedSoldiersCount--;
             break;
 
         case UnitType::ET:
@@ -107,12 +111,12 @@ int EarthArmy::getUnitsCount(UnitType unitType) const
     return 0;
 }
 
-float EarthArmy::getInfectionPercentage() const
+float EarthArmy::getInfectionPercentage() const 
 {
     if (soldiers.getCount() == 0)
         return 0;
 
-    return (float) infectedSoldiersCount * 100 / soldiers.getCount();
+    return (float) infectedSoldiersCount * 100 / soldiers.getCount(); 
 }
 
 int EarthArmy::getInfectedSoldiersCount() const
@@ -190,16 +194,6 @@ void EarthArmy::killHealUnit()
     gamePtr->addToKilledList(healerUnit);
 }
 
-void EarthArmy::incrementInfectedSoldiersCount()
-{
-    infectedSoldiersCount++;
-}
-
-void EarthArmy::decrementInfectedSoldiersCount()
-{
-    infectedSoldiersCount--;
-}
-
 void EarthArmy::spreadInfection()
 {
     // If there are no soldiers, return
@@ -236,6 +230,11 @@ void EarthArmy::spreadInfection()
             soldiers.enqueue(soldier);
         }
     }
+}
+
+void EarthArmy::incrementInfectedSoldiersCount()
+{
+    infectedSoldiersCount++;
 }
 
 bool EarthArmy::needAllyHelp() const
