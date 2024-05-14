@@ -225,16 +225,14 @@ void EarthArmy::spreadInfection()
             soldiers.dequeue(soldier);
 
             if (j == randomIndex)
-                dynamic_cast<EarthSoldier*>(soldier)->getInfection();
+            {
+                if (dynamic_cast<EarthSoldier*>(soldier)->getInfection())
+                    infectedSoldiersCount++;
+            }
 
             soldiers.enqueue(soldier);
         }
     }
-}
-
-void EarthArmy::incrementInfectedSoldiersCount()
-{
-    infectedSoldiersCount++;
 }
 
 bool EarthArmy::needAllyHelp() const

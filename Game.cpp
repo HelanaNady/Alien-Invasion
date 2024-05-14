@@ -263,11 +263,6 @@ LinkedQueue<HealableUnit*> Game::getUnitsToMaintainList(int attackCapacity)
 	return unitsToMaintain;
 }
 
-void Game::incrementInfectedESCount()
-{
-	earthArmy.incrementInfectedSoldiersCount();
-}
-
 void Game::printKilledList() const
 {
 	std::cout << killedList.getCount() << " units [";

@@ -57,16 +57,15 @@ bool EarthSoldier::attack()
     return attackCheck;
 }
 
-void EarthSoldier::getInfection()
+bool EarthSoldier::getInfection()
 {
     if (isInfected() || isImmune())
-        return;
+        return false; 
 
     // Set the infected flag to true
     infected = true;
 
-    // Increment the infected earth soldier count
-    gamePtr->incrementInfectedESCount();
+    return true;
 }
 
 bool EarthSoldier::isInfected() const

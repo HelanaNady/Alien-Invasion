@@ -40,7 +40,6 @@ public:
 
     // Infection functions
     void spreadInfection();
-    void incrementInfectedSoldiersCount();
 
     bool needAllyHelp() const;
 
