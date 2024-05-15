@@ -24,6 +24,9 @@ private:
 
     int infectedSoldiersCount; // Count of infected soldiers in the army
 
+private:
+    Unit* pickAttacker(UnitType); // Pick an attacker from the army and return it
+
 public:
     EarthArmy(Game*);
 
@@ -32,7 +35,6 @@ public:
 
     void addUnit(Unit*); // Add a unit to the army
     Unit* removeUnit(UnitType); // Remove a unit from the army and return it
-    Unit* pickAttacker(UnitType); // Pick an attacker from the army and return it
 
     bool attack(); // Attack the enemy army
     bool isDead() const; // Check if the army is dead

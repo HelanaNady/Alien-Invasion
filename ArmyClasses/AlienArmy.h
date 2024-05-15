@@ -21,12 +21,14 @@ private:
     bool dronesRemovingToggler; // Used for peeking the drones in the removeUnit function (front or back)
     bool dronesPickingToggler; // Used for peeking the drones in the pickAttacker function (front or back)
 
+private:
+    Unit* pickAttacker(UnitType); // Pick an attacker from the army and return it
+
 public:
     AlienArmy(Game*);
 
     void addUnit(Unit*); // Add a unit to the army
     Unit* removeUnit(UnitType); // Remove a unit from the army and return it
-    Unit* pickAttacker(UnitType); // Pick an attacker from the army and return it
 
     bool attack(); // Attack the enemy army
     bool isDead() const; // Check if the army is dead

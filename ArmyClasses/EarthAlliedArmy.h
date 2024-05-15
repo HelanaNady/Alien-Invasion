@@ -11,12 +11,14 @@ class EarthAlliedArmy: public Army
 private:
 	LinkedQueue<Unit*> savers;
 
+private:
+	Unit* pickAttacker(UnitType); // Pick an attacker from the army and return it
+
 public:
 	EarthAlliedArmy(Game*);
 
 	void addUnit(Unit*); // Add a unit to the army
 	Unit* removeUnit(UnitType); // Remove a unit from the army and return it
-	Unit* pickAttacker(UnitType); // Pick an attacker from the army and return it
 
 	bool attack(); // Attack the enemy army
 	bool isDead() const; // Check if the army is dead
