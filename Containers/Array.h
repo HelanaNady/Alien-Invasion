@@ -48,7 +48,7 @@ inline bool Array<T>::remove(int index, T& entry)
 
     entry = items[index];
     items[index] = items[count - 1];
-    items[count - 1] = nullptr;
+    items[count - 1] = T();
     count--;
 
     return true;

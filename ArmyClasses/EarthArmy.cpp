@@ -135,7 +135,7 @@ bool EarthArmy::isDead() const
 
 bool EarthArmy::needAllyHelp() const
 {
-    return (getInfectionPercentage() >= infectionThreshold);
+    return getInfectionPercentage() >= infectionThreshold;
 }
 
 void EarthArmy::printArmy() const

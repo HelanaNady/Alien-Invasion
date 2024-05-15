@@ -18,7 +18,7 @@ public:
 	bool willAttackSoldiers(); // Check if the tank will attack soldiers in the current timestep
 
 	// Getters
-	int getHealPriority() const; // Get the heal priority of the soldier to be used in the UML
+	int getHealPriority() const; // Get the heal priority of the tank to be used in the UML
 };
 
 #endif
