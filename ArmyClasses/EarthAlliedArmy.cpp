@@ -4,7 +4,7 @@
 #include "../UnitClasses/Unit.h"
 #include "../Game.h"
 
-EarthAlliedArmy::EarthAlliedArmy(Game*): Army(gamePtr)
+EarthAlliedArmy::EarthAlliedArmy(Game* gamePtr): Army(gamePtr)
 {}
 
 void EarthAlliedArmy::addUnit(Unit* unit)
@@ -36,7 +36,7 @@ void EarthAlliedArmy::printArmy() const
 bool EarthAlliedArmy::attack()
 {
 	bool didArmyAttack = false; // Flag to check if the army attacked
-	
+
 	// Make saver units attack 
 	Unit* attacker = pickAttacker(UnitType::SU);
 
