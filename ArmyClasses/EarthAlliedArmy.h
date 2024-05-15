@@ -13,6 +13,7 @@ private:
 
 private:
 	Unit* pickAttacker(UnitType); // Pick an attacker from the army and return it
+	void killSaverUnits(); // Kill all saver units in the army
 
 public:
 	EarthAlliedArmy(Game*);

@@ -10,7 +10,6 @@ class RandomGenerator
 {
 private:
 	Game* gamePtr;
-	bool isGeneratingSavers;
 
 	int N;
 	int ESPercentage;
@@ -34,7 +33,6 @@ private:
 
 private:
 	Unit* generateUnit(ArmyType); // Generate a unit of the given army type
-	bool willGenerateSavers(); // A check to determine the need of generating savers
 
 public:
 	RandomGenerator(Game*);

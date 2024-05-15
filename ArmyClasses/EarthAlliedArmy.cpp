@@ -7,6 +7,18 @@
 EarthAlliedArmy::EarthAlliedArmy(Game* gamePtr): Army(gamePtr)
 {}
 
+void EarthAlliedArmy::killSaverUnits()
+{
+	Unit* unit = nullptr;
+	while (savers.dequeue(unit))
+	{
+		unit->receiveDamage(unit->getHealth()); // Make unit health 0
+		gamePtr->addToKilledList(unit); // Add unit to killed list
+
+		unit = nullptr;
+	}
+}
+
 void EarthAlliedArmy::addUnit(Unit* unit)
 {
 	UnitType unitType = unit->getUnitType();
@@ -49,6 +61,13 @@ Unit* EarthAlliedArmy::pickAttacker(UnitType unitType)
 
 bool EarthAlliedArmy::attack()
 {
+	// If there are no infected units, saver units should be killed
+	if (gamePtr->getInfectedUnitsCount() == 0)
+	{
+		killSaverUnits();
+		return false;
+	}
+
 	// Flag to check if the army attacked
 	bool didArmyAttack = false;
 
