@@ -22,7 +22,7 @@ bool EarthGunnery::attack()
     int dronesCapacity = attackCapacity / 2;
 
     // To ensure that drones will be attacked in pairs 
-    if (dronesCapacity % 2) dronesCapacity++;
+    if (dronesCapacity % 2 && attackCapacity > 2) dronesCapacity++;
 
     int monstersCapacity = attackCapacity - dronesCapacity;
 
