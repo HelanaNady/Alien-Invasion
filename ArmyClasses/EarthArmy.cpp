@@ -239,19 +239,16 @@ void EarthArmy::killHealUnit()
 void EarthArmy::spreadInfection()
 {
     gamePtr->log("Spreading infection");
-    // If there are no soldiers, return
-    if (soldiers.isEmpty())
-    {
-        gamePtr->log("No soldiers to infect");
-        return;
-    }
 
     int soldiersCount = soldiers.getCount();
     int soldiersToInfect = infectedSoldiersCount;
 
     // if there are no soldiers to infect, return
     if (soldiersCount == 0)
+    {
+        gamePtr->log("No soldiers to infect");
         return;
+    }
 
     gamePtr->log("Infecting " + std::to_string(soldiersToInfect) + " soldiers");
 
