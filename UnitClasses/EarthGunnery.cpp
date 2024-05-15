@@ -19,35 +19,24 @@ void EarthGunnery::printFought()
 
 bool EarthGunnery::attack()
 {
-    int AMnumber = attackCapacity;
-    int ADnumber = attackCapacity;
+    int dronesCapacity = attackCapacity / 2;
 
-    LinkedQueue<Unit*> AMlist = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AM, AMnumber);
-    LinkedQueue<Unit*> ADlist = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AD, ADnumber);
+    // To ensure that drones will be attacked in pairs 
+    if (dronesCapacity % 2 && attackCapacity > 2) dronesCapacity++;
+
+    int monstersCapacity = attackCapacity - dronesCapacity;
+
+    LinkedQueue<Unit*> dronesList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AD, dronesCapacity);
+    LinkedQueue<Unit*> monstersList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AM, monstersCapacity);
 
     // Check for a successful attack
     bool attackCheck = false;
 
+    // Create a pointer to the enemy list
     Unit* enemyUnit = nullptr;
 
-    int dronesCount = 2; // Counter to handle attacking 2 drones then a monster repeatedly
-
-    for (int i = 0; i < 3 * attackCapacity; i++)
+    while (dronesList.dequeue(enemyUnit) || monstersList.dequeue(enemyUnit))
     {
-        if (dronesCount == 0)
-        {
-            AMlist.dequeue(enemyUnit);
-            dronesCount = 2; // Reseting the counter
-        }
-        else
-        {
-            ADlist.dequeue(enemyUnit);
-            dronesCount--;
-        }
-
-        if (!enemyUnit)
-            continue;
-
         // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
@@ -66,15 +55,6 @@ bool EarthGunnery::attack()
         // If this line is reached, at least one unit was attacked
         attackCheck = true;
     }
-
-    // Empty rest of enemy list
-    Unit* unit = nullptr;
-    while (AMlist.dequeue(unit))
-        gamePtr->addUnit(unit);
-
-    while (ADlist.dequeue(unit))
-        gamePtr->addUnit(unit);
-
     return attackCheck;
 }
 
