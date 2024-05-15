@@ -19,6 +19,7 @@ void HealUnit::printFought()
 
 bool HealUnit::attack()
 {
+    // Get the list of units to heal
     LinkedQueue<HealableUnit*> unitsToHeal = gamePtr->getUnitsToMaintainList(attackCapacity);
 
     // Create a pointer to the unit to heal
@@ -32,7 +33,7 @@ bool HealUnit::attack()
         // Check if unit has spent more than 10  consecutive time steps in UML
         if (unitToHeal->hasWaitedForTooLong())
         {
-            unitToHeal->receiveDamage(unitToHeal->getHealth()); // Make unit health 0 
+            unitToHeal->receiveDamage(unitToHeal->getHealth()); // Make unit health 0
             gamePtr->addToKilledList(unitToHeal); // Add unit to killed list
 
             continue;
@@ -40,20 +41,20 @@ bool HealUnit::attack()
 
         // Heal each unit with the appropriate heal power
         unitToHeal->receiveHeal(calcUAP(unitToHeal));
-        
+
         // Add the unit back to its list if completely healed, otherwise re-add to the UML
         if (unitToHeal->isHealed())
         {
             EarthSoldier* infectedSoldier = dynamic_cast<EarthSoldier*>(unitToHeal); // If the unit was an infected, additional heal is needed
-            if (infectedSoldier && infectedSoldier->isInfected()) 
-               healInfection(infectedSoldier);
+            if (infectedSoldier && infectedSoldier->isInfected())
+                healInfection(infectedSoldier);
 
             gamePtr->addUnit(unitToHeal); // Add it to its list whether it was infected or not
         }
         else
-            gamePtr->addUnitToMaintenanceList(unitToHeal);
+            gamePtr->addUnitToMaintenanceList(unitToHeal); // Add it back to the UML if not completely healed
 
-        // Store the IDs of the units that recieved heal to be printed later
+        // Store the IDs of the units that received heal to be printed later
         foughtUnits.enqueue(unitToHeal->getId());
 
         // Nullify the pointer to avoid duplication
@@ -67,7 +68,7 @@ bool HealUnit::attack()
 }
 
 void HealUnit::healInfection(EarthSoldier* recoveredSoldier)
-{   
+{
     recoveredSoldier->loseInfection(); // Turn the infection flag off
-    recoveredSoldier->gainImmunity(); // Make it immune to furure infections
+    recoveredSoldier->gainImmunity(); // Make it immune to future infections
 }

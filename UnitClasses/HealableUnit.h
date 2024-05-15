@@ -12,7 +12,7 @@ protected:
 public:
     HealableUnit(Game*, UnitType, double, int, int);
 
-    virtual int getHealPriority() const = 0;  // Get the heal priority of the unit varies from one unit to another
+    virtual int getHealPriority() const = 0; // Get the heal priority of the unit varies from one unit to another
 
     bool needsHeal() const; // Check if the unit is eligible for healing
     bool hasWaitedForTooLong() const; // Decides whether to kill or heal the unit based on its wait time

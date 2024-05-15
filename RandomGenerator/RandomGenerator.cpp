@@ -1,5 +1,4 @@
 #include "RandomGenerator.h"
-
 #include "../UnitClasses/Unit.h"
 #include "../UnitClasses/EarthSoldier.h"
 #include "../UnitClasses/EarthGunnery.h"
@@ -21,9 +20,9 @@ RandomGenerator::RandomGenerator(Game* gamePtr): gamePtr(gamePtr), isGeneratingS
 	setEarthAlliedParameters({ 0, 0 }, { 0, 0 }, { 0, 0 });
 }
 
-void RandomGenerator::generateUnits() 
+void RandomGenerator::generateUnits()
 {
-	ArmyType armyTypes[3] = { EARTH, ALIEN, EARTH_ALLIED };
+	ArmyType armyTypes[3] = { ArmyType::EARTH, ArmyType::ALIEN, ArmyType::EARTH_ALLIED };
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -36,8 +35,8 @@ void RandomGenerator::generateUnits()
 			// Generate N units
 			for (int i = 0; i < N; i++)
 			{
-				// Don't forget to handle no generation in allied army  
-				newUnit = generateUnit(armyTypes[i]); 
+				// Don't forget to handle no generation in allied army
+				newUnit = generateUnit(armyTypes[i]);
 
 				if (newUnit) // Unit may be nullptr if the max number of units is reached
 					gamePtr->addUnit(newUnit); // Add the unit to the suitable army & list based on the unit type
@@ -46,10 +45,10 @@ void RandomGenerator::generateUnits()
 	}
 }
 
-Unit* RandomGenerator::generateUnit(ArmyType armyType) 
+Unit* RandomGenerator::generateUnit(ArmyType armyType)
 {
 	Unit* newUnit = nullptr;
-	
+
 	int B = getRandomNumber(1, 100);
 
 	if (armyType == ArmyType::EARTH)
@@ -71,7 +70,7 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType)
 		else
 			newUnit = new HealUnit(gamePtr, health, power, attackCapacity);
 	}
-	else if(armyType == ArmyType:: ALIEN)
+	else if (armyType == ArmyType::ALIEN)
 	{
 		// Check if the max number of alien units is reached
 		if (Unit::cantCreateAlienUnit())
@@ -88,7 +87,7 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType)
 		else
 			newUnit = new AlienDrone(gamePtr, health, power, attackCapacity);
 	}
-	else if(armyType == EARTH_ALLIED && willGenerateSavers())
+	else if (armyType == ArmyType::EARTH_ALLIED && willGenerateSavers())
 	{
 		// Check if the max number of allied units is reached
 		if (Unit::cantCreateEarthAlliedUnit())
@@ -108,11 +107,12 @@ bool RandomGenerator::willGenerateSavers()
 {
 	if (gamePtr->doesEarthNeedHelp()) // Only generate when needed
 		isGeneratingSavers = true;
-	else if (gamePtr->getInfectedUnitsCount() == 0) // stop generating after all units have been healed
+	else if (gamePtr->getInfectedUnitsCount() == 0) // Stop generating after all units have been healed
 	{
 		isGeneratingSavers = false;
 		gamePtr->killSaverUnits(); // Kill the remaining savers
 	}
+
 	return isGeneratingSavers;
 }
 
@@ -160,4 +160,3 @@ void RandomGenerator::setEarthAlliedParameters(Range alliedPowerRange, Range all
 	this->earthAlliedHealthRange = alliedHealthRange;
 	this->earthAlliedAttackCapacityRange = alliedAttackCapacityRange;
 }
-

@@ -19,13 +19,15 @@ void AlienDrone::printFought()
 
 bool AlienDrone::attack()
 {
-    // Attack capacity is divided 50:50 between them 
+    // Attack capacity is divided 50:50 between them
     int ETnumber = attackCapacity / 2;
     int EGnumber = attackCapacity - ETnumber;
 
+    // Get the lists of units to attack
     LinkedQueue<Unit*> ETlist = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, ETnumber);
     LinkedQueue<Unit*> EGlist = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::EG, EGnumber);
 
+    // Check for a successful attack
     bool attackCheck = false;
 
     // Create a pointer to the enemy unit

@@ -10,8 +10,10 @@ int Unit::nextEarthAlliedId = 4000;
 Unit::Unit(Game* gamePtr, UnitType unitType, double health, int power, int attackCapacity)
 	: gamePtr(gamePtr), unitType(unitType), Ta(-1), Td(-1), power(power), attackCapacity(attackCapacity)
 {
+	// Set the unit's health
 	setHealth(health);
 
+	// Set the unit's ID and army type
 	if (unitType == UnitType::ES || unitType == UnitType::EG || unitType == UnitType::ET || unitType == UnitType::EH)
 	{
 		id = nextEarthId++;
@@ -22,13 +24,13 @@ Unit::Unit(Game* gamePtr, UnitType unitType, double health, int power, int attac
 		id = nextEarthAlliedId++;
 		armyType = ArmyType::EARTH_ALLIED;
 	}
-	else 
+	else
 	{
 		id = nextAlienId++;
 		armyType = ArmyType::ALIEN;
 	}
 
-	// set the unit's join time
+	// Set the unit's join time
 	Tj = gamePtr->getCurrentTimestep();
 }
 
@@ -56,12 +58,18 @@ void Unit::setHealth(double health)
 		health = 100;
 
 	this->initialHealth = health; // Save the initial health value for healing purposes
-	this->health = health;
+	this->health = health; // Set the current health value
 }
 
-double Unit::getInitialHealth() const
+double Unit::calcUAP(Unit* receivingUnit) const
 {
-	return initialHealth;
+	return (power * health / 100) / sqrt(receivingUnit->health);
+}
+
+void Unit::clearFoughtUnits()
+{
+	int i = 0;
+	while (foughtUnits.dequeue(i));
 }
 
 void Unit::receiveDamage(double UAP)
@@ -72,12 +80,6 @@ void Unit::receiveDamage(double UAP)
 	// Check if it's the unit's first time being attacked and set it if needed
 	if (!hasBeenAttackedBefore())
 		Ta = gamePtr->getCurrentTimestep();
-}
-
-void Unit::clearFoughtUnits()
-{
-	int i = 0;
-	while (foughtUnits.dequeue(i));
 }
 
 bool Unit::needsHeal() const
@@ -95,24 +97,19 @@ bool Unit::hasBeenAttackedBefore() const
 	return Ta != -1;
 }
 
-double Unit::calcUAP(Unit* recievingUnit) const
-{
-	return (power * health / 100) / sqrt(recievingUnit->health);
-}
-
 int Unit::getId() const
 {
 	return id;
 }
 
-UnitType Unit::getUnitType() const
-{
-	return unitType;
-}
-
 ArmyType Unit::getArmyType() const
 {
 	return armyType;
+}
+
+UnitType Unit::getUnitType() const
+{
+	return unitType;
 }
 
 double Unit::getHealth() const
@@ -125,19 +122,9 @@ int Unit::getPower() const
 	return power;
 }
 
-int Unit::getAttackCapacity() const
-{
-	return attackCapacity;
-}
-
 int Unit::getJoinTime() const
 {
 	return Tj;
-}
-
-int Unit::getFirstAttackTime() const
-{
-	return Ta;
 }
 
 int Unit::getDestructionTime() const
@@ -158,21 +145,6 @@ int Unit::getDestructionDelay() const
 int Unit::getBattleDelay() const
 {
 	return isDead() ? Td - Tj : -1;
-}
-
-void Unit::setPower(int power)
-{
-	this->power = power;
-}
-
-void Unit::setAttackCapacity(int attackCapacity)
-{
-	this->attackCapacity = attackCapacity;
-}
-
-void Unit::setFirstTimeAttack(int Ta)
-{
-	this->Ta = Ta;
 }
 
 void Unit::setDestructionTime(int Td)

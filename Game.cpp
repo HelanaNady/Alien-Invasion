@@ -3,7 +3,6 @@
 #include <fstream>
 
 #include "Game.h"
-#include "DEFS.h"
 #include "UnitClasses/Unit.h"
 #include "UnitClasses/AlienMonster.h"
 
@@ -21,13 +20,12 @@ float calculatePercentage(int numerator, int denominator) // Helper function to 
 	return calculateRatio(numerator, denominator) * 100;
 }
 
-
 Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), earthArmy(this), alienArmy(this), earthAlliedArmy(this), randomGenerator(this)
 {}
 
-void Game::run(GameMode gameMode, std::string inputFileName, std::string outputFileName)
+void Game::run(GameMode gameMode, const std::string& inputFileName, const std::string& outputFileName)
 {
-	// Change the game mode 
+	// Change the game mode
 	setGameMode(gameMode);
 
 	// Load the parameters from the file and set the parameters in the random generator
@@ -108,7 +106,7 @@ bool Game::doesEarthNeedHelp() const
 void Game::killSaverUnits()
 {
 	Unit* saverToKill = earthAlliedArmy.removeUnit(UnitType::SU); // Remove a saver from its list
-	
+
 	while (saverToKill)
 	{
 		saverToKill->receiveDamage(saverToKill->getHealth()); // Prepare it to be killed
@@ -116,7 +114,6 @@ void Game::killSaverUnits()
 		saverToKill = nullptr;
 		saverToKill = earthAlliedArmy.removeUnit(UnitType::SU); // Remove another saver
 	}
-
 }
 
 void Game::printFinalResults() const
@@ -124,7 +121,7 @@ void Game::printFinalResults() const
 	std::cout << std::endl;
 
 	// Print an overflow error message
-	if (Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit())
+	if (Unit::cantCreateEarthUnit() || Unit::cantCreateAlienUnit() || Unit::cantCreateEarthAlliedUnit())
 		std::cout << "Warning: The maximum number of units has been reached!" << std::endl << std::endl;
 
 	// Print battle results
@@ -461,7 +458,7 @@ void Game::countUnitMaintenanceStatistics(GameStatistics& gameStatistics)
 	}
 }
 
-void Game::generateOutputFile(std::string outputFileName)
+void Game::generateOutputFile(const std::string& outputFileName)
 {
 	// Open the output file
 	std::ofstream fout(outputFileName);
@@ -572,7 +569,7 @@ void Game::generateOutputFile(std::string outputFileName)
 	fout.close();
 }
 
-bool Game::loadParameters(std::string fileName)
+bool Game::loadParameters(const std::string& fileName)
 {
 	std::fstream fin(fileName);
 
@@ -601,7 +598,7 @@ bool Game::loadParameters(std::string fileName)
 		Range earthAlliedPowerRange = { 0, 0 };
 		Range earthAlliedHealthRange = { 0, 0 };
 		Range earthAlliedAttackCapacityRange = { 0, 0 };
-		
+
 		int infectingProbability = 0;
 		int infectionThreshold = 0;
 
@@ -631,7 +628,7 @@ bool Game::loadParameters(std::string fileName)
 		randomGenerator.setEarthAlliedParameters(earthAlliedPowerRange, earthAlliedHealthRange, earthAlliedAttackCapacityRange);
 
 		AlienMonster::setInfectingProbability(infectingProbability); // Set the infecting probability for the Alien Monster
-		EarthArmy::setInfectionThreshold(infectionThreshold); // Set the infection threshold percantage for the Earth Army
+		EarthArmy::setInfectionThreshold(infectionThreshold); // Set the infection threshold percentage for the Earth Army
 
 		fin.close(); // Close the file
 
@@ -656,7 +653,7 @@ int Game::getUnitsCount(ArmyType armyType, UnitType unitType) const
 
 		case ArmyType::ALIEN:
 			return alienArmy.getUnitsCount(unitType);
-		case ArmyType:: EARTH_ALLIED:
+		case ArmyType::EARTH_ALLIED:
 			return earthAlliedArmy.getUnitsCount(unitType);
 	}
 

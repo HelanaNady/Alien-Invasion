@@ -17,22 +17,26 @@ private:
     Array<Unit*> monsters;
     Deque<Unit*> drones;
 
-    bool dronesAddingToggler;
-    bool dronesRemovingToggler;
-    bool dronesPickingToggler;
+    bool dronesAddingToggler; // Used for peeking the drones in the addUnit function (front or back)
+    bool dronesRemovingToggler; // Used for peeking the drones in the removeUnit function (front or back)
+    bool dronesPickingToggler; // Used for peeking the drones in the pickAttacker function (front or back)
+
+private:
+    Unit* pickAttacker(UnitType); // Pick an attacker from the army and return it
 
 public:
     AlienArmy(Game*);
 
-    void addUnit(Unit*);
-    Unit* removeUnit(UnitType);
-    Unit* pickAttacker(UnitType);
-    void printArmy() const;
-    bool attack();
-    bool isDead() const;
+    void addUnit(Unit*); // Add a unit to the army
+    Unit* removeUnit(UnitType); // Remove a unit from the army and return it
+
+    bool attack(); // Attack the enemy army
+    bool isDead() const; // Check if the army is dead
+
+    void printArmy() const; // Print the army units
 
     // Getters
-    int getUnitsCount(UnitType) const;
+    int getUnitsCount(UnitType) const; // Get the count of a specific unit type
 
     ~AlienArmy();
 };

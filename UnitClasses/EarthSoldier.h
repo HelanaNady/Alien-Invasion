@@ -12,6 +12,7 @@ private:
 
 public:
 	EarthSoldier(Game*, double, int, int);
+
 	void printFought(); // Print the units that the soldier has fought
 	bool attack(); // Attack the enemy units
 
@@ -21,7 +22,6 @@ public:
 	void loseInfection(); // Heal the soldier from the infection
 	void gainImmunity(); // Make the soldier immune to infections
 	bool isImmune() const; // Check if the soldier is immune
-
 
 	// Getters
 	int getHealPriority() const; // Get the heal priority of the soldier to be used in the UML
