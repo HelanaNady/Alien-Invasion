@@ -43,25 +43,25 @@ private:
     void countArmyStatistics(GameStatistics&, ArmyType, UnitType[], int); // Count the statistics of the given army
     void countKilledUnitsStatistics(GameStatistics&); // Count the statistics of the killed units
     void countUnitMaintenanceStatistics(GameStatistics&); // Count the statistics of the units at the maintenance list
-    void generateOutputFile(std::string); // Generate the output file with the statistics
+    void generateOutputFile(const std::string&); // Generate the output file with the statistics
 
-    bool loadParameters(std::string); // Load the parameters from the file and sets parameters in the random generator
+    bool loadParameters(const std::string&); // Load the parameters from the file and sets parameters in the random generator
 
 public:
     Game();
 
-    void run(GameMode, std::string, std::string);  // Run the game
+    void run(GameMode, const std::string&, const std::string&); // Run the game
 
-    void addUnit(Unit*);  // Add a unit to the appropriate army and list
-    Unit* removeUnit(ArmyType, UnitType);  // Remove a unit from the appropriate army and list
+    void addUnit(Unit*); // Add a unit to the appropriate army and list
+    Unit* removeUnit(ArmyType, UnitType); // Remove a unit from the appropriate army and list
     LinkedQueue<Unit*> getEnemyList(ArmyType, UnitType, int); // Get the enemy list for the given army type, unit type and attack capacity
 
-    void addToKilledList(Unit*);  // Add a unit to the killed list
+    void addToKilledList(Unit*); // Add a unit to the killed list
 
     void addUnitToMaintenanceList(HealableUnit*); // Add a unit to the maintenance list
-    LinkedQueue<HealableUnit*> getUnitsToMaintainList(int);
+    LinkedQueue<HealableUnit*> getUnitsToMaintainList(int); // Get a list of units that need to be maintained
 
-    bool doesEarthNeedHelp() const; // A check for the infection perecentage for saver units generation
+    bool doesEarthNeedHelp() const; // Check if the Earth army needs help from the Earth Allied army if the number of infected units exceeds the threshold
     void killSaverUnits(); // Savers need to be killed once all infected units are healed
 
     // Getters
