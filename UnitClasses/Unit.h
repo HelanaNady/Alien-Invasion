@@ -37,6 +37,8 @@ protected:
 
 private:
 	void setHealth(double); // Health setter with range check & initial health saving to be used in constructor
+
+protected:
 	double calcUAP(Unit*) const; // Calculates the damage caused when attacked by "attackerUnit"
 	void clearFoughtUnits(); // Clear the list of fought units
 
