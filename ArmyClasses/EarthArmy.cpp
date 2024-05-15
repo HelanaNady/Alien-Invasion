@@ -175,10 +175,6 @@ void EarthArmy::killHealUnit()
 
 void EarthArmy::spreadInfection()
 {
-    // If there are no soldiers, return
-    if (soldiers.isEmpty())
-        return;
-
     int soldiersCount = soldiers.getCount();
     int soldiersToInfect = infectedSoldiersCount;
 
