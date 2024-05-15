@@ -101,7 +101,7 @@ bool EarthArmy::attack()
     // Flag to check if the army attacked
     bool didArmyAttack = false;
 
-    UnitType unitTypes[4] = { ES, EG, ET, EH };
+    UnitType unitTypes[4] = { UnitType::ES, UnitType::EG, UnitType::ET, UnitType::EH };
     for (int i = 0; i < 4; i++)
     {
         // Pick an attacker from the army to attack

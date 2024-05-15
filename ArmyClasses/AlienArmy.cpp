@@ -93,7 +93,7 @@ bool AlienArmy::attack()
     // Flag to check if the army attacked
     bool didArmyAttack = false;
 
-    UnitType unitTypes[4] = { AS, AM, AD, AD };
+    UnitType unitTypes[4] = { UnitType::AS, UnitType::AM, UnitType::AD, UnitType::AD };
     for (int i = 0; i < 4; i++)
     {
         // Pick an attacker from the army to attack

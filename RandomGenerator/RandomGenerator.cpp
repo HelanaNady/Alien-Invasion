@@ -22,7 +22,7 @@ RandomGenerator::RandomGenerator(Game* gamePtr): gamePtr(gamePtr), isGeneratingS
 
 void RandomGenerator::generateUnits()
 {
-	ArmyType armyTypes[3] = { EARTH, ALIEN, EARTH_ALLIED };
+	ArmyType armyTypes[3] = { ArmyType::EARTH, ArmyType::ALIEN, ArmyType::EARTH_ALLIED };
 
 	for (int i = 0; i < 3; i++)
 	{
