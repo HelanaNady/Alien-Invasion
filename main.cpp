@@ -28,7 +28,7 @@ int main()
 
     // Start the game
     Game game;
-    game.run(gameMode, "C:/Users/ahmed/Desktop/Alien-Invasion/InputFiles/" + inputFileName + ".txt", "C:/Users/ahmed/Desktop/Alien-Invasion" + outputFileName + ".txt");
+    game.run(gameMode, "InputFiles/" + inputFileName + ".txt", outputFileName + ".txt");
 
     return 0;
 }
