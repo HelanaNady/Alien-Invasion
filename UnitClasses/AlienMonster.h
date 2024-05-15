@@ -8,6 +8,7 @@ class AlienMonster: public Unit
 {
 private:
 	static int infectingProbability; // The probability of infecting the enemy units
+
 public:
 	AlienMonster(Game*, double, int, int);
 

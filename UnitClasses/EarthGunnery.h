@@ -8,6 +8,7 @@ class EarthGunnery: public Unit
 {
 public:
 	EarthGunnery(Game*, double, int, int);
+
 	void printFought(); // Print the units that the gunnery has fought
 	bool attack(); // Attack the enemy units
 

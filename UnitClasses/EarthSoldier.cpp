@@ -60,10 +60,9 @@ bool EarthSoldier::attack()
 bool EarthSoldier::getInfection()
 {
     if (isInfected() || isImmune())
-        return false; 
+        return false;
 
-    // Set the infected flag to true
-    infected = true;
+    infected = true; // Set the infected flag to true
 
     return true;
 }

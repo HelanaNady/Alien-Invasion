@@ -68,7 +68,7 @@ bool EarthTank::willAttackSoldiers()
 
     if (soldiersRatio < 0.3 && soldiersRatio >= 0) // Attacks soldiers if the soldiers ration is below 30%
         isAttackingSoldiers = true;
-    else if (soldiersRatio > 0.8) // Unitil it exceeds 80%
+    else if (soldiersRatio > 0.8) // Until it exceeds 80%
         isAttackingSoldiers = false;
 
     return isAttackingSoldiers;

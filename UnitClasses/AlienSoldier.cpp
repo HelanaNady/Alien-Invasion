@@ -55,5 +55,6 @@ bool AlienSoldier::attack()
         // If this line is reached, at least one unit was attacked
         attackCheck = true;
     }
+
     return attackCheck;
 }
