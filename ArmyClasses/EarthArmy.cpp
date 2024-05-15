@@ -9,6 +9,11 @@ int EarthArmy::infectionThreshold = 0;
 EarthArmy::EarthArmy(Game* gamePtr): Army(gamePtr), infectedSoldiersCount(0)
 {}
 
+void EarthArmy::setInfectionThreshold(int threshold)
+{
+    infectionThreshold = threshold;
+}
+
 void EarthArmy::addUnit(Unit* unit)
 {
     UnitType unitType = unit->getUnitType();
@@ -91,37 +96,46 @@ Unit* EarthArmy::pickAttacker(UnitType unitType)
     return unit;
 }
 
-int EarthArmy::getUnitsCount(UnitType unitType) const
+bool EarthArmy::attack()
 {
-    switch (unitType)
+    // Flag to check if the army attacked
+    bool didArmyAttack = false;
+
+    UnitType unitTypes[4] = { ES, EG, ET, EH };
+    for (int i = 0; i < 4; i++)
     {
-        case UnitType::ES:
-            return soldiers.getCount();
+        // Pick an attacker from the army to attack
+        Unit* attacker = pickAttacker(unitTypes[i]);
 
-        case UnitType::EG:
-            return gunneries.getCount();
+        if (attacker)
+        {
+            // Attack the enemy
+            bool didUnitAttack = attacker->attack();
 
-        case UnitType::ET:
-            return tanks.getCount();
+            // Healers need to be killed once they attack
+            if (attacker->getUnitType() == UnitType::EH && didUnitAttack)
+                killHealUnit();
 
-        case UnitType::EH:
-            return healers.getCount();
+            // Add the attacker to the current attackers queue
+            if (didUnitAttack)
+                currentAttackers.enqueue(attacker);
+
+            // If any unit attacked, the army attacked
+            didArmyAttack = didArmyAttack || didUnitAttack;
+        }
     }
 
-    return 0;
+    return didArmyAttack; // Return whether the army attacked
 }
 
-float EarthArmy::getInfectionPercentage() const 
+bool EarthArmy::isDead() const
 {
-    if (soldiers.getCount() == 0)
-        return 0;
-
-    return (float) infectedSoldiersCount * 100 / soldiers.getCount(); 
+    return soldiers.getCount() + tanks.getCount() + gunneries.getCount() == 0;
 }
 
-int EarthArmy::getInfectedSoldiersCount() const
+bool EarthArmy::needAllyHelp() const
 {
-    return infectedSoldiersCount;
+    return (getInfectionPercentage() >= infectionThreshold);
 }
 
 void EarthArmy::printArmy() const
@@ -143,41 +157,6 @@ void EarthArmy::printArmy() const
     std::cout << healers.getCount() << " EH [";
     healers.printList();
     std::cout << "]" << std::endl;
-}
-
-bool EarthArmy::attack()
-{
-    bool didArmyAttack = false; // Flag to check if the army attacked
-
-    UnitType unitTypes[4] = { ES, EG, ET, EH };
-    for (int i = 0; i < 4; i++)
-    {
-        Unit* attacker = pickAttacker(unitTypes[i]);
-
-        if (attacker)
-        {
-            // Attack the enemy
-            bool didUnitAttack = attacker->attack();
-
-            // Add the attacker to the current attackers queue
-            if (didUnitAttack)
-                currentAttackers.enqueue(attacker);
-
-            // If any unit attacked, the army attacked
-            didArmyAttack = didArmyAttack || didUnitAttack;
-
-            // Healers need to be killed once they attack
-            if (attacker->getUnitType() == UnitType::EH && didUnitAttack)
-                killHealUnit();
-        }
-    }
-
-    return didArmyAttack; // Return whether the army attacked
-}
-
-bool EarthArmy::isDead() const
-{
-    return soldiers.getCount() + tanks.getCount() + gunneries.getCount() == 0;
 }
 
 void EarthArmy::killHealUnit()
@@ -235,14 +214,37 @@ void EarthArmy::spreadInfection()
     }
 }
 
-bool EarthArmy::needAllyHelp() const
+int EarthArmy::getUnitsCount(UnitType unitType) const
 {
-    return (getInfectionPercentage() >= infectionThreshold);
+    switch (unitType)
+    {
+        case UnitType::ES:
+            return soldiers.getCount();
+
+        case UnitType::EG:
+            return gunneries.getCount();
+
+        case UnitType::ET:
+            return tanks.getCount();
+
+        case UnitType::EH:
+            return healers.getCount();
+    }
+
+    return 0;
 }
 
-void EarthArmy::setInfectionThreshold(int threshold)
+float EarthArmy::getInfectionPercentage() const
 {
-    infectionThreshold = threshold;
+    if (soldiers.getCount() == 0)
+        return 0;
+
+    return (float) infectedSoldiersCount * 100 / soldiers.getCount();
+}
+
+int EarthArmy::getInfectedSoldiersCount() const
+{
+    return infectedSoldiersCount;
 }
 
 EarthArmy::~EarthArmy()

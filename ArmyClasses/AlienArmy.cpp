@@ -72,11 +72,11 @@ Unit* AlienArmy::pickAttacker(UnitType unitType)
 
         case UnitType::AM:
             if (!monsters.isEmpty())
-                monsters.entryAt(unit, (rand() % monsters.getCount()));
+                monsters.entryAt(unit, (rand() % monsters.getCount())); // Pick a random monster
             break;
 
         case UnitType::AD:
-            if (dronesPickingToggler)
+            if (dronesPickingToggler) // To pick the drones in a once front, once back order
                 drones.peek(unit);
             else
                 drones.peekBack(unit);
@@ -88,45 +88,15 @@ Unit* AlienArmy::pickAttacker(UnitType unitType)
     return unit;
 }
 
-int AlienArmy::getUnitsCount(UnitType unitType) const
-{
-    switch (unitType)
-    {
-        case UnitType::AS:
-            return soldiers.getCount();
-
-        case UnitType::AM:
-            return monsters.getCount();
-
-        case UnitType::AD:
-            return drones.getCount();
-    }
-
-    return 0;
-}
-
-void AlienArmy::printArmy() const
-{
-    std::cout << soldiers.getCount() << " AS [";
-    soldiers.printList();
-    std::cout << "]" << std::endl;
-
-    std::cout << monsters.getCount() << " AM [";
-    monsters.printList();
-    std::cout << "]" << std::endl;
-
-    std::cout << drones.getCount() << " AD [";
-    drones.printList();
-    std::cout << "]" << std::endl;
-}
-
 bool AlienArmy::attack()
 {
-    bool didArmyAttack = false; // Flag to check if the army attacked
+    // Flag to check if the army attacked
+    bool didArmyAttack = false;
 
     UnitType unitTypes[4] = { AS, AM, AD, AD };
     for (int i = 0; i < 4; i++)
     {
+        // Pick an attacker from the army to attack
         Unit* attacker = pickAttacker(unitTypes[i]);
 
         if (attacker)
@@ -153,6 +123,38 @@ bool AlienArmy::attack()
 bool AlienArmy::isDead() const
 {
     return soldiers.getCount() + monsters.getCount() + drones.getCount() == 0;
+}
+
+void AlienArmy::printArmy() const
+{
+    std::cout << soldiers.getCount() << " AS [";
+    soldiers.printList();
+    std::cout << "]" << std::endl;
+
+    std::cout << monsters.getCount() << " AM [";
+    monsters.printList();
+    std::cout << "]" << std::endl;
+
+    std::cout << drones.getCount() << " AD [";
+    drones.printList();
+    std::cout << "]" << std::endl;
+}
+
+int AlienArmy::getUnitsCount(UnitType unitType) const
+{
+    switch (unitType)
+    {
+        case UnitType::AS:
+            return soldiers.getCount();
+
+        case UnitType::AM:
+            return monsters.getCount();
+
+        case UnitType::AD:
+            return drones.getCount();
+    }
+
+    return 0;
 }
 
 AlienArmy::~AlienArmy()

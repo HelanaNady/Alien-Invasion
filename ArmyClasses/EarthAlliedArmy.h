@@ -10,18 +10,22 @@ class EarthAlliedArmy: public Army
 {
 private:
 	LinkedQueue<Unit*> savers;
+
 public:
 	EarthAlliedArmy(Game*);
 
-	void addUnit(Unit*);
-	Unit* removeUnit(UnitType);
-	virtual Unit* pickAttacker(UnitType);
-	void printArmy() const;
-	bool attack();
-	bool isDead() const;
+	void addUnit(Unit*); // Add a unit to the army
+	Unit* removeUnit(UnitType); // Remove a unit from the army and return it
+	Unit* pickAttacker(UnitType); // Pick an attacker from the army and return it
+
+	bool attack(); // Attack the enemy army
+	bool isDead() const; // Check if the army is dead
+
+	void printArmy() const; // Print the army units
 
 	// Getters
-	int getUnitsCount(UnitType) const;
+	int getUnitsCount(UnitType) const; // Get the count of a specific unit type
+
 	~EarthAlliedArmy();
 };
 

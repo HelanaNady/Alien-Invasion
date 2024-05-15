@@ -9,20 +9,24 @@ class Army
 {
 protected:
     Game* gamePtr;
-    LinkedQueue<Unit*> currentAttackers; // enqueue at the beginning of each attack function  
+    LinkedQueue<Unit*> currentAttackers; // The units that are currently attacking the enemy army (used for printing)
+
 public:
     Army(Game*);
 
-    virtual void addUnit(Unit*) = 0;
-    virtual Unit* removeUnit(UnitType) = 0;
-    virtual Unit* pickAttacker(UnitType) = 0;
-    virtual bool attack() = 0;
-    virtual bool isDead() const = 0;
+    virtual void addUnit(Unit*) = 0; // Add a unit to the army
+    virtual Unit* removeUnit(UnitType) = 0; // Remove a unit from the army and return it
+    virtual Unit* pickAttacker(UnitType) = 0; // Pick an attacker from the army and return it
 
-    virtual int getUnitsCount(UnitType) const = 0;
-    virtual void printArmy() const = 0;
-    void printFightingUnits();
-    int getFightingUnitsCount() const;
+    virtual bool attack() = 0; // Attack the enemy army
+    virtual bool isDead() const = 0; // Check if the army is dead
+
+    virtual void printArmy() const = 0; // Print the army units
+    void printFightingUnits(); // Print the fighting units of the army (current attackers)
+
+    // Getters
+    virtual int getUnitsCount(UnitType) const = 0; // Get the count of a specific unit type
+    int getFightingUnitsCount() const; // Get the count of fighting units
 };
 
 #endif
