@@ -4,7 +4,8 @@
 #include "../UnitClasses/Unit.h"
 #include "../Game.h"
 
-AlienArmy::AlienArmy(Game* gamePtr): Army(gamePtr), dronesToggler(false)
+AlienArmy::AlienArmy(Game* gamePtr): Army(gamePtr),
+dronesAddingToggler(false), dronesRemovingToggler(false), dronesPickingToggler(false)
 {}
 
 void AlienArmy::addUnit(Unit* unit)
@@ -22,12 +23,12 @@ void AlienArmy::addUnit(Unit* unit)
             break;
 
         case UnitType::AD:
-            if (dronesToggler)
+            if (dronesAddingToggler)
                 drones.enqueue(unit);
             else
                 drones.enqueueFront(unit);
 
-            dronesToggler = !dronesToggler;
+            dronesAddingToggler = !dronesAddingToggler;
             break;
     }
 }
@@ -35,6 +36,8 @@ void AlienArmy::addUnit(Unit* unit)
 Unit* AlienArmy::removeUnit(UnitType unitType)
 {
     Unit* unit = nullptr;
+
+    gamePtr->log("Removing a unit from the Alien Army of type " + Unit::unitTypeString(unitType) + "...");
 
     switch (unitType)
     {
@@ -48,12 +51,12 @@ Unit* AlienArmy::removeUnit(UnitType unitType)
             break;
 
         case UnitType::AD:
-            if (dronesToggler)
+            if (dronesRemovingToggler)
                 drones.dequeue(unit);
             else
                 drones.dequeueBack(unit);
 
-            dronesToggler = !dronesToggler;
+            dronesRemovingToggler = !dronesRemovingToggler;
             break;
     }
 
@@ -76,12 +79,12 @@ Unit* AlienArmy::pickAttacker(UnitType unitType)
             break;
 
         case UnitType::AD:
-            if (dronesToggler)
+            if (dronesPickingToggler)
                 drones.peek(unit);
             else
                 drones.peekBack(unit);
 
-            dronesToggler = !dronesToggler;
+            dronesPickingToggler = !dronesPickingToggler;
             break;
     }
 
@@ -94,8 +97,10 @@ int AlienArmy::getUnitsCount(UnitType unitType) const
     {
         case UnitType::AS:
             return soldiers.getCount();
+
         case UnitType::AM:
             return monsters.getCount();
+
         case UnitType::AD:
             return drones.getCount();
     }
@@ -118,53 +123,70 @@ void AlienArmy::printArmy() const
     std::cout << "]" << std::endl;
 }
 
-void AlienArmy::attack()
+bool AlienArmy::attack()
 {
-    Unit* attacker = pickAttacker(UnitType::AS);
-    if (attacker)
-    {
-        gamePtr->log("Attacking with Alien Soldier: " + attacker->toString());
-        attacker->attack();
-        currentAttackers.enqueue(attacker);
-    }
-    else
-    {
-        gamePtr->log("No Alien Soldier to attack");
-    }
-    logCurrentAttackers();
+    bool didArmyAttack = false; // Flag to check if the army attacked
 
-    attacker = pickAttacker(UnitType::AM);
-    if (attacker)
+    UnitType unitTypes[4] = { AS, AM, AD, AD };
+    for (int i = 0; i < 4; i++)
     {
-        gamePtr->log("Attacking with Alien Monster: " + attacker->toString());
-        attacker->attack();
-        currentAttackers.enqueue(attacker);
-    }
-    else
-    {
-        gamePtr->log("No Alien Monster to attack");
-    }
-    logCurrentAttackers();
+        Unit* attacker = pickAttacker(unitTypes[i]);
 
-    if (drones.getCount() > 1)
-    {
-        attacker = pickAttacker(UnitType::AD);
-        gamePtr->log("Attacking with first Alien Drone " + attacker->toString());
-        attacker->attack();
-        currentAttackers.enqueue(attacker);
-        logCurrentAttackers();
+        if (attacker)
+        {
+            switch (unitTypes[i])
+            {
+                case UnitType::AS:
+                    gamePtr->log("Attacking with Alien Soldier: " + attacker->toString());
+                    break;
 
-        attacker = pickAttacker(UnitType::AD);
-        gamePtr->log("Attacking with second Alien Drone " + attacker->toString());
-        attacker->attack();
-        currentAttackers.enqueue(attacker);
-        logCurrentAttackers();
+                case UnitType::AM:
+                    gamePtr->log("Attacking with Alien Monster: " + attacker->toString());
+                    break;
+
+                case UnitType::AD:
+                    if (i == 3)
+                        gamePtr->log("Attacking with the first Alien Drone: " + attacker->toString());
+                    else
+                        gamePtr->log("Attacking with the second Alien Drone: " + attacker->toString());
+                    break;
+
+            }
+
+            // If drone is attacking and there are less than 2 drones, skip the attack
+            if (unitTypes[i] == UnitType::AD && drones.getCount() < 2)
+            {
+                gamePtr->log("Not enough Alien Drones to attack. We have " + std::to_string(drones.getCount()));
+                continue;
+            }
+
+            // Attack the enemy
+            bool didUnitAttack = attacker->attack();
+
+            // Add the attacker to the current attackers queue
+            if (didUnitAttack)
+                currentAttackers.enqueue(attacker);
+        }
+        else
+        {
+            switch (unitTypes[i])
+            {
+                case UnitType::AS:
+                    gamePtr->log("No Alien Soldier to attack with");
+                    break;
+
+                case UnitType::AM:
+                    gamePtr->log("No Alien Monster to attack with");
+                    break;
+
+                case UnitType::AD:
+                    gamePtr->log("No Alien Drone to attack with");
+                    break;
+            }
+        }
     }
-    else
-    {
-        gamePtr->log("Not enough Alien Drones to attack. We have " + std::to_string(drones.getCount()));
-        logCurrentAttackers();
-    }
+
+    return didArmyAttack;
 }
 
 bool AlienArmy::isDead() const
@@ -176,21 +198,21 @@ AlienArmy::~AlienArmy()
 {
     // Delete all units in the army
     Unit* unit = nullptr;
-    while (!soldiers.isEmpty())
+    while (soldiers.dequeue(unit))
     {
-        soldiers.dequeue(unit);
         delete unit;
+        unit = nullptr;
     }
 
-    while (!monsters.isEmpty())
+    while (monsters.remove(0, unit))
     {
-        monsters.remove(0, unit);
         delete unit;
+        unit = nullptr;
     }
 
-    while (!drones.isEmpty())
+    while (drones.dequeue(unit))
     {
-        drones.dequeue(unit);
         delete unit;
+        unit = nullptr;
     }
 }

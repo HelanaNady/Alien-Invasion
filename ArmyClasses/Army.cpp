@@ -31,3 +31,8 @@ void Army::logCurrentAttackers()
 		gamePtr->log("Current attackers: []");
 	}
 }
+
+int Army::getFightingUnitsCount() const
+{
+	return currentAttackers.getCount();
+}

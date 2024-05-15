@@ -17,7 +17,9 @@ private:
     Array<Unit*> monsters;
     Deque<Unit*> drones;
 
-    bool dronesToggler;
+    bool dronesAddingToggler;
+    bool dronesRemovingToggler;
+    bool dronesPickingToggler;
 
 public:
     AlienArmy(Game*);
@@ -26,7 +28,7 @@ public:
     Unit* removeUnit(UnitType);
     Unit* pickAttacker(UnitType);
     void printArmy() const;
-    void attack();
+    bool attack();
     bool isDead() const;
 
     // Getters

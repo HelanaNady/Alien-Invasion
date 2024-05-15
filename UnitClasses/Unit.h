@@ -11,20 +11,22 @@ class Game;
 class Unit
 {
 private:
-	static int lastEarthId;
-	static int lastAlienId;
+	enum { MAX_EARTH_ID = 999, MAX_ALIEN_ID = 2999, MAX_EARTH_ALLIED_ID = 4999};
 
-	ArmyType armyType;
-	UnitType unitType;
+	static int nextEarthId;
+	static int nextAlienId;
+	static int nextEarthAlliedId;
 
 protected:
 	Game* gamePtr;
 	int id;
 
+	ArmyType armyType; 
+	UnitType unitType; 
+
 	int Tj; // Join time 
 	int Ta; // First attack time
 	int Td; // Destruction time
-	int UMLjoinTime; // Time when the unit joined the UML
 
 	double initialHealth; // Initial health
 	double health; // Current health
@@ -39,16 +41,20 @@ private:
 public:
 	Unit(Game*, UnitType, double, int, int);
 
+	// Static functions
+	static bool cantCreateEarthUnit(); // Check if the max number of earth units is reached
+	static bool cantCreateAlienUnit(); // Check if the max number of alien units is reached
+	static bool cantCreateEarthAlliedUnit(); // Check if the max number of allied units is reached 
+
 	void receiveDamage(double); // Decrease the health of the unit by "UAP"
-	void receiveHeal(double); // Increase the health of the unit by "UHP"
 
 	double calcUAP(Unit*) const; // Calculates the damage caused when attacked by "attackerUnit"
-	virtual void attack() = 0; // Attack the enemy units
-	virtual void printFought(); // Print the fought units
+	virtual bool attack() = 0;
+	virtual void printFought() = 0;
 
+	virtual bool needsHeal() const; // Check if the unit is eligible for healing
 	bool isDead() const; // Check if the unit is dead
-	bool needsHeal() const; // Check if the unit is eligible for healing
-	bool isFirstAttack() const; // Check if it has been attacked before
+	bool hasBeenAttackedBefore() const; // Check if it has been attacked before
 
 	void clearFoughtUnits(); // Clear the list of fought units
 
@@ -56,11 +62,10 @@ public:
 	int getId() const;
 	ArmyType getArmyType() const;
 	UnitType getUnitType() const;
-	int getInitialHealth() const;
-	int getHealth() const;
+	double getInitialHealth() const;
+	double getHealth() const;
 	int getPower() const;
 	int getAttackCapacity() const;
-	int getUMLjoinTime() const;
 
 	// Time
 	int getJoinTime() const;
@@ -75,7 +80,6 @@ public:
 	// Setters
 	void setPower(int);
 	void setAttackCapacity(int);
-	void setUMLjoinTime(int);
 
 	// Time
 	void setFirstTimeAttack(int);

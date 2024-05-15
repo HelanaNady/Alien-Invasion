@@ -1,15 +1,16 @@
-#ifndef ALIEN_SOLDIER_H
-#define ALIEN_SOLDIER_H
+#ifndef SAVER_UNIT_H
+#define SAVER_UNIT_H
 
 #include "Unit.h"
 #include "../DEFS.h"
 
-class AlienSoldier: public Unit
+class SaverUnit: public Unit
 {
 public:
-	AlienSoldier(Game*, double, int, int);
+	SaverUnit(Game*, double, int, int);
+	
 	void printFought(); // Print the units that the soldier has fought
 	bool attack(); // Attack the enemy units
 };
 
-#endif
+#endif 

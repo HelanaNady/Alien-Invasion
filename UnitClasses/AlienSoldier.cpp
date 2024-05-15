@@ -17,21 +17,25 @@ void AlienSoldier::printFought()
     }
 }
 
-void AlienSoldier::attack()
+bool AlienSoldier::attack()
 {
-    // Get the lists of earth soldiers to attack
-    LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, attackCapacity);
+    // Calculate the number of earth soldiers and saver units to attack
+    int soldiersCapacity = attackCapacity / 2;
+    int saversCapacity = attackCapacity - soldiersCapacity;
+
+    // Get the lists of earth soldiers and saver units to attack
+    LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, soldiersCapacity);
+    LinkedQueue<Unit*> saversList = gamePtr->getEnemyList(ArmyType::EARTH_ALLIED, UnitType::SU, saversCapacity);
+
+    // Check for a successful attack
+    bool attackCheck = false;
 
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
 
-    while (soldiersList.dequeue(enemyUnit))
+    while (soldiersList.dequeue(enemyUnit) || saversList.dequeue(enemyUnit))
     {
         gamePtr->log("Alien " + getUnitTypeString() + " " + toString() + " is attacking Earth " + enemyUnit->getUnitTypeString() + " " + enemyUnit->toString() + " with UAP " + std::to_string(calcUAP(enemyUnit)));
-
-        // Set the first attack time if it's the first time attacking
-        if (enemyUnit->isFirstAttack())
-            enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
         // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
@@ -40,7 +44,7 @@ void AlienSoldier::attack()
         if (enemyUnit->isDead())
             gamePtr->addToKilledList(enemyUnit);
         else if (enemyUnit->needsHeal())
-            gamePtr->addUnitToMaintenanceList(enemyUnit);
+            gamePtr->addUnitToMaintenanceList(dynamic_cast<HealableUnit*>(enemyUnit));
         else
             gamePtr->addUnit(enemyUnit);
 
@@ -52,5 +56,8 @@ void AlienSoldier::attack()
         // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;
 
+        // If this line is reached, at least one unit was attacked
+        attackCheck = true;
     }
+    return attackCheck;
 }

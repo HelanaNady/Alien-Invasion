@@ -3,7 +3,7 @@
 #include "Logger.h"
 #include "Game.h"
 
-Logger::Logger(Game* gamePtr, const std::string filename): gamePtr(gamePtr)
+Logger::Logger(Game* gamePtr, const std::string filename): gamePtr(gamePtr), latestTimestep(0)
 {
     // Clear the log file
     std::ofstream clearFile(filename, std::ios::out | std::ios::trunc);

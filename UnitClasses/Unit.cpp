@@ -3,26 +3,48 @@
 #include "Unit.h"
 #include "../Game.h"
 
-int Unit::lastEarthId = 0;
-int Unit::lastAlienId = 1999;
+int Unit::nextEarthId = 1;
+int Unit::nextAlienId = 2000;
+int Unit::nextEarthAlliedId = 4000;
 
 Unit::Unit(Game* gamePtr, UnitType unitType, double health, int power, int attackCapacity)
-	: gamePtr(gamePtr), unitType(unitType), Ta(-1), Td(0), power(power), attackCapacity(attackCapacity)
+	: gamePtr(gamePtr), unitType(unitType), Ta(-1), Td(-1), power(power), attackCapacity(attackCapacity)
 {
 	setHealth(health);
 
 	if (unitType == UnitType::ES || unitType == UnitType::EG || unitType == UnitType::ET || unitType == UnitType::EH)
 	{
-		id = ++lastEarthId;
+		id = nextEarthId++;
 		armyType = ArmyType::EARTH;
+	}
+	else if (unitType == UnitType::SU)
+	{
+		id = nextEarthAlliedId++;
+		armyType = ArmyType::EARTH_ALLIED;
 	}
 	else
 	{
-		id = ++lastAlienId;
+		id = nextAlienId++;
 		armyType = ArmyType::ALIEN;
 	}
 
+	// set the unit's join time
 	Tj = gamePtr->getCurrentTimestep();
+}
+
+bool Unit::cantCreateEarthUnit()
+{
+	return nextEarthId > MAX_EARTH_ID;
+}
+
+bool Unit::cantCreateAlienUnit()
+{
+	return nextAlienId > MAX_ALIEN_ID;
+}
+
+bool Unit::cantCreateEarthAlliedUnit()
+{
+	return nextEarthAlliedId > MAX_EARTH_ALLIED_ID;
 }
 
 void Unit::setHealth(double health)
@@ -37,25 +59,19 @@ void Unit::setHealth(double health)
 	this->health = health;
 }
 
-int Unit::getInitialHealth() const
+double Unit::getInitialHealth() const
 {
 	return initialHealth;
 }
 
 void Unit::receiveDamage(double UAP)
 {
-	health -= UAP;
+	// Decrement the unit's health, force it to its minimum value if it exceeded it
+	health = health - UAP > 0 ? health - UAP : 0;
 
-	if (health <= 0)
-	{
-		health = 0;
-		Td = gamePtr->getCurrentTimestep(); // Set the destruction time
-	}
-}
-
-void Unit::receiveHeal(double UHP)
-{
-	health += UHP;
+	// Check if it's the unit's first time being attacked and set it if needed
+	if (!hasBeenAttackedBefore())
+		Ta = gamePtr->getCurrentTimestep();
 }
 
 void Unit::clearFoughtUnits()
@@ -64,28 +80,25 @@ void Unit::clearFoughtUnits()
 	while (foughtUnits.dequeue(i));
 }
 
+bool Unit::needsHeal() const
+{
+	return false;
+}
+
 bool Unit::isDead() const
 {
 	return health <= 0;
 }
 
-bool Unit::needsHeal() const
+bool Unit::hasBeenAttackedBefore() const
 {
-	return ((unitType == UnitType::ES || unitType == UnitType::ET) && (health / initialHealth) <= 0.2);
+	return Ta != -1;
 }
 
-bool Unit::isFirstAttack() const
+double Unit::calcUAP(Unit* recievingUnit) const
 {
-	return Ta == -1;
+	return (power * health / 100) / sqrt(recievingUnit->health);
 }
-
-double Unit::calcUAP(Unit* attackedUnit) const
-{
-	return (power * health / 100) / sqrt(attackedUnit->health);
-}
-
-void Unit::printFought()
-{}
 
 int Unit::getId() const
 {
@@ -102,7 +115,7 @@ ArmyType Unit::getArmyType() const
 	return armyType;
 }
 
-int Unit::getHealth() const
+double Unit::getHealth() const
 {
 	return health;
 }
@@ -134,32 +147,22 @@ int Unit::getDestructionTime() const
 
 int Unit::getFirstAttackDelay() const
 {
-	return Ta - Tj;
+	return hasBeenAttackedBefore() ? Ta - Tj : -1;
 }
 
 int Unit::getDestructionDelay() const
 {
-	return Td - Ta;
+	return isDead() ? Td - Ta : -1;
 }
 
 int Unit::getBattleDelay() const
 {
-	return Td - Tj;
-}
-
-int Unit::getUMLjoinTime() const
-{
-	return UMLjoinTime;
+	return isDead() ? Td - Tj : -1;
 }
 
 void Unit::setPower(int power)
 {
 	this->power = power;
-}
-
-void Unit::setUMLjoinTime(int UMLjoinTime)
-{
-	this->UMLjoinTime = UMLjoinTime;
 }
 
 void Unit::setAttackCapacity(int attackCapacity)
@@ -180,7 +183,11 @@ void Unit::setDestructionTime(int Td)
 std::ostream& operator<<(std::ostream& oStream, Unit* unitObj)
 {
 	oStream << unitObj->id;
-
+	EarthSoldier* ESunit = dynamic_cast<EarthSoldier*>(unitObj);
+	if (ESunit && ESunit->isInfected())
+	{
+		oStream << "*";
+	}
 	return oStream;
 }
 
@@ -200,6 +207,9 @@ std::string Unit::toString() const
 			break;
 		case UnitType::EH:
 			unitTypeStr = "Heal Unit";
+			break;
+		case UnitType::SU:
+			unitTypeStr = "Saver Unit";
 			break;
 		case UnitType::AS:
 			unitTypeStr = "Alien Soldier";
@@ -252,6 +262,8 @@ std::string Unit::unitTypeString(UnitType unitType)
 			return "EG";
 		case UnitType::EH:
 			return "EH";
+		case UnitType::SU:
+			return "SU";
 		case UnitType::AS:
 			return "AS";
 		case UnitType::AM:

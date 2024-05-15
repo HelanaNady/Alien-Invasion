@@ -14,23 +14,39 @@
 class EarthArmy: public Army
 {
 private:
+    enum { INFECTION_SPREAD_CHANCE = 2 }; // Chance to spread infection
+    static int infectionThreshold;
+
     LinkedQueue<Unit*> soldiers;
     ArrayStack<Unit*> tanks;
     PriorityQueue<Unit*> gunneries;
     ArrayStack<Unit*> healers;
 
+    int infectedSoldiersCount;
+
 public:
     EarthArmy(Game*);
+    
+    // Static functions
+    static void setInfectionThreshold(int);
 
     void addUnit(Unit*);
     Unit* removeUnit(UnitType);
     Unit* pickAttacker(UnitType);
     void printArmy() const;
-    void attack();
+    bool attack();
     bool isDead() const;
+    void killHealUnit();
+
+    // Infection functions
+    void spreadInfection();
+
+    bool needAllyHelp() const;
 
     // Getters
     int getUnitsCount(UnitType) const;
+    float getInfectionPercentage() const;
+    int getInfectedSoldiersCount() const;
 
     ~EarthArmy();
 };

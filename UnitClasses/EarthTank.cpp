@@ -4,8 +4,10 @@
 #include "../Game.h"
 #include "../Containers/LinkedQueue.h"
 
+bool EarthTank::isAttackingSoldiers = false;
+
 EarthTank::EarthTank(Game* gamePtr, double health, int power, int attackCapacity)
-    : Unit(gamePtr, UnitType::ET, health, power, attackCapacity)
+    : HealableUnit(gamePtr, UnitType::ET, health, power, attackCapacity)
 {}
 
 void EarthTank::printFought()
@@ -20,69 +22,60 @@ void EarthTank::printFought()
     }
 }
 
-void EarthTank::attack()
+bool EarthTank::attack()
 {
-    LinkedQueue<Unit*> monsterEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AM, attackCapacity);
-    LinkedQueue<Unit*> soldierEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, attackCapacity);
-    LinkedQueue<Unit*> tempList;
+    // If the tank is attacking soldiers, divide the attack capacity 50-50 between soldiers and monsters
+    int soldiersAttackCapacity = willAttackSoldiers() ? attackCapacity / 2 : 0;
+    int monstersAttackCapacity = attackCapacity - soldiersAttackCapacity;
 
-    // Calculating the number of alien soldiers that needs to be killed
-    int soldiersToKill = std::ceil(gamePtr->getUnitsCount(ALIEN, AS) - (gamePtr->getUnitsCount(EARTH, AS) / 0.8));
-    int deadSoldiers = 0;
+    // Get the lists of alien soldiers and monsters to attack
+    LinkedQueue<Unit*> monsterEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AM, monstersAttackCapacity);
+    LinkedQueue<Unit*> soldierEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, soldiersAttackCapacity);
+
+    // Check for a successful attack
+    bool attackCheck = false;
 
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
 
-    for (int i = 0; i < attackCapacity; i++)
+    while (monsterEnemyList.dequeue(enemyUnit) || soldierEnemyList.dequeue(enemyUnit))
     {
-        /* Re-adding the fought alive soldiers to their list to be fought again
-            till the required number of kills is reached */
-        if (soldierEnemyList.isEmpty() && deadSoldiers < soldiersToKill)
-        {
-            Unit* tempUnitPtr = nullptr;
-            while (tempList.dequeue(tempUnitPtr))
-                gamePtr->addUnit(tempUnitPtr);
-            soldierEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, attackCapacity);
-        }
-
-        if (deadSoldiers < soldiersToKill)
-            soldierEnemyList.dequeue(enemyUnit);
-        else
-            monsterEnemyList.dequeue(enemyUnit);
-
-        // If no unit was received and at least one of the lists weren't empty, don't increment the counter
-        if (!enemyUnit)
-            continue;
-
         gamePtr->log("Earth " + getUnitTypeString() + " " + toString() + " is attacking Alien " + enemyUnit->getUnitTypeString() + " " + enemyUnit->toString() + " with UAP " + std::to_string(calcUAP(enemyUnit)));
-
-        // Check if it were attacked before or not 
-        if (enemyUnit->isFirstAttack())
-            enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
         // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
         // Check if the unit is dead or can join the battle
         if (enemyUnit->isDead())
-        {
             gamePtr->addToKilledList(enemyUnit);
-            if (deadSoldiers < soldiersToKill)
-                deadSoldiers++;
-        }
         else
-            tempList.enqueue(enemyUnit);
+            gamePtr->addUnit(enemyUnit);
+
+        // Store the IDs of the fought units to be printed later
+        foughtUnits.enqueue(enemyUnit->getId());
 
         gamePtr->log("Earth " + getUnitTypeString() + " " + toString() + " attacked Alien " + enemyUnit->getUnitTypeString() + " " + enemyUnit->toString());
 
         // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;
+
+        // Set attack check to true if one unit at least was attacked successfully
+        attackCheck = true;
     }
 
-    // Re-adding attacked units to their original lists
-    Unit* tempUnitPtr = nullptr;
-    while (tempList.dequeue(tempUnitPtr))
-        gamePtr->addUnit(tempUnitPtr);
+    return attackCheck;
+}
+
+bool EarthTank::willAttackSoldiers()
+{
+    float soldiersRatio = gamePtr->getUnitsCount(ALIEN, AS) > 0 ? (float) gamePtr->getUnitsCount(EARTH, ES) / gamePtr->getUnitsCount(ALIEN, AS) : -1;
+
+    if (soldiersRatio < 0.3 && soldiersRatio >= 0) // Attacks soldiers if the soldiers ration is below 30%
+        isAttackingSoldiers = true;
+    else if (soldiersRatio > 0.8) // Unitil it exceeds 80%
+        isAttackingSoldiers = false;
+
+    return isAttackingSoldiers;
 }
 
 int EarthTank::getHealPriority() const

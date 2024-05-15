@@ -17,7 +17,7 @@ void EarthGunnery::printFought()
     }
 }
 
-void EarthGunnery::attack()
+bool EarthGunnery::attack()
 {
     int AMnumber = attackCapacity;
     int ADnumber = attackCapacity;
@@ -25,7 +25,9 @@ void EarthGunnery::attack()
     LinkedQueue<Unit*> AMlist = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AM, AMnumber);
     LinkedQueue<Unit*> ADlist = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AD, ADnumber);
 
-    // Create a pointer to the enemy unit
+    // Check for a successful attack
+    bool attackCheck = false;
+
     Unit* enemyUnit = nullptr;
 
     int dronesCount = 2; // Counter to handle attacking 2 drones then a monster repeatedly
@@ -48,10 +50,6 @@ void EarthGunnery::attack()
 
         gamePtr->log("Earth " + getUnitTypeString() + " " + toString() + " is attacking Alien " + enemyUnit->getUnitTypeString() + " " + enemyUnit->toString() + " with UAP " + std::to_string(calcUAP(enemyUnit)));
 
-        // Set the first attack time if it's the first time attacking
-        if (enemyUnit->isFirstAttack())
-            enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
-
         // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
@@ -69,6 +67,8 @@ void EarthGunnery::attack()
         // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;
 
+        // If this line is reached, at least one unit was attacked
+        attackCheck = true;
     }
 
     // Empty rest of enemy list
@@ -78,9 +78,11 @@ void EarthGunnery::attack()
 
     while (ADlist.dequeue(unit))
         gamePtr->addUnit(unit);
+
+    return attackCheck;
 }
 
 int EarthGunnery::getPriority() const
 {
-    return getHealth() + getPower();
+    return (int) getHealth() + getPower();
 }

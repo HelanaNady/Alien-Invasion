@@ -16,7 +16,7 @@ public:
     virtual void addUnit(Unit*) = 0;
     virtual Unit* removeUnit(UnitType) = 0;
     virtual Unit* pickAttacker(UnitType) = 0;
-    virtual void attack() = 0;
+    virtual bool attack() = 0;
     virtual bool isDead() const = 0;
 
     virtual int getUnitsCount(UnitType) const = 0;
@@ -24,6 +24,7 @@ public:
     void printFightingUnits();
 
     void logCurrentAttackers();
+    int getFightingUnitsCount() const;
 };
 
 #endif

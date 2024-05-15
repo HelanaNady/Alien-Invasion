@@ -17,7 +17,7 @@
       <UniqueIdentifier>{d6265d0d-9e06-4a0b-9c88-39e5e3415fa3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Logger Class">
-      <UniqueIdentifier>{95e5a3b4-d60f-4074-aca1-70aa469963dc}</UniqueIdentifier>
+      <UniqueIdentifier>{1f8091ea-ce05-4511-b390-c3353e64a201}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -82,6 +82,15 @@
     <ClInclude Include="UnitClasses\HealUnit.h">
       <Filter>Unit Classes</Filter>
     </ClInclude>
+    <ClInclude Include="UnitClasses\HealableUnit.h">
+      <Filter>Unit Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitClasses\SaverUnit.h">
+      <Filter>Unit Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="ArmyClasses\EarthAlliedArmy.h">
+      <Filter>Army Classes</Filter>
+    </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>Logger Class</Filter>
     </ClInclude>
@@ -137,6 +146,15 @@
     </ClCompile>
     <ClCompile Include="UnitClasses\HealUnit.cpp">
       <Filter>Unit Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitClasses\HealableUnit.cpp">
+      <Filter>Unit Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="UnitClasses\SaverUnit.cpp">
+      <Filter>Unit Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="ArmyClasses\EarthAlliedArmy.cpp">
+      <Filter>Army Classes</Filter>
     </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>Logger Class</Filter>

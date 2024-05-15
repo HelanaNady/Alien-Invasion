@@ -3,7 +3,7 @@
 #include "../Containers/LinkedQueue.h"
 
 EarthSoldier::EarthSoldier(Game* gamePtr, double health, int power, int attackCapacity)
-    : Unit(gamePtr, UnitType::ES, health, power, attackCapacity)
+    : HealableUnit(gamePtr, UnitType::ES, health, power, attackCapacity), infected(false), immune(false)
 {}
 
 void EarthSoldier::printFought()
@@ -18,10 +18,17 @@ void EarthSoldier::printFought()
     }
 }
 
-void EarthSoldier::attack()
+bool EarthSoldier::attack()
 {
-    // Get the lists of earth soldiers to attack
-    LinkedQueue<Unit*> enemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, attackCapacity);
+    // Check if the unit is infected and decide what to attack
+    ArmyType enemyArmyType = isInfected() ? ArmyType::EARTH : ArmyType::ALIEN;
+    UnitType enemyUnitType = isInfected() ? UnitType::ES : UnitType::AS;
+
+    // Get the lists of units to attack
+    LinkedQueue<Unit*> enemyList = gamePtr->getEnemyList(enemyArmyType, enemyUnitType, attackCapacity);
+
+    // Check for a successful attack
+    bool attackCheck = false;
 
     // Create a pointer to the enemy unit
     Unit* enemyUnit = nullptr;
@@ -29,10 +36,6 @@ void EarthSoldier::attack()
     while (enemyList.dequeue(enemyUnit))
     {
         gamePtr->log("Earth " + getUnitTypeString() + " " + toString() + " is attacking Alien " + enemyUnit->getUnitTypeString() + " " + enemyUnit->toString() + " with UAP " + std::to_string(calcUAP(enemyUnit)));
-
-        // Check if it were attacked before or not
-        if (enemyUnit->isFirstAttack())
-            enemyUnit->setFirstTimeAttack(gamePtr->getCurrentTimestep());
 
         // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
@@ -51,10 +54,53 @@ void EarthSoldier::attack()
         // Nullify the pointer to avoid duplication
         enemyUnit = nullptr;
 
+        // If this line is reached, at least one unit was attacked
+        attackCheck = true;
     }
+
+    return attackCheck;
+}
+
+bool EarthSoldier::getInfection()
+{
+    if (isInfected() || isImmune())
+    {
+        if (isImmune())
+            gamePtr->log("Earth " + getUnitTypeString() + " " + toString() + "is immune");
+        if (isInfected())
+            gamePtr->log("Earth " + getUnitTypeString() + " " + toString() + "is already infected");
+
+        return false;
+    }
+
+    // Set the infected flag to true
+    gamePtr->log("Earth " + getUnitTypeString() + " " + toString() + " is infected");
+    infected = true;
+
+    return true;
+}
+
+bool EarthSoldier::isInfected() const
+{
+    return infected;
+}
+
+void EarthSoldier::loseInfection()
+{
+    infected = false; // Set the infected flag to false since the unit is healed
+}
+
+void EarthSoldier::gainImmunity()
+{
+    immune = true; // Set the immunity flag to true
+}
+
+bool EarthSoldier::isImmune() const
+{
+    return immune;
 }
 
 int EarthSoldier::getHealPriority() const
 {
-    return 100 - health; // The lower the health, the higher the priority
+    return 100 - (int) health; // The lower the health, the higher the priority
 };

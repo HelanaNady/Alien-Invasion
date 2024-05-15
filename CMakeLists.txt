@@ -29,4 +29,7 @@ add_executable(Alien_Invasion
         ArmyClasses/EarthArmy.cpp
         ArmyClasses/Army.cpp
         UnitClasses/HealUnit.cpp
-        Logger.cpp)
+        Logger.cpp
+        UnitClasses/HealableUnit.cpp
+        UnitClasses/SaverUnit.cpp
+        ArmyClasses/EarthAlliedArmy.cpp)

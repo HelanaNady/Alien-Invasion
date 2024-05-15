@@ -14,9 +14,9 @@ private:
     int latestTimestep; // The latest timestep logged
 
 public:
-    Logger(Game* gamePtr, const std::string filename);
+    Logger(Game*, const std::string);
 
-    void log(std::string message);
+    void log(std::string);
     void addBreakLine();
 
     ~Logger();
