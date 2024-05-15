@@ -20,13 +20,12 @@ float calculatePercentage(int numerator, int denominator) // Helper function to 
 	return calculateRatio(numerator, denominator) * 100;
 }
 
-
 Game::Game(): gameMode(GameMode::INTERACTIVE), currentTimestep(0), earthArmy(this), alienArmy(this), earthAlliedArmy(this), randomGenerator(this)
 {}
 
 void Game::run(GameMode gameMode, const std::string& inputFileName, const std::string& outputFileName)
 {
-	// Change the game mode 
+	// Change the game mode
 	setGameMode(gameMode);
 
 	// Load the parameters from the file and set the parameters in the random generator
