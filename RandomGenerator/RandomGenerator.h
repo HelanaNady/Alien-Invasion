@@ -43,8 +43,8 @@ public:
 	int getRandomNumber(int, int) const; // Generate a random number between the given range
 
 	// Setters
-	void setN(int);
-	void setProb(int);
+	void setN(int); // Set the number of units to generate
+	void setProb(int); // Set the probability of generating a unit
 
 	void setEarthParameters(int, int, int, int, Range, Range, Range); // Sets earth parameters loaded by game class
 	void setAlienParameters(int, int, int, Range, Range, Range); // Sets alien parameters loaded by game class

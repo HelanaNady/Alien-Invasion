@@ -47,7 +47,7 @@ bool EarthSoldier::attack()
         // Store the IDs of the fought units to be printed later
         foughtUnits.enqueue(enemyUnit->getId());
 
-        // Nullify the pointer to avoid duplication
+        // Nullify the pointer
         enemyUnit = nullptr;
 
         // If this line is reached, at least one unit was attacked

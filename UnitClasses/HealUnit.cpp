@@ -57,7 +57,7 @@ bool HealUnit::attack()
         // Store the IDs of the units that received heal to be printed later
         foughtUnits.enqueue(unitToHeal->getId());
 
-        // Nullify the pointer to avoid duplication
+        // Nullify the pointer
         unitToHeal = nullptr;
 
         // If this line was reached, at least one heal was successful

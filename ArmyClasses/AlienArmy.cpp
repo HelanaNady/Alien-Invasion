@@ -27,7 +27,7 @@ void AlienArmy::addUnit(Unit* unit)
             else
                 drones.enqueueFront(unit);
 
-            dronesAddingToggler = !dronesAddingToggler;
+            dronesAddingToggler = !dronesAddingToggler; // Toggle the adding toggler to add the drones in a once front, once back order
             break;
     }
 }
@@ -44,7 +44,7 @@ Unit* AlienArmy::removeUnit(UnitType unitType)
 
         case UnitType::AM:
             if (!monsters.isEmpty())
-                monsters.remove((rand() % monsters.getCount()), unit);
+                monsters.remove((rand() % monsters.getCount()), unit); // Remove a random monster
             break;
 
         case UnitType::AD:
@@ -53,7 +53,7 @@ Unit* AlienArmy::removeUnit(UnitType unitType)
             else
                 drones.dequeueBack(unit);
 
-            dronesRemovingToggler = !dronesRemovingToggler;
+            dronesRemovingToggler = !dronesRemovingToggler; // Toggle the removing toggler to remove the drones in a once front, once back order
             break;
     }
 
@@ -81,7 +81,7 @@ Unit* AlienArmy::pickAttacker(UnitType unitType)
             else
                 drones.peekBack(unit);
 
-            dronesPickingToggler = !dronesPickingToggler;
+            dronesPickingToggler = !dronesPickingToggler; // Toggle the picking toggler to pick the drones in a once front, once back order
             break;
     }
 
