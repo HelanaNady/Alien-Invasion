@@ -245,9 +245,10 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 	return enemyUnits;
 }
 
-void Game::registerAttack(Unit* currentAttacker, std::string currentFoughtUnits)
+void Game::registerAttack(Unit* currentAttacker, std::string currentAction, std::string currentFoughtUnits)
 {
 	attackers.enqueue(currentAttacker);
+	attackActions.enqueue(currentAction);
 	foughtUnits.enqueue(currentFoughtUnits);
 }
 
@@ -320,9 +321,10 @@ void Game::printAll()
 	{
 		std::cout << std::endl << "============== Units fighting at current step =================" << std::endl;
 		Unit* currentAttacker = nullptr;
-		std::string currentFoughtUnits;
-		while (attackers.dequeue(currentAttacker) && foughtUnits.dequeue(currentFoughtUnits))
-			std::cout << currentAttacker << " shots [" << currentFoughtUnits << "]" << std::endl;
+		std::string currentFoughtUnits, currentAction;
+
+		while (attackers.dequeue(currentAttacker) && attackActions.dequeue(currentAction) && foughtUnits.dequeue(currentFoughtUnits))
+			std::cout << currentAttacker << " " << currentAction << " [" << currentFoughtUnits << "]" << std::endl;
 	}
 	else
 		std::cout << std::endl << "============== No units fighting at current step ==============" << std::endl;

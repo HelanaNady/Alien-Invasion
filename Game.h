@@ -25,6 +25,8 @@ private:
 
     LinkedQueue<Unit*> attackers;
     LinkedQueue<std::string> foughtUnits;
+    LinkedQueue<std::string> attackActions;
+
     LinkedQueue<Unit*> killedList;
     PriorityQueue<HealableUnit*> unitMaintenanceList;
 
@@ -59,7 +61,7 @@ public:
     void addUnit(Unit*); // Add a unit to the appropriate army and list
     Unit* removeUnit(ArmyType, UnitType); // Remove a unit from the appropriate army and list
     LinkedQueue<Unit*> getEnemyList(ArmyType, UnitType, int); // Get the enemy list for the given army type, unit type and attack capacity
-    void registerAttack(Unit*,std::string);
+    void registerAttack(Unit*,std::string, std::string);
 
     void addToKilledList(Unit*); // Add a unit to the killed list
 

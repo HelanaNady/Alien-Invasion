@@ -13,6 +13,7 @@ void EarthSoldier::printUnit()
 
 bool EarthSoldier::attack()
 {
+    std::string foughtUnits = "";
     // Check if the unit is infected and decide what to attack
     ArmyType enemyArmyType = isInfected() ? ArmyType::EARTH : ArmyType::ALIEN;
     UnitType enemyUnitType = isInfected() ? UnitType::ES : UnitType::AS;
@@ -38,7 +39,9 @@ bool EarthSoldier::attack()
             gamePtr->addUnit(enemyUnit);
 
         // Store the IDs of the fought units to be printed later
-        foughtUnits.enqueue(enemyUnit->getId());
+        if(foughtUnits != "")
+            foughtUnits += ", " ;
+        foughtUnits += std::to_string(enemyUnit->getId());
 
         // Nullify the pointer
         enemyUnit = nullptr;
@@ -47,6 +50,8 @@ bool EarthSoldier::attack()
         attackCheck = true;
     }
 
+    if (foughtUnits != "")
+        gamePtr->registerAttack(this, "shots", foughtUnits);
     return attackCheck;
 }
 

@@ -30,6 +30,8 @@ bool AlienMonster::attack()
     LinkedQueue<Unit*> tanksList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, tanksCapacity);
     LinkedQueue<Unit*> saversList = gamePtr->getEnemyList(ArmyType::EARTH_ALLIED, UnitType::SU, saversCapacity);
 
+    std::string foughtUnits = "", infectedSoldiers = "";
+
     // Check for a successful attack
     bool attackCheck = false;
 
@@ -45,6 +47,12 @@ bool AlienMonster::attack()
         {
             dynamic_cast<EarthSoldier*>(enemyUnit)->getInfection(); // The soldier will get infected if not infected already and not immune
             gamePtr->addUnit(enemyUnit); // The soldier will be re-enqueued to the list & infected soldiers counter will be incremented
+
+            // Store the IDs of the fought units to be printed later
+            if (infectedSoldiers != "") 
+                infectedSoldiers += ", ";
+            infectedSoldiers += std::to_string(enemyUnit->getId());
+
             continue;
         }
 
@@ -60,7 +68,9 @@ bool AlienMonster::attack()
             gamePtr->addUnit(enemyUnit);
 
         // Store the IDs of the fought units to be printed later
-        foughtUnits.enqueue(enemyUnit->getId());
+        if (foughtUnits != "")
+            foughtUnits += ", ";
+        foughtUnits += std::to_string(enemyUnit->getId());
 
         // Nullify the pointer
         enemyUnit = nullptr;
@@ -68,6 +78,11 @@ bool AlienMonster::attack()
         // If this line is reached, at least one unit was attacked
         attackCheck = true;
     }
+
+    if (foughtUnits != "")
+        gamePtr->registerAttack(this, "shots", foughtUnits);
+    if (infectedSoldiers != "")
+        gamePtr->registerAttack(this, "infects", infectedSoldiers);
 
     return attackCheck;
 }

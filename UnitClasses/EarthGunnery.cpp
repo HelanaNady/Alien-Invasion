@@ -22,6 +22,8 @@ bool EarthGunnery::attack()
     LinkedQueue<Unit*> dronesList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AD, dronesCapacity);
     LinkedQueue<Unit*> monstersList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AM, monstersCapacity);
 
+    std::string foughtUnits = "";
+
     // Check for a successful attack
     bool attackCheck = false;
 
@@ -40,7 +42,9 @@ bool EarthGunnery::attack()
             gamePtr->addUnit(enemyUnit);
 
         // Store the IDs of the fought units to be printed later
-        foughtUnits.enqueue(enemyUnit->getId());
+        if (foughtUnits != "")
+            foughtUnits += ", ";
+        foughtUnits += std::to_string(enemyUnit->getId());
 
         // Nullify the pointer
         enemyUnit = nullptr;
@@ -48,6 +52,10 @@ bool EarthGunnery::attack()
         // If this line is reached, at least one unit was attacked
         attackCheck = true;
     }
+
+    if (foughtUnits != "")
+        gamePtr->registerAttack(this, "shots", foughtUnits);
+
     return attackCheck;
 }
 

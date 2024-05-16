@@ -18,6 +18,8 @@ bool SaverUnit::attack()
     // Get the lists of alien soldiers to attack
     LinkedQueue<Unit*> enemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, attackCapacity);
 
+    std::string foughtUnits = "";
+
     // Check for a successful attack
     bool attackCheck = false;
 
@@ -36,7 +38,9 @@ bool SaverUnit::attack()
             gamePtr->addUnit(enemyUnit);
 
         // Store the IDs of the fought units to be printed later
-        foughtUnits.enqueue(enemyUnit->getId());
+        if (foughtUnits != "")
+            foughtUnits += ", ";
+        foughtUnits += std::to_string(enemyUnit->getId());
 
         // Nullify the pointer
         enemyUnit = nullptr;
@@ -44,6 +48,9 @@ bool SaverUnit::attack()
         // If this line is reached, at least one unit was attacked
         attackCheck = true;
     }
+
+    if (foughtUnits != "")
+        gamePtr->registerAttack(this, "shots", foughtUnits);
 
     return attackCheck;
 }

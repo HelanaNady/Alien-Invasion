@@ -24,7 +24,6 @@ public:
     virtual bool isDead() const = 0; // Check if the army is dead
 
     virtual void printArmy() const = 0; // Print the army units
-    void printFightingUnits(); // Print the fighting units of the army (current attackers)
 
     // Getters
     virtual int getUnitsCount(UnitType) const = 0; // Get the count of a specific unit type

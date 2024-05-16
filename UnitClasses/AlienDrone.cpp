@@ -20,6 +20,8 @@ bool AlienDrone::attack()
     LinkedQueue<Unit*> ETlist = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, ETnumber);
     LinkedQueue<Unit*> EGlist = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::EG, EGnumber);
 
+    std::string foughtUnits = "";
+
     // Check for a successful attack
     bool attackCheck = false;
 
@@ -40,7 +42,9 @@ bool AlienDrone::attack()
             gamePtr->addUnit(enemyUnit);
 
         // Store the IDs of the fought units to be printed later
-        foughtUnits.enqueue(enemyUnit->getId());
+        if (foughtUnits != "")
+            foughtUnits += ", ";
+        foughtUnits += std::to_string(enemyUnit->getId()); 
 
         // Nullify the pointer
         enemyUnit = nullptr;
@@ -49,5 +53,7 @@ bool AlienDrone::attack()
         attackCheck = true;
     }
 
+    if (foughtUnits != "")
+        gamePtr->registerAttack(this,"shots", foughtUnits);
     return attackCheck;
 }
