@@ -22,7 +22,7 @@ void EarthArmy::addUnit(Unit* unit)
     {
         case UnitType::ES:
             soldiers.enqueue(unit);
-            if (dynamic_cast<EarthSoldier*>(unit)->isInfected())
+            if (dynamic_cast<EarthSoldier*>(unit)->isInfected()) // If the soldier is infected, increment the infected count
                 infectedSoldiersCount++;
             break;
 
@@ -48,7 +48,7 @@ Unit* EarthArmy::removeUnit(UnitType unitType)
     {
         case UnitType::ES:
             soldiers.dequeue(unit);
-            if (unit && dynamic_cast<EarthSoldier*>(unit)->isInfected())
+            if (unit && dynamic_cast<EarthSoldier*>(unit)->isInfected()) // If the soldier is infected, decrement the infected count
                 infectedSoldiersCount--;
             break;
 
