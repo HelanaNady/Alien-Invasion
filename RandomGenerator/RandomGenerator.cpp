@@ -87,7 +87,7 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType)
 		else
 			newUnit = new AlienDrone(gamePtr, health, power, attackCapacity);
 	}
-	else if (armyType == ArmyType::EARTH_ALLIED && gamePtr->doesEarthNeedHelp())
+	else if (armyType == ArmyType::EARTH_ALLIED && willGenerateSavers())
 	{
 		// Check if the max number of allied units is reached
 		if (Unit::cantCreateEarthAlliedUnit())
@@ -101,6 +101,16 @@ Unit* RandomGenerator::generateUnit(ArmyType armyType)
 	}
 
 	return newUnit;
+}
+
+bool RandomGenerator::willGenerateSavers()
+{
+	if (gamePtr->doesEarthNeedHelp()) // Only generate when needed
+		isGeneratingSavers = true;
+	else if (gamePtr->getInfectedUnitsCount() == 0) // Stop generating after all units have been healed
+		isGeneratingSavers = false;
+
+	return isGeneratingSavers;
 }
 
 int RandomGenerator::getRandomNumber(int min, int max) const
