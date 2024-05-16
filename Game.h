@@ -23,6 +23,10 @@ private:
     EarthAlliedArmy earthAlliedArmy;
     RandomGenerator randomGenerator;
 
+    LinkedQueue<Unit*> attackers; // Attackers of the current time step
+    LinkedQueue<std::string> foughtUnits; // Units attacked by each attacker in the current timestep
+    LinkedQueue<std::string> attackActions; // Action done on the unit of the opposite army
+
     LinkedQueue<Unit*> killedList;
     PriorityQueue<HealableUnit*> unitMaintenanceList;
 
@@ -30,7 +34,6 @@ private:
     bool startAttack(); // Makes the two armies attack each other
     void setGameMode(GameMode); // Change the game mode
     bool battleOver(bool) const; // Check if the battle is over
-    bool areUnitsFighting() const; // Check if there are units fighting
     void killSaverUnits(); // Savers need to be killed once all infected units are healed
 
     void printKilledList() const; // Prints the killed list with the console formats
@@ -57,6 +60,7 @@ public:
     void addUnit(Unit*); // Add a unit to the appropriate army and list
     Unit* removeUnit(ArmyType, UnitType); // Remove a unit from the appropriate army and list
     LinkedQueue<Unit*> getEnemyList(ArmyType, UnitType, int); // Get the enemy list for the given army type, unit type and attack capacity
+    void registerAttack(Unit*, const std::string&, const std::string&); // Store the current attacker along with its fought units
 
     void addToKilledList(Unit*); // Add a unit to the killed list
 

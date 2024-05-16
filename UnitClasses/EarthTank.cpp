@@ -10,16 +10,9 @@ EarthTank::EarthTank(Game* gamePtr, double health, int power, int attackCapacity
     : HealableUnit(gamePtr, UnitType::ET, health, power, attackCapacity)
 {}
 
-void EarthTank::printFought()
+void EarthTank::printUnit()
 {
-    if (!foughtUnits.isEmpty())
-    {
-        std::cout << "ET " << getId() << " shots [";
-        foughtUnits.printList();
-        std::cout << "]" << std::endl;
-
-        clearFoughtUnits(); // Clear the list after printing
-    }
+    std::cout << "ET " << id;
 }
 
 bool EarthTank::attack()
@@ -31,6 +24,8 @@ bool EarthTank::attack()
     // Get the lists of alien soldiers and monsters to attack
     LinkedQueue<Unit*> monsterEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AM, monstersAttackCapacity);
     LinkedQueue<Unit*> soldierEnemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, soldiersAttackCapacity);
+
+    std::string foughtUnits = "";
 
     // Check for a successful attack
     bool attackCheck = false;
@@ -50,7 +45,9 @@ bool EarthTank::attack()
             gamePtr->addUnit(enemyUnit);
 
         // Store the IDs of the fought units to be printed later
-        foughtUnits.enqueue(enemyUnit->getId());
+        if (foughtUnits != "")
+            foughtUnits += ", ";
+        foughtUnits += std::to_string(enemyUnit->getId());
 
         // Nullify the pointer
         enemyUnit = nullptr;
@@ -58,6 +55,9 @@ bool EarthTank::attack()
         // Set attack check to true if one unit at least was attacked successfully
         attackCheck = true;
     }
+
+    if (foughtUnits != "")
+        gamePtr->registerAttack(this, "shots", foughtUnits);
 
     return attackCheck;
 }

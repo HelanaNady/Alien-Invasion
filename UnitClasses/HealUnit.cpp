@@ -5,22 +5,17 @@ HealUnit::HealUnit(Game* gamePtr, double health, int power, int attackCapacity)
     : Unit(gamePtr, UnitType::EH, health, power, attackCapacity)
 {}
 
-void HealUnit::printFought()
+void HealUnit::printUnit()
 {
-    if (!foughtUnits.isEmpty())
-    {
-        std::cout << "EH " << getId() << " heals [";
-        foughtUnits.printList();
-        std::cout << "]" << std::endl;
-
-        clearFoughtUnits(); // Clear the list after printing
-    }
+    std::cout << "HU " << id;
 }
 
 bool HealUnit::attack()
 {
     // Get the list of units to heal
     LinkedQueue<HealableUnit*> unitsToHeal = gamePtr->getUnitsToMaintainList(attackCapacity);
+
+    std::string healedUnits = "";
 
     // Create a pointer to the unit to heal
     HealableUnit* unitToHeal = nullptr;
@@ -56,7 +51,9 @@ bool HealUnit::attack()
             gamePtr->addUnitToMaintenanceList(unitToHeal); // Add it back to the UML if not completely healed
 
         // Store the IDs of the units that received heal to be printed later
-        foughtUnits.enqueue(unitToHeal->getId());
+        if (healedUnits != "")
+            healedUnits += ", ";
+        healedUnits += std::to_string(unitToHeal->getId());
 
         // Nullify the pointer
         unitToHeal = nullptr;
@@ -64,6 +61,9 @@ bool HealUnit::attack()
         // If this line was reached, at least one heal was successful
         healCheck = true;
     }
+
+    if (healedUnits != "")
+        gamePtr->registerAttack(this, "heals", healedUnits);
 
     return healCheck;
 }

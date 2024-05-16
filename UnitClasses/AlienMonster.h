@@ -15,7 +15,7 @@ public:
 	// Static functions
 	static void setInfectingProbability(int); // Set the infecting probability
 
-	void printFought(); // Print the units that the monster has fought
+	void printUnit(); // Print the unit's type along with its ID
 	bool attack(); // Attack the enemy units
 };
 

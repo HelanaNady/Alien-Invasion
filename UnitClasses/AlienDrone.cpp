@@ -5,16 +5,9 @@ AlienDrone::AlienDrone(Game* gamePtr, double health, int power, int attackCapaci
     : Unit(gamePtr, UnitType::AD, health, power, attackCapacity)
 {}
 
-void AlienDrone::printFought()
+void AlienDrone::printUnit()
 {
-    if (!foughtUnits.isEmpty())
-    {
-        std::cout << "AD " << getId() << " shots [";
-        foughtUnits.printList();
-        std::cout << "]" << std::endl;
-
-        clearFoughtUnits(); // Clear the list after printing
-    }
+    std::cout << "AD " << id;
 }
 
 bool AlienDrone::attack()
@@ -26,6 +19,8 @@ bool AlienDrone::attack()
     // Get the lists of units to attack
     LinkedQueue<Unit*> ETlist = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ET, ETnumber);
     LinkedQueue<Unit*> EGlist = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::EG, EGnumber);
+
+    std::string foughtUnits = "";
 
     // Check for a successful attack
     bool attackCheck = false;
@@ -47,7 +42,9 @@ bool AlienDrone::attack()
             gamePtr->addUnit(enemyUnit);
 
         // Store the IDs of the fought units to be printed later
-        foughtUnits.enqueue(enemyUnit->getId());
+        if (foughtUnits != "")
+            foughtUnits += ", ";
+        foughtUnits += std::to_string(enemyUnit->getId());
 
         // Nullify the pointer
         enemyUnit = nullptr;
@@ -55,6 +52,9 @@ bool AlienDrone::attack()
         // If this line is reached, at least one unit was attacked
         attackCheck = true;
     }
+
+    if (foughtUnits != "")
+        gamePtr->registerAttack(this, "shots", foughtUnits);
 
     return attackCheck;
 }

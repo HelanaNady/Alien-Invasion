@@ -3,16 +3,3 @@
 
 Army::Army(Game* gamePtr): gamePtr(gamePtr)
 {}
-
-void Army::printFightingUnits()
-{
-	Unit* unit = nullptr;
-
-	while (currentAttackers.dequeue(unit))
-		unit->printFought();
-}
-
-int Army::getFightingUnitsCount() const
-{
-	return currentAttackers.getCount();
-}

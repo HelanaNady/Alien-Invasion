@@ -6,20 +6,16 @@ EarthSoldier::EarthSoldier(Game* gamePtr, double health, int power, int attackCa
     : HealableUnit(gamePtr, UnitType::ES, health, power, attackCapacity), infected(false), immune(false)
 {}
 
-void EarthSoldier::printFought()
+void EarthSoldier::printUnit()
 {
-    if (!foughtUnits.isEmpty())
-    {
-        std::cout << "ES " << getId() << " shots [";
-        foughtUnits.printList();
-        std::cout << "]" << std::endl;
-
-        clearFoughtUnits(); // Clear the list after printing
-    }
+    std::cout << "ES " << id;
+    if (infected)
+        std::cout << "*";
 }
 
 bool EarthSoldier::attack()
 {
+    std::string foughtUnits = "";
     // Check if the unit is infected and decide what to attack
     ArmyType enemyArmyType = isInfected() ? ArmyType::EARTH : ArmyType::ALIEN;
     UnitType enemyUnitType = isInfected() ? UnitType::ES : UnitType::AS;
@@ -45,7 +41,9 @@ bool EarthSoldier::attack()
             gamePtr->addUnit(enemyUnit);
 
         // Store the IDs of the fought units to be printed later
-        foughtUnits.enqueue(enemyUnit->getId());
+        if (foughtUnits != "")
+            foughtUnits += ", ";
+        foughtUnits += std::to_string(enemyUnit->getId());
 
         // Nullify the pointer
         enemyUnit = nullptr;
@@ -53,6 +51,9 @@ bool EarthSoldier::attack()
         // If this line is reached, at least one unit was attacked
         attackCheck = true;
     }
+
+    if (foughtUnits != "")
+        gamePtr->registerAttack(this, "shots", foughtUnits);
 
     return attackCheck;
 }

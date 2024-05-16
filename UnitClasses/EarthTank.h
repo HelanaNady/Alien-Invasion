@@ -12,7 +12,7 @@ private:
 public:
 	EarthTank(Game*, double, int, int);
 
-	void printFought(); // Print the units that the tank has fought
+	void printUnit(); // Print the unit's type along with its ID
 	bool attack(); // Attack the enemy units
 
 	bool willAttackSoldiers(); // Check if the tank will attack soldiers in the current timestep

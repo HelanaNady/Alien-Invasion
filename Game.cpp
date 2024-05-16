@@ -100,11 +100,6 @@ bool Game::battleOver(bool didArmiesAttack) const
 	return currentTimestep >= 40 && (anArmyDied || noAttackTie);
 }
 
-bool Game::areUnitsFighting() const
-{
-	return earthArmy.getFightingUnitsCount() + alienArmy.getFightingUnitsCount();
-}
-
 void Game::killSaverUnits()
 {
 	Unit* saverToKill = earthAlliedArmy.removeUnit(UnitType::SU); // Remove a saver from its list
@@ -245,6 +240,13 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 	return enemyUnits;
 }
 
+void Game::registerAttack(Unit* currentAttacker, const std::string& currentAction, const std::string& currentFoughtUnits)
+{
+	attackers.enqueue(currentAttacker); // Store the current attacker
+	attackActions.enqueue(currentAction); // Store the action it made
+	foughtUnits.enqueue(currentFoughtUnits); // Store the list of units the action happened on
+}
+
 void Game::addToKilledList(Unit* unit)
 {
 	// Add the unit to the killed list
@@ -309,12 +311,17 @@ void Game::printAll()
 	std::cout << std::endl << "============== Earth Allied Army Alive Units ===================" << std::endl;
 	earthAlliedArmy.printArmy();
 
-	if (areUnitsFighting())
+	if (!attackers.isEmpty())
 	{
 		std::cout << std::endl << "============== Units fighting at current step =================" << std::endl;
-		earthArmy.printFightingUnits();
-		alienArmy.printFightingUnits();
-		earthAlliedArmy.printFightingUnits();
+		Unit* currentAttacker = nullptr;
+		std::string currentFoughtUnits, currentAction;
+
+		while (attackers.dequeue(currentAttacker) && attackActions.dequeue(currentAction) && foughtUnits.dequeue(currentFoughtUnits))
+		{
+			currentAttacker->printUnit();
+			std::cout << " " << currentAction << " [" << currentFoughtUnits << "]" << std::endl;
+		}
 	}
 	else
 		std::cout << std::endl << "============== No units fighting at current step ==============" << std::endl;

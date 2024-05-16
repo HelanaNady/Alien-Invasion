@@ -7,22 +7,17 @@ SaverUnit::SaverUnit(Game* gamePtr, double health, int power, int attackCapacity
     : Unit(gamePtr, UnitType::SU, health, power, attackCapacity)
 {}
 
-void SaverUnit::printFought()
+void SaverUnit::printUnit()
 {
-    if (!foughtUnits.isEmpty())
-    {
-        std::cout << "SU " << getId() << " shots [";
-        foughtUnits.printList();
-        std::cout << "]" << std::endl;
-
-        clearFoughtUnits(); // Clear the list after printing
-    }
+    std::cout << "SU " << id;
 }
 
 bool SaverUnit::attack()
 {
     // Get the lists of alien soldiers to attack
     LinkedQueue<Unit*> enemyList = gamePtr->getEnemyList(ArmyType::ALIEN, UnitType::AS, attackCapacity);
+
+    std::string foughtUnits = "";
 
     // Check for a successful attack
     bool attackCheck = false;
@@ -42,7 +37,9 @@ bool SaverUnit::attack()
             gamePtr->addUnit(enemyUnit);
 
         // Store the IDs of the fought units to be printed later
-        foughtUnits.enqueue(enemyUnit->getId());
+        if (foughtUnits != "")
+            foughtUnits += ", ";
+        foughtUnits += std::to_string(enemyUnit->getId());
 
         // Nullify the pointer
         enemyUnit = nullptr;
@@ -50,6 +47,9 @@ bool SaverUnit::attack()
         // If this line is reached, at least one unit was attacked
         attackCheck = true;
     }
+
+    if (foughtUnits != "")
+        gamePtr->registerAttack(this, "shots", foughtUnits);
 
     return attackCheck;
 }

@@ -5,16 +5,9 @@ AlienSoldier::AlienSoldier(Game* gamePtr, double health, int power, int attackCa
     : Unit(gamePtr, UnitType::AS, health, power, attackCapacity)
 {}
 
-void AlienSoldier::printFought()
+void AlienSoldier::printUnit()
 {
-    if (!foughtUnits.isEmpty())
-    {
-        std::cout << "AS " << getId() << " shots [";
-        foughtUnits.printList();
-        std::cout << "]" << std::endl;
-
-        clearFoughtUnits(); // Clear the list after printing
-    }
+    std::cout << "AS " << id;
 }
 
 bool AlienSoldier::attack()
@@ -26,6 +19,8 @@ bool AlienSoldier::attack()
     // Get the lists of earth soldiers and saver units to attack
     LinkedQueue<Unit*> soldiersList = gamePtr->getEnemyList(ArmyType::EARTH, UnitType::ES, soldiersCapacity);
     LinkedQueue<Unit*> saversList = gamePtr->getEnemyList(ArmyType::EARTH_ALLIED, UnitType::SU, saversCapacity);
+
+    std::string foughtUnits = "";
 
     // Check for a successful attack
     bool attackCheck = false;
@@ -47,7 +42,9 @@ bool AlienSoldier::attack()
             gamePtr->addUnit(enemyUnit);
 
         // Store the IDs of the fought units to be printed later
-        foughtUnits.enqueue(enemyUnit->getId());
+        if (foughtUnits != "")
+            foughtUnits += ", ";
+        foughtUnits += std::to_string(enemyUnit->getId());
 
         // Nullify the pointer
         enemyUnit = nullptr;
@@ -55,6 +52,9 @@ bool AlienSoldier::attack()
         // If this line is reached, at least one unit was attacked
         attackCheck = true;
     }
+
+    if (foughtUnits != "")
+        gamePtr->registerAttack(this, "shots", foughtUnits);
 
     return attackCheck;
 }

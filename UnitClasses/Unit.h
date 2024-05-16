@@ -33,14 +33,11 @@ protected:
 	int power; // Attack power
 	int attackCapacity; // Attack capacity
 
-	LinkedQueue<int> foughtUnits; // A list of the units fought in the current timestep to be printed
-
 private:
 	void setHealth(double); // Health setter with range check & initial health saving to be used in constructor
 
 protected:
 	double calcUAP(Unit*) const; // Calculates the damage caused when attacked by "attackerUnit"
-	void clearFoughtUnits(); // Clear the list of fought units
 
 public:
 	Unit(Game*, UnitType, double, int, int);
@@ -53,7 +50,7 @@ public:
 	void receiveDamage(double); // Decrease the health of the unit by "UAP"
 
 	virtual bool attack() = 0; // Attack the enemy units
-	virtual void printFought() = 0; // Print the units that the soldier has fought in the current timestep utilizing the foughtUnits list
+	virtual void printUnit() = 0; // Print the unit's type along with its ID
 
 	virtual bool needsHeal() const; // Check if the unit is eligible for healing
 	bool isDead() const; // Check if the unit is dead
