@@ -81,14 +81,18 @@ GameMode getUserGameModeChoice()
 
 std::string getUserInputFileChoice()
 {
-    const int numInputFiles = 3;
-    std::string inputFiles[] = { "neutral", "strong_earth", "strong_alien" };
+    const int numInputFiles = 6;
+    std::string inputFiles[] = { "strong_earth_strong_aliens", "strong_earth_moderate_aliens", "strong_earth_weak_aliens",
+                                "weak_earth_weak_aliens", "weak_earth_moderate_aliens", "weak_earth_strong_aliens" };
 
     std::cout << std::endl;
     std::cout << "Choose the input file:" << std::endl;
-    std::cout << "[1] Neutral --> Equal strength for both Earth and Aliens" << std::endl;
-    std::cout << "[2] Strong Earth --> Earth has a stronger army" << std::endl;
-    std::cout << "[3] Strong Aliens --> Aliens have a stronger army" << std::endl;
+    std::cout << "[1] Strong Earth and Aliens --> Earth and Aliens have a stronger army in front of each other" << std::endl;
+    std::cout << "[2] Strong Earth and Moderate Aliens --> Earth has a stronger army in front of moderate Aliens" << std::endl;
+    std::cout << "[3] Strong Earth and Weak Aliens --> Earth has a stronger army in front of weak Aliens" << std::endl;
+    std::cout << "[4] Weak Earth and Aliens --> Earth and Aliens have a weaker army in front of each other" << std::endl;
+    std::cout << "[5] Weak Earth and Moderate Aliens --> Earth has a weaker army in front of moderate Aliens" << std::endl;
+    std::cout << "[6] Weak Earth and Strong Aliens --> Earth has a weaker army in front of strong Aliens" << std::endl;
 
     // Get user choice
     int userChoice = requestValidInput(1, numInputFiles);
