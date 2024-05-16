@@ -26,9 +26,12 @@ int main()
     // Get user's choice for output file
     std::string outputFileName = getUserOutputFileChoice();
 
-    // Start the game
-    Game game;
-    game.run(gameMode, "InputFiles/" + inputFileName + ".txt", outputFileName + ".txt");
+    // Start the game (made on the heap to avoid stack overflow since the game object is large)
+    Game* game = new Game;
+    game->run(gameMode, "InputFiles/" + inputFileName + ".txt", outputFileName + ".txt");
+
+    // Delete the game object
+    delete game;
 
     return 0;
 }
