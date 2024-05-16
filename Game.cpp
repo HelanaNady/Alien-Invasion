@@ -44,7 +44,7 @@ void Game::run(GameMode gameMode, const std::string& inputFileName, const std::s
 
 		// Generate units for both armies
 		randomGenerator.generateUnits();
-			
+
 		// Start fight
 		didArmiesAttack = startAttack();
 
