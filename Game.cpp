@@ -297,6 +297,21 @@ void Game::printUnitMaintenanceList() const
 	std::cout << "]" << std::endl;
 }
 
+void Game::printUnitsFighting()
+{
+	Unit* currentAttacker = nullptr;
+	std::string currentFoughtUnits, currentAction;
+
+	while (attackers.dequeue(currentAttacker) && attackActions.dequeue(currentAction) && foughtUnits.dequeue(currentFoughtUnits))
+	{
+		currentAttacker->printUnit();
+		std::cout << " " << currentAction << " [" << currentFoughtUnits << "]" << std::endl;
+
+		// Nullify the pointers
+		currentAction = nullptr;
+	}
+}
+
 void Game::printAll()
 {
 	std::cout << std::endl;
@@ -311,20 +326,8 @@ void Game::printAll()
 	std::cout << std::endl << "============== Earth Allied Army Alive Units ===================" << std::endl;
 	earthAlliedArmy.printArmy();
 
-	if (!attackers.isEmpty())
-	{
-		std::cout << std::endl << "============== Units fighting at current step =================" << std::endl;
-		Unit* currentAttacker = nullptr;
-		std::string currentFoughtUnits, currentAction;
-
-		while (attackers.dequeue(currentAttacker) && attackActions.dequeue(currentAction) && foughtUnits.dequeue(currentFoughtUnits))
-		{
-			currentAttacker->printUnit();
-			std::cout << " " << currentAction << " [" << currentFoughtUnits << "]" << std::endl;
-		}
-	}
-	else
-		std::cout << std::endl << "============== No units fighting at current step ==============" << std::endl;
+	std::cout << std::endl << (attackers.isEmpty() ? "============== No units fighting at current step ==============" : "============== Units fighting at current step =================") << std::endl;
+	printUnitsFighting();
 
 	std::cout << std::endl << "============== Maintenance List Units =========================" << std::endl;
 	printUnitMaintenanceList();
