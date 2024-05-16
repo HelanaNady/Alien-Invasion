@@ -49,6 +49,9 @@ struct GameStatistics
 	// Destructed Unit Counts
 	int destructedUnitCounts[UnitType::UNIT_TOTAL];
 
+	// Total healed units
+	int totalHealedUnits;
+
 	// Total infected Earth Soldiers
 	int totalInfectedESCount;
 
