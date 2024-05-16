@@ -49,13 +49,6 @@ Unit* EarthAlliedArmy::pickAttacker(UnitType unitType)
 
 bool EarthAlliedArmy::attack()
 {
-	// If there are no infected units, saver units should be killed
-	if (gamePtr->getInfectedUnitsCount() == 0)
-	{
-		killSaverUnits();
-		return false;
-	}
-
 	// Flag to check if the army attacked
 	bool didArmyAttack = false;
 
