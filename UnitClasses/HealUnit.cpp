@@ -40,6 +40,7 @@ bool HealUnit::attack()
         }
 
         // Heal each unit with the appropriate heal power
+        // Inside receiveHeal, if unit is infected, it would apply only half of UAP so it would take as twice as long to heal
         unitToHeal->receiveHeal(calcUAP(unitToHeal));
 
         // Add the unit back to its list if completely healed, otherwise re-add to the UML
