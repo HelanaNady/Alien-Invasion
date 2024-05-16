@@ -100,11 +100,6 @@ bool Game::battleOver(bool didArmiesAttack) const
 	return currentTimestep >= 40 && (anArmyDied || noAttackTie);
 }
 
-bool Game::areUnitsFighting() const
-{
-	return earthArmy.getFightingUnitsCount() + alienArmy.getFightingUnitsCount();
-}
-
 void Game::killSaverUnits()
 {
 	Unit* saverToKill = earthAlliedArmy.removeUnit(UnitType::SU); // Remove a saver from its list

@@ -27,7 +27,6 @@ public:
 
     // Getters
     virtual int getUnitsCount(UnitType) const = 0; // Get the count of a specific unit type
-    int getFightingUnitsCount() const; // Get the count of fighting units
 };
 
 #endif

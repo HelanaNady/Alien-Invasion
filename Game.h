@@ -34,7 +34,6 @@ private:
     bool startAttack(); // Makes the two armies attack each other
     void setGameMode(GameMode); // Change the game mode
     bool battleOver(bool) const; // Check if the battle is over
-    bool areUnitsFighting() const; // Check if there are units fighting
     void killSaverUnits(); // Savers need to be killed once all infected units are healed
 
     void printKilledList() const; // Prints the killed list with the console formats
