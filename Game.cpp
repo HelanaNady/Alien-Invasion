@@ -245,6 +245,12 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 	return enemyUnits;
 }
 
+void Game::registerAttack(Unit* currentAttacker, std::string currentFoughtUnits)
+{
+	attackers.enqueue(currentAttacker);
+	foughtUnits.enqueue(currentFoughtUnits);
+}
+
 void Game::addToKilledList(Unit* unit)
 {
 	// Add the unit to the killed list
@@ -253,6 +259,7 @@ void Game::addToKilledList(Unit* unit)
 	// Set the destruction time of the unit
 	unit->setDestructionTime(currentTimestep);
 }
+
 
 void Game::addUnitToMaintenanceList(HealableUnit* unit)
 {
@@ -309,12 +316,13 @@ void Game::printAll()
 	std::cout << std::endl << "============== Earth Allied Army Alive Units ===================" << std::endl;
 	earthAlliedArmy.printArmy();
 
-	if (areUnitsFighting())
+	if (!attackers.isEmpty())
 	{
 		std::cout << std::endl << "============== Units fighting at current step =================" << std::endl;
-		earthArmy.printFightingUnits();
-		alienArmy.printFightingUnits();
-		earthAlliedArmy.printFightingUnits();
+		Unit* currentAttacker = nullptr;
+		std::string currentFoughtUnits;
+		while (attackers.dequeue(currentAttacker) && foughtUnits.dequeue(currentFoughtUnits))
+			std::cout << currentAttacker << " shots [" << currentFoughtUnits << "]" << std::endl;
 	}
 	else
 		std::cout << std::endl << "============== No units fighting at current step ==============" << std::endl;
