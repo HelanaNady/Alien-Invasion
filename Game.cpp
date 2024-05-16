@@ -245,7 +245,7 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 	return enemyUnits;
 }
 
-void Game::registerAttack(Unit* currentAttacker, std::string currentAction, std::string currentFoughtUnits)
+void Game::registerAttack(Unit* currentAttacker, const std::string& currentAction, const std::string& currentFoughtUnits)
 {
 	attackers.enqueue(currentAttacker); // Store the current attacker
 	attackActions.enqueue(currentAction); // Store the action it made
