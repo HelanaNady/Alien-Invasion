@@ -37,6 +37,8 @@ bool EarthGunnery::attack()
 
     while (dronesList.dequeue(enemyUnit) || monstersList.dequeue(enemyUnit))
     {
+        gamePtr->log("Earth " + getUnitTypeString() + " " + toString() + " is attacking Alien " + enemyUnit->getUnitTypeString() + " " + enemyUnit->toString() + " with UAP " + std::to_string(calcUAP(enemyUnit)));
+
         // Calculate the UAP and apply the damage
         enemyUnit->receiveDamage(calcUAP(enemyUnit));
 
