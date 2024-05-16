@@ -247,9 +247,9 @@ LinkedQueue<Unit*> Game::getEnemyList(ArmyType armyType, UnitType unitType, int 
 
 void Game::registerAttack(Unit* currentAttacker, std::string currentAction, std::string currentFoughtUnits)
 {
-	attackers.enqueue(currentAttacker);
-	attackActions.enqueue(currentAction);
-	foughtUnits.enqueue(currentFoughtUnits);
+	attackers.enqueue(currentAttacker); // Store the current attacker
+	attackActions.enqueue(currentAction); // Store the action it made
+	foughtUnits.enqueue(currentFoughtUnits); // Store the list of units the action happened on
 }
 
 void Game::addToKilledList(Unit* unit)

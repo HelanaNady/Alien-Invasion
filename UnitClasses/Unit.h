@@ -50,7 +50,7 @@ public:
 	void receiveDamage(double); // Decrease the health of the unit by "UAP"
 
 	virtual bool attack() = 0; // Attack the enemy units
-	virtual void printUnit() = 0;
+	virtual void printUnit() = 0; // Print the unit's type along with its ID
 
 	virtual bool needsHeal() const; // Check if the unit is eligible for healing
 	bool isDead() const; // Check if the unit is dead
