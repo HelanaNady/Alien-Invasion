@@ -381,6 +381,11 @@ void Game::countArmyStatistics(GameStatistics& gameStatistics, ArmyType armyType
 			// Total Army Units Count
 			gameStatistics.armyStatistics[armyType].totalUnitsCount++;
 
+			// Count the healed units
+			HealableUnit* healableUnit = dynamic_cast<HealableUnit*>(unit);
+			if (healableUnit && healableUnit->hasBeenHealedBefore())
+				gameStatistics.totalHealedUnits++;
+
 			// Count the infected Earth Soldiers
 			if (unitTypes[i] == UnitType::ES)
 			{
@@ -423,6 +428,11 @@ void Game::countKilledUnitsStatistics(GameStatistics& gameStatistics)
 		// Total Army Units Count
 		gameStatistics.armyStatistics[armyType].totalUnitsCount++;
 		gameStatistics.armyStatistics[armyType].totalDestructedUnitsCount++;
+
+		// Count the healed units
+		HealableUnit* healableUnit = dynamic_cast<HealableUnit*>(unit);
+		if (healableUnit && healableUnit->hasBeenHealedBefore())
+			gameStatistics.totalHealedUnits++;
 
 		// Count the infected Earth Soldiers
 		if (unitType == UnitType::ES)
@@ -509,6 +519,7 @@ void Game::generateOutputFile(const std::string& outputFileName)
 	fout << "Destructed EGs/Total EGs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::EG], gameStatistics.unitCounts[UnitType::EG]) << "%" << std::endl;
 	fout << "Destructed EHs/Total EHs = " << calculatePercentage(gameStatistics.destructedUnitCounts[UnitType::EH], gameStatistics.unitCounts[UnitType::EH]) << "%" << std::endl;
 	fout << "Total Destructed Earth Units/Total Earth Units = " << calculatePercentage(gameStatistics.armyStatistics[ArmyType::EARTH].totalDestructedUnitsCount, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << "%" << std::endl;
+	fout << "Total Healed Units/Total Earth Units = " << calculatePercentage(gameStatistics.totalHealedUnits, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << "%" << std::endl;
 	fout << "Total Infected ESs/Total Earth Units = " << calculatePercentage(gameStatistics.totalInfectedESCount, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << "%" << std::endl;
 	fout << "======================================================================" << std::endl;
 	fout << "Average of First Attack Delay = " << calculateRatio(gameStatistics.armyStatistics[ArmyType::EARTH].totalFirstAttackDelays, gameStatistics.armyStatistics[ArmyType::EARTH].totalUnitsCount) << std::endl;
@@ -637,7 +648,6 @@ int Game::getUnitsCount(ArmyType armyType, UnitType unitType) const
 	{
 		case ArmyType::EARTH:
 			return earthArmy.getUnitsCount(unitType);
-
 		case ArmyType::ALIEN:
 			return alienArmy.getUnitsCount(unitType);
 		case ArmyType::EARTH_ALLIED:
