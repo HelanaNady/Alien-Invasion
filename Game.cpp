@@ -74,6 +74,10 @@ bool Game::startAttack()
 	bool didAlienArmyAttack = alienArmy.attack();
 	bool didEarthAlliedAttack = earthAlliedArmy.attack();
 
+	// Check if earth doesn't have infected soldiers so to kill the savers in the allied army
+	if (getInfectedUnitsCount() == 0)
+		earthAlliedArmy.killSaverUnits();
+
 	// Return if any of the armies successfully attacked
 	return didEarthArmyAttack || didAlienArmyAttack || didEarthAlliedAttack;
 }
@@ -101,19 +105,6 @@ bool Game::areUnitsFighting() const
 bool Game::doesEarthNeedHelp() const
 {
 	return earthArmy.needAllyHelp();
-}
-
-void Game::killSaverUnits()
-{
-	Unit* saverToKill = earthAlliedArmy.removeUnit(UnitType::SU); // Remove a saver from its list
-
-	while (saverToKill)
-	{
-		saverToKill->receiveDamage(saverToKill->getHealth()); // Prepare it to be killed
-		addToKilledList(saverToKill); // Add it to the killed list
-		saverToKill = nullptr;
-		saverToKill = earthAlliedArmy.removeUnit(UnitType::SU); // Remove another saver
-	}
 }
 
 void Game::printFinalResults() const

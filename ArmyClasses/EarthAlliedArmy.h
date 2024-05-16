@@ -13,7 +13,6 @@ private:
 
 private:
 	Unit* pickAttacker(UnitType); // Pick an attacker from the army and return it
-	void killSaverUnits(); // Kill all saver units in the army
 
 public:
 	EarthAlliedArmy(Game*);
@@ -25,6 +24,8 @@ public:
 	bool isDead() const; // Check if the army is dead
 
 	void printArmy() const; // Print the army units
+
+	void killSaverUnits(); // Kill all saver units in the army
 
 	// Getters
 	int getUnitsCount(UnitType) const; // Get the count of a specific unit type

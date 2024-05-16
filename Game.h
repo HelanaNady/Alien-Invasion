@@ -62,7 +62,6 @@ public:
     LinkedQueue<HealableUnit*> getUnitsToMaintainList(int); // Get a list of units that need to be maintained
 
     bool doesEarthNeedHelp() const; // Check if the Earth army needs help from the Earth Allied army if the number of infected units exceeds the threshold
-    void killSaverUnits(); // Savers need to be killed once all infected units are healed
 
     // Getters
     int getCurrentTimestep() const;
