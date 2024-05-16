@@ -15,18 +15,6 @@ void EarthTank::printUnit()
     std::cout << "ET " << this;
 }
 
-void EarthTank::printFought()
-{
-    if (!foughtUnits.isEmpty())
-    {
-        std::cout << "ET " << getId() << " shots [";
-        foughtUnits.printList();
-        std::cout << "]" << std::endl;
-
-        clearFoughtUnits(); // Clear the list after printing
-    }
-}
-
 bool EarthTank::attack()
 {
     // If the tank is attacking soldiers, divide the attack capacity 50-50 between soldiers and monsters

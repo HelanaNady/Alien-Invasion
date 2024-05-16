@@ -17,17 +17,6 @@ void AlienMonster::printUnit()
     std::cout << "AM " << this;
 }
 
-void AlienMonster::printFought()
-{
-    if (!foughtUnits.isEmpty())
-    {
-        std::cout << "AM " << getId() << " shots [";
-        foughtUnits.printList();
-        std::cout << "]" << std::endl;
-
-        clearFoughtUnits(); // Clear the list after printing
-    }
-}
 
 bool AlienMonster::attack()
 {

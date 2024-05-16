@@ -66,11 +66,6 @@ double Unit::calcUAP(Unit* receivingUnit) const
 	return (power * health / 100) / sqrt(receivingUnit->health);
 }
 
-void Unit::clearFoughtUnits()
-{
-	int i = 0;
-	while (foughtUnits.dequeue(i));
-}
 
 void Unit::receiveDamage(double UAP)
 {

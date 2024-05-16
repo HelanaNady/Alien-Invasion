@@ -11,18 +11,6 @@ void EarthSoldier::printUnit()
     std::cout << "ES " << this;
 }
 
-void EarthSoldier::printFought()
-{
-    if (!foughtUnits.isEmpty())
-    {
-        std::cout << "ES " << getId() << " shots [";
-        foughtUnits.printList();
-        std::cout << "]" << std::endl;
-
-        clearFoughtUnits(); // Clear the list after printing
-    }
-}
-
 bool EarthSoldier::attack()
 {
     // Check if the unit is infected and decide what to attack

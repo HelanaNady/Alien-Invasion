@@ -12,17 +12,6 @@ void SaverUnit::printUnit()
     std::cout << "SU " << this;
 }
 
-void SaverUnit::printFought()
-{
-    if (!foughtUnits.isEmpty())
-    {
-        std::cout << "SU " << getId() << " shots [";
-        foughtUnits.printList();
-        std::cout << "]" << std::endl;
-
-        clearFoughtUnits(); // Clear the list after printing
-    }
-}
 
 bool SaverUnit::attack()
 {
