@@ -49,8 +49,8 @@ bool AlienMonster::attack()
         int x = rand() % 100 + 1;
         if (enemyUnit->getUnitType() == UnitType::ES && x <= infectingProbability)
         {
-            dynamic_cast<EarthSoldier*>(enemyUnit)->getInfection();
-            gamePtr->addUnit(enemyUnit);
+            dynamic_cast<EarthSoldier*>(enemyUnit)->getInfection(); // The soldier will get infected if not infected already and not immune
+            gamePtr->addUnit(enemyUnit); // The soldier will be re-enqueued to the list & infected soldiers counter will be incremented
             continue;
         }
 
@@ -68,7 +68,7 @@ bool AlienMonster::attack()
         // Store the IDs of the fought units to be printed later
         foughtUnits.enqueue(enemyUnit->getId());
 
-        // Nullify the pointer to avoid duplication
+        // Nullify the pointer
         enemyUnit = nullptr;
 
         // If this line is reached, at least one unit was attacked

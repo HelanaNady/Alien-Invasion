@@ -40,6 +40,7 @@ bool HealUnit::attack()
         }
 
         // Heal each unit with the appropriate heal power
+        // Inside receiveHeal, if unit is infected, it would apply only half of UAP so it would take as twice as long to heal
         unitToHeal->receiveHeal(calcUAP(unitToHeal));
 
         // Add the unit back to its list if completely healed, otherwise re-add to the UML
@@ -57,7 +58,7 @@ bool HealUnit::attack()
         // Store the IDs of the units that received heal to be printed later
         foughtUnits.enqueue(unitToHeal->getId());
 
-        // Nullify the pointer to avoid duplication
+        // Nullify the pointer
         unitToHeal = nullptr;
 
         // If this line was reached, at least one heal was successful
