@@ -3,7 +3,6 @@
 #include <fstream>
 
 #include "Game.h"
-#include "DEFS.h"
 #include "UnitClasses/Unit.h"
 #include "UnitClasses/AlienMonster.h"
 
@@ -67,6 +66,9 @@ void Game::run(GameMode gameMode, std::string inputFileName, std::string outputF
 		}
 		logEndOfTimeStep();
 	} while (!battleOver(didArmiesAttack));
+
+	// Empty the unit maintenance list by returning the units to the appropriate army
+	emptyUnitMaintenanceList();
 
 	// Produce the output file
 	log("Generating output file...");
@@ -157,6 +159,20 @@ void Game::printFinalResults() const
 	std::cout << "What a battle!" << std::endl;
 	std::cout << "Battle Result: " << battleResult() << std::endl;
 	std::cout << "Check the output file for a detailed conclusion" << std::endl;
+}
+
+void Game::emptyUnitMaintenanceList()
+{
+	HealableUnit* unit = nullptr;
+	int dummyPri = 0;
+
+	while (unitMaintenanceList.dequeue(unit, dummyPri))
+	{
+		unit->receiveDamage(unit->getHealth()); // Kill the unit
+		addToKilledList(unit); // Send it to the killed list
+
+		unit = nullptr; // Nullify pointer
+	}
 }
 
 std::string Game::battleResult() const
@@ -430,9 +446,6 @@ GameStatistics Game::countStatistics()
 	// Killed Units Statistics
 	countKilledUnitsStatistics(gameStatistics);
 
-	// Unit Maintenance List
-	countUnitMaintenanceStatistics(gameStatistics);
-
 	return gameStatistics;
 }
 
@@ -521,45 +534,7 @@ void Game::countKilledUnitsStatistics(GameStatistics& gameStatistics)
 	}
 }
 
-void Game::countUnitMaintenanceStatistics(GameStatistics& gameStatistics)
-{
-	HealableUnit* healableUnit = nullptr;
-	int count = unitMaintenanceList.getCount();
-	int priority = 0;
-
-	for (int i = 0; i < count; i++)
-	{
-		// Remove the unit from the maintenance list
-		unitMaintenanceList.dequeue(healableUnit, priority);
-
-		// Get the unit type & army type
-		ArmyType armyType = healableUnit->getArmyType();
-		UnitType unitType = healableUnit->getUnitType();
-
-		// Unit Counts
-		gameStatistics.unitCounts[unitType]++;
-		gameStatistics.totalUnitsCount++;
-
-		// Total Army Units Count
-		gameStatistics.armyStatistics[armyType].totalUnitsCount++;
-
-		// Count the infected Earth Soldiers
-		if (unitType == UnitType::ES)
-		{
-			EarthSoldier* earthSoldier = dynamic_cast<EarthSoldier*>(healableUnit);
-			if (earthSoldier->isInfected() || earthSoldier->isImmune()) // Check if the unit is infected or immune (has been infected before)
-				gameStatistics.totalInfectedESCount++;
-		}
-
-		// Add the unit back to the maintenance list
-		unitMaintenanceList.enqueue(healableUnit, priority);
-
-		// Nullify the pointer
-		healableUnit = nullptr;
-	}
-}
-
-void Game::generateOutputFile(std::string outputFileName)
+void Game::generateOutputFile(const std::string& outputFileName)
 {
 	// Open the output file
 	std::ofstream fout(outputFileName);
