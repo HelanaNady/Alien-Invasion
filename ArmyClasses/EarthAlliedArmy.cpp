@@ -83,18 +83,6 @@ void EarthAlliedArmy::printArmy() const
 	std::cout << "]" << std::endl;
 }
 
-void EarthAlliedArmy::killSaverUnits()
-{
-	Unit* unit = nullptr;
-	while (savers.dequeue(unit))
-	{
-		unit->receiveDamage(unit->getHealth()); // Make unit health 0
-		gamePtr->addToKilledList(unit); // Add unit to killed list
-
-		unit = nullptr; // Nullify the pointer
-	}
-}
-
 int EarthAlliedArmy::getUnitsCount(UnitType unitType) const
 {
 	switch (unitType)

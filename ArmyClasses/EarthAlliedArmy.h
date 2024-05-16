@@ -25,8 +25,6 @@ public:
 
 	void printArmy() const; // Print the army units
 
-	void killSaverUnits(); // Kill all saver units in the army
-
 	// Getters
 	int getUnitsCount(UnitType) const; // Get the count of a specific unit type
 

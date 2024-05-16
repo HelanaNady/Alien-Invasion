@@ -44,9 +44,13 @@ void Game::run(GameMode gameMode, const std::string& inputFileName, const std::s
 
 		// Generate units for both armies
 		randomGenerator.generateUnits();
-
+			
 		// Start fight
 		didArmiesAttack = startAttack();
+
+		// Check if earth no longer has infected soldiers  to kill the savers in the allied army
+		if (earthArmy.getInfectedSoldiersCount() == 0)
+			killSaverUnits();
 
 		// Spread infection in the Earth Army
 		earthArmy.spreadInfection();
@@ -77,10 +81,6 @@ bool Game::startAttack()
 	bool didAlienArmyAttack = alienArmy.attack();
 	bool didEarthAlliedAttack = earthAlliedArmy.attack();
 
-	// Check if earth doesn't have infected soldiers so to kill the savers in the allied army
-	if (getInfectedUnitsCount() == 0)
-		earthAlliedArmy.killSaverUnits();
-
 	// Return if any of the armies successfully attacked
 	return didEarthArmyAttack || didAlienArmyAttack || didEarthAlliedAttack;
 }
@@ -103,6 +103,19 @@ bool Game::battleOver(bool didArmiesAttack) const
 bool Game::areUnitsFighting() const
 {
 	return earthArmy.getFightingUnitsCount() + alienArmy.getFightingUnitsCount();
+}
+
+void Game::killSaverUnits()
+{
+	Unit* saverToKill = earthAlliedArmy.removeUnit(UnitType::SU); // Remove a saver from its list
+
+	while (saverToKill)
+	{
+		saverToKill->receiveDamage(saverToKill->getHealth()); // Prepare it to be killed
+		addToKilledList(saverToKill); // Add it to the killed list
+		saverToKill = nullptr;
+		saverToKill = earthAlliedArmy.removeUnit(UnitType::SU); // Remove another saver
+	}
 }
 
 bool Game::doesEarthNeedHelp() const
