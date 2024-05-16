@@ -54,6 +54,7 @@ public:
 
 	virtual bool attack() = 0; // Attack the enemy units
 	virtual void printFought() = 0; // Print the units that the soldier has fought in the current timestep utilizing the foughtUnits list
+	virtual void printUnit() = 0;
 
 	virtual bool needsHeal() const; // Check if the unit is eligible for healing
 	bool isDead() const; // Check if the unit is dead

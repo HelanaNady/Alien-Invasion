@@ -12,6 +12,11 @@ void AlienMonster::setInfectingProbability(int probability)
     infectingProbability = probability;
 }
 
+void AlienMonster::printUnit()
+{
+    std::cout << "AM " << this;
+}
+
 void AlienMonster::printFought()
 {
     if (!foughtUnits.isEmpty())

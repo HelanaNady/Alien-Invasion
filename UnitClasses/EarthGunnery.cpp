@@ -17,6 +17,11 @@ void EarthGunnery::printFought()
     }
 }
 
+void EarthGunnery::printUnit()
+{
+    std::cout << "EG " << this;
+}
+
 bool EarthGunnery::attack()
 {
     int dronesCapacity = attackCapacity / 2;

@@ -17,6 +17,11 @@ void AlienSoldier::printFought()
     }
 }
 
+void AlienSoldier::printUnit()
+{
+    std::cout << "AS " << this;
+}
+
 bool AlienSoldier::attack()
 {
     // Calculate the number of earth soldiers and saver units to attack

@@ -17,6 +17,11 @@ void AlienDrone::printFought()
     }
 }
 
+void AlienDrone::printUnit()
+{
+    std::cout << "AD " << this;
+}
+
 bool AlienDrone::attack()
 {
     // Attack capacity is divided 50:50 between them

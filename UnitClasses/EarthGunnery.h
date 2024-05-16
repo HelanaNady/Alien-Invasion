@@ -10,6 +10,7 @@ public:
 	EarthGunnery(Game*, double, int, int);
 
 	void printFought(); // Print the units that the gunnery has fought
+	void printUnit();
 	bool attack(); // Attack the enemy units
 
 	// Getters

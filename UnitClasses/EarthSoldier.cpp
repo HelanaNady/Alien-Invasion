@@ -6,6 +6,11 @@ EarthSoldier::EarthSoldier(Game* gamePtr, double health, int power, int attackCa
     : HealableUnit(gamePtr, UnitType::ES, health, power, attackCapacity), infected(false), immune(false)
 {}
 
+void EarthSoldier::printUnit()
+{
+    std::cout << "ES " << this;
+}
+
 void EarthSoldier::printFought()
 {
     if (!foughtUnits.isEmpty())

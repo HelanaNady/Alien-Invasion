@@ -7,6 +7,11 @@ SaverUnit::SaverUnit(Game* gamePtr, double health, int power, int attackCapacity
     : Unit(gamePtr, UnitType::SU, health, power, attackCapacity)
 {}
 
+void SaverUnit::printUnit()
+{
+    std::cout << "SU " << this;
+}
+
 void SaverUnit::printFought()
 {
     if (!foughtUnits.isEmpty())
