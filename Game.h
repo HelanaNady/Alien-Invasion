@@ -39,7 +39,7 @@ private:
     std::string battleResult() const; // Returns the result of the battle
     void printFinalResults() const; // Print the final results of the game
 
-    void emptyUnitMaintenanceList(); // Empty the unit maintenance list by returning the units to the appropriate army
+    void emptyUnitMaintenanceList(); // Empty the unit maintenance list by killing all units in it
 
     GameStatistics countStatistics(); // Calculate the statistics of the game
     void countArmyStatistics(GameStatistics&, ArmyType, UnitType[], int); // Count the statistics of the given army

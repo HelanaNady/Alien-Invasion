@@ -140,14 +140,8 @@ void Game::emptyUnitMaintenanceList()
 
 	while (unitMaintenanceList.dequeue(unit, dummyPri))
 	{
-		// Check if the unit has exceeded its waiting time
-		if (unit->hasWaitedForTooLong())
-		{
-			unit->receiveDamage(unit->getHealth()); // Kill thr unit
-			addToKilledList(unit); // Send it to the killed list
-		}
-		else
-		addUnit(unit); // Add unit back to its army
+		unit->receiveDamage(unit->getHealth()); // Kill the unit
+		addToKilledList(unit); // Send it to the killed list
 
 		unit = nullptr; // Nullify pointer
 	}
