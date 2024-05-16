@@ -13,8 +13,7 @@ private:
 public:
 	EarthSoldier(Game*, double, int, int);
 
-	void printUnit();
-	void printFought(); // Print the units that the soldier has fought
+	void printUnit(); // Print the unit's type along with its ID
 	bool attack(); // Attack the enemy units
 
 	// Infection and immunity functions

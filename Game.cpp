@@ -324,7 +324,10 @@ void Game::printAll()
 		std::string currentFoughtUnits, currentAction;
 
 		while (attackers.dequeue(currentAttacker) && attackActions.dequeue(currentAction) && foughtUnits.dequeue(currentFoughtUnits))
-			std::cout << currentAttacker << " " << currentAction << " [" << currentFoughtUnits << "]" << std::endl;
+		{
+			currentAttacker->printUnit();
+			std::cout << " " << currentAction << " [" << currentFoughtUnits << "]" << std::endl;
+		}
 	}
 	else
 		std::cout << std::endl << "============== No units fighting at current step ==============" << std::endl;

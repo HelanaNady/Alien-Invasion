@@ -14,7 +14,7 @@ void AlienMonster::setInfectingProbability(int probability)
 
 void AlienMonster::printUnit()
 {
-    std::cout << "AM " << this;
+    std::cout << "AM " << id;
 }
 
 

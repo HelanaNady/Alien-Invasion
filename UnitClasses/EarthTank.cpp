@@ -12,7 +12,7 @@ EarthTank::EarthTank(Game* gamePtr, double health, int power, int attackCapacity
 
 void EarthTank::printUnit()
 {
-    std::cout << "ET " << this;
+    std::cout << "ET " << id;
 }
 
 bool EarthTank::attack()

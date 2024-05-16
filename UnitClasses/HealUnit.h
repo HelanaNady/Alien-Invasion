@@ -10,7 +10,7 @@ class HealUnit: public Unit
 public:
 	HealUnit(Game*, double, int, int);
 
-	void printUnit();
+	void printUnit(); // Print the unit's type along with its ID
 	bool attack(); // Heal units from the unit maintenance list
 
 	void healInfection(EarthSoldier*); // Heal the infection of the soldier

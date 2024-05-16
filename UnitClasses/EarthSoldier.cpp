@@ -8,7 +8,7 @@ EarthSoldier::EarthSoldier(Game* gamePtr, double health, int power, int attackCa
 
 void EarthSoldier::printUnit()
 {
-    std::cout << "ES " << this;
+    std::cout << "ES " << id;
 }
 
 bool EarthSoldier::attack()

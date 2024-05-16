@@ -9,7 +9,7 @@ SaverUnit::SaverUnit(Game* gamePtr, double health, int power, int attackCapacity
 
 void SaverUnit::printUnit()
 {
-    std::cout << "SU " << this;
+    std::cout << "SU " << id;
 }
 
 

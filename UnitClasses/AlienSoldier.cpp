@@ -8,7 +8,7 @@ AlienSoldier::AlienSoldier(Game* gamePtr, double health, int power, int attackCa
 
 void AlienSoldier::printUnit()
 {
-    std::cout << "AS " << this;
+    std::cout << "AS " << id;
 }
 
 bool AlienSoldier::attack()

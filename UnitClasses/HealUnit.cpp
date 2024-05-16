@@ -7,7 +7,7 @@ HealUnit::HealUnit(Game* gamePtr, double health, int power, int attackCapacity)
 
 void HealUnit::printUnit()
 {
-    std::cout << "HU " << this;
+    std::cout << "HU " << id;
 }
 
 bool HealUnit::attack()

@@ -8,9 +8,8 @@ class AlienSoldier: public Unit
 {
 public:
 	AlienSoldier(Game*, double, int, int);
-
-	void printFought(); // Print the units that the soldier has fought
-	void printUnit();
+	
+	void printUnit(); // Print the unit's type along with its ID
 	bool attack(); // Attack the enemy units
 };
 

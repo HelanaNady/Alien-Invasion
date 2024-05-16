@@ -7,7 +7,7 @@ EarthGunnery::EarthGunnery(Game* gamePtr, double health, int power, int attackCa
 
 void EarthGunnery::printUnit()
 {
-    std::cout << "EG " << this;
+    std::cout << "EG " << id;
 }
 
 bool EarthGunnery::attack()

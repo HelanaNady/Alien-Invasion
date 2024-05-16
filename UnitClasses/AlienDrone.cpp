@@ -7,7 +7,7 @@ AlienDrone::AlienDrone(Game* gamePtr, double health, int power, int attackCapaci
 
 void AlienDrone::printUnit()
 {
-    std::cout << "AD " << this;
+    std::cout << "AD " << id;
 }
 
 bool AlienDrone::attack()
