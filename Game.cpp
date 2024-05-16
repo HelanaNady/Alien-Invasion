@@ -308,7 +308,7 @@ void Game::printUnitsFighting()
 		std::cout << " " << currentAction << " [" << currentFoughtUnits << "]" << std::endl;
 
 		// Nullify the pointers
-		currentAction = nullptr;
+		currentAttacker = nullptr;
 	}
 }
 
