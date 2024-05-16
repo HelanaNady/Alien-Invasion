@@ -9,6 +9,8 @@ EarthSoldier::EarthSoldier(Game* gamePtr, double health, int power, int attackCa
 void EarthSoldier::printUnit()
 {
     std::cout << "ES " << id;
+    if (infected)
+        std::cout << "*";
 }
 
 bool EarthSoldier::attack()
