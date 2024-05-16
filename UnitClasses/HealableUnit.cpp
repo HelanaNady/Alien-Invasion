@@ -39,6 +39,6 @@ void HealableUnit::receiveHeal(double UHP)
 void HealableUnit::setUMLjoinTime(int UMLjoinTime)
 {
     // Check if it's the unit first time to join uml 
-    if(!hasBeenInUMLbefore())
+    if (!hasBeenInUMLbefore())
         this->UMLjoinTime = UMLjoinTime;
 }
