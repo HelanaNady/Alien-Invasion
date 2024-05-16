@@ -2,7 +2,7 @@
 #include "../Game.h"
 
 HealableUnit::HealableUnit(Game* gamePtr, UnitType unitType, double health, int power, int attackCapacity)
-    : Unit(gamePtr, unitType, health, power, attackCapacity), UMLjoinTime(0)
+    : Unit(gamePtr, unitType, health, power, attackCapacity), UMLjoinTime(-1)
 {}
 
 bool HealableUnit::needsHeal() const
@@ -22,6 +22,11 @@ bool HealableUnit::isHealed() const
     return health > initialHealth * 0.2;
 }
 
+bool HealableUnit::hasBeenInUMLbefore() const
+{
+    return UMLjoinTime != -1;
+}
+
 void HealableUnit::receiveHeal(double UHP)
 {
     // Infected units get twice the time to get healed
@@ -33,5 +38,7 @@ void HealableUnit::receiveHeal(double UHP)
 
 void HealableUnit::setUMLjoinTime(int UMLjoinTime)
 {
-    this->UMLjoinTime = UMLjoinTime;
+    // Check if it's the unit first time to join uml 
+    if (!hasBeenInUMLbefore())
+        this->UMLjoinTime = UMLjoinTime;
 }

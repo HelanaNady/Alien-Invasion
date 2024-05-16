@@ -17,6 +17,7 @@ public:
     bool needsHeal() const; // Check if the unit is eligible for healing
     bool hasWaitedForTooLong() const; // Decides whether to kill or heal the unit based on its wait time
     bool isHealed() const; // Checks if the unit's health has increased enough
+    bool hasBeenInUMLbefore() const; // Check if it has been inside uml before or not
 
     void receiveHeal(double); // Increase the health of the unit by "UHP"
 
