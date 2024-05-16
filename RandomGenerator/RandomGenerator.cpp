@@ -40,7 +40,7 @@ void RandomGenerator::generateUnits()
 {
 	gamePtr->log("Generating units...");
 
-	ArmyType armyTypes[3] = { EARTH, ALIEN, EARTH_ALLIED };
+	ArmyType armyTypes[3] = { ArmyType::EARTH, ArmyType::ALIEN, ArmyType::EARTH_ALLIED };
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -54,7 +54,7 @@ void RandomGenerator::generateUnits()
 			Unit* newUnit = nullptr;
 
 			// Generate N units
-			for (int i = 0; i < N; i++)
+			for (int j = 0; j < N; j++)
 			{
 				// Don't forget to handle no generation in allied army  
 				newUnit = generateUnit(armyTypes[i]);
