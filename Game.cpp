@@ -102,8 +102,6 @@ bool Game::startAttack()
 	logger.log("Earth Allied Army attacking...");
 	bool didEarthAlliedAttack = earthAlliedArmy.attack();
 
-	logEndOfTimeStep();
-
 	// Return if any of the armies successfully attacked
 	return didEarthArmyAttack || didAlienArmyAttack || didEarthAlliedAttack;
 }
