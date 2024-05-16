@@ -261,7 +261,6 @@ void Game::addToKilledList(Unit* unit)
 	unit->setDestructionTime(currentTimestep);
 }
 
-
 void Game::addUnitToMaintenanceList(HealableUnit* unit)
 {
 	// Enqueue the unit with its priority to the maintenance list

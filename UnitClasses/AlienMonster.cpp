@@ -17,7 +17,6 @@ void AlienMonster::printUnit()
     std::cout << "AM " << id;
 }
 
-
 bool AlienMonster::attack()
 {
     // Calculate the number of soldiers and tanks to attack
@@ -49,7 +48,7 @@ bool AlienMonster::attack()
             gamePtr->addUnit(enemyUnit); // The soldier will be re-enqueued to the list & infected soldiers counter will be incremented
 
             // Store the IDs of the fought units to be printed later
-            if (infectedSoldiers != "") 
+            if (infectedSoldiers != "")
                 infectedSoldiers += ", ";
             infectedSoldiers += std::to_string(enemyUnit->getId());
 

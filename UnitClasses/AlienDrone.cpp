@@ -44,7 +44,7 @@ bool AlienDrone::attack()
         // Store the IDs of the fought units to be printed later
         if (foughtUnits != "")
             foughtUnits += ", ";
-        foughtUnits += std::to_string(enemyUnit->getId()); 
+        foughtUnits += std::to_string(enemyUnit->getId());
 
         // Nullify the pointer
         enemyUnit = nullptr;
@@ -54,6 +54,7 @@ bool AlienDrone::attack()
     }
 
     if (foughtUnits != "")
-        gamePtr->registerAttack(this,"shots", foughtUnits);
+        gamePtr->registerAttack(this, "shots", foughtUnits);
+
     return attackCheck;
 }

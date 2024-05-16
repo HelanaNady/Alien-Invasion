@@ -12,7 +12,6 @@ void SaverUnit::printUnit()
     std::cout << "SU " << id;
 }
 
-
 bool SaverUnit::attack()
 {
     // Get the lists of alien soldiers to attack

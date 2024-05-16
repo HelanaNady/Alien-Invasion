@@ -5,7 +5,6 @@ AlienSoldier::AlienSoldier(Game* gamePtr, double health, int power, int attackCa
     : Unit(gamePtr, UnitType::AS, health, power, attackCapacity)
 {}
 
-
 void AlienSoldier::printUnit()
 {
     std::cout << "AS " << id;

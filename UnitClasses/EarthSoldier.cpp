@@ -41,8 +41,8 @@ bool EarthSoldier::attack()
             gamePtr->addUnit(enemyUnit);
 
         // Store the IDs of the fought units to be printed later
-        if(foughtUnits != "")
-            foughtUnits += ", " ;
+        if (foughtUnits != "")
+            foughtUnits += ", ";
         foughtUnits += std::to_string(enemyUnit->getId());
 
         // Nullify the pointer
@@ -54,6 +54,7 @@ bool EarthSoldier::attack()
 
     if (foughtUnits != "")
         gamePtr->registerAttack(this, "shots", foughtUnits);
+
     return attackCheck;
 }
 
