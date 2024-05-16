@@ -10,7 +10,7 @@
 #include "../UnitClasses/SaverUnit.h"
 #include "../Game.h"
 
-RandomGenerator::RandomGenerator(Game* gamePtr): gamePtr(gamePtr)
+RandomGenerator::RandomGenerator(Game* gamePtr): gamePtr(gamePtr), isGeneratingSavers(false)
 {
 	// Initialize the parameters with default values
 	setN(0);
