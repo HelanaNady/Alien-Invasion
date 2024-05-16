@@ -38,6 +38,7 @@ private:
 
     void printKilledList() const; // Prints the killed list with the console formats
     void printUnitMaintenanceList() const; // Print the units at the maintence list
+    void printUnitsFighting(); // Print the units fighting in current timestep
     void printAll(); // Prints all the armies and the killed list and units fighting at the current timestep
 
     std::string battleResult() const; // Returns the result of the battle
