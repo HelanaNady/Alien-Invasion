@@ -30,7 +30,7 @@ The fate of Earth rests in your hands! Adapt your strategies and tactics as Eart
 2. Run using vscode or visual studio
    
 ## 🔒 License
-
+This project is licensed under MIT License, See [License](LICENSE) for more information.
 
 ## 🌟 Collaborators
 
