@@ -1,4 +1,4 @@
-<div align="center"> <h1>👾 Alien Invasion: simulate or surrender ! 👾</h1> </div>
+<div align="center"> <h1>👾 Alien Invasion 👾</h1> </div>
 <div align="center"> 
   
   #### Whispers have become screams, earie lights piercing the once-peaceful night sky, 
@@ -6,7 +6,56 @@
   
 </div>
 
-The once-distant nightmare is now a present threat. The clock is ticking, and the weight of humanity's future rests on the shoulders of the **Global Defense Unit** - humanity's last line of defense. grappling with the stark truth: brute force won't be enough. They needed a glimpse into the future, a way to predict their moves before they unfold.
+The once-distant nightmare is now a present threat! The clock is ticking, humanity needed a glimpse into the future, a way to predict the enemy's moves before they unfold.
 
-Faced with this impossible challenge, we stepped in. we developed a weapon not of steal and fire but of code and imagination: **a simulated realm where strategies are tested, weakness exposed and the enemy's playbook laid bare**. It is humanity's last chance to rewrite the future before the first shot shatters the silence!
+Faced with this impossible challenge, we developed **a simulated realm where strategies are tested, weaknesses exposed, and the enemy's playbook laid bare**. It is humanity's last chance to rewrite the future before the first shot shatters the silence!
 
+## 🕹️ Simulation Modes
+
+Choose how to witness **humanity's last stand**:
+- **Interactive Mode:** Watch the battle as it unfolds and let the aliens know you are watching!
+- **Silent Mode:** Conduct a silent stealth mission and strategize in secret.
+
+## ⚔️ Battle Scenarios
+
+The fate of Earth rests in your hands! Adapt your strategies and tactics as Earth's and alien forces vary in strength: 
+
+- **Balanced Power:** Engage in a battle where both Earth and alien armies are evenly matched, testing pure strategy.
+- **Earth Overpower:** Lead a stronger Earth army against weaker or moderate alien forces for offensive strategies.
+- **Alien Overpower:** Face overwhelming alien forces with a weaker Earth army to test defensive tactics.
+
+## 🛠️ How to get started
+
+1. Clone the repo
+2. Run using vscode or visual studio
+   
+## 🔒 License
+
+
+## 🌟 Collaborators
+
+<table>
+<tr>
+  <td align = "center"> 
+	<a href = "https://github.com/AhmedSobhy01">
+	  <img src = "https://github.com/AhmedSobhy01.png" width = 100>
+	  <br />
+	  <sub> Ahmed Sobhy </sub>
+	</a>
+  </td>
+  <td align = "center"> 
+	<a href = "https://github.com/habibayman">
+	  <img src = "https://github.com/habibayman.png" width = 100>
+	  <br />
+	  <sub> Habiba Ayman </sub>
+	</a>
+  </td>
+  <td align = "center"> 
+	<a href = "https://github.com/HelanaNady">
+	  <img src = "https://github.com/HelanaNady.png" width = 100>
+	  <br />
+	  <sub> Helana Nady</sub>
+	</a>
+  </td>
+</tr>
+</table>
