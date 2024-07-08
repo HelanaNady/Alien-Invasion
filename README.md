@@ -1,4 +1,5 @@
-<div align="center"> <h1>👾 Alien Invasion 👾</h1> </div>
+![image](https://github.com/HelanaNady/Alien-Invasion/assets/137416623/eb4b450b-6a96-40be-90c9-2b30caa70ba2) </br>
+<div align="center"> <h1>👾 Simulate or Surrender 👾</h1> </div>
 <div align="center"> 
   
   #### Whispers have become screams, earie lights piercing the once-peaceful night sky, 
@@ -15,6 +16,8 @@ Faced with this impossible challenge, we developed **a simulated realm where str
 Choose how to witness **humanity's last stand**:
 - **Interactive Mode:** Watch the battle as it unfolds and let the aliens know you are watching!
 - **Silent Mode:** Conduct a silent stealth mission and strategize in secret.
+
+https://github.com/HelanaNady/Alien-Invasion/assets/137416623/e665c15d-3613-4e57-840f-621ae3b08516
 
 ## ⚔️ Battle Scenarios
 
